@@ -1,0 +1,7 @@
+pwd
+
+
+Get-ChildItem -Recurse -Filter "*.ddl" | Select-Object FullName
+
+
+git status
