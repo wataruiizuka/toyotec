@@ -1,0 +1,4 @@
+﻿No,スキーマ名,テーブル名,テーブル論理名,カラム名,カラム論理名,データ型,NULL有/無,主キー,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,gold,DM_AREAMASTER,地域マスタ,cd_chiiki,地域コード,VARCHAR(50),NULL不可,Yes,なし,uslim_ve.AREAMASTER,cd_chiiki,そのまま取得,TRUNCATE後、INSERTによる全件洗い替え,地域を一意に識別するコード。コード1では gold.DM_AREAMASTER として作成されている一方、コード2では uslim_ve.DM_AREAMASTER に対してTRUNCATE/INSERTしているため、実際の投入先スキーマは要確認。
+2,gold,DM_AREAMASTER,地域マスタ,mj_chiiki,地域名,VARCHAR(255),NULL可,No,なし,uslim_ve.AREAMASTER,mj_chiiki,そのまま取得,TRUNCATE後、INSERTによる全件洗い替え,地域コードに対応する地域名を保持する項目と考えられる。正式な名称体系や値の一覧は元テーブルまたは仕様書で確認が必要。
+3,gold,DM_AREAMASTER,地域マスタ,mart_created_at,マート作成日時,TIMESTAMP,NULL不可,No,CURRENT_TIMESTAMP,なし,なし,コード1では DEFAULT CURRENT_TIMESTAMP。コード2では INSERT 時に NOW() を明示設定。,TRUNCATE後、INSERTによる全件洗い替え,DMテーブルへレコードを作成した日時。実際のコード2では洗い替え処理の実行日時が入る。
