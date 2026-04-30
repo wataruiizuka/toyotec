@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,VARCHAR(50),NULL不可,Yes（複合PK）,なし,uslim_ve.HANSYAINFO,cd_hansya,そのまま取得,TRUNCATE後、INSERTによる全件洗い替え,販社を識別するコード。複合主キーの構成項目。コード1ではcd_hansyaのみNOT NULLが明示されている。
+2,cd_kaisya,会社コード,VARCHAR(50),NULL不可（PK構成。DDL上のNOT NULL明記はなし）,Yes（複合PK）,なし,uslim_ve.HANSYAINFO,cd_kaisya,そのまま取得,TRUNCATE後、INSERTによる全件洗い替え,会社を識別するコードと考えられる。複合主キーの構成項目。実DBでのNULL制約の扱いは要確認。
+3,cd_hanbaitn,販売店コード,VARCHAR(50),NULL不可（PK構成。DDL上のNOT NULL明記はなし）,Yes（複合PK）,なし,uslim_ve.HANSYAINFO,cd_hanbaitn,そのまま取得,TRUNCATE後、INSERTによる全件洗い替え,販売店を識別するコードと考えられる。複合主キーの構成項目。実DBでのNULL制約の扱いは要確認。
+4,kj_hansya,販社表示名,VARCHAR(255),NULL可,No,なし,uslim_ve.HANSYAINFO,kj_hanbaitn,t_hsif.kj_hanbaitn AS kj_hansya として取得,TRUNCATE後、INSERTによる全件洗い替え,元テーブルの販売店名と思われる kj_hanbaitn を、DM側では販社表示名 kj_hansya として格納している。正式な表示名称は要確認。
+5,cd_chiiki,地域コード,VARCHAR(50),NULL可,No,なし,uslim_ve.HANSYAINFO,cd_chiiki,そのまま取得。加えて uslim_ve.AREAMASTER に同じ cd_chiiki が存在するデータのみ登録対象,TRUNCATE後、INSERTによる全件洗い替え,販社・販売店が所属する地域コードと考えられる。WHERE EXISTS により、AREAMASTERに存在しない地域コードは登録対象外。
+6,mj_upassuse,UPASS利用情報（要確認）,VARCHAR(255),NULL可,No,なし,uslim_ve.HANSYAINFO,mj_upassuse,そのまま取得,TRUNCATE後、INSERTによる全件洗い替え,カラム名から何らかのUPASS利用情報と考えられるが、正式な業務意味はコードのみでは断定不可。要確認。
+7,kb_disp,表示可否フラグ,BOOLEAN,NULL可,No,なし,uslim_ve.HANSYAINFO,dd_uslimstart / dd_uslimend,dd_uslimstart がNULLまたはJST当日以前、かつ dd_uslimend がNULLまたはJST当日以降の場合 true。それ以外は false。,TRUNCATE後、INSERTによる全件洗い替え,JST基準の当日が利用開始日・利用終了日の範囲内かどうかで表示可否を判定するフラグ。
+8,mart_target_date,マート対象日,DATE,NULL可,No,なし,なし,なし,"CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE) を設定",TRUNCATE後、INSERTによる全件洗い替え,洗い替え処理実行時点のJST日付を格納する。表示可否判定と同じ基準日。
+9,mart_created_at,マート作成日時,TIMESTAMP,NULL不可,No,CURRENT_TIMESTAMP,なし,なし,コード1ではDEFAULT CURRENT_TIMESTAMP。コード2ではINSERT時にNOW()を設定。,TRUNCATE後、INSERTによる全件洗い替え,DMテーブルへレコードを作成した日時。実際のINSERT処理ではNOW()が明示指定されているため、洗い替え処理の実行日時が入る。
