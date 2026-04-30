@@ -1,0 +1,19 @@
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Table Definition,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ Server,,,,,,,,, Table,,,,,AccessUser_(?????????),,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ Rows,,0,,,, CreateDate,,,,,,,,2026/2/9,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,Index,,,,,#VALUE!,
+No,ColumnName,,,DisplayName,,,,,,NN,,DataType,,,,DefaultValue,,,Memo,,,,,,,#VALUE!,
+1,CD_USER,,,??????,,,,,,?,,string,,,,,,,,,1,,,,,,"CD_USER string not null encoding auto_encoding compression default_compression ,"
+2,CD_HANBAITN,,,??????,,,,,,,,string,,,,,,,,,,,,,,,"CD_HANBAITN string null encoding auto_encoding compression default_compression ,"
+3,CD_SYAIN,,,?????,,,,,,,,string,,,,,,,,,,,,,,,"CD_SYAIN string null encoding auto_encoding compression default_compression ,"
+4,MJ_NAME,,,????,,,,,,,,string,,,,,,,,,,,,,,,"MJ_NAME string null encoding auto_encoding compression default_compression ,"
+,,,,,,,,,,,,,,,,,,,,,,,,,,,"  null encoding auto_encoding compression default_compression ,"
+,,,,,,,,,,,,,,,,,,,,,,,,,,,primary key (CD_USER)
+?Index?,,,,,,,,,,,,,,,,,,,,,,,,,,) comment '' stored as kudu;,
+Id,IndexName,,,PK,1,,2,,,,3,,,,,,,,,,,,,,,#VALUE!,
+1,AccessUser_pk,,,?,CD_USER,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
