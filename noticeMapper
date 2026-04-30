@@ -1,0 +1,184 @@
+ddl
+
+CREATE TABLE gold.DM_NOTICEINFO_ALL (
+    id_oshirase      VARCHAR(50)   NOT NULL,
+    cd_jyuyodo       VARCHAR(50),
+    dd_hashinbi      VARCHAR(10),
+    cd_categori      VARCHAR(50),
+    kj_naiyou        STRING,
+    kb_taisyo        VARCHAR(50),
+    dd_to            VARCHAR(10),
+    sort_dd_hashinbi DATE,
+    sort_dt_saisinup TIMESTAMP,
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_oshirase)
+);
+
+CREATE TABLE gold.DM_NOTICEINFO_PUBLISH (
+    id_oshirase      VARCHAR(50)   NOT NULL,
+    cd_jyuyodo       VARCHAR(50),
+    dd_hashinbi      VARCHAR(10),
+    cd_categori      VARCHAR(50),
+    kj_naiyou        STRING,
+    kb_taisyo        VARCHAR(50),
+    dd_to            VARCHAR(10),
+    sort_dd_hashinbi DATE,
+    sort_dt_saisinup TIMESTAMP,
+    mart_target_date DATE,
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_oshirase)
+);
+
+
+sql
+
+-- DM_NOTICEINFO_ALL
+TRUNCATE TABLE gold.DM_NOTICEINFO_ALL;
+
+INSERT INTO gold.DM_NOTICEINFO_ALL (
+    id_oshirase,
+    cd_jyuyodo,
+    dd_hashinbi,
+    cd_categori,
+    kj_naiyou,
+    kb_taisyo,
+    dd_to,
+    sort_dd_hashinbi,
+    sort_dt_saisinup,
+    mart_created_at
+)
+SELECT
+    id_oshirase,
+    cd_jyuyodo,
+    FROM_TIMESTAMP(dd_hashinbi, 'yyyy/MM/dd') AS dd_hashinbi,
+    cd_categori,
+    kj_naiyou,
+    kb_taisyo,
+    FROM_TIMESTAMP(dd_to, 'yyyy/MM/dd') AS dd_to,
+    dd_hashinbi AS sort_dd_hashinbi,
+    dt_saisinup AS sort_dt_saisinup,
+    NOW()
+FROM uslim_ve.NOTICEINFO;
+
+
+-- DM_NOTICEINFO_PUBLISH
+
+TRUNCATE TABLE gold.DM_NOTICEINFO_PUBLISH;
+
+INSERT INTO gold.DM_NOTICEINFO_PUBLISH (
+    id_oshirase,
+    cd_jyuyodo,
+    dd_hashinbi,
+    cd_categori,
+    kj_naiyou,
+    kb_taisyo,
+    dd_to,
+    sort_dd_hashinbi,
+    sort_dt_saisinup,
+    mart_target_date,
+    mart_created_at
+)
+SELECT
+    id_oshirase,
+    cd_jyuyodo,
+    FROM_TIMESTAMP(dd_hashinbi, 'yyyy/MM/dd') AS dd_hashinbi,
+    cd_categori,
+    kj_naiyou,
+    kb_taisyo,
+    FROM_TIMESTAMP(dd_to, 'yyyy/MM/dd') AS dd_to,
+    dd_hashinbi AS sort_dd_hashinbi,
+    dt_saisinup AS sort_dt_saisinup,
+    CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE) AS mart_target_date,
+    NOW()
+FROM uslim_ve.NOTICEINFO
+WHERE CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE)
+      BETWEEN NVL(dd_hashinbi, DATE'1900-01-01')
+          AND NVL(dd_to, DATE'9999-12-31');
+
+xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toyotec_jp.uslim.common.dao.NoticeMapper">
+
+    <!-- お知らせ情報取得SQL：DM参照版 -->
+    <select id="getNoticeInfo" resultType="com.toyotec_jp.uslim.common.model.NoticeInfo">
+        SELECT
+            id_oshirase AS ID_OSHIRASE
+            , cd_jyuyodo AS CD_JYUYODO
+            , dd_hashinbi AS DD_HASHINBI
+            , cd_categori AS CD_CATEGORI
+            , kj_naiyou AS KJ_NAIYOU
+            , kb_taisyo AS KB_TAISYO
+            , dd_to AS DD_TO
+        FROM ${uslimDb}.DM_NOTICEINFO_ALL
+        ORDER BY
+            sort_dd_hashinbi DESC
+            , sort_dt_saisinup DESC
+    </select>
+
+    <!-- 掲載対象のお知らせ情報取得SQL：DM参照版 -->
+    <select id="getPublishNoticeInfo" resultType="com.toyotec_jp.uslim.common.model.NoticeInfo">
+        SELECT
+            id_oshirase AS ID_OSHIRASE
+            , cd_jyuyodo AS CD_JYUYODO
+            , dd_hashinbi AS DD_HASHINBI
+            , cd_categori AS CD_CATEGORI
+            , kj_naiyou AS KJ_NAIYOU
+            , kb_taisyo AS KB_TAISYO
+            , dd_to AS DD_TO
+        FROM ${uslimDb}.DM_NOTICEINFO_PUBLISH
+        ORDER BY
+            sort_dd_hashinbi DESC
+            , sort_dt_saisinup DESC
+    </select>
+
+    <!-- お知らせ情報登録・更新SQL：元テーブル更新のまま -->
+    <update id="updNoticeInfo" parameterType="com.toyotec_jp.uslim.common.model.NoticeInfo">
+        UPSERT INTO ${uslimDb}.NOTICEINFO (
+            ID_OSHIRASE
+            ,CD_JYUYODO
+            ,DD_HASHINBI
+            ,CD_CATEGORI
+            ,KJ_NAIYOU
+            ,KB_TAISYO
+            ,DD_TO
+            ,MJ_SAKUSEISYA
+            ,DT_SAKUSEI
+            ,MJ_KOSINSYA
+            ,DT_SAISINUP
+        )
+        SELECT 
+            T_ID.ID_OSHIRASE
+            ,#{cdJyuyodo}
+            ,CAST(TO_TIMESTAMP(#{ddHashinbi, jdbcType=VARCHAR}, 'yyyy/MM/dd') AS DATE)
+            ,#{cdCategori}
+            ,#{kjNaiyou}
+            ,#{kbTaisyo}
+            ,CAST(TO_TIMESTAMP(#{ddTo, jdbcType=VARCHAR}, 'yyyy/MM/dd') AS DATE)
+            ,NVL(T_NI.MJ_SAKUSEISYA, #{cdUser}) 
+            ,NVL(T_NI.DT_SAKUSEI, FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')) 
+            ,#{cdUser}
+            ,FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')
+        FROM 
+            (VALUES(
+            <choose>
+            <when test="idOshirase != null and idOshirase != ''">
+                #{idOshirase} AS ID_OSHIRASE
+            </when>
+            <otherwise>
+                UUID() AS ID_OSHIRASE
+            </otherwise>
+            </choose>
+            )) T_ID
+            LEFT JOIN ${uslimDb}.NOTICEINFO T_NI
+                ON T_ID.ID_OSHIRASE = T_NI.ID_OSHIRASE
+    </update>
+
+    <!-- お知らせ情報削除SQL：元テーブル更新のまま -->
+    <delete id="delNoticeInfo" parameterType="com.toyotec_jp.uslim.common.model.NoticeDelParam">
+        DELETE FROM ${uslimDb}.NOTICEINFO 
+        WHERE ID_OSHIRASE = #{idOshirase}
+    </delete>
+
+</mapper>
