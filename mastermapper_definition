@@ -1,0 +1,272 @@
+No２
+カラム名：cd_hansya
+論理名：販社コード
+データ型：VARCHAR(50)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.HANSYAINFO
+元カラム：cd_hansya
+変換・加工ロジック：
+  uslim_ve.USERINFO.cd_hanbaitn = uslim_ve.HANSYAINFO.cd_hanbaitn で LEFT JOIN して取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  ユーザーが所属する販売店に紐づく販社コードと考えられる。
+  LEFT JOIN のため、紐づく HANSYAINFO が存在しない場合は NULL になる可能性がある。
+
+No3
+カラム名：cd_kaisya
+論理名：会社コード
+データ型：VARCHAR(50)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.HANSYAINFO
+元カラム：cd_kaisya
+変換・加工ロジック：
+  uslim_ve.USERINFO.cd_hanbaitn = uslim_ve.HANSYAINFO.cd_hanbaitn で LEFT JOIN して取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  ユーザーが所属する販売店に紐づく会社コードと考えられる。
+  LEFT JOIN のため、紐づく HANSYAINFO が存在しない場合は NULL になる可能性がある。
+
+No４
+カラム名：cd_hanbaitn
+論理名：販売店コード
+データ型：VARCHAR(50)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：cd_hanbaitn
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  ユーザーが所属する販売店コードと考えられる。
+  HANSYAINFO との結合キーとしても使用される。
+
+No5
+カラム名：cd_tenpo
+論理名：店舗コード
+データ型：VARCHAR(50)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：cd_tenpo
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  ユーザーが所属する店舗コードと考えられる。
+
+No6
+カラム名：mj_name
+論理名：ユーザー名
+データ型：VARCHAR(255)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：mj_name
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  アプリケーション上で表示されるユーザー名と考えられる。
+
+No7
+カラム名：mj_name
+論理名：ユーザー名
+データ型：VARCHAR(255)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：mj_name
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  アプリケーション上で表示されるユーザー名と考えられる。
+
+No8
+カラム名：mj_role
+論理名：ユーザーロール
+データ型：VARCHAR(255)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：mj_role
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  ユーザーの権限ロール、役割を表す項目と考えられる。
+  具体的なロール値はDDL・INSERT SQLからは判断できないため、実データまたは仕様書で確認が必要。
+
+No9
+カラム名：kb_access_honten
+論理名：本店アクセス権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_access_honten
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  本店機能へのアクセス可否を表す区分と考えられる。
+  値が 0/1、Y/N、true/false のどれで管理されるかは要確認。
+
+No10
+カラム名：kb_access_hansya
+論理名：販社アクセス権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_access_hansya
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  販社機能へのアクセス可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+No11
+カラム名：kb_access_yoyaku
+論理名：予約アクセス権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_access_yoyaku
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  予約機能へのアクセス可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+No12
+カラム名：kb_hansya_mente
+論理名：販社メンテナンス権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_hansya_mente
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  販社情報のメンテナンス可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+No13
+カラム名：kb_user_mente
+論理名：ユーザーメンテナンス権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_user_mente
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  ユーザー情報のメンテナンス可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+NO14
+カラム名：kb_notice_mente
+論理名：お知らせメンテナンス権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_notice_mente
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  お知らせ情報のメンテナンス可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+No15
+カラム名：kb_view_kpi
+論理名：KPI閲覧権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_view_kpi
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  KPI画面またはKPI情報の閲覧可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+No16
+カラム名：kb_view_proc
+論理名：PROC閲覧権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_view_proc
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  PROC関連画面または処理情報の閲覧可否を表す区分と考えられる。
+  PROCの正式な業務意味はこのコードだけでは断定できないため要確認。
+
+No17
+カラム名：kb_view_ucar
+論理名：U-Car閲覧権限区分
+データ型：VARCHAR(10)
+NULL有/無：NULL可
+プライマリーキー：No
+デフォルト値：なし
+元テーブル：uslim_ve.USERINFO
+元カラム：kb_view_ucar
+変換・加工ロジック：そのまま取得
+取り得る値：要確認
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  U-Car関連画面またはU-Car情報の閲覧可否を表す区分と考えられる。
+  具体的な値の意味は要確認。
+
+No18
+カラム名：mart_created_at
+論理名：マート作成日時
+データ型：TIMESTAMP
+NULL有/無：NULL不可
+プライマリーキー：No
+デフォルト値：CURRENT_TIMESTAMP
+元テーブル：なし
+元カラム：なし
+変換・加工ロジック：
+  コード1では DEFAULT CURRENT_TIMESTAMP
+  コード2では INSERT 時に NOW() を設定
+取り得る値：日時
+更新方法：TRUNCATE後、INSERTによる全件洗い替え
+説明/備考：
+  DMテーブルへレコードを作成した日時。
+  実際のINSERT処理では NOW() が明示指定されているため、洗い替え処理の実行日時が入る。
