@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toyotec_jp.uslim.common.dao.MasterMapper">
+
+    <!-- ユーザ情報（ユーザ認証・認可用）取得SQL：DM参照版 -->
+    <select id="getUserInfo" parameterType="String" resultType="com.toyotec_jp.uslim.common.model.UserInfo">
+        SELECT
+            cd_user AS CD_USER
+            , cd_hansya AS CD_HANSYA
+            , cd_kaisya AS CD_KAISYA
+            , cd_hanbaitn AS CD_HANBAITN
+            , cd_tenpo AS CD_TENPO
+            , cd_syain AS CD_SYAIN
+            , mj_name AS MJ_NAME
+            , mj_role AS MJ_ROLE
+            , kb_access_honten AS KB_ACCESS_HONTEN
+            , kb_access_hansya AS KB_ACCESS_HANSYA
+            , kb_access_yoyaku AS KB_ACCESS_YOYAKU
+            , kb_hansya_mente AS KB_HANSYA_MENTE
+            , kb_user_mente AS KB_USER_MENTE
+            , kb_notice_mente AS KB_NOTICE_MENTE
+            , kb_view_kpi AS KB_VIEW_KPI
+            , kb_view_proc AS KB_VIEW_PROC
+            , kb_view_ucar AS KB_VIEW_UCAR
+        FROM ${uslimDb}.DM_USERINFO_AUTH
+        WHERE cd_user = #{cdUser}
+        LIMIT 1
+    </select>
+
+    <!-- 地域取得SQL：DM参照版 -->
+    <select id="getArea" resultType="com.toyotec_jp.uslim.common.model.Area">
+        SELECT
+            cd_chiiki AS CD_CHIIKI
+            , mj_chiiki AS MJ_CHIIKI
+        FROM ${uslimDb}.DM_AREAMASTER
+    </select>
+
+    <!-- 販社情報取得SQL：DM参照版 -->
+    <select id="getHansya" resultType="com.toyotec_jp.uslim.common.model.Hansya">
+        SELECT
+            cd_hansya AS CD_HANSYA
+            , cd_kaisya AS CD_KAISYA
+            , cd_hanbaitn AS CD_HANBAITN
+            , kj_hansya AS KJ_HANSYA
+            , cd_chiiki AS CD_CHIIKI
+            , mj_upassuse AS MJ_UPASSUSE
+            , kb_disp AS KB_DISP
+        FROM ${uslimDb}.DM_HANSYA_DISPLAY
+    </select>
+
+    <!-- 販社情報（データベースコネクションプール構築用）取得SQL：DM参照版 -->
+    <select id="getHansyaInfo" resultType="com.toyotec_jp.uslim.common.model.HansyaInfo">
+        SELECT
+            cd_hanbaitn AS CD_HANBAITN
+            , kb_dbcp AS KB_DBCP
+            , mj_dlguid AS MJ_DLGUID
+        FROM ${uslimDb}.DM_HANSYAINFO_POOL
+    </select>
+
+</mapper>
