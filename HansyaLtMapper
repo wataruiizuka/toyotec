@@ -1,0 +1,312 @@
+ddl
+
+CREATE TABLE gold.DM_HANSYA_LT (
+    dd_lt_kikan         DATE         NOT NULL,
+    mj_lt_kikan         VARCHAR(8)   NOT NULL,
+    cd_hanbaitn         VARCHAR(50)  NOT NULL,
+    kj_kaisyatn         VARCHAR(255),
+    cd_chiiki           VARCHAR(50),
+    mj_chiiki           VARCHAR(255),
+    nu_sita_cnt         BIGINT,
+    nu_sita_minlt       BIGINT,
+    nu_sita_maxlt       BIGINT,
+    nu_sita_sumlt       BIGINT,
+    nu_sita_cntlt       BIGINT,
+    nu_siire_cnt        BIGINT,
+    nu_siire_minlt      BIGINT,
+    nu_siire_maxlt      BIGINT,
+    nu_siire_sumlt      BIGINT,
+    nu_siire_cntlt      BIGINT,
+    nu_hinsi_cnt        BIGINT,
+    nu_hinsi_minlt      BIGINT,
+    nu_hinsi_maxlt      BIGINT,
+    nu_hinsi_sumlt      BIGINT,
+    nu_hinsi_cntlt      BIGINT,
+    nu_tenji_cnt        BIGINT,
+    nu_tenji_minlt      BIGINT,
+    nu_tenji_maxlt      BIGINT,
+    nu_tenji_sumlt      BIGINT,
+    nu_tenji_cntlt      BIGINT,
+    nu_jucyu_cnt        BIGINT,
+    nu_jucyu_minlt      BIGINT,
+    nu_jucyu_maxlt      BIGINT,
+    nu_jucyu_sumlt      BIGINT,
+    nu_jucyu_cntlt      BIGINT,
+    nu_touroku_cnt      BIGINT,
+    nu_touroku_minlt    BIGINT,
+    nu_touroku_maxlt    BIGINT,
+    nu_touroku_sumlt    BIGINT,
+    nu_touroku_cntlt    BIGINT,
+    nu_sirtor_cnt       BIGINT,
+    nu_sirtor_minlt     BIGINT,
+    nu_sirtor_maxlt     BIGINT,
+    nu_sirtor_sumlt     BIGINT,
+    nu_sirtor_cntlt     BIGINT,
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+INSERT INTO ${uslimDb}.DM_HANSYA_LT (
+    dd_lt_kikan,
+    mj_lt_kikan,
+
+    cd_hanbaitn,
+    kj_kaisyatn,
+    cd_chiiki,
+    mj_chiiki,
+
+    nu_sita_cnt,
+    nu_sita_minlt,
+    nu_sita_maxlt,
+    nu_sita_sumlt,
+    nu_sita_cntlt,
+
+    nu_siire_cnt,
+    nu_siire_minlt,
+    nu_siire_maxlt,
+    nu_siire_sumlt,
+    nu_siire_cntlt,
+
+    nu_hinsi_cnt,
+    nu_hinsi_minlt,
+    nu_hinsi_maxlt,
+    nu_hinsi_sumlt,
+    nu_hinsi_cntlt,
+
+    nu_tenji_cnt,
+    nu_tenji_minlt,
+    nu_tenji_maxlt,
+    nu_tenji_sumlt,
+    nu_tenji_cntlt,
+
+    nu_jucyu_cnt,
+    nu_jucyu_minlt,
+    nu_jucyu_maxlt,
+    nu_jucyu_sumlt,
+    nu_jucyu_cntlt,
+
+    nu_touroku_cnt,
+    nu_touroku_minlt,
+    nu_touroku_maxlt,
+    nu_touroku_sumlt,
+    nu_touroku_cntlt,
+
+    nu_sirtor_cnt,
+    nu_sirtor_minlt,
+    nu_sirtor_maxlt,
+    nu_sirtor_sumlt,
+    nu_sirtor_cntlt,
+
+    mart_created_at
+)
+SELECT
+    #{ddLtKikan} AS dd_lt_kikan,
+    #{mjLtKikan} AS mj_lt_kikan,
+
+    T_HSIF.CD_HANBAITN,
+    T_HSIF.KJ_HANBAITN AS KJ_KAISYATN,
+    T_AREA.CD_CHIIKI,
+    T_AREA.MJ_CHIIKI,
+
+    T_LT1.NU_SITA_CNT,
+    T_LT1.NU_SITA_MINLT,
+    T_LT1.NU_SITA_MAXLT,
+    T_LT1.NU_SITA_SUMLT,
+    T_LT1.NU_SITA_CNTLT,
+
+    T_LT2.NU_SIIRE_CNT,
+    T_LT2.NU_SIIRE_MINLT,
+    T_LT2.NU_SIIRE_MAXLT,
+    T_LT2.NU_SIIRE_SUMLT,
+    T_LT2.NU_SIIRE_CNTLT,
+
+    T_LT2.NU_HINSI_CNT,
+    T_LT2.NU_HINSI_MINLT,
+    T_LT2.NU_HINSI_MAXLT,
+    T_LT2.NU_HINSI_SUMLT,
+    T_LT2.NU_HINSI_CNTLT,
+
+    T_LT3.NU_TENJI_CNT,
+    T_LT3.NU_TENJI_MINLT,
+    T_LT3.NU_TENJI_MAXLT,
+    T_LT3.NU_TENJI_SUMLT,
+    T_LT3.NU_TENJI_CNTLT,
+
+    T_LT3.NU_JUCYU_CNT,
+    T_LT3.NU_JUCYU_MINLT,
+    T_LT3.NU_JUCYU_MAXLT,
+    T_LT3.NU_JUCYU_SUMLT,
+    T_LT3.NU_JUCYU_CNTLT,
+
+    T_LT3.NU_TOUROKU_CNT,
+    T_LT3.NU_TOUROKU_MINLT,
+    T_LT3.NU_TOUROKU_MAXLT,
+    T_LT3.NU_TOUROKU_SUMLT,
+    T_LT3.NU_TOUROKU_CNTLT,
+
+    T_LT3.NU_SIRTOR_CNT,
+    T_LT3.NU_SIRTOR_MINLT,
+    T_LT3.NU_SIRTOR_MAXLT,
+    T_LT3.NU_SIRTOR_SUMLT,
+    T_LT3.NU_SIRTOR_CNTLT,
+
+    CURRENT_TIMESTAMP
+FROM
+    ${uslimDb}.HANSYAINFO T_HSIF
+    INNER JOIN ${uslimDb}.AREAMASTER T_AREA
+        ON T_HSIF.CD_CHIIKI = T_AREA.CD_CHIIKI
+    INNER JOIN (
+        SELECT
+            T_ZAIKO.CD_HANSYA,
+            T_ZAIKO.CD_KAISYA,
+            COUNT(CASE WHEN T_ZAIKO.KB_SIIRE THEN 1 ELSE NULL END) AS NU_SITA_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_SIIRE THEN T_ZAIKO.NU_SITA_LT ELSE NULL END) AS NU_SITA_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_SIIRE THEN T_ZAIKO.NU_SITA_LT ELSE NULL END) AS NU_SITA_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_SIIRE THEN T_ZAIKO.NU_SITA_LT ELSE NULL END) AS NU_SITA_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_SIIRE THEN T_ZAIKO.NU_SITA_LT ELSE NULL END) AS NU_SITA_CNTLT
+        FROM (
+            SELECT
+                TBBC001G.CD_HANSYA,
+                TBBC001G.CD_KAISYA,
+                TBBC001G.DD_TORIKESI IS NULL AND TBBC001G.DD_SIIRE >= #{ddLtKikan} AS KB_SIIRE,
+                DATEDIFF(TBBC001G.DD_SIIRE, TBBC001G.DD_SITASYUK) AS NU_SITA_LT
+            FROM ${ai21Db}.TBBC001G TBBC001G
+        ) T_ZAIKO
+        GROUP BY
+            T_ZAIKO.CD_HANSYA,
+            T_ZAIKO.CD_KAISYA
+    ) T_LT1
+        ON T_HSIF.CD_HANSYA = T_LT1.CD_HANSYA
+       AND T_HSIF.CD_KAISYA = T_LT1.CD_KAISYA
+    LEFT JOIN (
+        SELECT
+            T_ZAIKO.CD_HANSYA,
+            T_ZAIKO.CD_KAISYA,
+            COUNT(CASE WHEN T_ZAIKO.KB_STISGJS THEN 1 ELSE NULL END) AS NU_SIIRE_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_STISGJS THEN T_ZAIKO.NU_SIIRE_LT ELSE NULL END) AS NU_SIIRE_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_STISGJS THEN T_ZAIKO.NU_SIIRE_LT ELSE NULL END) AS NU_SIIRE_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_STISGJS THEN T_ZAIKO.NU_SIIRE_LT ELSE NULL END) AS NU_SIIRE_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_STISGJS THEN T_ZAIKO.NU_SIIRE_LT ELSE NULL END) AS NU_SIIRE_CNTLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_TNPTNJKI THEN 1 ELSE NULL END) AS NU_HINSI_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_TNPTNJKI THEN T_ZAIKO.NU_HINSI_LT ELSE NULL END) AS NU_HINSI_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_TNPTNJKI THEN T_ZAIKO.NU_HINSI_LT ELSE NULL END) AS NU_HINSI_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_TNPTNJKI THEN T_ZAIKO.NU_HINSI_LT ELSE NULL END) AS NU_HINSI_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_TNPTNJKI THEN T_ZAIKO.NU_HINSI_LT ELSE NULL END) AS NU_HINSI_CNTLT
+        FROM (
+            SELECT
+                TBBC001G.CD_HANSYA,
+                TBBC001G.CD_KAISYA,
+                TBNH002G.DD_STISGJS >= #{mjLtKikan} AS KB_STISGJS,
+                T_GAZOO.CD_TMCHANCD IS NOT NULL AS KB_TNPTNJKI,
+                DATEDIFF(TO_TIMESTAMP(TBNH002G.DD_STISGJS, 'yyyyMMdd'), TBBC001G.DD_SIIRE) AS NU_SIIRE_LT,
+                DATEDIFF(TO_TIMESTAMP(T_GAZOO.DD_KESAIKS, 'yyyyMMdd'), TO_TIMESTAMP(TBNH002G.DD_STISGJS, 'yyyyMMdd')) AS NU_HINSI_LT
+            FROM ${ai21Db}.TBBC001G TBBC001G
+                INNER JOIN ${uslimDb}.HANSYAINFO T_HSIF
+                    ON TBBC001G.CD_HANSYA = T_HSIF.CD_HANSYA
+                   AND TBBC001G.CD_KAISYA = T_HSIF.CD_KAISYA
+                LEFT JOIN /* +SHUFFLE */ ${uslimDb}.GAZOOALLINFO T_GAZOO
+                    ON T_HSIF.CD_HANBAITN = T_GAZOO.CD_TMCHANCD
+                   AND TBBC001G.NO_SYARYOU = T_GAZOO.NO_SYARYOU
+                   AND RTRIM(TBBC001G.NO_SYADAIBA) = T_GAZOO.NO_SYADAIBA
+                   AND T_GAZOO.DD_KESAIKS >= #{mjLtKikan}
+                INNER JOIN /* +SHUFFLE */ (
+                    SELECT
+                        CD_HANSYA,
+                        CD_KAISYA,
+                        NO_SYARYOU,
+                        MAX(NO_STI) AS NO_STI
+                    FROM ${ai21Db}.TBNH001G
+                    WHERE MJ_STIHZSM = '1'
+                    GROUP BY CD_HANSYA, CD_KAISYA, NO_SYARYOU
+                ) T_STBI
+                    ON TBBC001G.CD_HANSYA = T_STBI.CD_HANSYA
+                   AND TBBC001G.CD_KAISYA = T_STBI.CD_KAISYA
+                   AND TBBC001G.NO_SYARYOU = T_STBI.NO_SYARYOU
+                INNER JOIN /* +SHUFFLE */ ${ai21Db}.TBNH002G TBNH002G
+                    ON T_STBI.CD_HANSYA = TBNH002G.CD_HANSYA
+                   AND T_STBI.CD_KAISYA = TBNH002G.CD_KAISYA
+                   AND T_STBI.NO_STI = TBNH002G.NO_STI
+                   AND '1' = TBNH002G.MJ_STIHZSM
+                   AND '3' = TBNH002G.KB_STIKT
+            WHERE
+                TBBC001G.DD_TORIKESI IS NULL
+                AND LEFT(TBBC001G.KB_URIAGYOT, 1) = '1'
+                AND (
+                    T_GAZOO.CD_TMCHANCD IS NOT NULL
+                    OR TBNH002G.DD_STISGJS >= #{mjLtKikan}
+                )
+        ) T_ZAIKO
+        GROUP BY
+            T_ZAIKO.CD_HANSYA,
+            T_ZAIKO.CD_KAISYA
+    ) T_LT2
+        ON T_HSIF.CD_HANSYA = T_LT2.CD_HANSYA
+       AND T_HSIF.CD_KAISYA = T_LT2.CD_KAISYA
+    LEFT JOIN (
+        SELECT
+            T_ZAIKO.CD_HANSYA,
+            T_ZAIKO.CD_KAISYA,
+            COUNT(CASE WHEN T_ZAIKO.KB_JUCYU THEN 1 ELSE NULL END) AS NU_TENJI_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_JUCYU THEN T_ZAIKO.NU_TENJI_LT ELSE NULL END) AS NU_TENJI_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_JUCYU THEN T_ZAIKO.NU_TENJI_LT ELSE NULL END) AS NU_TENJI_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_JUCYU THEN T_ZAIKO.NU_TENJI_LT ELSE NULL END) AS NU_TENJI_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_JUCYU THEN T_ZAIKO.NU_TENJI_LT ELSE NULL END) AS NU_TENJI_CNTLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_TOUROKU THEN 1 ELSE NULL END) AS NU_JUCYU_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_JUCYU_LT ELSE NULL END) AS NU_JUCYU_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_JUCYU_LT ELSE NULL END) AS NU_JUCYU_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_JUCYU_LT ELSE NULL END) AS NU_JUCYU_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_JUCYU_LT ELSE NULL END) AS NU_JUCYU_CNTLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_NOSYA THEN 1 ELSE NULL END) AS NU_TOUROKU_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_NOSYA THEN T_ZAIKO.NU_TOUROKU_LT ELSE NULL END) AS NU_TOUROKU_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_NOSYA THEN T_ZAIKO.NU_TOUROKU_LT ELSE NULL END) AS NU_TOUROKU_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_NOSYA THEN T_ZAIKO.NU_TOUROKU_LT ELSE NULL END) AS NU_TOUROKU_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_NOSYA THEN T_ZAIKO.NU_TOUROKU_LT ELSE NULL END) AS NU_TOUROKU_CNTLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_TOUROKU THEN 1 ELSE NULL END) AS NU_SIRTOR_CNT,
+            MIN(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_SIRTOR_LT ELSE NULL END) AS NU_SIRTOR_MINLT,
+            MAX(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_SIRTOR_LT ELSE NULL END) AS NU_SIRTOR_MAXLT,
+            SUM(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_SIRTOR_LT ELSE NULL END) AS NU_SIRTOR_SUMLT,
+            COUNT(CASE WHEN T_ZAIKO.KB_TOUROKU THEN T_ZAIKO.NU_SIRTOR_LT ELSE NULL END) AS NU_SIRTOR_CNTLT
+        FROM (
+            SELECT
+                TBBC017G.CD_HANSYA,
+                TBBC017G.CD_KAISYA,
+                TBBC017G.DD_JUCYU >= #{ddLtKikan} AS KB_JUCYU,
+                TBBC017G.DD_TOUROKU >= #{ddLtKikan} AS KB_TOUROKU,
+                TBBC017G.DD_NOSYA >= #{ddLtKikan} AS KB_NOSYA,
+                DATEDIFF(TBBC017G.DD_JUCYU, TO_TIMESTAMP(T_GAZOO.DD_KESAIKS, 'yyyyMMdd')) AS NU_TENJI_LT,
+                DATEDIFF(TBBC017G.DD_TOUROKU, TBBC017G.DD_JUCYU) AS NU_JUCYU_LT,
+                DATEDIFF(TBBC017G.DD_NOSYA, TBBC017G.DD_TOUROKU) AS NU_TOUROKU_LT,
+                DATEDIFF(TBBC017G.DD_TOUROKU, TBBC001G.DD_SIIRE) AS NU_SIRTOR_LT
+            FROM ${ai21Db}.TBBC017G TBBC017G
+                INNER JOIN ${uslimDb}.HANSYAINFO T_HSIF
+                    ON TBBC017G.CD_HANSYA = T_HSIF.CD_HANSYA
+                   AND TBBC017G.CD_KAISYA = T_HSIF.CD_KAISYA
+                LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBBC001G TBBC001G
+                    ON TBBC017G.CD_HANSYA = TBBC001G.CD_HANSYA
+                   AND TBBC017G.CD_KAISYA = TBBC001G.CD_KAISYA
+                   AND TBBC017G.NO_CYUMON = TBBC001G.NO_CYUMON
+                   AND TBBC017G.NO_CYUMONED = TBBC001G.NO_CYUMONED
+                   AND TBBC017G.NO_SYARYOU = TBBC001G.NO_SYARYOU
+                   AND TBBC001G.DD_TORIKESI IS NULL
+                   AND LEFT(TBBC001G.KB_URIAGE, 1) = '1'
+                LEFT JOIN /* +SHUFFLE */ ${uslimDb}.GAZOOALLINFO T_GAZOO
+                    ON T_HSIF.CD_HANBAITN = T_GAZOO.CD_TMCHANCD
+                   AND TBBC001G.NO_SYARYOU = T_GAZOO.NO_SYARYOU
+                   AND RTRIM(TBBC001G.NO_SYADAIBA) = T_GAZOO.NO_SYADAIBA
+            WHERE
+                TBBC017G.DD_TORIKESI IS NULL
+                AND LEFT(TBBC017G.KB_URIAGE, 1) = '1'
+                AND (
+                    TBBC017G.DD_JUCYU >= #{ddLtKikan}
+                    OR TBBC017G.DD_TOUROKU >= #{ddLtKikan}
+                    OR TBBC017G.DD_NOSYA >= #{ddLtKikan}
+                )
+        ) T_ZAIKO
+        GROUP BY
+            T_ZAIKO.CD_HANSYA,
+            T_ZAIKO.CD_KAISYA
+    ) T_LT3
+        ON T_HSIF.CD_HANSYA = T_LT3.CD_HANSYA
+       AND T_HSIF.CD_KAISYA = T_LT3.CD_KAISYA;
