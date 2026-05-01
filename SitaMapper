@@ -1,0 +1,1341 @@
+ddl
+
+-- DM_SITA_VEHICLE_BASE
+CREATE TABLE gold.DM_SITA_VEHICLE_BASE (
+    source_type           VARCHAR(20)   NOT NULL,   -- SITA / ZAIKO / KYOYU
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+    status                VARCHAR(10),
+    cd_teanyote           VARCHAR(10),
+    no_syadaiba           VARCHAR(100),
+    no_syaryou            VARCHAR(100),
+    no_siretyum           VARCHAR(100),
+    cd_syamei             VARCHAR(100),
+    mj_syamei             VARCHAR(255),
+    cd_maker              VARCHAR(20),
+    su_syodotor           INT,
+    nu_soukoukm           VARCHAR(50),
+    cd_syufukre           VARCHAR(20),
+    kb_uriagyot           VARCHAR(20),
+    kb_engine             VARCHAR(20),
+    kb_kudohoho           VARCHAR(20),
+    mj_katasiki           VARCHAR(255),
+    no_siteruib           VARCHAR(100),
+    kb_web                VARCHAR(10),
+    dd_sitayote           DATE,
+    dd_sintyaku           DATE,
+    dd_syknmanr           DATE,
+    ki_hnbsijik           BIGINT,
+    cd_sitastaf           VARCHAR(50),
+    cd_sitadote           VARCHAR(50),
+    kj_syainmei           VARCHAR(255),
+    kj_tentanms           VARCHAR(255),
+    kj_zaikoten           VARCHAR(255),
+    mj_ncfr               VARCHAR(10),
+    id_syaryou            VARCHAR(100),
+    cd_zaiksyys           VARCHAR(50),
+    no_sti                VARCHAR(50),
+    nu_suhkt              VARCHAR(50),
+    ki_nesita             VARCHAR(50),
+    mj_nejknbk            STRING,
+    mj_comment            STRING,
+    cd_tmchancd           VARCHAR(50),
+    kj_kaisya             VARCHAR(255),
+    cd_todofken           VARCHAR(20),
+    mj_todofkenfl         VARCHAR(255),
+    kb_sintyaku           VARCHAR(10),
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_VEHICLE_DAISU
+CREATE TABLE gold.DM_SITA_VEHICLE_DAISU (
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+    kb_honten             VARCHAR(10),
+    category              INT,
+    sita_month_week       VARCHAR(50),
+    status                VARCHAR(10),
+    kb_uriagyot           VARCHAR(50),
+    syamei                VARCHAR(255),
+    daisu                 BIGINT,
+    daisu_rank            BIGINT,
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_VEHICLE_MEISAI
+CREATE TABLE gold.DM_SITA_VEHICLE_MEISAI (
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+    no_syadaiba           VARCHAR(100),
+    no_syaryou            VARCHAR(100),
+    no_siretyum           VARCHAR(100),
+    cd_teanyote           VARCHAR(10),
+    status                VARCHAR(10),
+    mj_ncfr               VARCHAR(10),
+    dd_syodotor           VARCHAR(20),
+    dd_syknmanr           VARCHAR(20),
+    mj_katasiki           VARCHAR(255),
+    ki_hnbsijik           BIGINT,
+    nu_soukoukm           VARCHAR(50),
+    mj_syamei             VARCHAR(255),
+    kb_uriagyot           VARCHAR(50),
+    dd_sitayote           VARCHAR(20),
+    dd_kibonoki           VARCHAR(20),
+    cd_syufukre           VARCHAR(10),
+    cd_web                VARCHAR(10),
+    kj_syainmei           VARCHAR(255),
+    kj_tentanms           VARCHAR(255),
+    mj_todofkenfl         VARCHAR(255),
+    kj_zaikoten           VARCHAR(255),
+    ki_sitadkak           BIGINT,
+    nu_suhkt              VARCHAR(50),
+    ki_nesita             VARCHAR(50),
+    kj_tosikime           VARCHAR(255),
+    mj_nisclr             VARCHAR(255),
+    mj_nejknbk            STRING,
+    mj_comment            STRING,
+    mj_kudohoho           VARCHAR(255),
+    id_syaryou            VARCHAR(100),
+    cd_zaiksyys           VARCHAR(50),
+    no_sti                VARCHAR(50),
+    id_upasssti           VARCHAR(100),
+    contain_png           VARCHAR(10),
+    contain_other         VARCHAR(10),
+    nu_zaikonis           BIGINT,
+    kb_tstihsk            VARCHAR(10),
+    dd_tstisgjs           VARCHAR(20),
+    dd_stisgjs            VARCHAR(20),
+    kb_sintyaku           VARCHAR(10),
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_UPASS_PARAM_SITA
+CREATE TABLE gold.DM_SITA_UPASS_PARAM_SITA (
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+    no_syadaiba           VARCHAR(100),
+    no_siretyum           VARCHAR(100),
+    no_syaryou            VARCHAR(100),
+    mj_katasiki           VARCHAR(255),
+    dd_syodotor           VARCHAR(20),
+    cd_zaiksyys           VARCHAR(50),
+    nu_soukoukm           VARCHAR(50),
+    nu_suhkt              VARCHAR(50),
+    no_siteruib           VARCHAR(100),
+    mj_doasu              VARCHAR(50),
+    nu_haikiryo           VARCHAR(50),
+    kb_engine             VARCHAR(20),
+    dd_syknmanr           VARCHAR(20),
+    cd_mission            VARCHAR(50),
+    kb_handle             VARCHAR(20),
+    kb_kudohoho           VARCHAR(20),
+    nu_josya1             VARCHAR(20),
+    cd_siyoreki           VARCHAR(20),
+    kb_arumiumu           VARCHAR(20),
+    kb_kanabumu           VARCHAR(20),
+    kb_sanrufuu           VARCHAR(20),
+    kb_seatszai           VARCHAR(20),
+    kb_airconum           VARCHAR(20),
+    kb_sobi1um            VARCHAR(20),
+    kb_ninucar            VARCHAR(20),
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_UPASS_PARAM_ZAIKO
+CREATE TABLE gold.DM_SITA_UPASS_PARAM_ZAIKO (
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+    no_syadaiba           VARCHAR(100),
+    no_syaryou            VARCHAR(100),
+    mj_katasiki           VARCHAR(255),
+    dd_syodotor           VARCHAR(20),
+    cd_zaiksyys           VARCHAR(50),
+    nu_soukoukm           VARCHAR(50),
+    nu_suhkt              VARCHAR(50),
+    no_siteruib           VARCHAR(100),
+    mj_doasu              VARCHAR(50),
+    nu_haikiryo           VARCHAR(50),
+    kb_engine             VARCHAR(20),
+    dd_syknmanr           VARCHAR(20),
+    cd_mission            VARCHAR(50),
+    kb_handle             VARCHAR(20),
+    kb_kudohoho           VARCHAR(20),
+    nu_josya1             VARCHAR(20),
+    cd_siyoreki           VARCHAR(20),
+    kb_arumiumu           VARCHAR(20),
+    kb_kanabumu           VARCHAR(20),
+    kb_sanrufuu           VARCHAR(20),
+    kb_seatszai           VARCHAR(20),
+    kb_airconum           VARCHAR(20),
+    kb_sobi1um            VARCHAR(20),
+    kb_ninucar            VARCHAR(20),
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_YOYAKU_INFO
+CREATE TABLE gold.DM_SITA_YOYAKU_INFO (
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    no_syaryou            VARCHAR(100),
+    kn_yoykkya1           VARCHAR(255),
+    cd_yoykten1           VARCHAR(50),
+    kj_tenpomei1          VARCHAR(255),
+    cd_yoyksta1           VARCHAR(50),
+    kj_syainmei1          VARCHAR(255),
+    dd_yoykin1            VARCHAR(20),
+    kb_yyktsir1           VARCHAR(20),
+    kn_yoykkya2           VARCHAR(255),
+    cd_yoykten2           VARCHAR(50),
+    kj_tenpomei2          VARCHAR(255),
+    cd_yoyksta2           VARCHAR(50),
+    kj_syainmei2          VARCHAR(255),
+    dd_yoykin2            VARCHAR(20),
+    kb_yyktsir2           VARCHAR(20),
+    kn_yoykkya3           VARCHAR(255),
+    cd_yoykten3           VARCHAR(50),
+    kj_tenpomei3          VARCHAR(255),
+    cd_yoyksta3           VARCHAR(50),
+    kj_syainmei3          VARCHAR(255),
+    dd_yoykin3            VARCHAR(20),
+    kb_yyktsir3           VARCHAR(20),
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_SOBH_SITA
+CREATE TABLE gold.DM_SITA_SOBH_SITA (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_siretyum         VARCHAR(100)  NOT NULL,
+    no_syaryou          VARCHAR(100)  NOT NULL,
+    kb_idlnum           VARCHAR(20),
+    kb_syotum           VARCHAR(20),
+    kb_pedaum           VARCHAR(20),
+    kb_sysnum           VARCHAR(20),
+    kb_snsnum           VARCHAR(20),
+    kb_airbakum         VARCHAR(255),
+    kb_absum            VARCHAR(20),
+    cd_hidum            VARCHAR(255),
+    kb_backmum          VARCHAR(20),
+    kb_blndum           VARCHAR(20),
+    kb_panoum           VARCHAR(20),
+    kb_drrcum           VARCHAR(20),
+    kb_kanabumu         VARCHAR(255),
+    kb_tvumu            VARCHAR(255),
+    kb_dvdumu           VARCHAR(20),
+    cd_cdumu            VARCHAR(255),
+    kb_sobi10um         VARCHAR(20),
+    kb_sobi11um         VARCHAR(20),
+    kb_consum           VARCHAR(255),
+    kb_seatszai         VARCHAR(255),
+    kb_arumiumu         VARCHAR(255),
+    kb_pwseatum         VARCHAR(20),
+    kb_sobi9um          VARCHAR(20),
+    kb_sobi6um          VARCHAR(20),
+    kb_sobi7um          VARCHAR(20),
+    kb_sobi8um          VARCHAR(20),
+    kb_keylesum         VARCHAR(255),
+    kb_autodum          VARCHAR(20),
+    kb_dendodum         VARCHAR(20),
+    kb_rmconum          VARCHAR(20),
+    kb_etcum            VARCHAR(20),
+    kb_kanreium         VARCHAR(255),
+    kb_sobi4um          VARCHAR(20),
+    kb_sobi5um          VARCHAR(20),
+    kb_supum            VARCHAR(255),
+    kb_djmatum          VARCHAR(20),
+    kb_tracontr         VARCHAR(255),
+    kb_hirufum          VARCHAR(20),
+    kb_rufum            VARCHAR(20),
+    kb_kudohoho         VARCHAR(255),
+    nu_josya1           VARCHAR(20),
+    nu_josya2           VARCHAR(20),
+    kb_haimenum         VARCHAR(20),
+    kb_sanrufuu         VARCHAR(20),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_SOBH_ZAIKO
+CREATE TABLE gold.DM_SITA_SOBH_ZAIKO (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_syaryou          VARCHAR(100)  NOT NULL,
+    kb_idlnum           VARCHAR(20),
+    kb_syotum           VARCHAR(20),
+    kb_pedaum           VARCHAR(20),
+    kb_sysnum           VARCHAR(20),
+    kb_snsnum           VARCHAR(20),
+    kb_airbakum         VARCHAR(255),
+    kb_absum            VARCHAR(20),
+    cd_hidum            VARCHAR(255),
+    kb_backmum          VARCHAR(20),
+    kb_blndum           VARCHAR(20),
+    kb_panoum           VARCHAR(20),
+    kb_drrcum           VARCHAR(20),
+    kb_kanabumu         VARCHAR(255),
+    kb_tvumu            VARCHAR(255),
+    kb_dvdumu           VARCHAR(20),
+    cd_cdumu            VARCHAR(255),
+    kb_sobi10um         VARCHAR(20),
+    kb_sobi11um         VARCHAR(20),
+    kb_consum           VARCHAR(255),
+    kb_seatszai         VARCHAR(255),
+    kb_arumiumu         VARCHAR(255),
+    kb_pwseatum         VARCHAR(20),
+    kb_sobi9um          VARCHAR(20),
+    kb_sobi6um          VARCHAR(20),
+    kb_sobi7um          VARCHAR(20),
+    kb_sobi8um          VARCHAR(20),
+    kb_keylesum         VARCHAR(255),
+    kb_autodum          VARCHAR(20),
+    kb_dendodum         VARCHAR(20),
+    kb_rmconum          VARCHAR(20),
+    kb_etcum            VARCHAR(20),
+    kb_kanreium         VARCHAR(255),
+    kb_sobi4um          VARCHAR(20),
+    kb_sobi5um          VARCHAR(20),
+    kb_supum            VARCHAR(255),
+    kb_djmatum          VARCHAR(20),
+    kb_tracontr         VARCHAR(255),
+    kb_hirufum          VARCHAR(20),
+    kb_rufum            VARCHAR(20),
+    kb_kudohoho         VARCHAR(255),
+    nu_josya1           VARCHAR(20),
+    nu_josya2           VARCHAR(20),
+    kb_haimenum         VARCHAR(20),
+    kb_sanrufuu         VARCHAR(20),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_SOBH_AA
+CREATE TABLE gold.DM_SITA_SOBH_AA (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    no_sobi             VARCHAR(50),
+    mj_komok            VARCHAR(255),
+    mj_sobi             VARCHAR(255),
+    mj_err              VARCHAR(20),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_SOBH_NSK
+CREATE TABLE gold.DM_SITA_SOBH_NSK (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    dd_tstisgjs         VARCHAR(20),
+    cd_nskbidtl         VARCHAR(50),
+    mj_komok            VARCHAR(255),
+    mj_sobi             VARCHAR(255),
+    mj_err              VARCHAR(50),
+    nu_gt               VARCHAR(50),
+    nu_kt               VARCHAR(50),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_TAIYA_AA
+CREATE TABLE gold.DM_SITA_TAIYA_AA (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    cd_bui              VARCHAR(20),
+    nu_tiyhaba          VARCHAR(20),
+    nu_tiyhpr           VARCHAR(20),
+    kb_tiykz            VARCHAR(20),
+    nu_tiyrimk          VARCHAR(20),
+    nu_tiymz            VARCHAR(20),
+    mj_tiyjtkb          VARCHAR(20),
+    mj_hsbu             VARCHAR(20),
+    mj_tiysyu           VARCHAR(255),
+    mj_nskbhsy          VARCHAR(255),
+    mj_nskssysy         VARCHAR(255),
+    mj_nskbhsy1         VARCHAR(255),
+    mj_nskbhsy2         VARCHAR(255),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_TAIYA_NSK
+CREATE TABLE gold.DM_SITA_TAIYA_NSK (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    dd_tstisgjs         VARCHAR(20),
+    cd_bui              VARCHAR(20),
+    nu_tiyhaba          VARCHAR(20),
+    nu_tiyhpr           VARCHAR(20),
+    kb_tiykz            VARCHAR(20),
+    nu_tiyrimk          VARCHAR(20),
+    nu_tiymz            VARCHAR(20),
+    mj_tiyjtkb          VARCHAR(20),
+    mj_hsbu             VARCHAR(20),
+    mj_tiysyu           VARCHAR(255),
+    mj_nskbhsy          VARCHAR(255),
+    mj_nskssysy         VARCHAR(255),
+    mj_nskbhsy1         VARCHAR(255),
+    mj_nskbhsy2         VARCHAR(255),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DM_SITA_TAIYA_NSK_FUKA
+CREATE TABLE gold.DM_SITA_TAIYA_NSK_FUKA (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    mj_nejknbk          STRING,
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+-- DM_SITA_VEHICLE_BASE
+TRUNCATE TABLE ${uslimDb}.DM_SITA_VEHICLE_BASE;
+
+INSERT INTO ${uslimDb}.DM_SITA_VEHICLE_BASE (
+    source_type,
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    status,
+    cd_teanyote,
+    no_syadaiba,
+    no_syaryou,
+    no_siretyum,
+    cd_syamei,
+    mj_syamei,
+    cd_maker,
+    su_syodotor,
+    nu_soukoukm,
+    cd_syufukre,
+    kb_uriagyot,
+    kb_engine,
+    kb_kudohoho,
+    mj_katasiki,
+    no_siteruib,
+    kb_web,
+    dd_sitayote,
+    dd_sintyaku,
+    dd_syknmanr,
+    ki_hnbsijik,
+    cd_sitastaf,
+    cd_sitadote,
+    kj_syainmei,
+    kj_tentanms,
+    kj_zaikoten,
+    mj_ncfr,
+    id_syaryou,
+    cd_zaiksyys,
+    no_sti,
+    nu_suhkt,
+    ki_nesita,
+    mj_nejknbk,
+    mj_comment,
+    cd_tmchancd,
+    kj_kaisya,
+    cd_todofken,
+    mj_todofkenfl,
+    kb_sintyaku,
+    mart_created_at
+)
+SELECT
+    source_type,
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    status,
+    cd_teanyote,
+    no_syadaiba,
+    no_syaryou,
+    no_siretyum,
+    cd_syamei,
+    mj_syamei,
+    cd_maker,
+    su_syodotor,
+    nu_soukoukm,
+    cd_syufukre,
+    kb_uriagyot,
+    kb_engine,
+    kb_kudohoho,
+    mj_katasiki,
+    no_siteruib,
+    kb_web,
+    dd_sitayote,
+    dd_sintyaku,
+    dd_syknmanr,
+    ki_hnbsijik,
+    cd_sitastaf,
+    cd_sitadote,
+    kj_syainmei,
+    kj_tentanms,
+    kj_zaikoten,
+    mj_ncfr,
+    id_syaryou,
+    cd_zaiksyys,
+    no_sti,
+    nu_suhkt,
+    ki_nesita,
+    mj_nejknbk,
+    mj_comment,
+    cd_tmchancd,
+    kj_kaisya,
+    cd_todofken,
+    mj_todofkenfl,
+    kb_sintyaku,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_SITA_VEHICLE_BASE_TMP;
+
+
+-- DM_SITA_VEHICLE_DAISU
+TRUNCATE TABLE ${uslimDb}.DM_SITA_VEHICLE_DAISU;
+
+INSERT INTO ${uslimDb}.DM_SITA_VEHICLE_DAISU (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    kb_honten,
+    category,
+    sita_month_week,
+    status,
+    kb_uriagyot,
+    syamei,
+    daisu,
+    daisu_rank,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    #{kbHonTen},
+    category,
+    sita_month_week,
+    status,
+    kb_uriagyot,
+    syamei,
+    daisu,
+    daisu_rank,
+    CURRENT_TIMESTAMP
+FROM (
+    SELECT
+        CASE
+            WHEN GROUPING(sita_month_week) = 0 THEN 1
+            WHEN GROUPING(status) = 0 THEN 2
+            WHEN GROUPING(mj_syamei) = 0 THEN 3
+            ELSE NULL
+        END AS category,
+        sita_month_week,
+        status,
+        kb_uriagyot,
+        mj_syamei AS syamei,
+        COUNT(1) AS daisu,
+        DENSE_RANK() OVER (PARTITION BY GROUPING(mj_syamei) ORDER BY COUNT(1) DESC) AS daisu_rank
+    FROM (
+        SELECT
+            CASE
+                WHEN status = '2' THEN NULL
+                WHEN dd_sitayote IS NULL THEN NULL
+                WHEN #{kbHonTen} = '1' AND dd_sitayote < CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE)
+                    THEN FROM_TIMESTAMP(DAYS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 1), ' ~yyyy/MM/dd')
+                WHEN #{kbHonTen} = '1'
+                    THEN FROM_TIMESTAMP(dd_sitayote, 'yyyy/MM')
+                WHEN #{kbHonTen} = '2' AND dd_sitayote < CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE)
+                    THEN FROM_TIMESTAMP(DAYS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 1), ' ~yyyy/MM/dd')
+                WHEN #{kbHonTen} = '2' AND DAYS_SUB(dd_sitayote, (5 + DAYOFWEEK(dd_sitayote)) % 7) < CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE)
+                    THEN FROM_TIMESTAMP(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 'yyyy/MM/dd~')
+                WHEN #{kbHonTen} = '2'
+                    THEN FROM_TIMESTAMP(DAYS_SUB(dd_sitayote, (5 + DAYOFWEEK(dd_sitayote)) % 7), 'yyyy/MM/dd~')
+                ELSE NULL
+            END AS sita_month_week,
+            status,
+            CASE
+                WHEN status = '2' THEN ''
+                WHEN kb_uriagyot = '1' THEN '小売'
+                WHEN kb_uriagyot = '2' THEN '卸売'
+                ELSE ''
+            END AS kb_uriagyot,
+            mj_syamei
+        FROM ${uslimDb}.DM_SITA_VEHICLE_BASE
+    ) T
+    GROUP BY GROUPING SETS ((sita_month_week), (status, kb_uriagyot), (mj_syamei))
+    HAVING (GROUPING(sita_month_week) = 0 AND sita_month_week IS NOT NULL)
+        OR GROUPING(status) = 0
+        OR (GROUPING(mj_syamei) = 0 AND mj_syamei IS NOT NULL)
+) X
+WHERE category IN (1, 2)
+   OR (category = 3 AND daisu_rank <= 10);
+
+
+-- DM_SITA_VEHICLE_MEISAI
+TRUNCATE TABLE ${uslimDb}.DM_SITA_VEHICLE_MEISAI;
+
+INSERT INTO ${uslimDb}.DM_SITA_VEHICLE_MEISAI (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    no_syadaiba,
+    no_syaryou,
+    no_siretyum,
+    cd_teanyote,
+    status,
+    mj_ncfr,
+    dd_syodotor,
+    dd_syknmanr,
+    mj_katasiki,
+    ki_hnbsijik,
+    nu_soukoukm,
+    mj_syamei,
+    kb_uriagyot,
+    dd_sitayote,
+    dd_kibonoki,
+    cd_syufukre,
+    cd_web,
+    kj_syainmei,
+    kj_tentanms,
+    mj_todofkenfl,
+    kj_zaikoten,
+    ki_sitadkak,
+    nu_suhkt,
+    ki_nesita,
+    kj_tosikime,
+    mj_nisclr,
+    mj_nejknbk,
+    mj_comment,
+    mj_kudohoho,
+    id_syaryou,
+    cd_zaiksyys,
+    no_sti,
+    id_upasssti,
+    contain_png,
+    contain_other,
+    nu_zaikonis,
+    kb_tstihsk,
+    dd_tstisgjs,
+    dd_stisgjs,
+    kb_sintyaku,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    no_syadaiba,
+    no_syaryou,
+    no_siretyum,
+    cd_teanyote,
+    status,
+    mj_ncfr,
+    CASE WHEN su_syodotor IS NULL OR su_syodotor = 0 THEN '' ELSE FROM_UNIXTIME(UNIX_TIMESTAMP(CAST(su_syodotor * 100 + 1 AS STRING), 'yyyyMMdd'), 'yyyy/MM/dd') END,
+    CASE WHEN dd_syknmanr <= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE) THEN '' ELSE FROM_TIMESTAMP(dd_syknmanr, 'yyyy/MM/dd') END,
+    mj_katasiki,
+    ki_hnbsijik,
+    nu_soukoukm,
+    mj_syamei,
+    CASE WHEN kb_uriagyot = '1' THEN '小売' WHEN kb_uriagyot = '2' THEN '卸売' ELSE '' END,
+    NVL(FROM_TIMESTAMP(dd_sitayote, 'yyyy/MM/dd'), ''),
+    '' AS dd_kibonoki,
+    CASE WHEN cd_syufukre = '' OR cd_syufukre IS NULL THEN '無' ELSE '有' END,
+    kb_web,
+    kj_syainmei,
+    kj_tentanms,
+    mj_todofkenfl,
+    kj_zaikoten,
+    NULL AS ki_sitadkak,
+    nu_suhkt,
+    ki_nesita,
+    '' AS kj_tosikime,
+    '' AS mj_nisclr,
+    mj_nejknbk,
+    mj_comment,
+    '' AS mj_kudohoho,
+    id_syaryou,
+    cd_zaiksyys,
+    no_sti,
+    '' AS id_upasssti,
+    '' AS contain_png,
+    '' AS contain_other,
+    NULL AS nu_zaikonis,
+    '' AS kb_tstihsk,
+    '' AS dd_tstisgjs,
+    '' AS dd_stisgjs,
+    kb_sintyaku,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_SITA_VEHICLE_BASE;
+
+
+-- DM_SITA_UPASS_PARAM_SITA
+TRUNCATE TABLE ${uslimDb}.DM_SITA_UPASS_PARAM_SITA;
+
+INSERT INTO ${uslimDb}.DM_SITA_UPASS_PARAM_SITA (
+    cd_hansya, cd_kaisya, cd_hanbaitn, no_syadaiba, no_siretyum, no_syaryou,
+    mj_katasiki, dd_syodotor, cd_zaiksyys, nu_soukoukm, nu_suhkt,
+    no_siteruib, mj_doasu, nu_haikiryo, kb_engine, dd_syknmanr, cd_mission,
+    kb_handle, kb_kudohoho, nu_josya1, cd_siyoreki, kb_arumiumu, kb_kanabumu,
+    kb_sanrufuu, kb_seatszai, kb_airconum, kb_sobi1um, kb_ninucar, mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    #{noSyadaiba},
+    #{noSiretyum},
+    #{noSyaryou},
+    NVL(#{mjKatasiki}, ''),
+    NVL(#{ddSyodotor}, ''),
+    NVL(#{cdZaiksyys}, ''),
+    NVL(#{nuSoukoukm}, ''),
+    NVL(RTRIM(#{nuSuhkt}), ''),
+    NVL(T1.NO_SITERUIB, ''),
+    NVL(T1.MJ_DOASU, ''),
+    NVL(CAST(T1.NU_HAIKIRYO AS STRING), ''),
+    NVL(T1.KB_ENGINE, ''),
+    NVL(FROM_TIMESTAMP(T1.DD_SYKNMANR, 'yyyy-MM-dd'), ''),
+    NVL(T1.CD_MISSION, ''),
+    NVL(RTRIM(T1.KB_HANDLE), ''),
+    NVL(T2.KB_KUDOHOHO, ''),
+    NVL(RTRIM(T2.NU_JOSYA1), ''),
+    NVL(RTRIM(T1.CD_SIYOREKI), ''),
+    NVL(T1.KB_ARUMIUMU, ''),
+    NVL(T2.KB_KANABUMU, ''),
+    NVL(T1.KB_SANRUFUU, ''),
+    NVL(T2.KB_SEATSZAI, ''),
+    NVL(T1.KB_AIRCONUM, ''),
+    NVL(T2.KB_SOBI1UM, ''),
+    NVL(RTRIM(T1.KB_NINUCAR), ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC003G T1
+LEFT JOIN ${ai21Db}.TBBC004G T2
+  ON #{cdHansya} = T2.CD_HANSYA
+ AND #{cdKaisya} = T2.CD_KAISYA
+ AND #{noSiretyum} = T2.NO_SIRETYUM
+ AND #{mjSirenori} = T2.MJ_SIRENORI
+ AND #{kbSiretosy} = T2.KB_SIRETOSY
+ AND #{cdSiretogy} = T2.CD_SIRETOGY
+ AND #{noSiretose} = T2.NO_SIRETOSE
+ AND #{noSyaryou} = T2.NO_SYARYOU
+ AND #{noLease} = T2.NO_LEASE
+ AND #{noKotesisn} = T2.NO_KOTESISN
+WHERE T1.CD_KAISYA = #{cdKaisya}
+  AND T1.CD_HANSYA = #{cdHansya}
+  AND T1.NO_SIRETYUM = #{noSiretyum}
+  AND T1.MJ_SIRENORI = #{mjSirenori}
+  AND T1.KB_SIRETOSY = #{kbSiretosy}
+  AND T1.CD_SIRETOGY = #{cdSiretogy}
+  AND T1.NO_SIRETOSE = #{noSiretose}
+  AND T1.NO_SYARYOU = #{noSyaryou}
+  AND T1.NO_LEASE = #{noLease}
+  AND T1.NO_KOTESISN = #{noKotesisn};
+
+
+-- DM_SITA_UPASS_PARAM_ZAIKO
+TRUNCATE TABLE ${uslimDb}.DM_SITA_UPASS_PARAM_ZAIKO;
+
+INSERT INTO ${uslimDb}.DM_SITA_UPASS_PARAM_ZAIKO (
+    cd_hansya, cd_kaisya, cd_hanbaitn, no_syadaiba, no_syaryou,
+    mj_katasiki, dd_syodotor, cd_zaiksyys, nu_soukoukm, nu_suhkt,
+    no_siteruib, mj_doasu, nu_haikiryo, kb_engine, dd_syknmanr, cd_mission,
+    kb_handle, kb_kudohoho, nu_josya1, cd_siyoreki, kb_arumiumu, kb_kanabumu,
+    kb_sanrufuu, kb_seatszai, kb_airconum, kb_sobi1um, kb_ninucar, mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    #{noSyadaiba},
+    #{noSyaryou},
+    NVL(#{mjKatasiki}, ''),
+    NVL(#{ddSyodotor}, ''),
+    NVL(#{cdZaiksyys}, ''),
+    NVL(#{nuSoukoukm}, ''),
+    NVL(RTRIM(#{nuSuhkt}), ''),
+    NVL(T1.NO_SITERUIB, ''),
+    NVL(T1.MJ_DOASU, ''),
+    NVL(CAST(T1.NU_HAIKIRYO AS STRING), ''),
+    NVL(T1.KB_ENGINE, ''),
+    NVL(FROM_TIMESTAMP(T1.DD_SYKNMANR, 'yyyy-MM-dd'), ''),
+    NVL(T1.CD_MISSION, ''),
+    NVL(RTRIM(T1.KB_HANDLE), ''),
+    NVL(T2.KB_KUDOHOHO, ''),
+    NVL(RTRIM(T2.NU_JOSYA1), ''),
+    NVL(RTRIM(T1.CD_SIYOREKI), ''),
+    NVL(T1.KB_ARUMIUMU, ''),
+    NVL(T2.KB_KANABUMU, ''),
+    NVL(T1.KB_SANRUFUU, ''),
+    NVL(T2.KB_SEATSZAI, ''),
+    NVL(T1.KB_AIRCONUM, ''),
+    NVL(T2.KB_SOBI1UM, ''),
+    NVL(RTRIM(T1.KB_NINUCAR), ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC001G T1
+LEFT JOIN ${ai21Db}.TBBC002G T2
+  ON #{cdHansya} = T2.CD_HANSYA
+ AND #{cdKaisya} = T2.CD_KAISYA
+ AND #{noSyaryou} = T2.NO_SYARYOU
+WHERE T1.CD_KAISYA = #{cdKaisya}
+  AND T1.CD_HANSYA = #{cdHansya}
+  AND T1.NO_SYARYOU = #{noSyaryou};
+
+
+-- DM_SITA_YOYAKU_INFO
+TRUNCATE TABLE ${uslimDb}.DM_SITA_YOYAKU_INFO;
+
+INSERT INTO ${uslimDb}.DM_SITA_YOYAKU_INFO (
+    cd_hansya, cd_kaisya, no_syaryou,
+    kn_yoykkya1, cd_yoykten1, kj_tenpomei1, cd_yoyksta1, kj_syainmei1, dd_yoykin1, kb_yyktsir1,
+    kn_yoykkya2, cd_yoykten2, kj_tenpomei2, cd_yoyksta2, kj_syainmei2, dd_yoykin2, kb_yyktsir2,
+    kn_yoykkya3, cd_yoykten3, kj_tenpomei3, cd_yoyksta3, kj_syainmei3, dd_yoykin3, kb_yyktsir3,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSyaryou},
+    RTRIM(TBBC015G.KN_YOYKKYA1),
+    TBBC015G.CD_YOYKTEN1,
+    MAX(CASE WHEN TBBC015G.CD_YOYKTEN1 = TBV0201M.CD_TENPO THEN REGEXP_REPLACE(TBV0201M.KJ_TENPOMEI, '[　 ]+$', '') ELSE NULL END) OVER(),
+    RTRIM(TBBC015G.CD_YOYKSTA1),
+    MAX(CASE WHEN TBBC015G.CD_YOYKSTA1 = TBV0014M.CD_SYAIN THEN REGEXP_REPLACE(TBV0014M.KJ_SYAINMEI, '[　 ]+$', '') ELSE NULL END) OVER(),
+    NVL(FROM_TIMESTAMP(TBBC015G.DD_YOYKIN1, 'yyyy/MM/dd'), ''),
+    RTRIM(TBBC015G.KB_YYKTSIR1),
+    RTRIM(TBBC015G.KN_YOYKKYA2),
+    TBBC015G.CD_YOYKTEN2,
+    MAX(CASE WHEN TBBC015G.CD_YOYKTEN2 = TBV0201M.CD_TENPO THEN REGEXP_REPLACE(TBV0201M.KJ_TENPOMEI, '[　 ]+$', '') ELSE NULL END) OVER(),
+    RTRIM(TBBC015G.CD_YOYKSTA2),
+    MAX(CASE WHEN TBBC015G.CD_YOYKSTA2 = TBV0014M.CD_SYAIN THEN REGEXP_REPLACE(TBV0014M.KJ_SYAINMEI, '[　 ]+$', '') ELSE NULL END) OVER(),
+    NVL(FROM_TIMESTAMP(TBBC015G.DD_YOYKIN2, 'yyyy/MM/dd'), ''),
+    RTRIM(TBBC015G.KB_YYKTSIR2),
+    RTRIM(TBBC015G.KN_YOYKKYA3),
+    TBBC015G.CD_YOYKTEN3,
+    MAX(CASE WHEN TBBC015G.CD_YOYKTEN3 = TBV0201M.CD_TENPO THEN REGEXP_REPLACE(TBV0201M.KJ_TENPOMEI, '[　 ]+$', '') ELSE NULL END) OVER(),
+    RTRIM(TBBC015G.CD_YOYKSTA3),
+    MAX(CASE WHEN TBBC015G.CD_YOYKSTA3 = TBV0014M.CD_SYAIN THEN REGEXP_REPLACE(TBV0014M.KJ_SYAINMEI, '[　 ]+$', '') ELSE NULL END) OVER(),
+    NVL(FROM_TIMESTAMP(TBBC015G.DD_YOYKIN3, 'yyyy/MM/dd'), ''),
+    RTRIM(TBBC015G.KB_YYKTSIR3),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC015G TBBC015G
+LEFT JOIN ${ai21Db}.TBV0201M TBV0201M
+  ON #{cdHansya} = TBV0201M.CD_HANSYA
+ AND #{cdKaisya} = TBV0201M.CD_KAISYA
+ AND TBV0201M.CD_TENPO IN (TBBC015G.CD_YOYKTEN1, TBBC015G.CD_YOYKTEN2, TBBC015G.CD_YOYKTEN3)
+LEFT JOIN ${ai21Db}.TBV0014M TBV0014M
+  ON #{cdHansya} = TBV0014M.CD_HANSYA
+ AND #{cdKaisya} = TBV0014M.CD_KAISYA
+ AND TBV0014M.CD_SYAIN IN (TBBC015G.CD_YOYKSTA1, TBBC015G.CD_YOYKSTA2, TBBC015G.CD_YOYKSTA3)
+WHERE TBBC015G.CD_HANSYA = #{cdHansya}
+  AND TBBC015G.CD_KAISYA = #{cdKaisya}
+  AND TBBC015G.NO_SYARYOU = #{noSyaryou};
+
+
+-- DM_SITA_SOBH_SITA
+TRUNCATE TABLE ${uslimDb}.DM_SITA_SOBH_SITA;
+
+INSERT INTO ${uslimDb}.DM_SITA_SOBH_SITA (
+    cd_hansya, cd_kaisya, no_siretyum, no_syaryou,
+    kb_idlnum, kb_syotum, kb_pedaum, kb_sysnum, kb_snsnum, kb_airbakum,
+    kb_absum, cd_hidum, kb_backmum, kb_blndum, kb_panoum, kb_drrcum,
+    kb_kanabumu, kb_tvumu, kb_dvdumu, cd_cdumu, kb_sobi10um, kb_sobi11um,
+    kb_consum, kb_seatszai, kb_arumiumu, kb_pwseatum, kb_sobi9um, kb_sobi6um,
+    kb_sobi7um, kb_sobi8um, kb_keylesum, kb_autodum, kb_dendodum, kb_rmconum,
+    kb_etcum, kb_kanreium, kb_sobi4um, kb_sobi5um, kb_supum, kb_djmatum,
+    kb_tracontr, kb_hirufum, kb_rufum, kb_kudohoho, nu_josya1, nu_josya2,
+    kb_haimenum, kb_sanrufuu, mart_created_at
+)
+SELECT
+    #{cdHansya}, #{cdKaisya}, #{noSiretyum}, #{noSyaryou},
+    CASE TBBC004G.KB_IDLNUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SYOTUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_PEDAUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SYSNUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SNSNUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_AIRBAKUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0078' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_ABSUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.CD_HIDUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0297' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_BACKMUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_BLNDUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_PANOUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_DRRCUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_KANABUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0079' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE NVL(TRIM(TBBC004G.KB_TVUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0273' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_DVDUMU WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.CD_CDUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0275' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_SOBI10UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SOBI11UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_CONSUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '9037' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE NVL(TRIM(TBBC004G.KB_SEATSZAI),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0082' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE NVL(TRIM(TBBC003G.KB_ARUMIUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0288' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_PWSEATUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SOBI9UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SOBI6UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SOBI7UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SOBI8UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_KEYLESUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0284' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_AUTODUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_DENDODUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_RMCONUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_ETCUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_KANREIUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0268' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_SOBI4UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_SOBI5UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_SUPUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0294' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_DJMATUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_TRACONTR),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0081' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC004G.KB_HIRUFUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC004G.KB_RUFUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC004G.KB_KUDOHOHO),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0080' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    COALESCE(NULLIF(RTRIM(TBBC004G.NU_JOSYA1),''),'0'),
+    COALESCE(NULLIF(RTRIM(TBBC004G.NU_JOSYA2),''),'0'),
+    CASE TBBC004G.KB_HAIMENUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC003G.KB_SANRUFUU WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC003G TBBC003G
+LEFT JOIN ${ai21Db}.TBBC004G TBBC004G
+  ON #{cdHansya} = TBBC004G.CD_HANSYA
+ AND #{cdKaisya} = TBBC004G.CD_KAISYA
+ AND #{noSiretyum} = TBBC004G.NO_SIRETYUM
+ AND #{mjSirenori} = TBBC004G.MJ_SIRENORI
+ AND #{kbSiretosy} = TBBC004G.KB_SIRETOSY
+ AND #{cdSiretogy} = TBBC004G.CD_SIRETOGY
+ AND #{noSiretose} = TBBC004G.NO_SIRETOSE
+ AND #{noSyaryou} = TBBC004G.NO_SYARYOU
+ AND #{noLease} = TBBC004G.NO_LEASE
+ AND #{noKotesisn} = TBBC004G.NO_KOTESISN
+LEFT JOIN ${ai21Db}.TBV0231M TBV0231M
+  ON #{cdHansya} = TBV0231M.CD_HANSYA
+ AND #{cdKaisya} = TBV0231M.CD_KAISYA
+ AND TBV0231M.MJ_BLOCKID = '03'
+ AND TBV0231M.MJ_KUBUNID IN ('0078','0079','0080','0081','0082','0273','0275','0284','0268','0288','0294','0297','9037')
+ AND TBV0231M.CD_KUBUN != '**'
+WHERE TBBC003G.CD_HANSYA = #{cdHansya}
+  AND TBBC003G.CD_KAISYA = #{cdKaisya}
+  AND TBBC003G.NO_SIRETYUM = #{noSiretyum}
+  AND TBBC003G.MJ_SIRENORI = #{mjSirenori}
+  AND TBBC003G.KB_SIRETOSY = #{kbSiretosy}
+  AND TBBC003G.CD_SIRETOGY = #{cdSiretogy}
+  AND TBBC003G.NO_SIRETOSE = #{noSiretose}
+  AND TBBC003G.NO_SYARYOU = #{noSyaryou}
+  AND TBBC003G.NO_LEASE = #{noLease}
+  AND TBBC003G.NO_KOTESISN = #{noKotesisn};
+
+
+-- DM_SITA_SOBH_ZAIKO
+TRUNCATE TABLE ${uslimDb}.DM_SITA_SOBH_ZAIKO;
+
+INSERT INTO ${uslimDb}.DM_SITA_SOBH_ZAIKO (
+    cd_hansya, cd_kaisya, no_syaryou,
+    kb_idlnum, kb_syotum, kb_pedaum, kb_sysnum, kb_snsnum, kb_airbakum,
+    kb_absum, cd_hidum, kb_backmum, kb_blndum, kb_panoum, kb_drrcum,
+    kb_kanabumu, kb_tvumu, kb_dvdumu, cd_cdumu, kb_sobi10um, kb_sobi11um,
+    kb_consum, kb_seatszai, kb_arumiumu, kb_pwseatum, kb_sobi9um, kb_sobi6um,
+    kb_sobi7um, kb_sobi8um, kb_keylesum, kb_autodum, kb_dendodum, kb_rmconum,
+    kb_etcum, kb_kanreium, kb_sobi4um, kb_sobi5um, kb_supum, kb_djmatum,
+    kb_tracontr, kb_hirufum, kb_rufum, kb_kudohoho, nu_josya1, nu_josya2,
+    kb_haimenum, kb_sanrufuu, mart_created_at
+)
+SELECT
+    #{cdHansya}, #{cdKaisya}, #{noSyaryou},
+    /* 中身は getSitaSobh と同型。TBBC003G→TBBC001G、TBBC004G→TBBC002G に置換 */
+    CASE TBBC002G.KB_IDLNUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SYOTUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_PEDAUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SYSNUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SNSNUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_AIRBAKUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0078' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_ABSUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.CD_HIDUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0297' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_BACKMUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_BLNDUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_PANOUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_DRRCUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_KANABUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0079' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE NVL(TRIM(TBBC002G.KB_TVUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0273' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_DVDUMU WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.CD_CDUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0275' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_SOBI10UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SOBI11UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_CONSUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '9037' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE NVL(TRIM(TBBC002G.KB_SEATSZAI),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0082' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE NVL(TRIM(TBBC001G.KB_ARUMIUMU),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0288' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_PWSEATUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SOBI9UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SOBI6UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SOBI7UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SOBI8UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_KEYLESUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0284' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_AUTODUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_DENDODUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_RMCONUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_ETCUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_KANREIUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0268' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_SOBI4UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_SOBI5UM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_SUPUM),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0294' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_DJMATUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_TRACONTR),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0081' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    CASE TBBC002G.KB_HIRUFUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC002G.KB_RUFUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE NVL(TRIM(TBBC002G.KB_KUDOHOHO),'') WHEN '' THEN 'ー'
+         ELSE MAX(CASE TBV0231M.MJ_KUBUNID WHEN '0080' THEN REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') END) OVER() END,
+    COALESCE(NULLIF(RTRIM(TBBC002G.NU_JOSYA1),''),'0'),
+    COALESCE(NULLIF(RTRIM(TBBC002G.NU_JOSYA2),''),'0'),
+    CASE TBBC002G.KB_HAIMENUM WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CASE TBBC001G.KB_SANRUFUU WHEN '0' THEN '無' WHEN '1' THEN '有' ELSE 'ー' END,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC001G TBBC001G
+LEFT JOIN ${ai21Db}.TBBC002G TBBC002G
+  ON #{cdHansya} = TBBC002G.CD_HANSYA
+ AND #{cdKaisya} = TBBC002G.CD_KAISYA
+ AND #{noSyaryou} = TBBC002G.NO_SYARYOU
+LEFT JOIN ${ai21Db}.TBV0231M TBV0231M
+  ON #{cdHansya} = TBV0231M.CD_HANSYA
+ AND #{cdKaisya} = TBV0231M.CD_KAISYA
+ AND TBV0231M.MJ_BLOCKID = '03'
+ AND TBV0231M.MJ_KUBUNID IN ('0078','0079','0080','0081','0082','0273','0275','0284','0268','0288','0294','0297','9037')
+ AND TBV0231M.CD_KUBUN != '**'
+WHERE TBBC001G.CD_HANSYA = #{cdHansya}
+  AND TBBC001G.CD_KAISYA = #{cdKaisya}
+  AND TBBC001G.NO_SYARYOU = #{noSyaryou};
+
+
+-- DM_SITA_SOBH_AA
+TRUNCATE TABLE ${uslimDb}.DM_SITA_SOBH_AA;
+
+INSERT INTO ${uslimDb}.DM_SITA_SOBH_AA (
+    cd_hansya, cd_kaisya, no_sti,
+    no_sobi, mj_komok, mj_sobi, mj_err, mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSti},
+    TBBC094G.NO_SOBI,
+    RTRIM(TBBC094G.MJ_SOBIHITA),
+    REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', ''),
+    CASE TBNH017G.MJ_SBERRU WHEN '1' THEN '有' ELSE '' END,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC094G TBBC094G
+INNER JOIN ${ai21Db}.TBNH030M TBNH030M
+  ON #{cdHansya} = TBNH030M.CD_HANSYA
+ AND #{cdKaisya} = TBNH030M.CD_KAISYA
+ AND TBBC094G.NO_SOBI = TBNH030M.NO_SOBI
+LEFT JOIN ${ai21Db}.TBNH017G TBNH017G
+  ON #{cdHansya} = TBNH017G.CD_HANSYA
+ AND #{cdKaisya} = TBNH017G.CD_KAISYA
+ AND #{noSti} = TBNH017G.NO_STI
+ AND '1' = TBNH017G.MJ_STIHZSM
+ AND '1' = TBNH017G.KB_STIKT
+ AND TBNH030M.NO_SOBI = TBNH017G.NO_SOBI
+LEFT JOIN ${ai21Db}.TBV0231M TBV0231M
+  ON #{cdHansya} = TBV0231M.CD_HANSYA
+ AND #{cdKaisya} = TBV0231M.CD_KAISYA
+ AND TBNH030M.MJ_BLOCKID = TBV0231M.MJ_BLOCKID
+ AND TBNH030M.MJ_KUBUNID = TBV0231M.MJ_KUBUNID
+ AND TBNH017G.KB_SBDTL = TBV0231M.CD_KUBUN
+WHERE TBBC094G.CD_HANSYA = #{cdHansya}
+  AND TBBC094G.CD_KAISYA = #{cdKaisya}
+  AND TBBC094G.NU_STINSJUN != 0;
+
+
+-- DM_SITA_SOBH_NSK
+TRUNCATE TABLE ${uslimDb}.DM_SITA_SOBH_NSK;
+
+INSERT INTO ${uslimDb}.DM_SITA_SOBH_NSK (
+    cd_hansya, cd_kaisya, no_sti, dd_tstisgjs,
+    cd_nskbidtl, mj_komok, mj_sobi, mj_err, nu_gt, nu_kt, mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSti},
+    #{ddTstisgjs},
+    TBNH055M.CD_NSKBIDTL,
+    TBNH055M.MJ_NSKBDTT3,
+    CASE TBNH031G.MJ_NSKSBARI
+        WHEN '0' THEN '無'
+        WHEN '1' THEN
+            CASE
+                WHEN NOT REGEXP_LIKE(TBNH057M.MJ_NSKBHSY1, '^[　 ]*$')
+                    THEN CONCAT_WS('　', REGEXP_REPLACE(TBNH057M.MJ_NSKBHSY1, '[　 ]+$', ''), REGEXP_REPLACE(TBNH059M.MJ_NSKBHSY2, '[　 ]+$', ''))
+                WHEN TBNH055M.CD_NSKBIDTL = '4050' THEN REGEXP_REPLACE(TBNH055M.MJ_NSKBDTNS, '[　 ]+$', '')
+                WHEN TBNH057M.MJ_NSKBHSY1 IS NOT NULL THEN '有'
+                ELSE ''
+            END
+        ELSE ''
+    END,
+    CASE WHEN TBNH031G.KB_NSKSBSBT = '2' THEN '欠' ELSE TBNH048M.MJ_NSSSYTAN END,
+    CASE WHEN TBNH035G.NU_SYNSKKGT IS NULL AND TBNH031G.NU_NHYKPGT IS NULL THEN ''
+         ELSE CAST(NVL(TBNH035G.NU_SYNSKKGT, 0) + NVL(TBNH031G.NU_NHYKPGT, 0) AS STRING) END,
+    CASE WHEN TBNH031G.NU_NSKOPKT IS NULL THEN '' ELSE CAST(TBNH031G.NU_NSKOPKT AS STRING) END,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH055M TBNH055M
+LEFT JOIN ${ai21Db}.TBNH031G TBNH031G
+  ON #{cdHansya} = TBNH031G.CD_HANSYA
+ AND #{cdKaisya} = TBNH031G.CD_KAISYA
+ AND #{noSti} = TBNH031G.NO_STI
+ AND '1' = TBNH031G.MJ_STIHZSM
+ AND '1' = TBNH031G.KB_STIKT
+ AND TBNH055M.CD_NSKBIDTL = TBNH031G.CD_NSKBIDTL
+LEFT JOIN ${ai21Db}.TBNH035G TBNH035G
+  ON #{cdHansya} = TBNH035G.CD_HANSYA
+ AND #{cdKaisya} = TBNH035G.CD_KAISYA
+ AND #{noSti} = TBNH035G.NO_STI
+ AND '1' = TBNH035G.MJ_STIHZSM
+ AND '1' = TBNH035G.KB_STIKT
+ AND TBNH055M.CD_NSKBIDTL = TBNH035G.CD_NSKBIDTL
+LEFT JOIN ${ai21Db}.TBNH032G TBNH032G
+  ON #{cdHansya} = TBNH032G.CD_HANSYA
+ AND #{cdKaisya} = TBNH032G.CD_KAISYA
+ AND #{noSti} = TBNH032G.NO_STI
+ AND '1' = TBNH032G.MJ_STIHZSM
+ AND '1' = TBNH032G.KB_STIKT
+ AND TBNH031G.CD_NSKBIDTL = TBNH032G.CD_NSKBIDTL
+LEFT JOIN ${ai21Db}.TBNH064M TBNH064M
+  ON #{cdHansya} = TBNH064M.CD_HANSYA
+ AND #{cdKaisya} = TBNH064M.CD_KAISYA
+ AND TBNH064M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH064M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH032G.CD_NSKKASI = TBNH064M.CD_NSKKASI
+LEFT JOIN ${ai21Db}.TBNH057M TBNH057M
+  ON #{cdHansya} = TBNH057M.CD_HANSYA
+ AND #{cdKaisya} = TBNH057M.CD_KAISYA
+ AND TBNH057M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH057M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH064M.CD_NSKBHSY1 = TBNH057M.CD_NSKBHSY1
+LEFT JOIN ${ai21Db}.TBNH059M TBNH059M
+  ON #{cdHansya} = TBNH059M.CD_HANSYA
+ AND #{cdKaisya} = TBNH059M.CD_KAISYA
+ AND TBNH059M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH059M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH064M.CD_NSKBHSY2 = TBNH059M.CD_NSKBHSY2
+LEFT JOIN ${ai21Db}.TBNH048M TBNH048M
+  ON #{cdHansya} = TBNH048M.CD_HANSYA
+ AND #{cdKaisya} = TBNH048M.CD_KAISYA
+ AND TBNH048M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH048M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH064M.CD_NSKSSYSY = TBNH048M.CD_NSKSSYSY
+WHERE TBNH055M.CD_HANSYA = #{cdHansya}
+  AND TBNH055M.CD_KAISYA = #{cdKaisya}
+  AND TBNH055M.DD_TKIST <= #{ddTstisgjs}
+  AND TBNH055M.DD_TKIEND >= #{ddTstisgjs}
+  AND LEFT(TBNH055M.CD_NSKBIDTL, 2) IN ('39', '40')
+  AND TBNH055M.CD_NSKBIDTL != '4042';
+
+
+-- DM_SITA_TAIYA_AA
+TRUNCATE TABLE ${uslimDb}.DM_SITA_TAIYA_AA;
+
+INSERT INTO ${uslimDb}.DM_SITA_TAIYA_AA (
+    cd_hansya, cd_kaisya, no_sti,
+    cd_bui, nu_tiyhaba, nu_tiyhpr, kb_tiykz, nu_tiyrimk, nu_tiymz,
+    mj_tiyjtkb, mj_hsbu, mj_tiysyu, mj_nskbhsy, mj_nskssysy, mj_nskbhsy1, mj_nskbhsy2,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSti},
+    CASE TBNH014G.CD_FGBUI
+        WHEN '064' THEN 'L'
+        WHEN '065' THEN 'R'
+        WHEN '066' THEN 'LE'
+        WHEN '067' THEN 'RE'
+        WHEN '069' THEN 'LI'
+        WHEN '070' THEN 'RI'
+        WHEN '068' THEN 'S1'
+    END,
+    TBNH014G.NU_TIYHABA,
+    TBNH014G.NU_TIYHPR,
+    TBNH014G.KB_TIYKZ,
+    TBNH014G.NU_TIYRIMK,
+    TBNH014G.KB_TIYJT,
+    CASE TBNH014G.KB_TIYJT WHEN 'X' THEN '要' ELSE '否' END,
+    CASE TBNH014G.MJ_HSBU WHEN '1' THEN '有' WHEN '0' THEN '無' ELSE '' END,
+    REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', ''),
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH014G TBNH014G
+LEFT JOIN ${ai21Db}.TBV0231M TBV0231M
+  ON #{cdHansya} = TBV0231M.CD_HANSYA
+ AND #{cdKaisya} = TBV0231M.CD_KAISYA
+ AND '10' = TBV0231M.MJ_BLOCKID
+ AND '0003' = TBV0231M.MJ_KUBUNID
+ AND TBNH014G.CD_TIYSYU = TBV0231M.CD_KUBUN
+WHERE TBNH014G.CD_HANSYA = #{cdHansya}
+  AND TBNH014G.CD_KAISYA = #{cdKaisya}
+  AND TBNH014G.NO_STI = #{noSti}
+  AND TBNH014G.MJ_STIHZSM = '1'
+  AND TBNH014G.KB_STIKT = '1'
+  AND TBNH014G.CD_FGBUI IN ('064', '065', '066', '067', '068', '069', '070');
+
+
+-- DM_SITA_TAIYA_NSK
+TRUNCATE TABLE ${uslimDb}.DM_SITA_TAIYA_NSK;
+
+INSERT INTO ${uslimDb}.DM_SITA_TAIYA_NSK (
+    cd_hansya, cd_kaisya, no_sti, dd_tstisgjs,
+    cd_bui, nu_tiyhaba, nu_tiyhpr, kb_tiykz, nu_tiyrimk, nu_tiymz,
+    mj_tiyjtkb, mj_hsbu, mj_tiysyu, mj_nskbhsy, mj_nskssysy, mj_nskbhsy1, mj_nskbhsy2,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSti},
+    #{ddTstisgjs},
+    CASE
+        WHEN TBNH030G.CD_NSKBIDTL IN ('1185', '1189', '1193') THEN 'L'
+        WHEN TBNH030G.CD_NSKBIDTL IN ('1186', '1190', '1194') THEN 'R'
+        WHEN TBNH030G.CD_NSKBIDTL IN ('1187', '1191', '1195') THEN 'LE'
+        WHEN TBNH030G.CD_NSKBIDTL IN ('1188', '1192', '1196') THEN 'RE'
+        WHEN TBNH030G.CD_NSKBIDTL = '1197' THEN 'LI'
+        WHEN TBNH030G.CD_NSKBIDTL = '1198' THEN 'RI'
+        WHEN TBNH030G.CD_NSKBIDTL IN ('1203', '1204', '1206') THEN 'S1'
+        WHEN TBNH030G.CD_NSKBIDTL = '1207' THEN 'S2'
+    END,
+    TBNH030G.NU_TIYHABA,
+    TBNH030G.NU_TIYHPR,
+    TBNH030G.KB_TIYKZ,
+    TBNH030G.NU_TIYRIMK,
+    TBNH030G.NU_TIYMZ,
+    CASE TBNH030G.KB_TIYJT WHEN 'X' THEN '要' ELSE '否' END,
+    NULL,
+    NULL,
+    CONCAT_WS(' ', REGEXP_REPLACE(TBNH057M.MJ_NSKBHSY1, '[　 ]+$', ''), REGEXP_REPLACE(TBNH059M.MJ_NSKBHSY2, '[　 ]+$', '')),
+    REGEXP_REPLACE(TBNH048M.MJ_NSKSSYSY, '[　 ]+$', ''),
+    REGEXP_REPLACE(TBNH057M.MJ_NSKBHSY1, '[　 ]+$', ''),
+    REGEXP_REPLACE(TBNH059M.MJ_NSKBHSY2, '[　 ]+$', ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH030G TBNH030G
+INNER JOIN ${ai21Db}.TBNH032G TBNH032G
+  ON #{cdHansya} = TBNH032G.CD_HANSYA
+ AND #{cdKaisya} = TBNH032G.CD_KAISYA
+ AND #{noSti} = TBNH032G.NO_STI
+ AND '1' = TBNH032G.MJ_STIHZSM
+ AND '1' = TBNH032G.KB_STIKT
+ AND TBNH030G.CD_NSKBIDTL = TBNH032G.CD_NSKBIDTL
+INNER JOIN ${ai21Db}.TBNH074M TBNH074M
+  ON #{cdHansya} = TBNH074M.CD_HANSYA
+ AND #{cdKaisya} = TBNH074M.CD_KAISYA
+ AND TBNH074M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH074M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH032G.CD_NSKKASI = TBNH074M.CD_NSKKASI
+INNER JOIN ${ai21Db}.TBNH057M TBNH057M
+  ON #{cdHansya} = TBNH057M.CD_HANSYA
+ AND #{cdKaisya} = TBNH057M.CD_KAISYA
+ AND TBNH057M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH057M.DD_TKIEND >= #{ddTstisgjs}
+ AND REGEXP_REPLACE(TBNH057M.MJ_NSKBHSY1, '[　 ]+$', '') IN ('ﾀｲﾔ', 'ｽﾍﾟｱ')
+ AND TBNH074M.CD_NSKBHSY1 = TBNH057M.CD_NSKBHSY1
+LEFT JOIN ${ai21Db}.TBNH059M TBNH059M
+  ON #{cdHansya} = TBNH059M.CD_HANSYA
+ AND #{cdKaisya} = TBNH059M.CD_KAISYA
+ AND TBNH059M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH059M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH074M.CD_NSKBHSY2 = TBNH059M.CD_NSKBHSY2
+LEFT JOIN ${ai21Db}.TBNH048M TBNH048M
+  ON #{cdHansya} = TBNH048M.CD_HANSYA
+ AND #{cdKaisya} = TBNH048M.CD_KAISYA
+ AND TBNH048M.DD_TKIST <= #{ddTstisgjs}
+ AND TBNH048M.DD_TKIEND >= #{ddTstisgjs}
+ AND TBNH074M.CD_NSKSSYSY = TBNH048M.CD_NSKSSYSY
+WHERE TBNH030G.CD_HANSYA = #{cdHansya}
+  AND TBNH030G.CD_KAISYA = #{cdKaisya}
+  AND TBNH030G.NO_STI = #{noSti}
+  AND TBNH030G.MJ_STIHZSM = '1'
+  AND TBNH030G.KB_STIKT = '1'
+  AND TBNH030G.CD_NSKBIDTL IN ('1185', '1189', '1193', '1186', '1190', '1194', '1187', '1191', '1195', '1188', '1192', '1196', '1197', '1198', '1203', '1204', '1206', '1207');
+
+
+-- DM_SITA_TAIYA_NSK_FUKA
+TRUNCATE TABLE ${uslimDb}.DM_SITA_TAIYA_NSK_FUKA;
+
+INSERT INTO ${uslimDb}.DM_SITA_TAIYA_NSK_FUKA (
+    cd_hansya, cd_kaisya, no_sti,
+    mj_nejknbk, mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSti},
+    TBNH022G.MJ_NEJKNBK,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH022G TBNH022G
+WHERE TBNH022G.CD_HANSYA = #{cdHansya}
+  AND TBNH022G.CD_KAISYA = #{cdKaisya}
+  AND TBNH022G.NO_STI = #{noSti}
+  AND TBNH022G.MJ_STIHZSM = '1'
+  AND TBNH022G.KB_STIKT = '1';
+
+
+-- DM_SITA_TAIYA_AA_FUKA
+TRUNCATE TABLE ${uslimDb}.DM_SITA_TAIYA_AA_FUKA;
+
+INSERT INTO ${uslimDb}.DM_SITA_TAIYA_AA_FUKA (
+    cd_hansya, cd_kaisya, no_sti,
+    mj_tiymeigar, mj_tiysyu, mj_nejknbk, mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{noSti},
+    MAX(CASE MJ_KUBUNID WHEN '0005' THEN MJ_KUBUNNAI END),
+    MAX(CASE MJ_KUBUNID WHEN '0006' THEN MJ_KUBUNNAI END),
+    MAX(MJ_NEJKNBK),
+    CURRENT_TIMESTAMP
+FROM (
+    SELECT
+        TBV0231M.MJ_KUBUNID,
+        REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') AS MJ_KUBUNNAI,
+        NULL AS MJ_NEJKNBK
+    FROM ${ai21Db}.TBNH009G TBNH009G
+    LEFT JOIN ${ai21Db}.TBV0231M TBV0231M
+      ON #{cdHansya} = TBV0231M.CD_HANSYA
+     AND #{cdKaisya} = TBV0231M.CD_KAISYA
+     AND TBV0231M.MJ_BLOCKID = '10'
+     AND TBV0231M.MJ_KUBUNID IN ('0005', '0006')
+    WHERE TBNH009G.CD_HANSYA = #{cdHansya}
+      AND TBNH009G.CD_KAISYA = #{cdKaisya}
+      AND TBNH009G.NO_STI = #{noSti}
+      AND TBNH009G.MJ_STIHZSM = '1'
+      AND TBNH009G.KB_STIKT = '1'
+    UNION ALL
+    SELECT
+        NULL, NULL, TBNH022G.MJ_NEJKNBK
+    FROM ${ai21Db}.TBNH022G TBNH022G
+    WHERE TBNH022G.CD_HANSYA = #{cdHansya}
+      AND TBNH022G.CD_KAISYA = #{cdKaisya}
+      AND TBNH022G.NO_STI = #{noSti}
+      AND TBNH022G.MJ_STIHZSM = '1'
+      AND TBNH022G.KB_STIKT = '1'
+) T;
