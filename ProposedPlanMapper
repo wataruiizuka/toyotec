@@ -1,0 +1,343 @@
+ddl
+
+CREATE TABLE gold.DM_PROPOSED_PLAN_DETAIL (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_siretyum         VARCHAR(100)  NOT NULL,
+    no_syadaiba         VARCHAR(100)  NOT NULL,
+    dt_sakusei_key      VARCHAR(30),
+
+    mj_stetas           VARCHAR(10),
+    cd_tenpo            VARCHAR(50),
+    kj_tenpomei         VARCHAR(255),
+    kj_tanstaff         VARCHAR(255),
+    kj_rentanto         VARCHAR(255),
+    mj_bikou            STRING,
+    dt_sakusei          VARCHAR(30),
+    dt_saisinup         VARCHAR(30),
+    dt_renzumi          VARCHAR(30),
+    mj_sakuseimail      VARCHAR(255),
+    mj_kousinmail       VARCHAR(255),
+    mj_sakujo           VARCHAR(10),
+    kj_okyakume         VARCHAR(255),
+    dd_sydan            VARCHAR(20),
+    mj_zaikost          VARCHAR(10),
+    no_cyumon           VARCHAR(100),
+    dd_sitatori         VARCHAR(20),
+
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_PROPOSED_PLAN_SYARYO (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    cd_hanbaitn         VARCHAR(50),
+    kb_honten           VARCHAR(10),
+
+    cd_teanyote         VARCHAR(10),
+    cd_tenpo            VARCHAR(50),
+    status              VARCHAR(10),
+    no_syaryou          VARCHAR(100),
+    no_syadaiba         VARCHAR(100),
+    cd_syamei           VARCHAR(100),
+    mj_syamei           VARCHAR(255),
+
+    dd_sitasyuk         VARCHAR(20),
+    dd_siire            VARCHAR(20),
+    dd_henkouou         VARCHAR(20),
+    dd_sitayote         VARCHAR(20),
+    dd_sitatori         VARCHAR(20),
+    dd_sydan            VARCHAR(20),
+
+    kj_okyakume         VARCHAR(255),
+    dt_sakusei          VARCHAR(30),
+    dt_sakusei_key      TIMESTAMP,
+    kj_tanstaff         VARCHAR(255),
+    kj_tenpomei         VARCHAR(255),
+    mj_bikou            STRING,
+    okureflg            VARCHAR(10),
+
+    no_siretyum         VARCHAR(100),
+    kb_uriagyot         VARCHAR(20),
+    su_syodotor         INT,
+    nu_soukoukm         BIGINT,
+    cd_syufukre         VARCHAR(20),
+    cd_web              VARCHAR(10),
+    mj_sakuseimail      VARCHAR(255),
+    mj_kousinmail       VARCHAR(255),
+
+    nu_suhkt            VARCHAR(20),
+
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_PROPOSED_PLAN_CHECK_PLAN (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    cd_hanbaitn         VARCHAR(50),
+    kb_honten           VARCHAR(10),
+
+    no_syadaiba         VARCHAR(100)  NOT NULL,
+    no_siretyum         VARCHAR(100),
+    is_target_plan      VARCHAR(1),
+
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_PROPOSED_PLAN_REN_STATUS (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_syadaiba         VARCHAR(100)  NOT NULL,
+    exists_ren_status   BIGINT,
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_PROPOSED_PLAN_AUTH_BASE (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_syadaiba         VARCHAR(100)  NOT NULL,
+    dt_sakusei_key      VARCHAR(30)   NOT NULL,
+
+    cd_tenpo            VARCHAR(50),
+    mj_sakuseimail      VARCHAR(255),
+    mj_kousinmail       VARCHAR(255),
+    mj_sakujo           VARCHAR(10),
+    mj_zaikost          VARCHAR(10),
+
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+sql
+
+-- DM_PROPOSED_PLAN_DETAIL
+TRUNCATE TABLE ${uslimDb}.DM_PROPOSED_PLAN_DETAIL;
+
+INSERT INTO ${uslimDb}.DM_PROPOSED_PLAN_DETAIL (
+    cd_hansya,
+    cd_kaisya,
+    no_siretyum,
+    no_syadaiba,
+    dt_sakusei_key,
+    mj_stetas,
+    cd_tenpo,
+    kj_tenpomei,
+    kj_tanstaff,
+    kj_rentanto,
+    mj_bikou,
+    dt_sakusei,
+    dt_saisinup,
+    dt_renzumi,
+    mj_sakuseimail,
+    mj_kousinmail,
+    mj_sakujo,
+    kj_okyakume,
+    dd_sydan,
+    mj_zaikost,
+    no_cyumon,
+    dd_sitatori,
+    mart_created_at
+)
+SELECT
+    T_RI.CD_HANSYA,
+    T_RI.CD_KAISYA,
+    T_RI.NO_SIRETYUM,
+    T_RI.NO_SYADAIBA,
+    FROM_TIMESTAMP(T_RI.DT_SAKUSEI, 'yyyy/MM/dd HH:mm:ss.SSSSSS') AS dt_sakusei_key,
+    T_RI.MJ_STETAS,
+    T_RI.CD_TENPO,
+    REGEXP_REPLACE(T_RI.KJ_TENPOMEI, '[　 ]+$', ''),
+    REGEXP_REPLACE(T_RI.KJ_TANSTAFF, '[　 ]+$', ''),
+    TRIM(T_RI.KJ_RENTANTO),
+    REGEXP_REPLACE(T_RI.MJ_BIKOU, '[　 ]+$', ''),
+    FROM_TIMESTAMP(T_RI.DT_SAKUSEI, 'yyyy/MM/dd HH:mm:ss.SSSSSS'),
+    FROM_TIMESTAMP(T_RI.DT_SAISINUP, 'yyyy/MM/dd HH:mm:ss.SSSSSS'),
+    FROM_TIMESTAMP(T_RI.DT_RENZUMI, 'yyyy/MM/dd HH:mm:ss.SSSSSS'),
+    T_RI.MJ_SAKUSEIMAIL,
+    T_RI.MJ_KOUSINMAIL,
+    T_RI.MJ_SAKUJO,
+    REGEXP_REPLACE(T_RI.KJ_OKYAKUME, '[　 ]+$', ''),
+    FROM_TIMESTAMP(T_RI.DD_SYDAN, 'yyyy/MM/dd'),
+    TBBC001G.MJ_ZAIKOST,
+    T_RI.NO_CYUMON,
+    FROM_TIMESTAMP(T_RI.DD_SITATORI, 'yyyy/MM/dd'),
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.RESERVEINFO T_RI
+LEFT JOIN ${ai21Db}.TBBC001G TBBC001G
+  ON T_RI.CD_HANSYA = TBBC001G.CD_HANSYA
+ AND T_RI.CD_KAISYA = TBBC001G.CD_KAISYA
+ AND T_RI.NO_SYADAIBA = RTRIM(TBBC001G.NO_SYADAIBA)
+ AND CAST(T_RI.DT_SAKUSEI AS DATE) <= CAST(TBBC001G.DD_SIIRE AS DATE)
+ AND TBBC001G.DD_TORIKESI IS NULL
+WHERE T_RI.NO_CYUMON IS NULL;
+
+
+-- DM_PROPOSED_PLAN_SYARYO
+TRUNCATE TABLE ${uslimDb}.DM_PROPOSED_PLAN_SYARYO;
+
+INSERT INTO ${uslimDb}.DM_PROPOSED_PLAN_SYARYO (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    kb_honten,
+    cd_teanyote,
+    cd_tenpo,
+    status,
+    no_syaryou,
+    no_syadaiba,
+    cd_syamei,
+    mj_syamei,
+    dd_sitasyuk,
+    dd_siire,
+    dd_henkouou,
+    dd_sitayote,
+    dd_sitatori,
+    dd_sydan,
+    kj_okyakume,
+    dt_sakusei,
+    dt_sakusei_key,
+    kj_tanstaff,
+    kj_tenpomei,
+    mj_bikou,
+    okureflg,
+    no_siretyum,
+    kb_uriagyot,
+    su_syodotor,
+    nu_soukoukm,
+    cd_syufukre,
+    cd_web,
+    mj_sakuseimail,
+    mj_kousinmail,
+    nu_suhkt,
+    mart_created_at
+)
+SELECT
+    T_ALL.CD_HANSYA,
+    T_ALL.CD_KAISYA,
+    T_ALL.CD_HANBAITN,
+    T_ALL.KB_HONTEN,
+    T_ALL.CD_TEANYOTE,
+    T_ALL.CD_TENPO,
+    T_ALL.STATUS,
+    T_ALL.NO_SYARYOU,
+    T_ALL.NO_SYADAIBA,
+    T_ALL.CD_SYAMEI,
+    RTRIM(TBV0232M.MJ_SYAMEI) AS MJ_SYAMEI,
+    T_ALL.DD_SITASYUK,
+    T_ALL.DD_SIIRE,
+    T_ALL.DD_HENKOUOU,
+    T_ALL.DD_SITAYOTE,
+    T_ALL.DD_SITATORI,
+    T_ALL.DD_SYDAN,
+    T_ALL.KJ_OKYAKUME,
+    T_ALL.DT_SAKUSEI,
+    TO_TIMESTAMP(T_ALL.DT_SAKUSEI, 'yyyy/MM/dd HH:mm:ss.SSSSSS'),
+    T_ALL.KJ_TANSTAFF,
+    T_ALL.KJ_TENPOMEI,
+    T_ALL.MJ_BIKOU,
+    T_ALL.OKUREFLG,
+    T_ALL.NO_SIRETYUM,
+    T_ALL.KB_URIAGYOT,
+    T_ALL.SU_SYODOTOR,
+    T_ALL.NU_SOUKOUKM,
+    T_ALL.CD_SYUFUKRE,
+    T_ALL.CD_WEB,
+    T_ALL.MJ_SAKUSEIMAIL,
+    T_ALL.MJ_KOUSINMAIL,
+    T_ALL.NU_SUHKT,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_PROPOSED_PLAN_SYARYO_TMP T_ALL
+INNER JOIN ${ai21Db}.TBV0232M TBV0232M
+  ON T_ALL.CD_HANSYA = TBV0232M.CD_HANSYA
+ AND T_ALL.CD_KAISYA = TBV0232M.CD_KAISYA
+ AND T_ALL.CD_SYAMEI = TBV0232M.CD_SYAMEI;
+
+
+-- DM_PROPOSED_PLAN_CHECK_PLAN
+TRUNCATE TABLE ${uslimDb}.DM_PROPOSED_PLAN_CHECK_PLAN;
+
+INSERT INTO ${uslimDb}.DM_PROPOSED_PLAN_CHECK_PLAN (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    kb_honten,
+    no_syadaiba,
+    no_siretyum,
+    is_target_plan,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    #{kbHonTen},
+    RTRIM(TBBC003G.NO_SYADAIBA),
+    TBBC003G.NO_SIRETYUM,
+    '1',
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBBC003G TBBC003G
+WHERE TBBC003G.CD_KAISYA = #{cdKaisya}
+  AND TBBC003G.CD_HANSYA = #{cdHansya}
+  AND TBBC003G.KB_SITASITY IN ('1', '2');
+
+
+-- DM_PROPOSED_PLAN_REN_STATUS
+TRUNCATE TABLE ${uslimDb}.DM_PROPOSED_PLAN_REN_STATUS;
+
+INSERT INTO ${uslimDb}.DM_PROPOSED_PLAN_REN_STATUS (
+    cd_hansya,
+    cd_kaisya,
+    no_syadaiba,
+    exists_ren_status,
+    mart_created_at
+)
+SELECT
+    CD_HANSYA,
+    CD_KAISYA,
+    RTRIM(NO_SYADAIBA),
+    COUNT(1),
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.RESERVEINFO
+WHERE MJ_STETAS <> '0'
+  AND MJ_SAKUJO = '0'
+  AND (MJ_ZAIKOST IS NULL OR MJ_ZAIKOST NOT IN ('4','5'))
+GROUP BY
+    CD_HANSYA,
+    CD_KAISYA,
+    RTRIM(NO_SYADAIBA);
+
+
+-- DM_PROPOSED_PLAN_AUTH_BASE
+TRUNCATE TABLE ${uslimDb}.DM_PROPOSED_PLAN_AUTH_BASE;
+
+INSERT INTO ${uslimDb}.DM_PROPOSED_PLAN_AUTH_BASE (
+    cd_hansya,
+    cd_kaisya,
+    no_syadaiba,
+    dt_sakusei_key,
+    cd_tenpo,
+    mj_sakuseimail,
+    mj_kousinmail,
+    mj_sakujo,
+    mj_zaikost,
+    mart_created_at
+)
+SELECT
+    T_RI.CD_HANSYA,
+    T_RI.CD_KAISYA,
+    T_RI.NO_SYADAIBA,
+    FROM_TIMESTAMP(T_RI.DT_SAKUSEI, 'yyyy/MM/dd HH:mm:ss.SSSSSS'),
+    T_RI.CD_TENPO,
+    T_RI.MJ_SAKUSEIMAIL,
+    T_RI.MJ_KOUSINMAIL,
+    T_RI.MJ_SAKUJO,
+    TBBC001G.MJ_ZAIKOST,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.RESERVEINFO T_RI
+LEFT JOIN ${ai21Db}.TBBC001G TBBC001G
+  ON T_RI.CD_HANSYA = TBBC001G.CD_HANSYA
+ AND T_RI.CD_KAISYA = TBBC001G.CD_KAISYA
+ AND T_RI.NO_SYADAIBA = RTRIM(TBBC001G.NO_SYADAIBA)
+ AND CAST(T_RI.DT_SAKUSEI AS DATE) <= CAST(TBBC001G.DD_SIIRE AS DATE)
+ AND TBBC001G.DD_TORIKESI IS NULL;
