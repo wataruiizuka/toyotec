@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,,実行時パラメータ,#{cdHansya},実行時パラメータを設定,TRUNCATE後INSERT,販社を識別するコード。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,,実行時パラメータ,#{cdKaisya},実行時パラメータを設定,TRUNCATE後INSERT,会社を識別するコード。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,,実行時パラメータ,#{cdHanbaitn},実行時パラメータを設定,TRUNCATE後INSERT,販売店を識別するコード。
+4,kb_honten,本店区分,STRING,有,なし,なし,,実行時パラメータ,#{kbHonTen},実行時パラメータを設定,TRUNCATE後INSERT,本店／店舗などの集計単位を切り替える区分と推定。SQLでは査定予定日の月別・週別表示ロジックの分岐に使用。
+5,category,集計カテゴリ,INT,有,なし,なし,,集計処理,"GROUPING(sita_month_week), GROUPING(status), GROUPING(mj_syamei)",GROUPING(sita_month_week)=0 の場合は1、GROUPING(status)=0 の場合は2、GROUPING(mj_syamei)=0 の場合は3、それ以外はNULLを設定,TRUNCATE後INSERT,集計結果の種類を表すカテゴリ。1=査定予定月/週別、2=ステータス・売上業態別、3=車名別ランキングとして扱われる。
+6,sita_month_week,SITA査定予定月週,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,"dd_sitayote, status",status='2' または dd_sitayote がNULLの場合はNULL。kb_honten='1'の場合は月単位、kb_honten='2'の場合は週開始日単位で表示用文字列に変換。過去日の場合はJST現在日付を基準に過去扱いの表示へ変換。,TRUNCATE後INSERT,査定予定日を月単位または週単位で集計するための表示用項目。
+7,status,車両ステータス,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,status,"GROUPING SETS の (status, kb_uriagyot) 集計で使用。元カラムを集計軸として設定",TRUNCATE後INSERT,車両の状態を表すコード。具体的なコード意味はDDL/SQL上では未定義。
+8,kb_uriagyot,売上業態,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,"status, kb_uriagyot",status='2' の場合は空文字。kb_uriagyot='1' の場合は '小売'、'2' の場合は '卸売'、それ以外は空文字へ変換,TRUNCATE後INSERT,売上業態コードを画面表示向けの日本語に変換した項目。
+9,syamei,車名,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_syamei,mj_syamei を syamei として設定し、車名別集計の軸として使用,TRUNCATE後INSERT,車名別台数ランキングで使用する車名。NULLの車名はHAVING条件で除外。
+10,daisu,台数,BIGINT,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,全行,GROUPING SETS で集計した単位ごとに COUNT(1) を設定,TRUNCATE後INSERT,各集計カテゴリにおける車両台数。
+11,daisu_rank,台数順位,BIGINT,有,なし,なし,,集計処理,"COUNT(1), GROUPING(mj_syamei)",DENSE_RANK() OVER (PARTITION BY GROUPING(mj_syamei) ORDER BY COUNT(1) DESC) で台数降順の順位を設定,TRUNCATE後INSERT,台数の順位。車名別カテゴリでは上位10件のみ登録対象。
+12,mart_created_at,データマート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。Impala版STRING化時は実DDL要確認）,システム生成,CURRENT_TIMESTAMP,INSERT時にCURRENT_TIMESTAMPを設定。Impala版ではSTRINGとして格納する前提,TRUNCATE後INSERT,データマートへ登録した日時を保持する監査用項目。DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP。
