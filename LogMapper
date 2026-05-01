@@ -1,0 +1,156 @@
+ddl
+
+-- DM_FILEDOWNLOAD_LOG_DETAIL
+
+CREATE TABLE gold.DM_FILEDOWNLOAD_LOG_DETAIL (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    cd_user           VARCHAR(50)   NOT NULL,
+    dt_download       TIMESTAMP     NOT NULL,
+    dt_download_str   VARCHAR(19),
+    dd_download       DATE,
+    kb_file           VARCHAR(10),
+    kb_file_label     VARCHAR(100),
+    mj_file           VARCHAR(500),
+    mj_name           VARCHAR(255),
+    cd_chiiki         VARCHAR(50),
+    cd_hanbaitn       VARCHAR(50),
+    kj_kaisyatn       VARCHAR(255),
+    link_key          VARCHAR(500),
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- DM_FILEDOWNLOAD_FILTER_FILEKB
+
+CREATE TABLE gold.DM_FILEDOWNLOAD_FILTER_FILEKB (
+    cd_hansya        VARCHAR(50),
+    cd_kaisya        VARCHAR(50),
+    kb_file          VARCHAR(10)   NOT NULL,
+    value            VARCHAR(10),
+    label            VARCHAR(100),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- DM_FILEDOWNLOAD_FILTER_USER
+
+CREATE TABLE gold.DM_FILEDOWNLOAD_FILTER_USER (
+    cd_hansya        VARCHAR(50),
+    cd_kaisya        VARCHAR(50),
+    cd_user          VARCHAR(50)   NOT NULL,
+    value            VARCHAR(50),
+    label            VARCHAR(255),
+    link_key         VARCHAR(500),
+    cd_chiiki        VARCHAR(50),
+    cd_hanbaitn      VARCHAR(50),
+    kj_kaisyatn      VARCHAR(255),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+sql
+
+-- DM_FILEDOWNLOAD_LOG_DETAIL
+
+TRUNCATE TABLE gold.DM_FILEDOWNLOAD_LOG_DETAIL;
+
+INSERT INTO gold.DM_FILEDOWNLOAD_LOG_DETAIL (
+    cd_hansya,
+    cd_kaisya,
+    cd_user,
+    dt_download,
+    dt_download_str,
+    dd_download,
+    kb_file,
+    kb_file_label,
+    mj_file,
+    mj_name,
+    cd_chiiki,
+    cd_hanbaitn,
+    kj_kaisyatn,
+    link_key,
+    mart_created_at
+)
+SELECT
+    t_fdl.cd_hansya,
+    t_fdl.cd_kaisya,
+    t_fdl.cd_user,
+    t_fdl.dt_download,
+    FROM_TIMESTAMP(t_fdl.dt_download, 'yyyy/MM/dd HH:mm:ss') AS dt_download_str,
+    CAST(t_fdl.dt_download AS DATE) AS dd_download,
+    t_fdl.kb_file,
+    CASE t_fdl.kb_file
+        WHEN '1' THEN '車両明細'
+        WHEN '2' THEN '提案予定状況管理'
+        WHEN '3' THEN 'ユーザー管理'
+        WHEN '4' THEN 'ユーザー別実績管理'
+        WHEN '5' THEN '工程管理'
+        ELSE '未定義'
+    END AS kb_file_label,
+    t_fdl.mj_file,
+    NVL(t_user.mj_name, t_au.mj_name) AS mj_name,
+    t_hsif.cd_chiiki,
+    t_hsif.cd_hanbaitn,
+    t_hsif.kj_hanbaitn AS kj_kaisyatn,
+    '{"hanbaitn": ["' || t_hsif.cd_hanbaitn || '"]}' AS link_key,
+    NOW()
+FROM uslim_ve.FILEDOWNLOADLOG t_fdl
+LEFT JOIN uslim_ve.USERINFO t_user
+    ON t_fdl.cd_user = t_user.cd_user
+LEFT JOIN uslim_ve.ACCESSUSER t_au
+    ON t_fdl.cd_user = t_au.cd_user
+LEFT JOIN uslim_ve.HANSYAINFO t_hsif
+    ON t_fdl.cd_hansya = t_hsif.cd_hansya
+   AND t_fdl.cd_kaisya = t_hsif.cd_kaisya;
+
+
+-- DM_FILEDOWNLOAD_FILTER_FILEKB
+
+TRUNCATE TABLE gold.DM_FILEDOWNLOAD_FILTER_FILEKB;
+
+INSERT INTO gold.DM_FILEDOWNLOAD_FILTER_FILEKB (
+    cd_hansya,
+    cd_kaisya,
+    kb_file,
+    value,
+    label,
+    mart_created_at
+)
+SELECT DISTINCT
+    cd_hansya,
+    cd_kaisya,
+    kb_file,
+    kb_file AS value,
+    kb_file_label AS label,
+    NOW()
+FROM uslim_ve.DM_FILEDOWNLOAD_LOG_DETAIL;
+
+
+-- DM_FILEDOWNLOAD_FILTER_USER
+
+TRUNCATE TABLE gold.DM_FILEDOWNLOAD_FILTER_USER;
+
+INSERT INTO gold.DM_FILEDOWNLOAD_FILTER_USER (
+    cd_hansya,
+    cd_kaisya,
+    cd_user,
+    value,
+    label,
+    link_key,
+    cd_chiiki,
+    cd_hanbaitn,
+    kj_kaisyatn,
+    mart_created_at
+)
+SELECT DISTINCT
+    cd_hansya,
+    cd_kaisya,
+    cd_user,
+    cd_user AS value,
+    mj_name AS label,
+    link_key,
+    cd_chiiki,
+    cd_hanbaitn,
+    kj_kaisyatn,
+    NOW()
+FROM uslim_ve.DM_FILEDOWNLOAD_LOG_DETAIL;
