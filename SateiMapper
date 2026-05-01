@@ -1,0 +1,296 @@
+ddl
+
+CREATE TABLE gold.DM_SATEI_HEADER (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    no_syadai           VARCHAR(100),
+    mj_carsbt           VARCHAR(255),
+    no_trknosri         VARCHAR(255),
+    mj_katasiki         VARCHAR(255),
+    mj_furusyam         VARCHAR(255),
+    mj_stihzsm          VARCHAR(10),
+    kb_stikt            VARCHAR(10),
+    nu_suhkt            VARCHAR(50),
+    ki_nesita           VARCHAR(50),
+    kb_sitakit          VARCHAR(10),
+    mj_nejknbk          STRING,
+    cd_stijstan         VARCHAR(50),
+    dd_stisgjs          VARCHAR(20),
+    kj_syainmei         VARCHAR(255),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_SATEI_KASHI_NSK (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    kb_stikt            VARCHAR(10),
+    cd_nskbidtl         VARCHAR(50),
+    mj_nskbidtl         VARCHAR(255),
+    cd_nskssysy         VARCHAR(50),
+    mj_nskssysy         VARCHAR(255),
+    mj_nskkasi          VARCHAR(255),
+    nu_nskkgt           VARCHAR(50),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_SATEI_KASHI_AA (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    no_sti              VARCHAR(50)   NOT NULL,
+    kb_stikt            VARCHAR(10),
+    cd_fgbui            VARCHAR(50),
+    mj_fgbui            VARCHAR(255),
+    cd_snsyo            VARCHAR(50),
+    mj_snsyona          VARCHAR(255),
+    mj_snsyokg          VARCHAR(255),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+TRUNCATE TABLE ${uslimDb}.DM_SATEI_HEADER;
+
+INSERT INTO ${uslimDb}.DM_SATEI_HEADER (
+    cd_hansya,
+    cd_kaisya,
+    no_sti,
+    no_syadai,
+    mj_carsbt,
+    no_trknosri,
+    mj_katasiki,
+    mj_furusyam,
+    mj_stihzsm,
+    kb_stikt,
+    nu_suhkt,
+    ki_nesita,
+    kb_sitakit,
+    mj_nejknbk,
+    cd_stijstan,
+    dd_stisgjs,
+    kj_syainmei,
+    mart_created_at
+)
+SELECT
+    #{cdHansya} AS cd_hansya,
+    #{cdKaisya} AS cd_kaisya,
+    #{noSti} AS no_sti,
+    RTRIM(T1.NO_SYADAI) AS no_syadai,
+    T2.MJ_CARSBT AS mj_carsbt,
+    TRIM(REPLACE(T2.CD_TRKNORKS, '　', ' ')) || ' ' || T2.KB_TRKNOSY || T2.CD_TRKNOGTI ||
+        IF(LENGTH(T2.NO_TRKNOSRI) BETWEEN 1 AND 3, LPAD(T2.NO_TRKNOSRI, 4, '0'), T2.NO_TRKNOSRI) AS no_trknosri,
+    T2.MJ_KATASIKI AS mj_katasiki,
+    T3.MJ_FURUSYAM AS mj_furusyam,
+    '1' AS mj_stihzsm,
+    T3.KB_STIKT AS kb_stikt,
+    T4.NU_SUHKT AS nu_suhkt,
+    CAST(TRUNC(ISNULL(NVL2(T7.KB_STIKT, T7.KI_NSTI, T5.KI_NESITA), 0) / 1000) AS STRING) AS ki_nesita,
+    NVL2(T7.KB_STIKT, '', T5.KB_SITAKIT) AS kb_sitakit,
+    NVL2(T7.KB_STIKT, T7.MJ_NSTIBIKO, T6.MJ_NEJKNBK) AS mj_nejknbk,
+    T8.CD_STIJSTAN AS cd_stijstan,
+    FROM_UNIXTIME(UNIX_TIMESTAMP(T8.DD_STISGJS, 'yyyyMMdd'), 'yyyy/MM/dd') AS dd_stisgjs,
+    REGEXP_REPLACE(T9.KJ_SYAINMEI, '[　 ]+$', '') AS kj_syainmei,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH001G T1
+LEFT JOIN (
+    SELECT
+        CD_STIJSTAN, DD_STISGJS, KB_STIKT,
+        MAX(KB_STIKT) OVER() AS KB_STIKT_MAX
+    FROM ${ai21Db}.TBNH002G
+    WHERE CD_KAISYA = #{cdKaisya}
+      AND CD_HANSYA = #{cdHansya}
+      AND NO_STI = #{noSti}
+      AND MJ_STIHZSM = '1'
+) T8
+    ON T8.KB_STIKT = T8.KB_STIKT_MAX
+LEFT JOIN ${ai21Db}.TBV0014M T9
+    ON #{cdKaisya} = T9.CD_KAISYA
+   AND #{cdHansya} = T9.CD_HANSYA
+   AND T8.CD_STIJSTAN = T9.CD_SYAIN
+LEFT JOIN (
+    SELECT
+        NO_TRKNOSRI, MJ_CARSBT, CD_TRKNORKS, KB_TRKNOSY, CD_TRKNOGTI, MJ_KATASIKI, KB_STIKT,
+        MAX(KB_STIKT) OVER() AS KB_STIKT_MAX
+    FROM ${ai21Db}.TBNH003G
+    WHERE CD_KAISYA = #{cdKaisya}
+      AND CD_HANSYA = #{cdHansya}
+      AND NO_STI = #{noSti}
+      AND MJ_STIHZSM = '1'
+) T2
+    ON T2.KB_STIKT = T2.KB_STIKT_MAX
+LEFT JOIN (
+    SELECT
+        MJ_FURUSYAM, KB_STIKT,
+        MAX(KB_STIKT) OVER() AS KB_STIKT_MAX
+    FROM ${ai21Db}.TBNH004G
+    WHERE CD_KAISYA = #{cdKaisya}
+      AND CD_HANSYA = #{cdHansya}
+      AND NO_STI = #{noSti}
+      AND MJ_STIHZSM = '1'
+) T3
+    ON T3.KB_STIKT = T3.KB_STIKT_MAX
+LEFT JOIN (
+    SELECT
+        NU_SUHKT, KB_STIKT,
+        MAX(KB_STIKT) OVER() AS KB_STIKT_MAX
+    FROM ${ai21Db}.TBNH007G
+    WHERE CD_KAISYA = #{cdKaisya}
+      AND CD_HANSYA = #{cdHansya}
+      AND NO_STI = #{noSti}
+      AND MJ_STIHZSM = '1'
+) T4
+    ON T4.KB_STIKT = T4.KB_STIKT_MAX
+LEFT JOIN (
+    SELECT
+        KI_NESITA, KB_SITAKIT, KB_STIKT,
+        MAX(KB_STIKT) OVER() AS KB_STIKT_MAX
+    FROM ${ai21Db}.TBNH021G
+    WHERE CD_KAISYA = #{cdKaisya}
+      AND CD_HANSYA = #{cdHansya}
+      AND NO_STI = #{noSti}
+      AND MJ_STIHZSM = '1'
+) T5
+    ON T5.KB_STIKT = T5.KB_STIKT_MAX
+LEFT JOIN ${ai21Db}.TBNH022G T6
+    ON #{cdHansya} = T6.CD_HANSYA
+   AND #{cdKaisya} = T6.CD_KAISYA
+   AND #{noSti} = T6.NO_STI
+   AND '1' = T6.MJ_STIHZSM
+   AND T5.KB_STIKT = T6.KB_STIKT
+LEFT JOIN (
+    SELECT
+        KI_NSTI, KB_STIKT, MJ_NSTIBIKO,
+        MAX(KB_STIKT) OVER() AS KB_STIKT_MAX
+    FROM ${ai21Db}.TBNH013G
+    WHERE CD_KAISYA = #{cdKaisya}
+      AND CD_HANSYA = #{cdHansya}
+      AND NO_STI = #{noSti}
+      AND MJ_STIHZSM = '1'
+) T7
+    ON T7.KB_STIKT = T7.KB_STIKT_MAX
+   AND (T5.KB_STIKT IS NULL OR T5.KB_STIKT < T7.KB_STIKT)
+WHERE T1.CD_KAISYA = #{cdKaisya}
+  AND T1.CD_HANSYA = #{cdHansya}
+  AND T1.NO_STI = #{noSti}
+  AND T1.MJ_STIHZSM = '1';
+
+
+TRUNCATE TABLE ${uslimDb}.DM_SATEI_KASHI_NSK;
+
+INSERT INTO ${uslimDb}.DM_SATEI_KASHI_NSK (
+    cd_hansya,
+    cd_kaisya,
+    no_sti,
+    kb_stikt,
+    cd_nskbidtl,
+    mj_nskbidtl,
+    cd_nskssysy,
+    mj_nskssysy,
+    mj_nskkasi,
+    nu_nskkgt,
+    mart_created_at
+)
+SELECT
+    #{cdHansya} AS cd_hansya,
+    #{cdKaisya} AS cd_kaisya,
+    #{noSti} AS no_sti,
+    TBNH032G.KB_STIKT,
+    TBNH055M.CD_NSKBIDTL,
+    TBNH055M.MJ_NSKBIDTL,
+    TBNH048M.CD_NSKSSYSY,
+    TBNH048M.MJ_NSKSSYSY,
+    TBNH048M.MJ_NSKKASI,
+    CASE
+        WHEN TBNH064M.CD_HANSYA IS NULL THEN TBNH074M.NU_NSKKGT
+        ELSE TBNH064M.NU_NSKKGT
+    END AS nu_nskkgt,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH032G TBNH032G
+INNER JOIN ${ai21Db}.TBNH002G TBNH002G
+    ON #{cdHansya} = TBNH002G.CD_HANSYA
+   AND #{cdKaisya} = TBNH002G.CD_KAISYA
+   AND #{noSti} = TBNH002G.NO_STI
+   AND '1' = TBNH002G.MJ_STIHZSM
+   AND TBNH032G.KB_STIKT = TBNH002G.KB_STIKT
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH055M TBNH055M
+    ON #{cdHansya} = TBNH055M.CD_HANSYA
+   AND #{cdKaisya} = TBNH055M.CD_KAISYA
+   AND TBNH032G.CD_NSKBIDTL = TBNH055M.CD_NSKBIDTL
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH055M.DD_TKIST AND TBNH055M.DD_TKIEND
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH064M TBNH064M
+    ON #{cdHansya} = TBNH064M.CD_HANSYA
+   AND #{cdKaisya} = TBNH064M.CD_KAISYA
+   AND TBNH032G.CD_NSKKASI = TBNH064M.CD_NSKKASI
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH064M.DD_TKIST AND TBNH064M.DD_TKIEND
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH074M TBNH074M
+    ON #{cdHansya} = TBNH074M.CD_HANSYA
+   AND #{cdKaisya} = TBNH074M.CD_KAISYA
+   AND TBNH032G.CD_NSKKASI = TBNH074M.CD_NSKKASI
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH074M.DD_TKIST AND TBNH074M.DD_TKIEND
+   AND TBNH064M.CD_HANSYA IS NULL
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH048M TBNH048M
+    ON #{cdHansya} = TBNH048M.CD_HANSYA
+   AND #{cdKaisya} = TBNH048M.CD_KAISYA
+   AND CASE WHEN TBNH064M.CD_HANSYA IS NULL THEN TBNH074M.CD_NSKSSYSY ELSE TBNH064M.CD_NSKSSYSY END = TBNH048M.CD_NSKSSYSY
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH048M.DD_TKIST AND TBNH048M.DD_TKIEND
+WHERE TBNH032G.CD_KAISYA = #{cdKaisya}
+  AND TBNH032G.CD_HANSYA = #{cdHansya}
+  AND TBNH032G.NO_STI = #{noSti}
+  AND TBNH032G.MJ_STIHZSM = '1';
+
+
+TRUNCATE TABLE ${uslimDb}.DM_SATEI_KASHI_AA;
+
+INSERT INTO ${uslimDb}.DM_SATEI_KASHI_AA (
+    cd_hansya,
+    cd_kaisya,
+    no_sti,
+    kb_stikt,
+    cd_fgbui,
+    mj_fgbui,
+    cd_snsyo,
+    mj_snsyona,
+    mj_snsyokg,
+    mart_created_at
+)
+SELECT
+    #{cdHansya} AS cd_hansya,
+    #{cdKaisya} AS cd_kaisya,
+    #{noSti} AS no_sti,
+    TBNH008G.KB_STIKT,
+    TBNH019M.CD_FGBUI,
+    TBNH016M.MJ_FGBUI,
+    TBNH019M.CD_SNSYO,
+    TBNH011M.MJ_SNSYONA,
+    TBNH011M.MJ_SNSYOKG,
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBNH008G TBNH008G
+INNER JOIN ${ai21Db}.TBNH002G TBNH002G
+    ON #{cdHansya} = TBNH002G.CD_HANSYA
+   AND #{cdKaisya} = TBNH002G.CD_KAISYA
+   AND #{noSti} = TBNH002G.NO_STI
+   AND '1' = TBNH002G.MJ_STIHZSM
+   AND TBNH008G.KB_STIKT = TBNH002G.KB_STIKT
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH019M TBNH019M
+    ON #{cdHansya} = TBNH019M.CD_HANSYA
+   AND #{cdKaisya} = TBNH019M.CD_KAISYA
+   AND TBNH008G.CD_STIKASI = TBNH019M.CD_STIKASI
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH019M.DD_TKIST AND TBNH019M.DD_TKIEND
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH016M TBNH016M
+    ON #{cdHansya} = TBNH016M.CD_HANSYA
+   AND #{cdKaisya} = TBNH016M.CD_KAISYA
+   AND TBNH019M.CD_FGBUI = TBNH016M.CD_FGBUI
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH016M.DD_TKIST AND TBNH016M.DD_TKIEND
+LEFT JOIN /* +SHUFFLE */ ${ai21Db}.TBNH011M TBNH011M
+    ON #{cdHansya} = TBNH011M.CD_HANSYA
+   AND #{cdKaisya} = TBNH011M.CD_KAISYA
+   AND TBNH019M.CD_SNSYO = TBNH011M.CD_SNSYO
+   AND TBNH002G.DD_STISGJS BETWEEN TBNH011M.DD_TKIST AND TBNH011M.DD_TKIEND
+WHERE TBNH008G.CD_HANSYA = #{cdHansya}
+  AND TBNH008G.CD_KAISYA = #{cdKaisya}
+  AND TBNH008G.NO_STI = #{noSti}
+  AND TBNH008G.MJ_STIHZSM = '1';
+
+
