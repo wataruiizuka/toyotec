@@ -1,0 +1,329 @@
+ddl
+
+CREATE TABLE gold.DM_CONDITIONSETTING (
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    kb_range         VARCHAR(10)   NOT NULL,
+    kb_condition     VARCHAR(10)   NOT NULL,
+    key_item         VARCHAR(255)  NOT NULL,
+    mj_syamei        VARCHAR(255),
+    cd_maker         VARCHAR(50),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_CONDITION_EXCEPT_MAKER (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    kb_range          VARCHAR(10)   NOT NULL,
+    cd_maker          VARCHAR(50)   NOT NULL,
+    mj_makermei       VARCHAR(255),
+    except_cd_maker   VARCHAR(50),
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_CONDITION_EXCEPT_SYAMEI (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    kb_range            VARCHAR(10)   NOT NULL,
+    cd_syamei           VARCHAR(50)   NOT NULL,
+    mj_syamei           VARCHAR(255),
+    cd_maker            VARCHAR(50),
+    except_cd_syamei    VARCHAR(50),
+    except_cd_maker     VARCHAR(50),
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_ELAPSEDDAYS_MAINT (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    nu_shinsitayo       INTEGER,
+    nu_cyusitayo        INTEGER,
+    nu_okure            INTEGER,
+    nu_marker_display   INTEGER,
+    nu_del_keepday      INTEGER,
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_ELAPSEDDAYS_MAINT (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    nu_shinsitayo       INTEGER,
+    nu_cyusitayo        INTEGER,
+    nu_okure            INTEGER,
+    nu_marker_display   INTEGER,
+    nu_del_keepday      INTEGER,
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DISPLAYITEMS_MAINT (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    id_item           VARCHAR(50)   NOT NULL,
+    mj_item           VARCHAR(255),
+    nu_haba           INTEGER,
+    mj_hyouji         VARCHAR(10),
+    nu_sort           INTEGER,
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_BOOKINGLIMIT_MAINT (
+    cd_hansya          VARCHAR(50)   NOT NULL,
+    cd_kaisya          VARCHAR(50)   NOT NULL,
+    su_yoyakujyogen    INTEGER,
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_SITERUIB_EXISTS (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    exists_flag       VARCHAR(1),
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+-- DM_CONDITIONSETTING
+
+TRUNCATE TABLE gold.DM_CONDITIONSETTING;
+
+INSERT INTO gold.DM_CONDITIONSETTING (
+    cd_hansya,
+    cd_kaisya,
+    kb_range,
+    kb_condition,
+    key_item,
+    mj_syamei,
+    cd_maker,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    kb_range,
+    kb_condition,
+    key_item,
+    mj_syamei,
+    cd_maker,
+    NOW()
+FROM uslim_ve.CONDITIONSETTING;
+
+
+-- DM_CONDITION_EXCEPT_MAKER
+
+TRUNCATE TABLE gold.DM_CONDITION_EXCEPT_MAKER;
+
+INSERT INTO gold.DM_CONDITION_EXCEPT_MAKER (
+    cd_hansya,
+    cd_kaisya,
+    kb_range,
+    cd_maker,
+    mj_makermei,
+    except_cd_maker,
+    mart_created_at
+)
+SELECT
+    tbv0205m.cd_hansya,
+    tbv0205m.cd_kaisya,
+    t_cs.kb_range,
+    tbv0205m.cd_maker,
+    NVL(REGEXP_REPLACE(tbv0205m.mj_makermei, '[　 ]+$', ''), '') AS mj_makermei,
+    t_cs.key_item AS except_cd_maker,
+    NOW()
+FROM ai21rep_ve.TBV0205M tbv0205m
+LEFT JOIN uslim_ve.CONDITIONSETTING t_cs
+    ON tbv0205m.cd_hansya = t_cs.cd_hansya
+   AND tbv0205m.cd_kaisya = t_cs.cd_kaisya
+   AND tbv0205m.cd_maker = t_cs.key_item
+   AND t_cs.kb_condition = '01';
+
+
+-- DM_CONDITION_EXCEPT_SYAMEI
+
+TRUNCATE TABLE gold.DM_CONDITION_EXCEPT_SYAMEI;
+
+INSERT INTO gold.DM_CONDITION_EXCEPT_SYAMEI (
+    cd_hansya,
+    cd_kaisya,
+    kb_range,
+    cd_syamei,
+    mj_syamei,
+    cd_maker,
+    except_cd_syamei,
+    except_cd_maker,
+    mart_created_at
+)
+SELECT
+    tbv0232m.cd_hansya,
+    tbv0232m.cd_kaisya,
+    t_cs.kb_range,
+    tbv0232m.cd_syamei,
+    NVL(REGEXP_REPLACE(tbv0232m.mj_syamei, '[　 ]+$', ''), '') AS mj_syamei,
+    tbv0232m.cd_maker,
+    t_cs.key_item AS except_cd_syamei,
+    t_cs.cd_maker AS except_cd_maker,
+    NOW()
+FROM ai21rep_ve.TBV0232M tbv0232m
+LEFT JOIN uslim_ve.CONDITIONSETTING t_cs
+    ON tbv0232m.cd_hansya = t_cs.cd_hansya
+   AND tbv0232m.cd_kaisya = t_cs.cd_kaisya
+   AND tbv0232m.cd_syamei = t_cs.key_item
+   AND t_cs.kb_condition = '02';
+
+
+-- DM_ELAPSEDDAYS_MAINT
+TRUNCATE TABLE gold.DM_ELAPSEDDAYS_MAINT;
+
+INSERT INTO gold.DM_ELAPSEDDAYS_MAINT (
+    cd_hansya,
+    cd_kaisya,
+    nu_shinsitayo,
+    nu_cyusitayo,
+    nu_okure,
+    nu_marker_display,
+    nu_del_keepday,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    nu_shinsitayo,
+    nu_cyusitayo,
+    nu_okure,
+    nu_marker_display,
+    nu_del_keepday,
+    NOW()
+FROM uslim_ve.ELAPSEDDAYSMAINT;
+
+
+-- DM_RESERVE_STORE
+TRUNCATE TABLE gold.DM_RESERVE_STORE;
+
+INSERT INTO gold.DM_RESERVE_STORE (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    cd_tenpo,
+    kj_tentanms,
+    mj_taisyoten,
+    sort_cd_tenpo,
+    mart_created_at
+)
+SELECT
+    base.cd_hansya,
+    base.cd_kaisya,
+    usr.cd_hanbaitn,
+    NVL(usr.cd_tenpo, base.rsm_cd_tenpo) AS cd_tenpo,
+    NVL(REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', ''), t_kts.kj_tentanms) AS kj_tentanms,
+    NVL(base.mj_taisyoten, '0') AS mj_taisyoten,
+    NVL(usr.cd_tenpo, base.rsm_cd_tenpo) AS sort_cd_tenpo,
+    NOW()
+FROM (
+    SELECT
+        COALESCE(t_user.cd_hansya, t_rsm.cd_hansya) AS cd_hansya,
+        COALESCE(t_user.cd_kaisya, t_rsm.cd_kaisya) AS cd_kaisya,
+        t_user.cd_tenpo,
+        t_rsm.cd_tenpo AS rsm_cd_tenpo,
+        t_rsm.mj_taisyoten
+    FROM (
+        SELECT
+            cd_hansya,
+            cd_kaisya,
+            cd_hanbaitn,
+            cd_tenpo
+        FROM uslim_ve.USERINFO
+        WHERE (mj_sakujo != '1' OR mj_sakujo IS NULL)
+        GROUP BY cd_hansya, cd_kaisya, cd_hanbaitn, cd_tenpo
+    ) t_user
+    FULL JOIN (
+        SELECT
+            cd_hansya,
+            cd_kaisya,
+            cd_tenpo,
+            mj_taisyoten
+        FROM uslim_ve.RESERVESTOREMAINT
+    ) t_rsm
+      ON t_user.cd_hansya = t_rsm.cd_hansya
+     AND t_user.cd_kaisya = t_rsm.cd_kaisya
+     AND t_user.cd_tenpo = t_rsm.cd_tenpo
+) base
+LEFT JOIN (
+    SELECT
+        cd_hansya,
+        cd_kaisya,
+        cd_hanbaitn,
+        cd_tenpo
+    FROM uslim_ve.USERINFO
+    WHERE (mj_sakujo != '1' OR mj_sakujo IS NULL)
+    GROUP BY cd_hansya, cd_kaisya, cd_hanbaitn, cd_tenpo
+) usr
+  ON NVL(base.cd_tenpo, base.rsm_cd_tenpo) = usr.cd_tenpo
+ AND base.cd_hansya = usr.cd_hansya
+ AND base.cd_kaisya = usr.cd_kaisya
+LEFT JOIN ai21rep_ve.TBV0201M tbv0201m
+  ON base.cd_hansya = tbv0201m.cd_hansya
+ AND base.cd_kaisya = tbv0201m.cd_kaisya
+ AND NVL(base.cd_tenpo, base.rsm_cd_tenpo) = tbv0201m.cd_tenpo
+LEFT JOIN uslim_ve.KPITARGETSTORE t_kts
+  ON base.cd_hansya = t_kts.cd_hansya
+ AND base.cd_kaisya = t_kts.cd_kaisya
+ AND NVL(base.cd_tenpo, base.rsm_cd_tenpo) = t_kts.cd_tenpo;
+
+
+-- DM_DISPLAYITEMS_MAINT
+TRUNCATE TABLE gold.DM_DISPLAYITEMS_MAINT;
+
+INSERT INTO gold.DM_DISPLAYITEMS_MAINT (
+    cd_hansya,
+    cd_kaisya,
+    id_item,
+    mj_item,
+    nu_haba,
+    mj_hyouji,
+    nu_sort,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    id_item,
+    mj_item,
+    nu_haba,
+    mj_hyouji,
+    nu_sort,
+    NOW()
+FROM uslim_ve.DISPLAYITEMSMAINT;
+
+
+-- DM_BOOKINGLIMIT_MAINT
+TRUNCATE TABLE gold.DM_BOOKINGLIMIT_MAINT;
+
+INSERT INTO gold.DM_BOOKINGLIMIT_MAINT (
+    cd_hansya,
+    cd_kaisya,
+    su_yoyakujyogen,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    su_yoyakujyogen,
+    NOW()
+FROM uslim_ve.BOOKINGLIMITMAINT;
+
+
+-- DM_SITERUIB_EXISTS
+TRUNCATE TABLE gold.DM_SITERUIB_EXISTS;
+
+INSERT INTO gold.DM_SITERUIB_EXISTS (
+    cd_hansya,
+    cd_kaisya,
+    exists_flag,
+    mart_created_at
+)
+SELECT DISTINCT
+    cd_hansya,
+    cd_kaisya,
+    '1' AS exists_flag,
+    NOW()
+FROM ai21rep_ve.TBV0229M;
