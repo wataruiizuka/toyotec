@@ -1,0 +1,45 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,,実行時パラメータ,#{cdHansya},実行時パラメータを設定,TRUNCATE後INSERT,販社を識別するコード。DDL上はVARCHARだが、Impala向けにSTRINGとして整理。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,,実行時パラメータ,#{cdKaisya},実行時パラメータを設定,TRUNCATE後INSERT,会社を識別するコード。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,,実行時パラメータ,#{cdHanbaitn},実行時パラメータを設定,TRUNCATE後INSERT,販売店を識別するコード。
+4,no_syadaiba,車台番号,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,no_syadaiba,元カラムをそのまま設定,TRUNCATE後INSERT,車両を識別する車台番号。
+5,no_syaryou,車両番号,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,no_syaryou,元カラムをそのまま設定,TRUNCATE後INSERT,車両を識別する番号。
+6,no_siretyum,仕入注文番号,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,no_siretyum,元カラムをそのまま設定,TRUNCATE後INSERT,仕入注文または仕入関連の番号と推定。
+7,cd_teanyote,提案予定コード,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,cd_teanyote,元カラムをそのまま設定,TRUNCATE後INSERT,提案予定に関するコードと推定。コード値の意味はDDL/SQL上では未定義。
+8,status,車両ステータス,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,status,元カラムをそのまま設定,TRUNCATE後INSERT,車両の状態を表すコード。具体的なコード意味はDDL/SQL上では未定義。
+9,mj_ncfr,NC/FR区分,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_ncfr,元カラムをそのまま設定,TRUNCATE後INSERT,NC/FRなどの区分値と推定。具体的意味はDDL/SQL上では未定義。
+10,dd_syodotor,初度登録日,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,su_syodotor,su_syodotorがNULLまたは0の場合は空文字。値がある場合は su_syodotor * 100 + 1 をyyyyMMddとして解釈し、yyyy/MM/dd形式へ変換,TRUNCATE後INSERT,初度登録年月を表示用の日付形式に整形した項目。
+11,dd_syknmanr,車検満了日,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,dd_syknmanr,dd_syknmanrがJST現在日付以前の場合は空文字。未来日の場合はyyyy/MM/dd形式へ変換,TRUNCATE後INSERT,有効な車検満了日のみ表示するための項目。過去日付は空文字。
+12,mj_katasiki,型式,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_katasiki,元カラムをそのまま設定,TRUNCATE後INSERT,車両型式。
+13,ki_hnbsijik,販売指示価格,BIGINT,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,ki_hnbsijik,元カラムをそのまま設定,TRUNCATE後INSERT,販売価格または販売指示価格に相当する金額項目と推定。
+14,nu_soukoukm,走行距離,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,nu_soukoukm,元カラムをそのまま設定,TRUNCATE後INSERT,車両の走行距離。
+15,mj_syamei,車名,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_syamei,元カラムをそのまま設定,TRUNCATE後INSERT,車両の名称。
+16,kb_uriagyot,売上業態,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,kb_uriagyot,'1'の場合は'小売'、'2'の場合は'卸売'、それ以外は空文字へ変換,TRUNCATE後INSERT,売上業態コードを画面表示向けの日本語に変換した項目。
+17,dd_sitayote,査定予定日,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,dd_sitayote,"FROM_TIMESTAMP(dd_sitayote, 'yyyy/MM/dd')で文字列化し、NULLの場合は空文字",TRUNCATE後INSERT,査定予定日を表示用の日付形式に整形した項目。
+18,dd_kibonoki,希望納期,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。
+19,cd_syufukre,修復歴有無,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,cd_syufukre,cd_syufukreが空文字またはNULLの場合は'無'、それ以外は'有'へ変換,TRUNCATE後INSERT,修復歴コードを表示用の有無に変換した項目。
+20,cd_web,Web掲載区分,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,kb_web,kb_webをcd_webとして設定,TRUNCATE後INSERT,Web掲載・表示に関する区分と推定。DDL上のカラム名はcd_web、元はkb_web。
+21,kj_syainmei,社員名,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,kj_syainmei,元カラムをそのまま設定,TRUNCATE後INSERT,担当社員名。
+22,kj_tentanms,担当店名／担当者名,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,kj_tentanms,元カラムをそのまま設定,TRUNCATE後INSERT,項目名から担当店または担当者名に関する名称と推定。
+23,mj_todofkenfl,都道府県表示名,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_todofkenfl,元カラムをそのまま設定,TRUNCATE後INSERT,都道府県名または都道府県表示用名称。
+24,kj_zaikoten,在庫店舗名,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,kj_zaikoten,元カラムをそのまま設定,TRUNCATE後INSERT,在庫を保有する店舗名。
+25,ki_sitadkak,査定価格,BIGINT,有,なし,なし,,固定値,NULL,NULLを固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、NULL固定。
+26,nu_suhkt,諸費用等の数値項目,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,nu_suhkt,元カラムをそのまま設定,TRUNCATE後INSERT,具体的意味はDDL/SQL上では未定義。
+27,ki_nesita,値下価格／値下情報,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,ki_nesita,元カラムをそのまま設定,TRUNCATE後INSERT,値下げに関する金額・情報と推定。DDL上はVARCHARのためSTRING扱い。
+28,kj_tosikime,都市名／年式名,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。論理名はカラム名からの推定。
+29,mj_nisclr,内装色／色名,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。論理名はカラム名からの推定。
+30,mj_nejknbk,値引条件備考,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_nejknbk,元カラムをそのまま設定,TRUNCATE後INSERT,値引条件・備考などの長文情報と推定。
+31,mj_comment,コメント,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_comment,元カラムをそのまま設定,TRUNCATE後INSERT,車両に関するコメント。
+32,mj_kudohoho,駆動方式表示名,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。駆動方式の表示名と推定。
+33,id_syaryou,車両ID,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,id_syaryou,元カラムをそのまま設定,TRUNCATE後INSERT,車両を識別するID。
+34,cd_zaiksyys,在庫種別コード,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,cd_zaiksyys,元カラムをそのまま設定,TRUNCATE後INSERT,在庫種別または在庫状態を表すコードと推定。
+35,no_sti,STI番号,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,no_sti,元カラムをそのまま設定,TRUNCATE後INSERT,STIを識別する番号。
+36,id_upasssti,UPASS STI ID,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。UPASS側のSTI識別子と推定。
+37,contain_png,PNG画像有無,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。PNG画像の有無を示す項目と推定。
+38,contain_other,その他画像有無,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。PNG以外の画像有無を示す項目と推定。
+39,nu_zaikonis,在庫日数,BIGINT,有,なし,なし,,固定値,NULL,NULLを固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、NULL固定。在庫日数と推定。
+40,kb_tstihsk,査定引継区分,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。論理名はカラム名からの推定。
+41,dd_tstisgjs,査定実施日,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。
+42,dd_stisgjs,STI実施日,STRING,有,なし,なし,,固定値,'',空文字を固定設定,TRUNCATE後INSERT,現SQLでは元データから取得せず、空文字固定。論理名はカラム名からの推定。
+43,kb_sintyaku,新着区分,STRING,有,なし,なし,,${uslimDb}.DM_SITA_VEHICLE_BASE,kb_sintyaku,元カラムをそのまま設定,TRUNCATE後INSERT,新着かどうかを表す区分。
+44,mart_created_at,データマート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。Impala版STRING化時は実DDL要確認）,システム生成,CURRENT_TIMESTAMP,INSERT時にCURRENT_TIMESTAMPを設定。Impala版ではSTRINGとして格納する前提,TRUNCATE後INSERT,データマートへ登録した日時を保持する監査用項目。DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP。
