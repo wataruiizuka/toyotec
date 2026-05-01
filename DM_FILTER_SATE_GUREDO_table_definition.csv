@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,有,無,無,,SQLパラメータ,#{cdHansya},実行時パラメータ #{cdHansya} をそのまま設定,全件洗い替え（TRUNCATE後INSERT）,対象販社を識別するためのコード。DDL上はNULL許容。
+2,cd_kaisya,会社コード,STRING,有,無,無,,SQLパラメータ,#{cdKaisya},実行時パラメータ #{cdKaisya} をそのまま設定,全件洗い替え（TRUNCATE後INSERT）,対象会社を識別するためのコード。DDL上はNULL許容。
+3,cd_hanbaitn,販売店コード,STRING,有,無,無,,SQLパラメータ,#{cdHanbaitn},実行時パラメータ #{cdHanbaitn} をそのまま設定,全件洗い替え（TRUNCATE後INSERT）,対象販売店を識別するためのコード。DDL上はNULL許容。
+4,mj_sate_guredo,査定グレード名,STRING,無,無,無,,${uslimDb}.DM_FILTER_VEHICLE_BASE,mj_sate_guredo,mj_sate_guredo IS NOT NULL のデータを対象に、mj_sate_guredo 単位でGROUP BYして設定,全件洗い替え（TRUNCATE後INSERT）,査定グレードのフィルタ表示・集約キーとなる項目。DDL上はNOT NULL。
+5,value,査定グレード値,STRING,有,無,無,,${uslimDb}.DM_FILTER_VEHICLE_BASE,mj_sate_guredo,mj_sate_guredo AS value として、査定グレード名をそのまま設定,全件洗い替え（TRUNCATE後INSERT）,画面や検索条件で内部値として使用する想定の値。
+6,label,査定グレード表示名,STRING,有,無,無,,${uslimDb}.DM_FILTER_VEHICLE_BASE,mj_sate_guredo,mj_sate_guredo AS label として、査定グレード名をそのまま設定,全件洗い替え（TRUNCATE後INSERT）,画面表示用の査定グレード名。
+7,link_key,連動キー,STRING,有,無,無,,${uslimDb}.DM_FILTER_VEHICLE_BASE,cd_syamei,"GROUP_CONCAT(DISTINCT cd_syamei) により、紐づく車名コードを {""syamei"": [...]} 形式のJSON風文字列で集約",全件洗い替え（TRUNCATE後INSERT）,査定グレードと車名フィルタを連動させるための情報と読み取れる。画面側の利用方法はSQL上では未記載。
+8,disp,表示フラグ,STRING,有,無,無,,固定値,'1',固定値 '1' を設定,全件洗い替え（TRUNCATE後INSERT）,表示対象を示すフラグと読み取れるが、'1' の業務的意味はSQL上では未記載。
+9,mart_created_at,マート作成日時,STRING,無,無,無,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時の CURRENT_TIMESTAMP を設定,全件洗い替え（TRUNCATE後INSERT）,データマート作成日時。DDLでは TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP だが、要件に従いデータ型はSTRINGとして記載。
