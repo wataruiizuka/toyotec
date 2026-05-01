@@ -1,0 +1,90 @@
+ddl
+
+CREATE TABLE gold.DM_KPI_TENPO (
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    cd_hanbaitn      VARCHAR(50)   NOT NULL,
+    mj_datatype      VARCHAR(20),
+    cd_tenpo         VARCHAR(50)   NOT NULL,
+    kj_tentanms      VARCHAR(255),
+    mj_taisyoten     VARCHAR(10),
+    sort_cd_tenpo    VARCHAR(50),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+TRUNCATE TABLE uslim_ve.DM_KPI_TENPO;
+
+INSERT INTO uslim_ve.DM_KPI_TENPO (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    mj_datatype,
+    cd_tenpo,
+    kj_tentanms,
+    mj_taisyoten,
+    sort_cd_tenpo,
+    mart_created_at
+)
+SELECT
+    base.cd_hansya,
+    base.cd_kaisya,
+    usr.cd_hanbaitn,
+    CASE
+        WHEN usr.cd_tenpo IS NOT NULL THEN 'uslimList'
+        WHEN base.ai21_cd_tenpo IS NOT NULL THEN 'otherList'
+        ELSE 'delList'
+    END AS mj_datatype,
+    NVL(base.ai21_cd_tenpo, base.kts_cd_tenpo) AS cd_tenpo,
+    NVL(base.ai21_kj_tentanms, base.kts_kj_tentanms) AS kj_tentanms,
+    NVL(base.mj_taisyoten, '0') AS mj_taisyoten,
+    NVL(base.ai21_cd_tenpo, base.kts_cd_tenpo) AS sort_cd_tenpo,
+    NOW()
+FROM (
+    SELECT
+        COALESCE(t_ten.cd_hansya, t_kts.cd_hansya) AS cd_hansya,
+        COALESCE(t_ten.cd_kaisya, t_kts.cd_kaisya) AS cd_kaisya,
+        t_ten.cd_tenpo AS ai21_cd_tenpo,
+        t_ten.kj_tentanms AS ai21_kj_tentanms,
+        t_ten.kb_duotenpo,
+        t_kts.cd_tenpo AS kts_cd_tenpo,
+        t_kts.kj_tentanms AS kts_kj_tentanms,
+        t_kts.mj_taisyoten
+    FROM (
+        SELECT
+            cd_hansya,
+            cd_kaisya,
+            cd_tenpo,
+            REGEXP_REPLACE(kj_tentanms, '[　 ]+$', '') AS kj_tentanms,
+            kb_duotenpo
+        FROM ai21rep_ve.TBV0201M
+    ) t_ten
+    FULL JOIN (
+        SELECT
+            cd_hansya,
+            cd_kaisya,
+            cd_tenpo,
+            kj_tentanms,
+            mj_taisyoten
+        FROM uslim_ve.KPITARGETSTORE
+    ) t_kts
+        ON t_ten.cd_hansya = t_kts.cd_hansya
+       AND t_ten.cd_kaisya = t_kts.cd_kaisya
+       AND t_ten.cd_tenpo = t_kts.cd_tenpo
+) base
+LEFT JOIN (
+    SELECT
+        cd_hanbaitn,
+        cd_tenpo,
+        cd_hansya,
+        cd_kaisya
+    FROM uslim_ve.USERINFO
+    WHERE mj_sakujo IS DISTINCT FROM '1'
+    GROUP BY cd_hanbaitn, cd_tenpo, cd_hansya, cd_kaisya
+) usr
+    ON NVL(base.ai21_cd_tenpo, base.kts_cd_tenpo) = usr.cd_tenpo
+   AND base.cd_hansya = usr.cd_hansya
+   AND base.cd_kaisya = usr.cd_kaisya
+WHERE base.kb_duotenpo IS DISTINCT FROM '6';
