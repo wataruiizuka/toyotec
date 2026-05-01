@@ -1,0 +1,530 @@
+ddl
+
+CREATE TABLE gold.DM_USERMAINT_AREA_HANSYA (
+    cd_chiiki        VARCHAR(50)   NOT NULL,
+    mj_chiiki        VARCHAR(255),
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    cd_hanbaitn      VARCHAR(50),
+    kj_hansya        VARCHAR(255),
+    mart_target_date DATE,
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USERMAINT_ALL_TENPO (
+    cd_chiiki        VARCHAR(50),
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    cd_hanbaitn      VARCHAR(50),
+    cd_tenpo         VARCHAR(50)   NOT NULL,
+    kj_tenpomei      VARCHAR(255),
+    disp             VARCHAR(10),
+    sort_cd_chiiki   VARCHAR(50),
+    sort_cd_hanbaitn VARCHAR(50),
+    sort_cd_tenpo    VARCHAR(50),
+    mart_target_date DATE,
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USERMAINT_HANSYA_TENPO (
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    cd_hanbaitn      VARCHAR(50)   NOT NULL,
+    cd_chiiki        VARCHAR(50),
+    cd_tenpo         VARCHAR(50)   NOT NULL,
+    kj_tenpomei      VARCHAR(255),
+    disp             VARCHAR(10),
+    sort_cd_tenpo    VARCHAR(50),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USERMAINT_ALL_USER (
+    cd_user              VARCHAR(50)   NOT NULL,
+    cd_hanbaitn          VARCHAR(50),
+    cd_tenpo             VARCHAR(50),
+    cd_syain             VARCHAR(50),
+    mj_name              VARCHAR(255),
+    mj_role              VARCHAR(50),
+    kb_access_honten     VARCHAR(10),
+    kb_access_hansya     VARCHAR(10),
+    kb_access_yoyaku     VARCHAR(10),
+    kb_hansya_mente      VARCHAR(10),
+    kb_user_mente        VARCHAR(10),
+    kb_notice_mente      VARCHAR(10),
+    kb_view_kpi          VARCHAR(10),
+    kb_view_proc         VARCHAR(10),
+    kb_view_ucar         VARCHAR(10),
+    cd_hansya            VARCHAR(50),
+    cd_kaisya            VARCHAR(50),
+    cd_chiiki            VARCHAR(50),
+    kj_kaisyatn          VARCHAR(255),
+    kj_tenpomei          VARCHAR(255),
+    kb_lexusten          VARCHAR(10),
+    mart_target_date     DATE,
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USERMAINT_HANSYA_USER (
+    cd_hansya            VARCHAR(50)   NOT NULL,
+    cd_kaisya            VARCHAR(50)   NOT NULL,
+    cd_hanbaitn          VARCHAR(50)   NOT NULL,
+    cd_user              VARCHAR(50)   NOT NULL,
+    cd_tenpo             VARCHAR(50),
+    cd_syain             VARCHAR(50),
+    mj_name              VARCHAR(255),
+    mj_role              VARCHAR(50),
+    kb_access_honten     VARCHAR(10),
+    kb_access_hansya     VARCHAR(10),
+    kb_access_yoyaku     VARCHAR(10),
+    kb_hansya_mente      VARCHAR(10),
+    kb_user_mente        VARCHAR(10),
+    kb_notice_mente      VARCHAR(10),
+    kb_view_kpi          VARCHAR(10),
+    kb_view_proc         VARCHAR(10),
+    kb_view_ucar         VARCHAR(10),
+    cd_chiiki            VARCHAR(50),
+    kj_kaisyatn          VARCHAR(255),
+    kj_tenpomei          VARCHAR(255),
+    kb_edit              VARCHAR(10),
+    kb_chg_view          VARCHAR(10),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USERMAINT_TMC_USER (
+    cd_user              VARCHAR(50)   NOT NULL,
+    cd_hanbaitn          VARCHAR(50),
+    cd_tenpo             VARCHAR(50),
+    cd_syain             VARCHAR(50),
+    mj_name              VARCHAR(255),
+    mj_role              VARCHAR(50),
+    kb_access_honten     VARCHAR(10),
+    kb_access_hansya     VARCHAR(10),
+    kb_access_yoyaku     VARCHAR(10),
+    kb_hansya_mente      VARCHAR(10),
+    kb_user_mente        VARCHAR(10),
+    kb_notice_mente      VARCHAR(10),
+    kb_view_kpi          VARCHAR(10),
+    kb_view_proc         VARCHAR(10),
+    kb_view_ucar         VARCHAR(10),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USERMAINT_USER_GET (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    cd_user           VARCHAR(50),
+    cd_syain          VARCHAR(50),
+    mj_name           VARCHAR(255),
+    cd_tenpo          VARCHAR(50),
+    kj_tenpomei       VARCHAR(255),
+    kb_lexusten       VARCHAR(10),
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+-- DM_USERMAINT_AREA_HANSYA
+TRUNCATE TABLE gold.DM_USERMAINT_AREA_HANSYA;
+
+INSERT INTO gold.DM_USERMAINT_AREA_HANSYA (
+    cd_chiiki,
+    mj_chiiki,
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    kj_hansya,
+    mart_target_date,
+    mart_created_at
+)
+SELECT
+    t_area.cd_chiiki,
+    t_area.mj_chiiki,
+    t_hsif.cd_hansya,
+    t_hsif.cd_kaisya,
+    t_hsif.cd_hanbaitn,
+    t_hsif.cd_hanbaitn || '_' || t_hsif.kj_hanbaitn AS kj_hansya,
+    CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE),
+    NOW()
+FROM uslim_ve.HANSYAINFO t_hsif
+INNER JOIN uslim_ve.AREAMASTER t_area
+    ON t_hsif.cd_chiiki = t_area.cd_chiiki
+WHERE
+    (t_hsif.dd_uslimstart IS NULL OR t_hsif.dd_uslimstart <= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE))
+    AND (t_hsif.dd_uslimend IS NULL OR t_hsif.dd_uslimend >= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE));
+
+
+-- DM_USERMAINT_ALL_TENPO
+TRUNCATE TABLE gold.DM_USERMAINT_ALL_TENPO;
+
+INSERT INTO gold.DM_USERMAINT_ALL_TENPO (
+    cd_chiiki,
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    cd_tenpo,
+    kj_tenpomei,
+    disp,
+    sort_cd_chiiki,
+    sort_cd_hanbaitn,
+    sort_cd_tenpo,
+    mart_target_date,
+    mart_created_at
+)
+SELECT
+    t_hsif.cd_chiiki,
+    t_hsif.cd_hansya,
+    t_hsif.cd_kaisya,
+    t_hsif.cd_hanbaitn,
+    t_ten.cd_tenpo,
+    t_ten.kj_tenpomei,
+    NVL2(t_user.cd_tenpo, '1', '0') AS disp,
+    t_hsif.cd_chiiki,
+    t_hsif.cd_hanbaitn,
+    t_ten.cd_tenpo,
+    CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE),
+    NOW()
+FROM uslim_ve.HANSYAINFO t_hsif
+INNER JOIN (
+    SELECT
+        NVL(tbv0201m.cd_hansya, t_kts.cd_hansya) AS cd_hansya,
+        NVL(tbv0201m.cd_kaisya, t_kts.cd_kaisya) AS cd_kaisya,
+        NVL(tbv0201m.cd_tenpo, t_kts.cd_tenpo) AS cd_tenpo,
+        NVL(REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', ''), t_kts.kj_tentanms) AS kj_tenpomei,
+        tbv0201m.kb_duotenpo
+    FROM ai21rep_ve.TBV0201M tbv0201m
+    FULL JOIN uslim_ve.KPITARGETSTORE t_kts
+      ON tbv0201m.cd_hansya = t_kts.cd_hansya
+     AND tbv0201m.cd_kaisya = t_kts.cd_kaisya
+     AND tbv0201m.cd_tenpo = t_kts.cd_tenpo
+) t_ten
+  ON t_hsif.cd_hansya = t_ten.cd_hansya
+ AND t_hsif.cd_kaisya = t_ten.cd_kaisya
+ AND t_ten.kb_duotenpo IS DISTINCT FROM '6'
+LEFT JOIN (
+    SELECT
+        cd_hanbaitn,
+        cd_tenpo
+    FROM uslim_ve.USERINFO
+    WHERE mj_sakujo IS DISTINCT FROM '1'
+    GROUP BY cd_hanbaitn, cd_tenpo
+) t_user
+  ON t_hsif.cd_hanbaitn = t_user.cd_hanbaitn
+ AND t_ten.cd_tenpo = t_user.cd_tenpo
+WHERE
+    (t_hsif.dd_uslimstart IS NULL OR t_hsif.dd_uslimstart <= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE))
+    AND (t_hsif.dd_uslimend IS NULL OR t_hsif.dd_uslimend >= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE));
+
+
+-- DM_USERMAINT_HANSYA_TENPO
+TRUNCATE TABLE gold.DM_USERMAINT_HANSYA_TENPO;
+
+INSERT INTO gold.DM_USERMAINT_HANSYA_TENPO (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    cd_chiiki,
+    cd_tenpo,
+    kj_tenpomei,
+    disp,
+    sort_cd_tenpo,
+    mart_created_at
+)
+SELECT
+    t_hsif.cd_hansya,
+    t_hsif.cd_kaisya,
+    t_userbase.cd_hanbaitn,
+    t_hsif.cd_chiiki,
+    t_ten.cd_tenpo,
+    t_ten.kj_tenpomei,
+    NVL2(t_user.cd_tenpo, '1', '0') AS disp,
+    t_ten.cd_tenpo,
+    NOW()
+FROM uslim_ve.HANSYAINFO t_hsif
+CROSS JOIN (
+    SELECT
+        NVL(t_cmn.cd_tenpo, t_kts.cd_tenpo) AS cd_tenpo,
+        NVL(t_cmn.kj_tentanms, t_kts.kj_tentanms) AS kj_tenpomei,
+        t_cmn.kb_duotenpo
+    FROM (
+        SELECT
+            cd_hansya,
+            cd_kaisya,
+            cd_tenpo,
+            REGEXP_REPLACE(kj_tentanms, '[　 ]+$', '') AS kj_tentanms,
+            kb_duotenpo
+        FROM ai21rep_ve.TBV0201M
+    ) t_cmn
+    FULL JOIN (
+        SELECT
+            cd_hansya,
+            cd_kaisya,
+            cd_tenpo,
+            kj_tentanms
+        FROM uslim_ve.KPITARGETSTORE
+    ) t_kts
+      ON t_cmn.cd_hansya = t_kts.cd_hansya
+     AND t_cmn.cd_kaisya = t_kts.cd_kaisya
+     AND t_cmn.cd_tenpo = t_kts.cd_tenpo
+    WHERE t_cmn.kb_duotenpo IS DISTINCT FROM '6'
+) t_ten
+LEFT JOIN (
+    SELECT
+        cd_hanbaitn,
+        cd_tenpo,
+        cd_hansya,
+        cd_kaisya
+    FROM uslim_ve.USERINFO
+    WHERE mj_sakujo IS DISTINCT FROM '1'
+    GROUP BY cd_hanbaitn, cd_tenpo, cd_hansya, cd_kaisya
+) t_userbase
+  ON t_hsif.cd_hansya = t_userbase.cd_hansya
+ AND t_hsif.cd_kaisya = t_userbase.cd_kaisya
+LEFT JOIN (
+    SELECT
+        cd_hanbaitn,
+        cd_tenpo
+    FROM uslim_ve.USERINFO
+    WHERE mj_sakujo IS DISTINCT FROM '1'
+    GROUP BY cd_hanbaitn, cd_tenpo
+) t_user
+  ON t_ten.cd_tenpo = t_user.cd_tenpo
+ AND t_userbase.cd_hanbaitn = t_user.cd_hanbaitn;
+
+
+-- DM_USERMAINT_ALL_USER
+TRUNCATE TABLE gold.DM_USERMAINT_ALL_USER;
+
+INSERT INTO gold.DM_USERMAINT_ALL_USER (
+    cd_user,
+    cd_hanbaitn,
+    cd_tenpo,
+    cd_syain,
+    mj_name,
+    mj_role,
+    kb_access_honten,
+    kb_access_hansya,
+    kb_access_yoyaku,
+    kb_hansya_mente,
+    kb_user_mente,
+    kb_notice_mente,
+    kb_view_kpi,
+    kb_view_proc,
+    kb_view_ucar,
+    cd_hansya,
+    cd_kaisya,
+    cd_chiiki,
+    kj_kaisyatn,
+    kj_tenpomei,
+    kb_lexusten,
+    mart_target_date,
+    mart_created_at
+)
+SELECT
+    t_user.cd_user,
+    t_user.cd_hanbaitn,
+    t_user.cd_tenpo,
+    t_user.cd_syain,
+    t_user.mj_name,
+    t_user.mj_role,
+    t_user.kb_access_honten,
+    t_user.kb_access_hansya,
+    t_user.kb_access_yoyaku,
+    t_user.kb_hansya_mente,
+    t_user.kb_user_mente,
+    t_user.kb_notice_mente,
+    t_user.kb_view_kpi,
+    t_user.kb_view_proc,
+    t_user.kb_view_ucar,
+    t_hsif.cd_hansya,
+    t_hsif.cd_kaisya,
+    CASE t_user.mj_role
+        WHEN 'DEV' THEN '001'
+        WHEN 'TMC' THEN '002'
+        ELSE t_hsif.cd_chiiki
+    END AS cd_chiiki,
+    t_hsif.kj_hanbaitn AS kj_kaisyatn,
+    NVL(REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', ''), t_kts.kj_tentanms) AS kj_tenpomei,
+    CASE tbv0201m.kb_duotenpo WHEN '6' THEN '1' ELSE '0' END AS kb_lexusten,
+    CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE),
+    NOW()
+FROM uslim_ve.USERINFO t_user
+LEFT JOIN uslim_ve.HANSYAINFO t_hsif
+  ON t_user.cd_hanbaitn = t_hsif.cd_hanbaitn
+ AND (t_hsif.dd_uslimstart IS NULL OR t_hsif.dd_uslimstart <= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE))
+ AND (t_hsif.dd_uslimend IS NULL OR t_hsif.dd_uslimend >= CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE))
+ AND t_user.mj_role = 'DLR'
+LEFT JOIN ai21rep_ve.TBV0201M tbv0201m
+  ON t_hsif.cd_hansya = tbv0201m.cd_hansya
+ AND t_hsif.cd_kaisya = tbv0201m.cd_kaisya
+ AND t_user.cd_tenpo = tbv0201m.cd_tenpo
+LEFT JOIN uslim_ve.KPITARGETSTORE t_kts
+  ON t_hsif.cd_hansya = t_kts.cd_hansya
+ AND t_hsif.cd_kaisya = t_kts.cd_kaisya
+ AND t_user.cd_tenpo = t_kts.cd_tenpo
+WHERE
+    NOT (t_user.mj_role = 'DLR' AND tbv0201m.cd_hansya IS NULL AND t_kts.cd_hansya IS NULL)
+    AND t_user.mj_sakujo IS DISTINCT FROM '1'
+    AND tbv0201m.kb_duotenpo IS DISTINCT FROM '6';
+
+
+-- DM_USERMAINT_HANSYA_USER
+TRUNCATE TABLE gold.DM_USERMAINT_HANSYA_USER;
+
+INSERT INTO gold.DM_USERMAINT_HANSYA_USER (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    cd_user,
+    cd_tenpo,
+    cd_syain,
+    mj_name,
+    mj_role,
+    kb_access_honten,
+    kb_access_hansya,
+    kb_access_yoyaku,
+    kb_hansya_mente,
+    kb_user_mente,
+    kb_notice_mente,
+    kb_view_kpi,
+    kb_view_proc,
+    kb_view_ucar,
+    cd_chiiki,
+    kj_kaisyatn,
+    kj_tenpomei,
+    kb_edit,
+    kb_chg_view,
+    mart_created_at
+)
+SELECT
+    t_hsif.cd_hansya,
+    t_hsif.cd_kaisya,
+    t_user.cd_hanbaitn,
+    t_user.cd_user,
+    t_user.cd_tenpo,
+    t_user.cd_syain,
+    t_user.mj_name,
+    t_user.mj_role,
+    t_user.kb_access_honten,
+    t_user.kb_access_hansya,
+    t_user.kb_access_yoyaku,
+    t_user.kb_hansya_mente,
+    t_user.kb_user_mente,
+    t_user.kb_notice_mente,
+    t_user.kb_view_kpi,
+    t_user.kb_view_proc,
+    t_user.kb_view_ucar,
+    CASE t_user.mj_role
+        WHEN 'DEV' THEN '001'
+        WHEN 'TMC' THEN '002'
+        ELSE t_hsif.cd_chiiki
+    END AS cd_chiiki,
+    t_hsif.kj_hanbaitn AS kj_kaisyatn,
+    NVL(REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', ''), t_kts.kj_tentanms) AS kj_tenpomei,
+    CASE WHEN tbv0014m.cd_syain IS NULL THEN '1' ELSE NULL END AS kb_edit,
+    CASE WHEN t_ten.cd_user IS NULL THEN '0' ELSE '1' END AS kb_chg_view,
+    NOW()
+FROM uslim_ve.USERINFO t_user
+INNER JOIN uslim_ve.HANSYAINFO t_hsif
+  ON t_user.cd_hanbaitn = t_hsif.cd_hanbaitn
+LEFT JOIN ai21rep_ve.TBV0201M tbv0201m
+  ON t_hsif.cd_hansya = tbv0201m.cd_hansya
+ AND t_hsif.cd_kaisya = tbv0201m.cd_kaisya
+ AND t_user.cd_tenpo = tbv0201m.cd_tenpo
+LEFT JOIN uslim_ve.KPITARGETSTORE t_kts
+  ON t_hsif.cd_hansya = t_kts.cd_hansya
+ AND t_hsif.cd_kaisya = t_kts.cd_kaisya
+ AND t_user.cd_tenpo = t_kts.cd_tenpo
+LEFT JOIN ai21rep_ve.TBV0014M tbv0014m
+  ON t_hsif.cd_hansya = tbv0014m.cd_hansya
+ AND t_hsif.cd_kaisya = tbv0014m.cd_kaisya
+ AND t_user.cd_syain = tbv0014m.cd_syain
+ AND tbv0014m.dd_taisyoku IS NULL
+LEFT JOIN (
+    SELECT
+        cd_hanbaitn,
+        MAX(cd_user) AS cd_user
+    FROM uslim_ve.USERINFO
+    WHERE (mj_sakujo != '1' OR mj_sakujo IS NULL)
+      AND kb_access_honten = '2'
+    GROUP BY cd_hanbaitn
+) t_ten
+  ON t_user.cd_hanbaitn = t_ten.cd_hanbaitn
+WHERE
+    t_user.mj_sakujo IS DISTINCT FROM '1'
+    AND tbv0201m.kb_duotenpo IS DISTINCT FROM '6';
+
+
+-- DM_USERMAINT_TMC_USER
+TRUNCATE TABLE gold.DM_USERMAINT_TMC_USER;
+
+INSERT INTO gold.DM_USERMAINT_TMC_USER (
+    cd_user,
+    cd_hanbaitn,
+    cd_tenpo,
+    cd_syain,
+    mj_name,
+    mj_role,
+    kb_access_honten,
+    kb_access_hansya,
+    kb_access_yoyaku,
+    kb_hansya_mente,
+    kb_user_mente,
+    kb_notice_mente,
+    kb_view_kpi,
+    kb_view_proc,
+    kb_view_ucar,
+    mart_created_at
+)
+SELECT
+    cd_user,
+    cd_hanbaitn,
+    cd_tenpo,
+    cd_syain,
+    mj_name,
+    mj_role,
+    kb_access_honten,
+    kb_access_hansya,
+    kb_access_yoyaku,
+    kb_hansya_mente,
+    kb_user_mente,
+    kb_notice_mente,
+    kb_view_kpi,
+    kb_view_proc,
+    kb_view_ucar,
+    NOW()
+FROM uslim_ve.USERINFO
+WHERE mj_role = 'TMC'
+  AND (mj_sakujo != '1' OR mj_sakujo IS NULL);
+
+
+-- DM_USERMAINT_USER_GET
+TRUNCATE TABLE gold.DM_USERMAINT_USER_GET;
+
+INSERT INTO gold.DM_USERMAINT_USER_GET (
+    cd_hansya,
+    cd_kaisya,
+    cd_user,
+    cd_syain,
+    mj_name,
+    cd_tenpo,
+    kj_tenpomei,
+    kb_lexusten,
+    mart_created_at
+)
+SELECT
+    tbv0014m.cd_hansya,
+    tbv0014m.cd_kaisya,
+    NULL AS cd_user,
+    tbv0014m.cd_syain,
+    tbv0014m.kj_syainmei AS mj_name,
+    tbv0201m.cd_tenpo,
+    REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', '') AS kj_tenpomei,
+    CASE tbv0201m.kb_duotenpo WHEN '6' THEN '1' ELSE '0' END AS kb_lexusten,
+    NOW()
+FROM ai21rep_ve.TBV0014M tbv0014m
+LEFT JOIN ai21rep_ve.TBV0201M tbv0201m
+  ON tbv0014m.cd_hansya = tbv0201m.cd_hansya
+ AND tbv0014m.cd_kaisya = tbv0201m.cd_kaisya
+ AND tbv0014m.cd_syozoten = tbv0201m.cd_tenpo
+WHERE tbv0014m.dd_taisyoku IS NULL;
