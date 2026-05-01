@@ -1,0 +1,44 @@
+ddl
+
+CREATE TABLE gold.DM_COMMENT (
+    cd_hansya          VARCHAR(50)   NOT NULL,
+    cd_kaisya          VARCHAR(50)   NOT NULL,
+    kb_koumoku         VARCHAR(100)  NOT NULL,
+    mj_key             VARCHAR(255)  NOT NULL,
+    mj_report          VARCHAR(255)  NOT NULL,
+    mj_value           STRING,
+    dt_sakusei         TIMESTAMP,
+    dt_saisinup        TIMESTAMP,
+    mj_kosinsyamail    VARCHAR(255),
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+sql
+
+TRUNCATE TABLE ${uslimDb}.DM_COMMENT;
+
+INSERT INTO ${uslimDb}.DM_COMMENT (
+    cd_hansya,
+    cd_kaisya,
+    kb_koumoku,
+    mj_key,
+    mj_report,
+    mj_value,
+    dt_sakusei,
+    dt_saisinup,
+    mj_kosinsyamail,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    kb_koumoku,
+    mj_key,
+    mj_report,
+    mj_value,
+    dt_sakusei,
+    dt_saisinup,
+    mj_kosinsyamail,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.KEYVALUEMAINT;
+
