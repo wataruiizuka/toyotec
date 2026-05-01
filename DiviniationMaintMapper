@@ -1,0 +1,364 @@
+ddl
+
+CREATE TABLE gold.DM_DEVIATION_BIZ_PROC (
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    cd_proc          VARCHAR(50)   NOT NULL,
+    kj_proc          VARCHAR(255),
+    cd_proc_dev      VARCHAR(50),
+    su_hyojijun      INTEGER,
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_URIAG (
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    kb_uriage        VARCHAR(50)   NOT NULL,
+    kj_uriagekb      VARCHAR(255),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_TENPO (
+    cd_hansya        VARCHAR(50)   NOT NULL,
+    cd_kaisya        VARCHAR(50)   NOT NULL,
+    cd_tenpo         VARCHAR(50)   NOT NULL,
+    kj_tentanms      VARCHAR(255),
+    mart_created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_PROC_LT_MAINT (
+    cd_hansya           VARCHAR(50)   NOT NULL,
+    cd_kaisya           VARCHAR(50)   NOT NULL,
+    cd_proc_dev         VARCHAR(50)   NOT NULL,
+    kj_proc_dev         VARCHAR(255),
+    cd_prev_proc        VARCHAR(50),
+    cd_proc             VARCHAR(50)   NOT NULL,
+    nu_proc_lt          INTEGER,
+    kb_uriag_list       STRING,
+    cd_tenpo_list       STRING,
+    sort_proc           INTEGER,
+    sort_proc_dev       INTEGER,
+    mart_created_at     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_KASY_PROC_COND (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    kb_type           VARCHAR(10)   NOT NULL,
+    kb_sagyou         VARCHAR(50)   NOT NULL,
+    cd_kasyu_list     STRING,
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_PROC_COND (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    mj_kubunid        VARCHAR(10)   NOT NULL,
+    cd_kubun          VARCHAR(50)   NOT NULL,
+    mj_fukainfo       STRING,
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_PROC_STD_LT (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    cd_proc_dev       VARCHAR(50)   NOT NULL,
+    kj_proc_dev       VARCHAR(255),
+    cd_prev_proc      VARCHAR(50),
+    cd_proc           VARCHAR(50)   NOT NULL,
+    nu_proc_lt        INTEGER,
+    kj_proc           VARCHAR(255),
+    su_hyojijun       INTEGER,
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_DEVIATION_PROC_CONT (
+    cd_hansya         VARCHAR(50)   NOT NULL,
+    cd_kaisya         VARCHAR(50)   NOT NULL,
+    mj_kubunid        VARCHAR(10)   NOT NULL,
+    cd_kubun          VARCHAR(50)   NOT NULL,
+    mj_fukainfo       STRING,
+    mart_created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+-- DM_DEVIATION_BIZ_PROC
+TRUNCATE TABLE gold.DM_DEVIATION_BIZ_PROC;
+
+INSERT INTO gold.DM_DEVIATION_BIZ_PROC (
+    cd_hansya,
+    cd_kaisya,
+    cd_proc,
+    kj_proc,
+    cd_proc_dev,
+    su_hyojijun,
+    mart_created_at
+)
+SELECT
+    t_plm.cd_hansya,
+    t_plm.cd_kaisya,
+    t_ppm.cd_proc,
+    t_ppm.kj_proc,
+    t_plm.cd_proc_dev,
+    t_ppm.su_hyojijun,
+    NOW()
+FROM uslim_ve.PROCPHASEMAINT t_ppm
+INNER JOIN uslim_ve.PROCLTMAINT t_plm
+    ON t_ppm.cd_proc = t_plm.cd_proc
+INNER JOIN uslim_ve.PROCPHASEMAINT t_ppmd
+    ON t_ppmd.kb_proc_type = '3'
+   AND t_ppmd.su_hyojijun = 1
+   AND t_plm.cd_proc_dev = t_ppmd.cd_proc
+WHERE t_ppm.kb_proc_type = '1';
+
+
+-- DM_DEVIATION_URIAG
+TRUNCATE TABLE gold.DM_DEVIATION_URIAG;
+
+INSERT INTO gold.DM_DEVIATION_URIAG (
+    cd_hansya,
+    cd_kaisya,
+    kb_uriage,
+    kj_uriagekb,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    kb_uriage,
+    REGEXP_REPLACE(kj_uriagekb, '[　 ]+$', '') AS kj_uriagekb,
+    NOW()
+FROM ai21rep_ve.TBBF026M;
+
+
+-- DM_DEVIATION_TENPO
+TRUNCATE TABLE gold.DM_DEVIATION_TENPO;
+
+INSERT INTO gold.DM_DEVIATION_TENPO (
+    cd_hansya,
+    cd_kaisya,
+    cd_tenpo,
+    kj_tentanms,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    cd_tenpo,
+    REGEXP_REPLACE(kj_tentanms, '[　 ]+$', '') AS kj_tentanms,
+    NOW()
+FROM ai21rep_ve.TBV0201M;
+
+
+-- DM_DEVIATION_PROC_LT_MAINT
+TRUNCATE TABLE gold.DM_DEVIATION_PROC_LT_MAINT;
+
+INSERT INTO gold.DM_DEVIATION_PROC_LT_MAINT (
+    cd_hansya,
+    cd_kaisya,
+    cd_proc_dev,
+    kj_proc_dev,
+    cd_prev_proc,
+    cd_proc,
+    nu_proc_lt,
+    kb_uriag_list,
+    cd_tenpo_list,
+    sort_proc,
+    sort_proc_dev,
+    mart_created_at
+)
+SELECT
+    base.target_cd_hansya AS cd_hansya,
+    base.target_cd_kaisya AS cd_kaisya,
+    base.cd_proc_dev,
+    base.kj_proc_dev,
+    base.cd_prev_proc,
+    base.cd_proc,
+    base.nu_proc_lt,
+    t_pc.mj_fukainfo AS kb_uriag_list,
+    t_tp.mj_fukainfo AS cd_tenpo_list,
+    t_ppmp.su_hyojijun AS sort_proc,
+    t_ppmd.su_hyojijun AS sort_proc_dev,
+    NOW()
+FROM (
+    SELECT *
+    FROM (
+        SELECT
+            m.target_cd_hansya,
+            m.target_cd_kaisya,
+            p.cd_proc_dev,
+            p.kj_proc_dev,
+            p.cd_prev_proc,
+            p.cd_proc,
+            p.nu_proc_lt,
+            ROW_NUMBER() OVER (
+                PARTITION BY m.target_cd_hansya, m.target_cd_kaisya, p.cd_proc_dev, p.cd_prev_proc, p.cd_proc
+                ORDER BY CASE
+                    WHEN p.cd_hansya = m.target_cd_hansya AND p.cd_kaisya = m.target_cd_kaisya THEN 1
+                    ELSE 2
+                END
+            ) AS rn
+        FROM uslim_ve.PROCLTMAINT p
+        INNER JOIN (
+            SELECT DISTINCT
+                cd_hansya AS target_cd_hansya,
+                cd_kaisya AS target_cd_kaisya,
+                /* 共通販社・会社は固定値マスタや設定テーブルで持つ想定 */
+                '${cdCmnHansya}' AS cd_cmn_hansya,
+                '${cdCmnKaisya}' AS cd_cmn_kaisya
+            FROM uslim_ve.HANSYAINFO
+        ) m
+          ON (p.cd_hansya = m.target_cd_hansya AND p.cd_kaisya = m.target_cd_kaisya)
+          OR (p.cd_hansya = m.cd_cmn_hansya AND p.cd_kaisya = m.cd_cmn_kaisya)
+    ) x
+    WHERE x.rn = 1
+) base
+INNER JOIN uslim_ve.PROCPHASEMAINT t_ppmp
+    ON t_ppmp.kb_proc_type = '2'
+   AND CONCAT(base.cd_prev_proc, ',', base.cd_proc) = t_ppmp.cd_proc
+INNER JOIN uslim_ve.PROCPHASEMAINT t_ppmd
+    ON t_ppmd.kb_proc_type = '3'
+   AND base.cd_proc_dev = t_ppmd.cd_proc
+LEFT JOIN uslim_ve.PROCCONDITION t_pc
+    ON base.target_cd_hansya = t_pc.cd_hansya
+   AND base.target_cd_kaisya = t_pc.cd_kaisya
+   AND t_pc.mj_kubunid = '01'
+   AND base.cd_proc = t_pc.cd_kubun
+LEFT JOIN uslim_ve.PROCCONDITION t_tp
+    ON base.target_cd_hansya = t_tp.cd_hansya
+   AND base.target_cd_kaisya = t_tp.cd_kaisya
+   AND t_tp.mj_kubunid = '04'
+   AND base.cd_proc = t_tp.cd_kubun;
+
+
+-- DM_DEVIATION_KASY_PROC_COND
+TRUNCATE TABLE gold.DM_DEVIATION_KASY_PROC_COND;
+
+INSERT INTO gold.DM_DEVIATION_KASY_PROC_COND (
+    cd_hansya,
+    cd_kaisya,
+    kb_type,
+    kb_sagyou,
+    cd_kasyu_list,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    mj_kubunid AS kb_type,
+    cd_kubun AS kb_sagyou,
+    mj_fukainfo AS cd_kasyu_list,
+    NOW()
+FROM uslim_ve.PROCCONDITION
+WHERE mj_kubunid IN ('02', '03');
+
+
+-- DM_DEVIATION_PROC_COND
+TRUNCATE TABLE gold.DM_DEVIATION_PROC_COND;
+
+INSERT INTO gold.DM_DEVIATION_PROC_COND (
+    cd_hansya,
+    cd_kaisya,
+    mj_kubunid,
+    cd_kubun,
+    mj_fukainfo,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    mj_kubunid,
+    cd_kubun,
+    mj_fukainfo,
+    NOW()
+FROM uslim_ve.PROCCONDITION;
+
+
+-- DM_DEVIATION_PROC_STD_LT
+TRUNCATE TABLE gold.DM_DEVIATION_PROC_STD_LT;
+
+INSERT INTO gold.DM_DEVIATION_PROC_STD_LT (
+    cd_hansya,
+    cd_kaisya,
+    cd_proc_dev,
+    kj_proc_dev,
+    cd_prev_proc,
+    cd_proc,
+    nu_proc_lt,
+    kj_proc,
+    su_hyojijun,
+    mart_created_at
+)
+SELECT
+    base.target_cd_hansya AS cd_hansya,
+    base.target_cd_kaisya AS cd_kaisya,
+    base.cd_proc_dev,
+    base.kj_proc_dev,
+    base.cd_prev_proc,
+    base.cd_proc,
+    base.nu_proc_lt,
+    t_ppmp.kj_proc,
+    t_ppmd.su_hyojijun,
+    NOW()
+FROM (
+    SELECT *
+    FROM (
+        SELECT
+            m.target_cd_hansya,
+            m.target_cd_kaisya,
+            p.cd_proc_dev,
+            p.kj_proc_dev,
+            p.cd_prev_proc,
+            p.cd_proc,
+            p.nu_proc_lt,
+            ROW_NUMBER() OVER (
+                PARTITION BY m.target_cd_hansya, m.target_cd_kaisya, p.cd_proc_dev, p.cd_prev_proc, p.cd_proc
+                ORDER BY CASE
+                    WHEN p.cd_hansya = m.target_cd_hansya AND p.cd_kaisya = m.target_cd_kaisya THEN 1
+                    ELSE 2
+                END
+            ) AS rn
+        FROM uslim_ve.PROCLTMAINT p
+        INNER JOIN (
+            SELECT DISTINCT
+                cd_hansya AS target_cd_hansya,
+                cd_kaisya AS target_cd_kaisya,
+                '${cdCmnHansya}' AS cd_cmn_hansya,
+                '${cdCmnKaisya}' AS cd_cmn_kaisya
+            FROM uslim_ve.HANSYAINFO
+        ) m
+          ON (p.cd_hansya = m.target_cd_hansya AND p.cd_kaisya = m.target_cd_kaisya)
+          OR (p.cd_hansya = m.cd_cmn_hansya AND p.cd_kaisya = m.cd_cmn_kaisya)
+    ) x
+    WHERE x.rn = 1
+) base
+INNER JOIN uslim_ve.PROCPHASEMAINT t_ppmp
+    ON t_ppmp.kb_proc_type = '2'
+   AND CONCAT(base.cd_prev_proc, ',', base.cd_proc) = t_ppmp.cd_proc
+INNER JOIN uslim_ve.PROCPHASEMAINT t_ppmd
+    ON t_ppmd.kb_proc_type = '3'
+   AND base.cd_proc_dev = t_ppmd.cd_proc;
+
+
+-- DM_DEVIATION_PROC_CONT
+TRUNCATE TABLE gold.DM_DEVIATION_PROC_CONT;
+
+INSERT INTO gold.DM_DEVIATION_PROC_CONT (
+    cd_hansya,
+    cd_kaisya,
+    mj_kubunid,
+    cd_kubun,
+    mj_fukainfo,
+    mart_created_at
+)
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    mj_kubunid,
+    cd_kubun,
+    mj_fukainfo,
+    NOW()
+FROM uslim_ve.PROCCONDITION
+WHERE mj_kubunid = '05';
