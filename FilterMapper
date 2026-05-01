@@ -1,0 +1,726 @@
+ddl
+
+CREATE TABLE gold.DM_FILTER_VEHICLE_BASE (
+    source_type           VARCHAR(20)   NOT NULL,   -- SITA / ZAIKO / GAZOO
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+
+    no_syadaiba           VARCHAR(100),
+    no_syaryou            VARCHAR(100),
+    no_siretyum           VARCHAR(100),
+
+    cd_syamei            VARCHAR(100),
+    mj_syamei            VARCHAR(255),
+    cd_maker             VARCHAR(20),
+
+    mj_katasiki          VARCHAR(255),
+    no_siteruib          VARCHAR(100),
+    mj_siteruib_guredo   VARCHAR(255),
+    mj_sate_guredo       VARCHAR(255),
+
+    su_syodotor          INT,
+    syodotor_year        INT,
+    nu_soukoukm          BIGINT,
+    cd_syufukre          VARCHAR(20),
+    kb_uriagyot          VARCHAR(20),
+    nu_suhkt             VARCHAR(20),
+
+    mj_ncfr              VARCHAR(10),
+    cd_web               VARCHAR(10),
+    status               VARCHAR(10),
+
+    dd_sitayote          DATE,
+    cd_tmchancd          VARCHAR(50),
+    kj_kaisya            VARCHAR(255),
+    cd_todofken          VARCHAR(20),
+    mj_todofkenfl        VARCHAR(255),
+
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_TOSIKIME (
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    disp_order           INT,
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_CODE_0309 (
+    cd_kaisya            VARCHAR(50) NOT NULL,
+    cd_hansya            VARCHAR(50) NOT NULL,
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_CODE_0345 (
+    cd_kaisya            VARCHAR(50) NOT NULL,
+    cd_hansya            VARCHAR(50) NOT NULL,
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_CODE_0128 (
+    cd_kaisya            VARCHAR(50) NOT NULL,
+    cd_hansya            VARCHAR(50) NOT NULL,
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_MAKER (
+    cd_kaisya            VARCHAR(50) NOT NULL,
+    cd_hansya            VARCHAR(50) NOT NULL,
+    value                VARCHAR(20) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_CODE_0080 (
+    cd_kaisya            VARCHAR(50) NOT NULL,
+    cd_hansya            VARCHAR(50) NOT NULL,
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_GAZOO_HANSYA (
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_GAZOO_TODOFKEN (
+    value                VARCHAR(50) NOT NULL,
+    label                VARCHAR(255),
+    mart_created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_SYAMEI (
+    cd_hansya          VARCHAR(50),
+    cd_kaisya          VARCHAR(50),
+    cd_hanbaitn        VARCHAR(50),
+
+    mj_syamei          VARCHAR(255) NOT NULL,
+    value              STRING,
+    link_key           STRING,
+    disp               VARCHAR(1),
+
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_SYODOTOR (
+    cd_hansya          VARCHAR(50),
+    cd_kaisya          VARCHAR(50),
+    cd_hanbaitn        VARCHAR(50),
+
+    syodotor_year      INT NOT NULL,
+    value              VARCHAR(20),
+    label              VARCHAR(50),
+    disp               VARCHAR(1),
+
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_KATASIKI (
+    cd_hansya          VARCHAR(50),
+    cd_kaisya          VARCHAR(50),
+    cd_hanbaitn        VARCHAR(50),
+
+    mj_katasiki        VARCHAR(255) NOT NULL,
+    value              VARCHAR(255),
+    label              VARCHAR(255),
+    link_key           STRING,
+    disp               VARCHAR(1),
+
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_SITERUIB_GUREDO (
+    cd_hansya             VARCHAR(50),
+    cd_kaisya             VARCHAR(50),
+    cd_hanbaitn           VARCHAR(50),
+
+    mj_siteruib_guredo    VARCHAR(255) NOT NULL,
+    value                 VARCHAR(255),
+    label                 VARCHAR(255),
+    link_key              STRING,
+    disp                  VARCHAR(1),
+
+    mart_created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_SATE_GUREDO (
+    cd_hansya          VARCHAR(50),
+    cd_kaisya          VARCHAR(50),
+    cd_hanbaitn        VARCHAR(50),
+
+    mj_sate_guredo     VARCHAR(255) NOT NULL,
+    value              VARCHAR(255),
+    label              VARCHAR(255),
+    link_key           STRING,
+    disp               VARCHAR(1),
+
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_FILTER_SITAYOTE (
+    cd_hansya          VARCHAR(50),
+    cd_kaisya          VARCHAR(50),
+    cd_hanbaitn        VARCHAR(50),
+
+    dd_sitayote        DATE NOT NULL,
+    value              VARCHAR(20),
+    label              VARCHAR(50),
+    disp               VARCHAR(1),
+
+    mart_created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_TOSIKIME;
+INSERT INTO ${uslimDb}.DM_FILTER_TOSIKIME (
+    value, label, disp_order, mart_created_at
+)
+SELECT
+    SEARCH_COLOR_CD,
+    SEARCH_COLOR_NM,
+    DISP_ORDER,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.GAZOOSEARCHCOLOR;
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_CODE_0309;
+INSERT INTO ${uslimDb}.DM_FILTER_CODE_0309 (
+    cd_kaisya, cd_hansya, value, label, mart_created_at
+)
+SELECT
+    CD_KAISYA,
+    CD_HANSYA,
+    CD_KUBUN,
+    REGEXP_REPLACE(MJ_KUBUNNAI, '[　 ]+$', ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBV0231M
+WHERE MJ_BLOCKID = '03'
+  AND MJ_KUBUNID = '0309'
+  AND CD_KUBUN <> '**';
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_CODE_0345;
+INSERT INTO ${uslimDb}.DM_FILTER_CODE_0345 (
+    cd_kaisya, cd_hansya, value, label, mart_created_at
+)
+SELECT
+    CD_KAISYA,
+    CD_HANSYA,
+    CD_KUBUN,
+    REGEXP_REPLACE(MJ_KUBUNNAI, '[　 ]+$', ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBV0231M
+WHERE MJ_BLOCKID = '03'
+  AND MJ_KUBUNID = '0345'
+  AND CD_KUBUN <> '**';
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_CODE_0128;
+INSERT INTO ${uslimDb}.DM_FILTER_CODE_0128 (
+    cd_kaisya, cd_hansya, value, label, mart_created_at
+)
+SELECT
+    CD_KAISYA,
+    CD_HANSYA,
+    RTRIM(CD_KUBUN),
+    REGEXP_REPLACE(MJ_KUBUNNAI, '[　| ]', ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBV0231M
+WHERE MJ_BLOCKID = '03'
+  AND MJ_KUBUNID = '0128'
+  AND CD_KUBUN <> '**';
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_MAKER;
+INSERT INTO ${uslimDb}.DM_FILTER_MAKER (
+    cd_kaisya, cd_hansya, value, label, mart_created_at
+)
+SELECT
+    CD_KAISYA,
+    CD_HANSYA,
+    CD_MAKER,
+    REGEXP_REPLACE(MJ_MAKERMEI, '[　 ]+$', ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBV0205M;
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_CODE_0080;
+INSERT INTO ${uslimDb}.DM_FILTER_CODE_0080 (
+    cd_kaisya, cd_hansya, value, label, mart_created_at
+)
+SELECT
+    CD_KAISYA,
+    CD_HANSYA,
+    RTRIM(CD_KUBUN),
+    REGEXP_REPLACE(MJ_KUBUNNAI, '[　 ]+$', ''),
+    CURRENT_TIMESTAMP
+FROM ${ai21Db}.TBV0231M
+WHERE MJ_BLOCKID = '03'
+  AND MJ_KUBUNID = '0080'
+  AND CD_KUBUN <> '**';
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_GAZOO_HANSYA;
+INSERT INTO ${uslimDb}.DM_FILTER_GAZOO_HANSYA (
+    value, label, mart_created_at
+)
+SELECT
+    CD_TMCHANCD,
+    KJ_KAISYA,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.GAZOOKYOUZAIKOINFO
+GROUP BY CD_TMCHANCD, KJ_KAISYA;
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_GAZOO_TODOFKEN;
+INSERT INTO ${uslimDb}.DM_FILTER_GAZOO_TODOFKEN (
+    value, label, mart_created_at
+)
+SELECT
+    CD_TODOFKEN,
+    MJ_TODOFKENFL,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.GAZOOKYOUZAIKOINFO
+GROUP BY CD_TODOFKEN, MJ_TODOFKENFL;
+
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_VEHICLE_BASE;
+
+INSERT INTO ${uslimDb}.DM_FILTER_VEHICLE_BASE (
+    source_type,
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    no_syadaiba,
+    no_syaryou,
+    no_siretyum,
+    cd_syamei,
+    mj_syamei,
+    cd_maker,
+    mj_katasiki,
+    no_siteruib,
+    mj_siteruib_guredo,
+    mj_sate_guredo,
+    su_syodotor,
+    syodotor_year,
+    nu_soukoukm,
+    cd_syufukre,
+    kb_uriagyot,
+    nu_suhkt,
+    mj_ncfr,
+    cd_web,
+    status,
+    dd_sitayote,
+    cd_tmchancd,
+    kj_kaisya,
+    cd_todofken,
+    mj_todofkenfl,
+    mart_created_at
+)
+SELECT
+    source_type,
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    no_syadaiba,
+    no_syaryou,
+    no_siretyum,
+    cd_syamei,
+    mj_syamei,
+    cd_maker,
+    mj_katasiki,
+    no_siteruib,
+    mj_siteruib_guredo,
+    mj_sate_guredo,
+    su_syodotor,
+    CASE WHEN su_syodotor IS NOT NULL AND su_syodotor <> 0 THEN su_syodotor DIV 100 ELSE NULL END,
+    nu_soukoukm,
+    cd_syufukre,
+    kb_uriagyot,
+    nu_suhkt,
+    mj_ncfr,
+    cd_web,
+    status,
+    dd_sitayote,
+    cd_tmchancd,
+    kj_kaisya,
+    cd_todofken,
+    mj_todofkenfl,
+    CURRENT_TIMESTAMP
+FROM (
+    /* 1) 仕入予定 */
+    SELECT
+        'SITA' AS source_type,
+        #{cdHansya} AS cd_hansya,
+        #{cdKaisya} AS cd_kaisya,
+        #{cdHanbaitn} AS cd_hanbaitn,
+        RTRIM(TBBC003G.NO_SYADAIBA) AS no_syadaiba,
+        NULL AS no_syaryou,
+        TBBC003G.NO_SIRETYUM AS no_siretyum,
+        TBV0232M.CD_SYAMEI AS cd_syamei,
+        COALESCE(T_GCCN1.CAR_NM, T_GCCN2.CAR_NM, REGEXP_REPLACE(TBV0232M.KJ_SYAMEI, '[　 ]+$', '')) AS mj_syamei,
+        TBV0232M.CD_MAKER AS cd_maker,
+        REGEXP_REPLACE(TBBC003G.MJ_KATASIKI, '[　 ]+$', '') AS mj_katasiki,
+        TBBC003G.NO_SITERUIB AS no_siteruib,
+        NVL(NULLIF(RTRIM(TBV0229M.MJ_GUREDO), ''), 'その他') AS mj_siteruib_guredo,
+        NULL AS mj_sate_guredo,
+        TBBC003G.SU_SYODOTOR AS su_syodotor,
+        TBBC003G.NU_SOUKOUKM AS nu_soukoukm,
+        RTRIM(TBBC003G.CD_SYUFUKRE) AS cd_syufukre,
+        RTRIM(LEFT(TBBC003G.KB_URIAGYOT, 1)) AS kb_uriagyot,
+        NULL AS nu_suhkt,
+        CASE
+            WHEN TBBA001G.CD_KAISYA IS NULL THEN '0'
+            WHEN TBBA001G.DD_FR IS NULL THEN '1'
+            WHEN TBBA001G.DD_FRTORIKS IS NULL THEN '2'
+            WHEN TBBA001G.DD_FR >= TBBA001G.DD_FRTORIKS THEN '2'
+            ELSE '1'
+        END AS mj_ncfr,
+        '' AS cd_web,
+        '1' AS status,
+        CASE
+            WHEN T_JOS.SIM_KNDATE_DT IS NOT NULL AND TBBA001G.DD_FR IS NOT NULL
+                 AND CAST(TBBA001G.DD_FR AS DATE) > CAST(DAYS_ADD(T_JOS.SIM_KNDATE_DT, #{nuShinsitayo}) AS DATE)
+                THEN NULL
+            WHEN T_JOS.SIM_KNDATE_DT IS NOT NULL
+                THEN DAYS_ADD(T_JOS.SIM_KNDATE_DT, #{nuShinsitayo})
+            WHEN TBBC017G.DD_NOSYAYOT IS NOT NULL
+                THEN TBBC017G.DD_NOSYAYOT
+            WHEN TBBC017G.DD_JUCYU IS NOT NULL
+                THEN DAYS_ADD(TBBC017G.DD_JUCYU, #{nuCyusitayo})
+            ELSE NULL
+        END AS dd_sitayote,
+        NULL AS cd_tmchancd,
+        NULL AS kj_kaisya,
+        NULL AS cd_todofken,
+        NULL AS mj_todofkenfl
+    FROM ${ai21Db}.TBBC003G TBBC003G
+    INNER JOIN ${ai21Db}.TBV0232M TBV0232M
+      ON #{cdKaisya} = TBV0232M.CD_KAISYA
+     AND #{cdHansya} = TBV0232M.CD_HANSYA
+     AND CONCAT(TBBC003G.MJ_21SYAMEK, TBBC003G.MJ_21SYASYU, TBBC003G.MJ_21SYAMAK, TBBC003G.NO_21SYAREN, TBBC003G.MJ_21SYANIN) = TBV0232M.CD_SYAMEI
+    LEFT JOIN ${uslimDb}.GAZOOCMNCARNM T_GCCN1
+      ON TBV0232M.CD_SYAMEI = T_GCCN1.CAR_NM_CD
+    LEFT JOIN ${uslimDb}.GAZOODLRCARNM T_GDCN
+      ON #{cdHanbaitn} = T_GDCN.DEALER_CD
+     AND TBV0232M.CD_SYAMEI = T_GDCN.DLR_CAR_NM_CD
+     AND T_GCCN1.CAR_NM_CD IS NULL
+    LEFT JOIN ${uslimDb}.GAZOOCMNCARNM T_GCCN2
+      ON T_GDCN.CMN_CAR_NM_CD = T_GCCN2.CAR_NM_CD
+    LEFT JOIN ${ai21Db}.TBBA001G TBBA001G
+      ON #{cdHansya} = TBBA001G.CD_HANSYA
+     AND #{cdKaisya} = TBBA001G.CD_KAISYA
+     AND TBBC003G.NO_SIRETYUM = CONCAT(TBBA001G.NO_CYUMON, TBBA001G.NO_CYUMONED)
+     AND TBBA001G.DD_TORIKESI IS NULL
+    LEFT JOIN ${uslimDb}.JSLIMORDERSTATUS T_JOS
+      ON #{cdHanbaitn} = T_JOS.DLRCD
+     AND TBBC003G.NO_SIRETYUM = CONCAT(T_JOS.NO_CYUMON, T_JOS.NO_CYUMONED)
+     AND T_JOS.SIM_KNDATE_DT IS NOT NULL
+     AND TBBA001G.CD_KAISYA IS NOT NULL
+    LEFT JOIN ${ai21Db}.TBBC017G TBBC017G
+      ON #{cdKaisya} = TBBC017G.CD_KAISYA
+     AND #{cdHansya} = TBBC017G.CD_HANSYA
+     AND TBBC003G.NO_SIRETYUM = CONCAT(TBBC017G.NO_CYUMON, TBBC017G.NO_CYUMONED)
+     AND TBBC017G.DD_TORIKESI IS NULL
+    LEFT JOIN ${ai21Db}.TBV0229M TBV0229M
+      ON #{cdKaisya} = TBV0229M.CD_KAISYA
+     AND #{cdHansya} = TBV0229M.CD_HANSYA
+     AND TBBC003G.NO_SITERUIB = TBV0229M.NO_SITERUIB
+    WHERE TBBC003G.CD_KAISYA = #{cdKaisya}
+      AND TBBC003G.CD_HANSYA = #{cdHansya}
+
+    UNION ALL
+
+    /* 2) 在庫 */
+    SELECT
+        'ZAIKO' AS source_type,
+        #{cdHansya},
+        #{cdKaisya},
+        #{cdHanbaitn},
+        RTRIM(TBBC001G.NO_SYADAIBA),
+        TBBC001G.NO_SYARYOU,
+        TBBC001G.NO_SIRETYUM,
+        TBV0232M.CD_SYAMEI,
+        COALESCE(T_GCCN1.CAR_NM, T_GCCN2.CAR_NM, REGEXP_REPLACE(TBV0232M.KJ_SYAMEI, '[　 ]+$', '')),
+        TBV0232M.CD_MAKER,
+        REGEXP_REPLACE(TBBC001G.MJ_KATASIKI, '[　 ]+$', ''),
+        TBBC001G.NO_SITERUIB,
+        NVL(NULLIF(RTRIM(TBV0229M.MJ_GUREDO), ''), 'その他'),
+        NULL,
+        TBBC001G.SU_SYODOTOR,
+        TBBC001G.NU_SOUKOUKM,
+        RTRIM(TBBC001G.CD_SYUFUKRE),
+        RTRIM(LEFT(TBBC001G.KB_URIAGYOT, 1)),
+        NULL,
+        '0',
+        CASE T_GAZOO.MJ_KESAIST WHEN '1' THEN '1' ELSE '0' END,
+        CASE WHEN TBBC001G.MJ_ZAIKOST = '1' THEN '3' ELSE '2' END,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    FROM ${ai21Db}.TBBC001G TBBC001G
+    INNER JOIN ${ai21Db}.TBV0232M TBV0232M
+      ON #{cdKaisya} = TBV0232M.CD_KAISYA
+     AND #{cdHansya} = TBV0232M.CD_HANSYA
+     AND CONCAT(TBBC001G.MJ_21SYAMEK, TBBC001G.MJ_21SYASYU, TBBC001G.MJ_21SYAMAK, TBBC001G.NO_21SYAREN, TBBC001G.MJ_21SYANIN) = TBV0232M.CD_SYAMEI
+    LEFT JOIN ${gazooDb}.GAZOOINFO T_GAZOO
+      ON #{cdHanbaitn} = T_GAZOO.CD_TMCHANCD
+     AND TBBC001G.NO_SYARYOU = T_GAZOO.NO_SYARYOU
+     AND RTRIM(TBBC001G.NO_SYADAIBA) = T_GAZOO.NO_SYADAIBA
+    LEFT JOIN ${uslimDb}.GAZOOCMNCARNM T_GCCN1
+      ON TBV0232M.CD_SYAMEI = T_GCCN1.CAR_NM_CD
+    LEFT JOIN ${uslimDb}.GAZOODLRCARNM T_GDCN
+      ON #{cdHanbaitn} = T_GDCN.DEALER_CD
+     AND TBV0232M.CD_SYAMEI = T_GDCN.DLR_CAR_NM_CD
+     AND T_GCCN1.CAR_NM_CD IS NULL
+    LEFT JOIN ${uslimDb}.GAZOOCMNCARNM T_GCCN2
+      ON T_GDCN.CMN_CAR_NM_CD = T_GCCN2.CAR_NM_CD
+    LEFT JOIN ${ai21Db}.TBV0229M TBV0229M
+      ON #{cdKaisya} = TBV0229M.CD_KAISYA
+     AND #{cdHansya} = TBV0229M.CD_HANSYA
+     AND TBBC001G.NO_SITERUIB = TBV0229M.NO_SITERUIB
+    WHERE TBBC001G.CD_KAISYA = #{cdKaisya}
+      AND TBBC001G.CD_HANSYA = #{cdHansya}
+      AND TBBC001G.DD_TORIKESI IS NULL
+      AND TBBC001G.MJ_ZAIKOST IN (' ', '1')
+
+    UNION ALL
+
+    /* 3) Gazoo共通在庫 */
+    SELECT
+        'GAZOO' AS source_type,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        T_GKZI.CD_SYAMEIAI,
+        T_GKZI.KJ_SYAMEI,
+        CASE
+            WHEN T_GKZI.CD_MAKER <> '12' THEN T_GKZI.CD_MAKER
+            WHEN TBV0205M.CD_MAKER IS NOT NULL THEN TBV0205M.CD_MAKER
+            ELSE '01'
+        END,
+        REGEXP_REPLACE(T_GKZI.MJ_KATASIKI, '[　 ]+$', ''),
+        NULL,
+        NVL(NULLIF(RTRIM(T_GKZI.MJ_GUREDO), ''), 'その他'),
+        NVL(NULLIF(RTRIM(T_GKZI.MJ_GUREDO), ''), 'その他'),
+        CAST(T_GKZI.SU_SYODOTOR AS INT),
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        '1',
+        '4',
+        NULL,
+        T_GKZI.CD_TMCHANCD,
+        T_GKZI.KJ_KAISYA,
+        T_GKZI.CD_TODOFKEN,
+        T_GKZI.MJ_TODOFKENFL
+    FROM ${uslimDb}.GAZOOKYOUZAIKOINFO T_GKZI
+    LEFT JOIN ${ai21Db}.TBV0205M TBV0205M
+      ON #{cdKaisya} = TBV0205M.CD_KAISYA
+     AND #{cdHansya} = TBV0205M.CD_HANSYA
+     AND TBV0205M.MJ_MAKERMEI LIKE '%ﾚｸｻｽ%'
+) T_BASE;
+
+
+-- DM_FILTER_SYAMEI
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_SYAMEI;
+
+INSERT INTO ${uslimDb}.DM_FILTER_SYAMEI (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    mj_syamei,
+    value,
+    link_key,
+    disp,
+    mart_created_at
+)
+SELECT
+    #{cdHansya} AS cd_hansya,
+    #{cdKaisya} AS cd_kaisya,
+    #{cdHanbaitn} AS cd_hanbaitn,
+    mj_syamei,
+    GROUP_CONCAT(DISTINCT(cd_syamei), ',') AS value,
+    '{"status": [' || GROUP_CONCAT(DISTINCT('"' || status || '"')) || '], "maker": [' || GROUP_CONCAT(DISTINCT('"' || cd_maker || '"')) || ']}' AS link_key,
+    '1' AS disp,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_FILTER_VEHICLE_BASE
+WHERE ((cd_hansya = #{cdHansya} AND cd_kaisya = #{cdKaisya}) OR source_type = 'GAZOO')
+  AND mj_syamei IS NOT NULL
+GROUP BY mj_syamei;
+
+
+-- DM_FILTER_SYODOTOR
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_SYODOTOR;
+
+INSERT INTO ${uslimDb}.DM_FILTER_SYODOTOR (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    syodotor_year,
+    value,
+    label,
+    disp,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    syodotor_year,
+    CAST(syodotor_year AS STRING) AS value,
+    CASE
+        WHEN syodotor_year >= 2019 THEN CAST(syodotor_year AS STRING) || '(R' || LPAD(CAST(syodotor_year - 2018 AS STRING), 2, '0') || ')'
+        WHEN syodotor_year >= 1989 THEN CAST(syodotor_year AS STRING) || '(H' || LPAD(CAST(syodotor_year - 1988 AS STRING), 2, '0') || ')'
+        WHEN syodotor_year >= 1926 THEN CAST(syodotor_year AS STRING) || '(S' || LPAD(CAST(syodotor_year - 1925 AS STRING), 2, '0') || ')'
+        WHEN syodotor_year >= 1912 THEN CAST(syodotor_year AS STRING) || '(T' || LPAD(CAST(syodotor_year - 1911 AS STRING), 2, '0') || ')'
+        WHEN syodotor_year >= 1868 THEN CAST(syodotor_year AS STRING) || '(M' || LPAD(CAST(syodotor_year - 1867 AS STRING), 2, '0') || ')'
+        ELSE ''
+    END AS label,
+    '1' AS disp,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_FILTER_VEHICLE_BASE
+WHERE syodotor_year IS NOT NULL
+  AND ((cd_hansya = #{cdHansya} AND cd_kaisya = #{cdKaisya}) OR source_type = 'GAZOO')
+GROUP BY syodotor_year;
+
+
+-- DM_FILTER_KATASIKI
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_KATASIKI;
+
+INSERT INTO ${uslimDb}.DM_FILTER_KATASIKI (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    mj_katasiki,
+    value,
+    label,
+    link_key,
+    disp,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    mj_katasiki,
+    mj_katasiki AS value,
+    mj_katasiki AS label,
+    '{"syamei": [' || GROUP_CONCAT(DISTINCT('"' || cd_syamei || '"')) || ']}' AS link_key,
+    '1' AS disp,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_FILTER_VEHICLE_BASE
+WHERE mj_katasiki IS NOT NULL
+  AND mj_katasiki <> ''
+  AND ((cd_hansya = #{cdHansya} AND cd_kaisya = #{cdKaisya}) OR source_type = 'GAZOO')
+GROUP BY mj_katasiki;
+
+
+-- DM_FILTER_SITERUIB_GUREDO
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_SITERUIB_GUREDO;
+
+INSERT INTO ${uslimDb}.DM_FILTER_SITERUIB_GUREDO (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    mj_siteruib_guredo,
+    value,
+    label,
+    link_key,
+    disp,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    mj_siteruib_guredo,
+    mj_siteruib_guredo AS value,
+    mj_siteruib_guredo AS label,
+    '{"syamei": [' || GROUP_CONCAT(DISTINCT('"' || cd_syamei || '"')) || ']}' AS link_key,
+    '1' AS disp,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_FILTER_VEHICLE_BASE
+WHERE mj_siteruib_guredo IS NOT NULL
+  AND ((cd_hansya = #{cdHansya} AND cd_kaisya = #{cdKaisya}) OR source_type = 'GAZOO')
+GROUP BY mj_siteruib_guredo;
+
+
+-- DM_FILTER_SATE_GUREDO
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_SATE_GUREDO;
+
+INSERT INTO ${uslimDb}.DM_FILTER_SATE_GUREDO (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    mj_sate_guredo,
+    value,
+    label,
+    link_key,
+    disp,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    mj_sate_guredo,
+    mj_sate_guredo AS value,
+    mj_sate_guredo AS label,
+    '{"syamei": [' || GROUP_CONCAT(DISTINCT('"' || cd_syamei || '"')) || ']}' AS link_key,
+    '1' AS disp,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_FILTER_VEHICLE_BASE
+WHERE mj_sate_guredo IS NOT NULL
+  AND ((cd_hansya = #{cdHansya} AND cd_kaisya = #{cdKaisya}) OR source_type = 'GAZOO')
+GROUP BY mj_sate_guredo;
+
+
+-- DM_FILTER_SITAYOTE
+TRUNCATE TABLE ${uslimDb}.DM_FILTER_SITAYOTE;
+
+INSERT INTO ${uslimDb}.DM_FILTER_SITAYOTE (
+    cd_hansya,
+    cd_kaisya,
+    cd_hanbaitn,
+    dd_sitayote,
+    value,
+    label,
+    disp,
+    mart_created_at
+)
+SELECT
+    #{cdHansya},
+    #{cdKaisya},
+    #{cdHanbaitn},
+    dd_sitayote,
+    FROM_TIMESTAMP(dd_sitayote, 'yyyy/MM/dd') AS value,
+    CASE
+        WHEN dd_sitayote >= DATE'2019-05-01' THEN REPLACE(FROM_TIMESTAMP(dd_sitayote, 'yy(?)/MM/dd'), '?', 'R' || LPAD(CAST(YEAR(dd_sitayote) - 2018 AS STRING), 2, '0'))
+        WHEN dd_sitayote >= DATE'1989-01-08' THEN REPLACE(FROM_TIMESTAMP(dd_sitayote, 'yy(?)/MM/dd'), '?', 'H' || LPAD(CAST(YEAR(dd_sitayote) - 1988 AS STRING), 2, '0'))
+        WHEN dd_sitayote >= DATE'1926-12-25' THEN REPLACE(FROM_TIMESTAMP(dd_sitayote, 'yy(?)/MM/dd'), '?', 'S' || LPAD(CAST(YEAR(dd_sitayote) - 1925 AS STRING), 2, '0'))
+        WHEN dd_sitayote >= DATE'1912-07-30' THEN REPLACE(FROM_TIMESTAMP(dd_sitayote, 'yy(?)/MM/dd'), '?', 'T' || LPAD(CAST(YEAR(dd_sitayote) - 1911 AS STRING), 2, '0'))
+        WHEN dd_sitayote >= DATE'1868-09-08' THEN REPLACE(FROM_TIMESTAMP(dd_sitayote, 'yy(?)/MM/dd'), '?', 'M' || LPAD(CAST(YEAR(dd_sitayote) - 1867 AS STRING), 2, '0'))
+        ELSE ''
+    END AS label,
+    '1' AS disp,
+    CURRENT_TIMESTAMP
+FROM ${uslimDb}.DM_FILTER_VEHICLE_BASE
+WHERE source_type = 'SITA'
+  AND cd_hansya = #{cdHansya}
+  AND cd_kaisya = #{cdKaisya}
+  AND dd_sitayote IS NOT NULL
+GROUP BY dd_sitayote;
+
+
+-- 
