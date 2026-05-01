@@ -1,0 +1,382 @@
+ddl
+
+CREATE TABLE gold.DM_HANSYA_KPI_MONTHLY (
+    dd_ym                    INT          NOT NULL,
+    cd_chiiki                VARCHAR(50),
+    cd_hanbaitn              VARCHAR(50),
+    mj_chiiki                VARCHAR(255),
+    kj_kaisyatn              VARCHAR(255),
+    su_hansya                BIGINT,
+    su_accessday             BIGINT,
+    su_kado                  BIGINT,
+    su_prev_accessday        BIGINT,
+    su_prev_kado             BIGINT,
+    su_accessten             BIGINT,
+    su_ten                   BIGINT,
+    su_accessuser            BIGINT,
+    su_user                  BIGINT,
+    su_monyote               BIGINT,
+    su_uslim_monjucyu        BIGINT,
+    nu_uslim_monsiirelt      BIGINT,
+    su_uslim_monsiirelt      BIGINT,
+    su_monjucyu              BIGINT,
+    nu_monsiirelt            BIGINT,
+    su_monsiirelt            BIGINT,
+    su_yote                  BIGINT,
+    su_uslim_jucyu           BIGINT,
+    nu_uslim_siirelt         BIGINT,
+    su_uslim_siirelt         BIGINT,
+    su_jucyu                 BIGINT,
+    nu_siirelt               BIGINT,
+    su_siirelt               BIGINT,
+    row_type                 VARCHAR(20),   -- DETAIL / AREA_TOTAL
+    mart_created_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_TENPO_KPI_MONTHLY (
+    dd_ym                    INT          NOT NULL,
+    cd_chiiki                VARCHAR(50),
+    cd_hanbaitn              VARCHAR(50),
+    cd_tenpo                 VARCHAR(50),
+    mj_chiiki                VARCHAR(255),
+    kj_kaisyatn              VARCHAR(255),
+    kj_tenpomei              VARCHAR(255),
+
+    su_accessuser_w1         BIGINT,
+    su_user_w1               BIGINT,
+    su_accessuser_w2         BIGINT,
+    su_user_w2               BIGINT,
+    su_accessuser_w3         BIGINT,
+    su_user_w3               BIGINT,
+    su_accessuser_w4         BIGINT,
+    su_user_w4               BIGINT,
+    su_accessuser_w5         BIGINT,
+    su_user_w5               BIGINT,
+
+    su_monyote               BIGINT,
+    su_uslim_monjucyu        BIGINT,
+    su_uslim_monsiirelt      BIGINT,
+    nu_uslim_monsiirelt      BIGINT,
+    su_monjucyu              BIGINT,
+    su_monsiirelt            BIGINT,
+    nu_monsiirelt            BIGINT,
+
+    row_type                 VARCHAR(20),   -- DETAIL / AREA_TOTAL / NATIONAL_TOTAL
+    mart_created_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_USER_KPI_MONTHLY (
+    dd_ym                    INT          NOT NULL,
+    cd_chiiki                VARCHAR(50),
+    cd_hanbaitn              VARCHAR(50),
+    cd_tenpo                 VARCHAR(50),
+    cd_syain                 VARCHAR(50),
+    cd_user                  VARCHAR(100),
+    mj_chiiki                VARCHAR(255),
+    kj_kaisyatn              VARCHAR(255),
+    kj_tenpomei              VARCHAR(255),
+    mj_name                  VARCHAR(255),
+
+    su_accessday_w1          BIGINT,
+    su_accessday_w2          BIGINT,
+    su_accessday_w3          BIGINT,
+    su_accessday_w4          BIGINT,
+    su_accessday_w5          BIGINT,
+
+    su_monyote               BIGINT,
+    su_uslim_monjucyu        BIGINT,
+    su_uslim_monsiirelt      BIGINT,
+    nu_uslim_monsiirelt      BIGINT,
+    su_monjucyu              BIGINT,
+    su_monsiirelt            BIGINT,
+    nu_monsiirelt            BIGINT,
+
+    mart_created_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gold.DM_WORKINGDAY_YEARLY (
+    year_num                 INT          NOT NULL,
+    dd_ym                    INT          NOT NULL,
+    su_riyofuka              BIGINT,
+    mart_created_at          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+sql
+
+m-- DM_WORKINGDAY_YEARLY
+TRUNCATE TABLE gold.DM_WORKINGDAY_YEARLY;
+
+INSERT INTO gold.DM_WORKINGDAY_YEARLY (
+    year_num,
+    dd_ym,
+    su_riyofuka,
+    mart_created_at
+)
+SELECT
+    FLOOR(t_wd.dd_ym / 100) AS year_num,
+    t_wd.dd_ym,
+    NVL(t_wd.su_riyofuka, 0) AS su_riyofuka,
+    NOW()
+FROM uslim_ve.WORKINGDAY t_wd;
+
+
+-- DM_HANSYA_KPI_MONTHLY
+TRUNCATE TABLE gold.DM_HANSYA_KPI_MONTHLY;
+
+INSERT INTO gold.DM_HANSYA_KPI_MONTHLY (
+    dd_ym,
+    cd_chiiki,
+    cd_hanbaitn,
+    mj_chiiki,
+    kj_kaisyatn,
+    su_hansya,
+    su_accessday,
+    su_kado,
+    su_prev_accessday,
+    su_prev_kado,
+    su_accessten,
+    su_ten,
+    su_accessuser,
+    su_user,
+    su_monyote,
+    su_uslim_monjucyu,
+    nu_uslim_monsiirelt,
+    su_uslim_monsiirelt,
+    su_monjucyu,
+    nu_monsiirelt,
+    su_monsiirelt,
+    su_yote,
+    su_uslim_jucyu,
+    nu_uslim_siirelt,
+    su_uslim_siirelt,
+    su_jucyu,
+    nu_siirelt,
+    su_siirelt,
+    row_type,
+    mart_created_at
+)
+SELECT
+    #{ddYm} AS dd_ym,
+    T_HSIF.CD_CHIIKI,
+    T_HSIF.CD_HANBAITN,
+    MAX(T_AREA.MJ_CHIIKI) AS MJ_CHIIKI,
+    CASE
+        WHEN GROUPING(T_HSIF.CD_HANBAITN) = 0 THEN MAX(T_HSIF.KJ_HANBAITN)
+        WHEN GROUPING(T_HSIF.CD_CHIIKI) = 0 THEN MAX(T_AREA.MJ_CHIIKI) || '合計'
+        ELSE NULL
+    END AS KJ_KAISYATN,
+    COUNT(1) AS SU_HANSYA,
+    NVL(MAX(T_HONACC.SU_ACCESSDAY), 0) AS SU_ACCESSDAY,
+    (#{suKadonisu} - NVL(MAX(T_WD.SU_RIYOFUKA), 0)) AS SU_KADO,
+    NVL(MAX(T_HONACC.SU_PREV_ACCESSDAY), 0) AS SU_PREV_ACCESSDAY,
+    (#{suPrevKadonisu} - NVL(MAX(T_PREV_WD.SU_RIYOFUKA), 0)) AS SU_PREV_KADO,
+    NVL(SUM(T_TENACC1.SU_ACCESSTEN), 0) AS SU_ACCESSTEN,
+    NVL(SUM(T_TENACC1.SU_TEN), 0) AS SU_TEN,
+    NVL(SUM(T_TENACC2.SU_ACCESSUSER), 0) AS SU_ACCESSUSER,
+    NVL(SUM(T_TENACC2.SU_USER), 0) AS SU_USER,
+    NVL(SUM(T_YOTE.SU_MONYOTE), 0) AS SU_MONYOTE,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_MONJUCYU), 0) AS SU_USLIM_MONJUCYU,
+    NVL(SUM(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT), 0) AS NU_USLIM_MONSIIRELT,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT), 0) AS SU_USLIM_MONSIIRELT,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_MONJUCYU), 0) + NVL(SUM(T_REG_JUCYU.SU_REG_MONJUCYU), 0) AS SU_MONJUCYU,
+    NVL(SUM(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT), 0) + NVL(SUM(T_REG_JUCYU.NU_REG_MONSIIRELT), 0) AS NU_MONSIIRELT,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT), 0) + NVL(SUM(T_REG_JUCYU.SU_REG_MONSIIRELT), 0) AS SU_MONSIIRELT,
+    NVL(SUM(T_YOTE.SU_YOTE), 0) AS SU_YOTE,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_JUCYU), 0) AS SU_USLIM_JUCYU,
+    NVL(SUM(T_USLIM_JUCYU.NU_USLIM_SIIRELT), 0) AS NU_USLIM_SIIRELT,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_SIIRELT), 0) AS SU_USLIM_SIIRELT,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_JUCYU), 0) + NVL(SUM(T_REG_JUCYU.SU_REG_JUCYU), 0) AS SU_JUCYU,
+    NVL(SUM(T_USLIM_JUCYU.NU_USLIM_SIIRELT), 0) + NVL(SUM(T_REG_JUCYU.NU_REG_SIIRELT), 0) AS NU_SIIRELT,
+    NVL(SUM(T_USLIM_JUCYU.SU_USLIM_SIIRELT), 0) + NVL(SUM(T_REG_JUCYU.SU_REG_SIIRELT), 0) AS SU_SIIRELT,
+    CASE
+        WHEN GROUPING(T_HSIF.CD_HANBAITN) = 0 THEN 'DETAIL'
+        ELSE 'AREA_TOTAL'
+    END AS row_type,
+    NOW()
+FROM uslim_ve.HANSYAINFO T_HSIF
+INNER JOIN uslim_ve.AREAMASTER T_AREA
+    ON T_HSIF.CD_CHIIKI = T_AREA.CD_CHIIKI
+LEFT JOIN uslim_ve.WORKINGDAY T_WD
+    ON T_WD.DD_YM = #{ddYm}
+LEFT JOIN uslim_ve.WORKINGDAY T_PREV_WD
+    ON T_PREV_WD.DD_YM = #{ddPrevYm}
+LEFT JOIN uslim_ve.DM_HANSYA_KPI_HONACC_TMP T_HONACC
+    ON T_HSIF.CD_HANSYA = T_HONACC.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_HONACC.CD_KAISYA
+LEFT JOIN uslim_ve.DM_HANSYA_KPI_TENACC1_TMP T_TENACC1
+    ON T_HSIF.CD_HANSYA = T_TENACC1.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_TENACC1.CD_KAISYA
+LEFT JOIN uslim_ve.DM_HANSYA_KPI_TENACC2_TMP T_TENACC2
+    ON T_HSIF.CD_HANSYA = T_TENACC2.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_TENACC2.CD_KAISYA
+LEFT JOIN uslim_ve.DM_HANSYA_KPI_YOTE_TMP T_YOTE
+    ON T_HSIF.CD_HANSYA = T_YOTE.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_YOTE.CD_KAISYA
+LEFT JOIN uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP T_USLIM_JUCYU
+    ON T_HSIF.CD_HANSYA = T_USLIM_JUCYU.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_USLIM_JUCYU.CD_KAISYA
+LEFT JOIN uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP T_REG_JUCYU
+    ON T_HSIF.CD_HANSYA = T_REG_JUCYU.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_REG_JUCYU.CD_KAISYA
+WHERE
+    (T_HSIF.DD_USLIMEND IS NULL OR T_HSIF.DD_USLIMEND >= #{ddMonthStart})
+    AND (T_HSIF.DD_USLIMSTART IS NULL OR T_HSIF.DD_USLIMSTART <= #{ddRefEnd})
+GROUP BY
+    GROUPING SETS (
+        (T_HSIF.CD_CHIIKI, T_HSIF.CD_HANBAITN),
+        (T_HSIF.CD_CHIIKI)
+    );
+
+
+-- DM_TENPO_KPI_MONTHLY
+TRUNCATE TABLE gold.DM_TENPO_KPI_MONTHLY;
+
+INSERT INTO gold.DM_TENPO_KPI_MONTHLY (
+    dd_ym,
+    cd_chiiki,
+    cd_hanbaitn,
+    cd_tenpo,
+    mj_chiiki,
+    kj_kaisyatn,
+    kj_tenpomei,
+    su_accessuser_w1,
+    su_user_w1,
+    su_accessuser_w2,
+    su_user_w2,
+    su_accessuser_w3,
+    su_user_w3,
+    su_accessuser_w4,
+    su_user_w4,
+    su_accessuser_w5,
+    su_user_w5,
+    su_monyote,
+    su_uslim_monjucyu,
+    su_uslim_monsiirelt,
+    nu_uslim_monsiirelt,
+    su_monjucyu,
+    su_monsiirelt,
+    nu_monsiirelt,
+    row_type,
+    mart_created_at
+)
+SELECT
+    #{ddYm} AS dd_ym,
+    CD_CHIIKI,
+    CD_HANBAITN,
+    CD_TENPO,
+    MAX(MJ_CHIIKI) AS MJ_CHIIKI,
+    MAX(KJ_KAISYATN) AS KJ_KAISYATN,
+    MAX(KJ_TENPOMEI) AS KJ_TENPOMEI,
+    SUM(SU_ACCESSUSER_W1),
+    SUM(SU_USER_W1),
+    SUM(SU_ACCESSUSER_W2),
+    SUM(SU_USER_W2),
+    SUM(SU_ACCESSUSER_W3),
+    SUM(SU_USER_W3),
+    SUM(SU_ACCESSUSER_W4),
+    SUM(SU_USER_W4),
+    SUM(SU_ACCESSUSER_W5),
+    SUM(SU_USER_W5),
+    SUM(SU_MONYOTE),
+    SUM(SU_USLIM_MONJUCYU),
+    SUM(SU_USLIM_MONSIIRELT),
+    SUM(NU_USLIM_MONSIIRELT),
+    SUM(SU_MONJUCYU),
+    SUM(SU_MONSIIRELT),
+    SUM(NU_MONSIIRELT),
+    CASE
+        WHEN GROUPING(CD_TENPO) = 0 THEN 'DETAIL'
+        WHEN GROUPING(CD_CHIIKI) = 0 THEN 'AREA_TOTAL'
+        ELSE 'NATIONAL_TOTAL'
+    END AS row_type,
+    NOW()
+FROM uslim_ve.DM_TENPO_KPI_DETAIL_TMP
+GROUP BY
+    GROUPING SETS (
+        (CD_CHIIKI, CD_HANBAITN, CD_TENPO),
+        (CD_CHIIKI),
+        ()
+    );
+
+
+-- DM_USER_KPI_MONTHLY
+TRUNCATE TABLE gold.DM_USER_KPI_MONTHLY;
+
+INSERT INTO gold.DM_USER_KPI_MONTHLY (
+    dd_ym,
+    cd_chiiki,
+    cd_hanbaitn,
+    cd_tenpo,
+    cd_syain,
+    cd_user,
+    mj_chiiki,
+    kj_kaisyatn,
+    kj_tenpomei,
+    mj_name,
+    su_accessday_w1,
+    su_accessday_w2,
+    su_accessday_w3,
+    su_accessday_w4,
+    su_accessday_w5,
+    su_monyote,
+    su_uslim_monjucyu,
+    su_uslim_monsiirelt,
+    nu_uslim_monsiirelt,
+    su_monjucyu,
+    su_monsiirelt,
+    nu_monsiirelt,
+    mart_created_at
+)
+SELECT
+    #{ddYm} AS dd_ym,
+    T_AREA.CD_CHIIKI,
+    T_HSIF.CD_HANBAITN,
+    T_KTS.CD_TENPO,
+    T_ACCESS.CD_SYAIN,
+    T_ACCESS.CD_USER,
+    T_AREA.MJ_CHIIKI,
+    T_HSIF.KJ_HANBAITN,
+    NVL(REGEXP_REPLACE(TBV0201M.KJ_TENTANMS, '[　 ]+$', ''), T_KTS.KJ_TENTANMS) AS KJ_TENPOMEI,
+    T_ACCESS.MJ_NAME,
+    NVL(COUNTSET(T_ACCESS.SU_ACCESS & 1), 0) AS SU_ACCESSDAY_W1,
+    NVL(COUNTSET(T_ACCESS.SU_ACCESS & 2), 0) AS SU_ACCESSDAY_W2,
+    NVL(COUNTSET(T_ACCESS.SU_ACCESS & 4), 0) AS SU_ACCESSDAY_W3,
+    NVL(COUNTSET(T_ACCESS.SU_ACCESS & 8), 0) AS SU_ACCESSDAY_W4,
+    NVL(COUNTSET(T_ACCESS.SU_ACCESS & 16), 0) AS SU_ACCESSDAY_W5,
+    NVL(T_YOTE.SU_MONYOTE, 0),
+    NVL(T_USLIM_JUCYU.SU_USLIM_MONJUCYU, 0),
+    NVL(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT, 0),
+    NVL(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT, 0),
+    NVL(T_USLIM_JUCYU.SU_USLIM_MONJUCYU, 0) + NVL(T_REG_JUCYU.SU_REG_MONJUCYU, 0),
+    NVL(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT, 0) + NVL(T_REG_JUCYU.SU_REG_MONSIIRELT, 0),
+    NVL(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT, 0) + NVL(T_REG_JUCYU.NU_REG_MONSIIRELT, 0),
+    NOW()
+FROM uslim_ve.DM_USER_KPI_ACCESS_TMP T_ACCESS
+INNER JOIN uslim_ve.HANSYAINFO T_HSIF
+    ON T_ACCESS.CD_HANBAITN = T_HSIF.CD_HANBAITN
+INNER JOIN uslim_ve.AREAMASTER T_AREA
+    ON T_HSIF.CD_CHIIKI = T_AREA.CD_CHIIKI
+INNER JOIN uslim_ve.KPITARGETSTORE T_KTS
+    ON T_HSIF.CD_HANSYA = T_KTS.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_KTS.CD_KAISYA
+   AND T_ACCESS.CD_TENPO = T_KTS.CD_TENPO
+LEFT JOIN ai21rep_ve.TBV0201M TBV0201M
+    ON T_KTS.CD_HANSYA = TBV0201M.CD_HANSYA
+   AND T_KTS.CD_KAISYA = TBV0201M.CD_KAISYA
+   AND T_KTS.CD_TENPO = TBV0201M.CD_TENPO
+LEFT JOIN uslim_ve.DM_USER_KPI_YOTE_TMP T_YOTE
+    ON T_ACCESS.CD_USER = T_YOTE.MJ_SAKUSEIMAIL
+LEFT JOIN uslim_ve.DM_USER_KPI_USLIM_TMP T_USLIM_JUCYU
+    ON T_HSIF.CD_HANSYA = T_USLIM_JUCYU.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_USLIM_JUCYU.CD_KAISYA
+   AND T_ACCESS.CD_SYAIN = T_USLIM_JUCYU.CD_HANSTAFF
+LEFT JOIN uslim_ve.DM_USER_KPI_REG_TMP T_REG_JUCYU
+    ON T_HSIF.CD_HANSYA = T_REG_JUCYU.CD_HANSYA
+   AND T_HSIF.CD_KAISYA = T_REG_JUCYU.CD_KAISYA
+   AND T_ACCESS.CD_SYAIN = T_REG_JUCYU.CD_HANSTAFF
+WHERE
+    T_ACCESS.SU_ACCESS IS NOT NULL
+    OR T_KTS.MJ_TAISYOTEN = '1';
+
+
