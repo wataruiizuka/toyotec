@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0229M,cd_hansya,SELECT DISTINCTにより、cd_hansya・cd_kaisyaの組み合わせで重複排除して設定,TRUNCATE後INSERTによる洗い替え,対象データが存在する販社を識別するコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0229M,cd_kaisya,SELECT DISTINCTにより、cd_hansya・cd_kaisyaの組み合わせで重複排除して設定,TRUNCATE後INSERTによる洗い替え,対象データが存在する会社を識別するコード。DDL上はNOT NULL。
+3,exists_flag,存在フラグ,STRING,有,なし,なし,なし,なし（SQL内固定値）,'1',固定値 '1' を設定,TRUNCATE後INSERTによる洗い替え,ai21rep_ve.TBV0229Mに該当する販社・会社の組み合わせが存在することを示すフラグ。DDL上はNULL許容。
+4,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点のNOW()を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
