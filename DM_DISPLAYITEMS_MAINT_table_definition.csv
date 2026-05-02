@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,cd_hansya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,販社単位で表示項目設定を管理するためのコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,cd_kaisya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,会社単位で表示項目設定を管理するためのコード。DDL上はNOT NULL。
+3,id_item,表示項目ID,STRING,無,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,id_item,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,画面や一覧に表示する項目を識別するID。DDL上はNOT NULL。
+4,mj_item,表示項目名,STRING,有,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,mj_item,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,表示項目の名称。画面表示や帳票出力で使用される名称項目と考えられる。DDL上はNULL許容。
+5,nu_haba,表示幅,INTEGER,有,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,nu_haba,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,画面上の項目幅を管理する数値項目。DDL上はNULL許容。
+6,mj_hyouji,表示区分,STRING,有,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,mj_hyouji,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,項目を表示するかどうか、または表示状態を管理する区分項目と考えられる。DDL上はNULL許容。
+7,nu_sort,表示順,INTEGER,有,なし,なし,なし,uslim_ve.DISPLAYITEMSMAINT,nu_sort,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,画面や一覧での表示順を管理する数値項目。DDL上はNULL許容。
+8,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点のNOW()を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
