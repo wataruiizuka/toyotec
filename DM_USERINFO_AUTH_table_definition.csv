@@ -1,0 +1,19 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_user,ユーザーID,STRING,無,PK,なし,,uslim_ve.USERINFO,cd_user,USERINFO.cd_userをそのまま設定。投入対象はUSERINFOのmj_sakujo <> '1' または mj_sakujo IS NULL のレコード。,TRUNCATE後INSERT（全件洗い替え）,ユーザーを一意に識別するキー。DDL上はVARCHAR(50) NOT NULL、Impala向けにSTRINGへ変更。
+2,cd_hansya,販社コード,STRING,有,,なし,,uslim_ve.HANSYAINFO,cd_hansya,USERINFOを起点に、USERINFO.cd_hanbaitn = HANSYAINFO.cd_hanbaitnでLEFT JOINし、HANSYAINFO.cd_hansyaを設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーの販売店コードに紐づく販社コード。JOIN先が存在しない場合はNULLになり得る。DDL上はVARCHAR(50)、Impala向けにSTRINGへ変更。
+3,cd_kaisya,会社コード,STRING,有,,なし,,uslim_ve.HANSYAINFO,cd_kaisya,USERINFOを起点に、USERINFO.cd_hanbaitn = HANSYAINFO.cd_hanbaitnでLEFT JOINし、HANSYAINFO.cd_kaisyaを設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーの販売店コードに紐づく会社コード。JOIN先が存在しない場合はNULLになり得る。DDL上はVARCHAR(50)、Impala向けにSTRINGへ変更。
+4,cd_hanbaitn,販売店コード,STRING,有,,なし,,uslim_ve.USERINFO,cd_hanbaitn,USERINFO.cd_hanbaitnをそのまま設定。HANSYAINFOとのJOINキーとしても使用。,TRUNCATE後INSERT（全件洗い替え）,ユーザーが所属する販売店コード。DDL上はVARCHAR(50)、Impala向けにSTRINGへ変更。
+5,cd_tenpo,店舗コード,STRING,有,,なし,,uslim_ve.USERINFO,cd_tenpo,USERINFO.cd_tenpoをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーが所属する店舗コード。DDL上はVARCHAR(50)、Impala向けにSTRINGへ変更。
+6,cd_syain,社員コード,STRING,有,,なし,,uslim_ve.USERINFO,cd_syain,USERINFO.cd_syainをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーに紐づく社員コード。DDL上はVARCHAR(50)、Impala向けにSTRINGへ変更。
+7,mj_name,ユーザー名,STRING,有,,なし,,uslim_ve.USERINFO,mj_name,USERINFO.mj_nameをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーの名称・表示名を保持。DDL上はVARCHAR(255)、Impala向けにSTRINGへ変更。
+8,mj_role,ロール,STRING,有,,なし,,uslim_ve.USERINFO,mj_role,USERINFO.mj_roleをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーの役割・権限ロールを保持。具体的な値の意味は提示コードからは未確認。DDL上はVARCHAR(255)、Impala向けにSTRINGへ変更。
+9,kb_access_honten,本店アクセス区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_access_honten,USERINFO.kb_access_hontenをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,本店機能へのアクセス可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+10,kb_access_hansya,販社アクセス区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_access_hansya,USERINFO.kb_access_hansyaをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,販社機能へのアクセス可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+11,kb_access_yoyaku,予約アクセス区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_access_yoyaku,USERINFO.kb_access_yoyakuをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,予約機能へのアクセス可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+12,kb_hansya_mente,販社メンテナンス権限区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_hansya_mente,USERINFO.kb_hansya_menteをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,販社メンテナンス機能の利用可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+13,kb_user_mente,ユーザーメンテナンス権限区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_user_mente,USERINFO.kb_user_menteをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,ユーザーメンテナンス機能の利用可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+14,kb_notice_mente,お知らせメンテナンス権限区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_notice_mente,USERINFO.kb_notice_menteをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,お知らせメンテナンス機能の利用可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+15,kb_view_kpi,KPI閲覧権限区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_view_kpi,USERINFO.kb_view_kpiをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,KPI画面・KPI情報の閲覧可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+16,kb_view_proc,PROC閲覧権限区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_view_proc,USERINFO.kb_view_procをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,PROC関連画面・情報の閲覧可否を表す区分と考えられる。具体的な業務意味は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+17,kb_view_ucar,U-Car閲覧権限区分,STRING,有,,なし,,uslim_ve.USERINFO,kb_view_ucar,USERINFO.kb_view_ucarをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,U-Car関連画面・情報の閲覧可否を表す区分と考えられる。取り得る値は提示コードからは未確認。DDL上はVARCHAR(10)、Impala向けにSTRINGへ変更。
+18,mart_created_at,マート作成日時,STRING,無,,なし,CURRENT_TIMESTAMP,なし（システム生成）,なし,INSERT時にNOW()を設定。DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRINGへ変更。,TRUNCATE後INSERT（全件洗い替え）,DMテーブルへデータを投入した日時。コード2では明示的にNOW()をINSERTしている。
