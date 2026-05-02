@@ -1,0 +1,12 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,id_oshirase,お知らせID,STRING,無,○,なし,,uslim_ve.NOTICEINFO,id_oshirase,元カラムをそのまま設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,お知らせを一意に識別するID。DDL上の主キー。
+2,cd_jyuyodo,重要度コード,STRING,有,,なし,,uslim_ve.NOTICEINFO,cd_jyuyodo,元カラムをそのまま設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,お知らせの重要度を表すコード項目。具体的なコード値はDDL/SQL上では未定義。
+3,dd_hashinbi,配信日,STRING,有,,なし,,uslim_ve.NOTICEINFO,dd_hashinbi,"FROM_TIMESTAMP(dd_hashinbi, 'yyyy/MM/dd') により yyyy/MM/dd 形式へ変換",TRUNCATE後INSERT（公開対象のみ全件洗い替え）,表示用の配信日。公開対象判定では元テーブルのdd_hashinbiが開始日として使用される。
+4,cd_categori,カテゴリコード,STRING,有,,なし,,uslim_ve.NOTICEINFO,cd_categori,元カラムをそのまま設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,お知らせのカテゴリを表すコード項目。具体的なカテゴリ値はDDL/SQL上では未定義。
+5,kj_naiyou,内容,STRING,有,,なし,,uslim_ve.NOTICEINFO,kj_naiyou,元カラムをそのまま設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,お知らせ本文または内容を格納する項目。
+6,kb_taisyo,対象区分,STRING,有,,なし,,uslim_ve.NOTICEINFO,kb_taisyo,元カラムをそのまま設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,お知らせの対象範囲・対象区分を表す項目。具体的な区分値はDDL/SQL上では未定義。
+7,dd_to,終了日,STRING,有,,なし,,uslim_ve.NOTICEINFO,dd_to,"FROM_TIMESTAMP(dd_to, 'yyyy/MM/dd') により yyyy/MM/dd 形式へ変換",TRUNCATE後INSERT（公開対象のみ全件洗い替え）,表示用の終了日。公開対象判定では元テーブルのdd_toが終了日として使用される。
+8,sort_dd_hashinbi,配信日ソート用,DATE,有,,なし,,uslim_ve.NOTICEINFO,dd_hashinbi,dd_hashinbi を sort_dd_hashinbi として設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,配信日で正しく並び替えるためのDATE型項目。表示用のdd_hashinbiとは別に保持。
+9,sort_dt_saisinup,最新更新日時ソート用,STRING,有,,なし,,uslim_ve.NOTICEINFO,dt_saisinup,dt_saisinup を sort_dt_saisinup として設定。SQL上は明示的な文字列変換なし。,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,最新更新日時で並び替えるための項目。DDLではTIMESTAMPだが、Impala対応方針によりSTRINGとして整理。
+10,mart_target_date,マート対象日,DATE,有,,なし,,システム生成,-,"CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE) によりJSTの実行日を設定",TRUNCATE後INSERT（公開対象のみ全件洗い替え）,公開対象と判定した基準日。JSTの当日が設定される。
+11,mart_created_at,マート作成日時,STRING,無,,なし,CURRENT_TIMESTAMP,システム生成,-,SQL実行時点の日時を NOW() で設定,TRUNCATE後INSERT（公開対象のみ全件洗い替え）,gold.DM_NOTICEINFO_PUBLISHへデータ作成した日時。INSERT文ではNOW()を明示設定しているため、通常はデフォルト値ではなくNOW()が登録される。
