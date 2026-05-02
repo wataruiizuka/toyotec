@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,cd_hansya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,販社単位で経過日数設定を管理するためのコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,cd_kaisya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,会社単位で経過日数設定を管理するためのコード。DDL上はNOT NULL。
+3,nu_shinsitayo,新規対応日数,INTEGER,有,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,nu_shinsitayo,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,新規対応に関する日数設定。DDL上はNULL許容。
+4,nu_cyusitayo,中止対応日数,INTEGER,有,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,nu_cyusitayo,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,中止対応に関する日数設定。DDL上はNULL許容。
+5,nu_okure,遅れ日数,INTEGER,有,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,nu_okure,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,遅れ判定に関する日数設定。DDL上はNULL許容。
+6,nu_marker_display,マーカー表示日数,INTEGER,有,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,nu_marker_display,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,マーカー表示に関する日数設定。DDL上はNULL許容。
+7,nu_del_keepday,削除保持日数,INTEGER,有,なし,なし,なし,uslim_ve.ELAPSEDDAYSMAINT,nu_del_keepday,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,削除データなどを保持する日数設定。DDL上はNULL許容。
+8,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点のNOW()を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
