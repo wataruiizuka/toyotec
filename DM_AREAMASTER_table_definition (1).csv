@@ -1,0 +1,4 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_chiiki,地域コード,STRING,無,PK,なし,,uslim_ve.AREAMASTER,cd_chiiki,AREAMASTER.cd_chiikiをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,地域を一意に識別するキー。DDL上はVARCHAR(50) NOT NULL、Impala向けにSTRINGへ変更。
+2,mj_chiiki,地域名,STRING,有,,なし,,uslim_ve.AREAMASTER,mj_chiiki,AREAMASTER.mj_chiikiをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,地域名称を保持する項目。DDL上はVARCHAR(255)、Impala向けにSTRINGへ変更。
+3,mart_created_at,マート作成日時,STRING,無,,なし,CURRENT_TIMESTAMP,なし（システム生成）,なし,INSERT時にNOW()を設定。DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRINGへ変更。,TRUNCATE後INSERT（全件洗い替え）,DMテーブルへデータを投入した日時。コード2では明示的にNOW()をINSERTしている。
