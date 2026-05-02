@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0205M,cd_hansya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,メーカー情報を販社単位で管理するためのコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0205M,cd_kaisya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,メーカー情報を会社単位で管理するためのコード。DDL上はNOT NULL。
+3,kb_range,範囲区分,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,kb_range,TBV0205MとCONDITIONSETTINGを販社コード・会社コード・メーカーコード=key_itemでLEFT JOINし、kb_condition='01'に一致したレコードのkb_rangeを設定,TRUNCATE後INSERTによる洗い替え,メーカー除外条件の範囲を表す区分。DDL上はNOT NULLだが、SQLではLEFT JOIN先の値のため、結合できない場合はNULLになる可能性がある。
+4,cd_maker,メーカーコード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0205M,cd_maker,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,対象メーカーを識別するコード。CONDITIONSETTINGとの結合条件にも使用される。DDL上はNOT NULL。
+5,mj_makermei,メーカー名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0205M,mj_makermei,"REGEXP_REPLACE(mj_makermei, '[　 ]+$', '')で末尾の全角・半角スペースを削除し、NVL(..., '')でNULLを空文字に変換",TRUNCATE後INSERTによる洗い替え,メーカー名称。画面表示や帳票出力で使用される名称項目と考えられる。DDL上はNULL許容。
+6,except_cd_maker,除外メーカーコード,STRING,有,なし,なし,なし,uslim_ve.CONDITIONSETTING,key_item,TBV0205MとCONDITIONSETTINGを販社コード・会社コード・メーカーコード=key_itemでLEFT JOINし、kb_condition='01'に一致したkey_itemを除外メーカーコードとして設定,TRUNCATE後INSERTによる洗い替え,条件設定上、除外対象となるメーカーコード。SQLではLEFT JOIN先の値のため、結合できない場合はNULLになる可能性がある。
+7,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点のNOW()を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
