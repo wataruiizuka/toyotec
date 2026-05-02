@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0232M,cd_hansya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,車名情報を販社単位で管理するためのコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0232M,cd_kaisya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,車名情報を会社単位で管理するためのコード。DDL上はNOT NULL。
+3,kb_range,範囲区分,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,kb_range,`TBV0232M` と `CONDITIONSETTING` を販社コード・会社コード・車名コード = `key_item` で `LEFT JOIN` し、`kb_condition = '02'` に一致したレコードの `kb_range` を設定,TRUNCATE後INSERTによる洗い替え,車名除外条件の範囲を表す区分。DDL上はNOT NULLだが、SQLではLEFT JOIN先の値のため、結合できない場合はNULLになる可能性がある。
+4,cd_syamei,車名コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0232M,cd_syamei,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,対象車名を識別するコード。`CONDITIONSETTING` との結合条件にも使用される。DDL上はNOT NULL。
+5,mj_syamei,車名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0232M,mj_syamei,"`REGEXP_REPLACE(mj_syamei, '[　 ]+$', '')` で末尾の全角・半角スペースを削除し、`NVL(..., '')` でNULLを空文字に変換",TRUNCATE後INSERTによる洗い替え,車名の名称項目。画面表示や帳票出力で使用される名称項目と考えられる。DDL上はNULL許容。
+6,cd_maker,メーカーコード,STRING,有,なし,なし,なし,ai21rep_ve.TBV0232M,cd_maker,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,対象車名に紐づくメーカーコード。DDL上はNULL許容。
+7,except_cd_syamei,除外車名コード,STRING,有,なし,なし,なし,uslim_ve.CONDITIONSETTING,key_item,`TBV0232M` と `CONDITIONSETTING` を販社コード・会社コード・車名コード = `key_item` で `LEFT JOIN` し、`kb_condition = '02'` に一致した `key_item` を除外車名コードとして設定,TRUNCATE後INSERTによる洗い替え,条件設定上、除外対象となる車名コード。SQLではLEFT JOIN先の値のため、結合できない場合はNULLになる可能性がある。
+8,except_cd_maker,除外メーカーコード,STRING,有,なし,なし,なし,uslim_ve.CONDITIONSETTING,cd_maker,`TBV0232M` と `CONDITIONSETTING` を販社コード・会社コード・車名コード = `key_item` で `LEFT JOIN` し、`kb_condition = '02'` に一致した `cd_maker` を除外メーカーコードとして設定,TRUNCATE後INSERTによる洗い替え,除外車名に紐づくメーカーコード。SQLではLEFT JOIN先の値のため、結合できない場合はNULLになる可能性がある。
+9,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点の `NOW()` を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
