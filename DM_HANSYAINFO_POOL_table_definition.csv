@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hanbaitn,販売店コード,STRING,無,PK,なし,,uslim_ve.HANSYAINFO,cd_hanbaitn,HANSYAINFO.cd_hanbaitnをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,販売店を一意に識別するキー。DDL上はVARCHAR(50) NOT NULL、Impala向けにSTRINGへ変更。
+2,kb_dbcp,DB接続プール区分,STRING,有,,なし,,uslim_ve.HANSYAINFO,kb_dbcp,HANSYAINFO.kb_dbcpをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,コメント上はデータベースコネクションプール構築用の情報として参照される。具体的な値の意味は提示コードのみでは未確認。
+3,mj_dlguid,DLGUID,STRING,有,,なし,,uslim_ve.HANSYAINFO,mj_dlguid,HANSYAINFO.mj_dlguidをそのまま設定。,TRUNCATE後INSERT（全件洗い替え）,GUIDまたは接続識別子のような項目と考えられるが、正式な業務意味は提示コードのみでは未確認。MyBatisのgetHansyaInfoで取得される。
+4,mart_created_at,マート作成日時,STRING,無,,なし,CURRENT_TIMESTAMP,なし（システム生成）,なし,INSERT時にNOW()を設定。DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRINGへ変更。,TRUNCATE後INSERT（全件洗い替え）,DMテーブルへデータを投入した日時。コード2では明示的にNOW()をINSERTしている。
