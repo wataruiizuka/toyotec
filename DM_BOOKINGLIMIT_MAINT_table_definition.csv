@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.BOOKINGLIMITMAINT,cd_hansya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,販社単位で予約上限数を管理するためのコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.BOOKINGLIMITMAINT,cd_kaisya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,会社単位で予約上限数を管理するためのコード。DDL上はNOT NULL。
+3,su_yoyakujyogen,予約上限数,INTEGER,有,なし,なし,なし,uslim_ve.BOOKINGLIMITMAINT,su_yoyakujyogen,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,予約可能な上限数を表す数値項目。DDL上はNULL許容。
+4,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点のNOW()を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
