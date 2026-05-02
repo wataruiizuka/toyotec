@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,cd_hansya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,販社単位で条件設定を管理するためのキー項目。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,cd_kaisya,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,会社単位で条件設定を管理するためのキー項目。DDL上はNOT NULL。
+3,kb_range,範囲区分,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,kb_range,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,条件を適用する範囲を表す区分項目。DDL上はNOT NULL。
+4,kb_condition,条件区分,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,kb_condition,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,条件の種類を表す区分項目。メーカー除外・車名除外などの判定に利用される可能性がある。DDL上はNOT NULL。
+5,key_item,キー項目,STRING,無,なし,なし,なし,uslim_ve.CONDITIONSETTING,key_item,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,条件判定に使用するキー値。DDL上はNOT NULL。
+6,mj_syamei,車名,STRING,有,なし,なし,なし,uslim_ve.CONDITIONSETTING,mj_syamei,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,車名に関する名称項目と考えられる。DDL上はNULL許容。
+7,cd_maker,メーカーコード,STRING,有,なし,なし,なし,uslim_ve.CONDITIONSETTING,cd_maker,元カラムをそのまま設定,TRUNCATE後INSERTによる洗い替え,メーカーを識別するコード項目。DDL上はNULL許容。
+8,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL実行時に生成）,NOW(),SQL実行時点のNOW()を設定,TRUNCATE後INSERTによる洗い替え,DDL上はTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、Impala向けにSTRING扱い。INSERT時はNOW()を明示設定。
