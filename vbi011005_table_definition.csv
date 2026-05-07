@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_hansya,tz006m.cd_hansya をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,顧客・担当スタッフ情報側の販社識別コード。vbi011002およびtbv0014mとのJOIN条件にも使用される。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_kaisya,tz006m.cd_kaisya をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,顧客・担当スタッフ情報側の会社識別コード。vbi011002およびtbv0014mとのJOIN条件にも使用される。
+3,cd_okyaku,顧客コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_okyaku,tz006m.cd_okyaku をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,顧客を識別するコード。kb_tantobun='1' の担当情報に限定して出力される。
+4,cd_stafften,担当スタッフ店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_stafften,tz006m.cd_stafften をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,担当スタッフの店舗コード。vbi011002.cd_tenpoとのINNER JOIN条件に使用される。
+5,cd_staff,担当スタッフコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_staff,tz006m.cd_staff をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,担当スタッフを識別するコード。tbv0014m.cd_syainとのLEFT JOIN条件に使用される。
+6,cd_zon,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.vbi011002,cd_zon,tz006mの販社コード・会社コード・担当スタッフ店舗コードをキーにvbi011002をINNER JOINし、vbi011002.cd_zonを取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,担当スタッフ店舗に紐づくゾーンコード。vbi011002に該当店舗が存在しない場合、そのレコードはINNER JOINにより出力対象外となる。
+7,kj_zonmei,ゾーン名,STRING,有,なし,なし,なし,dx_ve.vbi011002,kj_zonmei,tz006mの販社コード・会社コード・担当スタッフ店舗コードをキーにvbi011002をINNER JOINし、vbi011002.kj_zonmeiを取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,担当スタッフ店舗に紐づくゾーン名称。
+8,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,dx_ve.vbi011002,kj_tenpomei,tz006mの販社コード・会社コード・担当スタッフ店舗コードをキーにvbi011002をINNER JOINし、vbi011002.kj_tenpomeiを取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,担当スタッフ店舗コードに対応する店舗名称。
+9,mj_sortjyun,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi011002,mj_sortjyun,tz006mの販社コード・会社コード・担当スタッフ店舗コードをキーにvbi011002をINNER JOINし、vbi011002.mj_sortjyunを取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,店舗・ゾーン表示などの並び順に使用される項目と考えられる。正式な業務定義は元テーブル定義の確認が必要。
+10,kj_syainmei,社員名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0014m,kj_syainmei,tz006mの販社コード・会社コード・担当スタッフコードをキーにtbv0014mをLEFT JOINし、t0014m.kj_syainmeiを取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,担当スタッフコードに対応する社員名。LEFT JOINのため、社員マスタに一致しない場合はNULLになる可能性がある。
