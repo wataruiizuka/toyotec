@@ -1,0 +1,16 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,ソート順,ソート順,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,mj_sortjyun,v3003.mj_sortjyun をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,表示・並び順に利用される項目。正式な業務定義は元テーブル定義の確認が必要。
+2,販社コード,販社コード,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,cd_hansya,v3003.cd_hansya をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,販社を識別するコード。予約集計データとのJOIN条件にも使用される。
+3,会社コード,会社コード,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,cd_kaisya,v3003.cd_kaisya をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,会社を識別するコード。予約集計データとのJOIN条件にも使用される。
+4,店舗コード,店舗コード,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,cd_tenpo,v3003.cd_tenpo をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,店舗を識別するコード。予約集計データとのJOIN条件にも使用される。
+5,販社会社店舗コード,販社会社店舗コード,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,"cd_hansya, cd_kaisya, cd_tenpo","concat(v3003.cd_hansya, v3003.cd_kaisya, v3003.cd_tenpo) により、販社コード・会社コード・店舗コードを連結",DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,販社・会社・店舗をまとめて識別するための分析用キー。元項目にNULLがある場合は結果がNULLになる可能性がある。
+6,エリアコード,エリアコード,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,cd_zon,v3003.cd_zon をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,エリアまたはゾーンを識別するコード。
+7,エリア名,エリア名,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,kj_zonmei,v3003.kj_zonmei をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,エリアコードに対応する名称。元カラム名はゾーン名を示す項目と考えられる。
+8,店舗名,店舗名,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,kj_tenpomei,v3003.kj_tenpomei をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,店舗コードに対応する店舗名称。
+9,ストール番号,ストール番号,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,no_stall,v3003.no_stall をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストールを識別する番号。予約集計データとのJOIN条件にも使用される。
+10,ストール名称,ストール名称,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,mj_stallmei,v3003.mj_stallmei をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストール番号に対応するストール名称。
+11,販社会社店舗ストール番号日付,販社会社店舗ストール番号日付,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,cd_hansyakaisyatenpostalldate,v3003.cd_hansyakaisyatenpostalldate をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,販社・会社・店舗・ストール・日付を結合した識別キーと考えられる。正式な構成要素は元テーブル定義の確認が必要。
+12,ストール選択,ストール選択,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,kb_stallsentaku,v3003.kb_stallsentaku をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストール選択に関する区分項目。コード値の正式な意味は元テーブル定義の確認が必要。
+13,日付,日付,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,dd_date,v3003.dd_date をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,店舗・ストール別の対象日付。ユーザー指定によりデータ型はSTRINGとして記載。
+14,定内規定,定内規定,STRING,NULL可,なし,なし,なし,dx_ve.vbi003003,kb_teinaikitei,v3003.kb_teinaikitei をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,定内規定に関する区分項目。コード値の正式な意味は元テーブル定義の確認が必要。
+15,予約,予約,STRING,NULL不可,なし,なし,なし,dx_ve.vbi003006_en,mj_yoyaku,"vbi003006_en を cd_hansya, cd_kaisya, cd_tenpo, no_stall, dd_nyuukoyt 単位で集計し、sum(v3006.mj_yoyaku) を算出。v3003 と販社・会社・店舗・ストール・日付でLEFT JOIN後、nvl(v3006.mj_yoyaku, 0) によりNULLを0へ補完",DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,店舗・ストール・日付単位の予約数。予約データが存在しない場合は0として出力される。
