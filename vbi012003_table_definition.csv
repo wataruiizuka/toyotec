@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,更新方法,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi012002,cd_hansya,v12002.cd_hansya をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストール情報側の販社識別コード。t275mおよびtbsa002mとのJOIN条件にも使用される。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi012002,cd_kaisya,v12002.cd_kaisya をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストール情報側の会社識別コード。t275mおよびtbsa002mとのJOIN条件にも使用される。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi012002,cd_tenpo,v12002.cd_tenpo をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,店舗を識別するコード。t275mおよびtbsa002mとのJOIN条件にも使用される。
+4,no_stall,ストール番号,STRING,有,なし,なし,なし,dx_ve.vbi012002,no_stall,v12002.no_stall をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストールを識別する番号。tbsa002mとのJOIN条件にも使用される。
+5,mj_stallmei,ストール名称,STRING,有,なし,なし,なし,dx_ve.vbi012002,mj_stallmei,v12002.mj_stallmei をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストール番号に対応するストール名称。正式な業務定義は元テーブル定義の確認が必要。
+6,kb_stallsentaku,ストール選択区分,STRING,有,なし,なし,なし,dx_ve.vbi012002,kb_stallsentaku,v12002.kb_stallsentaku をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,ストール選択に関する区分項目。コード値の正式な意味は元テーブル定義の確認が必要。
+7,kb_kyukei,休憩区分,STRING,無,なし,なし,なし,dx_ve.vbi012002 / dx_ve.vbi012001_en / ai21rep_ve_stg_kudu.tbfy275m / ai21rep_ve_stg_kudu.tbsa002m,"kb_kado, kb_hikado","vbi012002とvbi012001_enをCROSS JOINした全ストール・全日付データに対し、tbfy275mの月別横持ち項目kb_kado1～kb_kado31を日付の日部分に応じてkb_kadoへ変換してLEFT JOIN。さらにtbsa002mをストール・日付単位でLEFT JOINし、if(t275m.kb_kado NOT IN('1','9') OR t002m.kb_hikado = '1', 1, 0) により休憩区分を設定",DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,休憩または非稼働扱いを示す0/1フラグ。SQL上は1または0が設定されるためNULLなしとして整理。kb_kadoやkb_hikadoの正式な業務意味は元テーブル定義の確認が必要。
+8,dd_date,日付,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_date,v12001.dd_date をそのまま取得,DROP TABLE IF EXISTS後、CREATE TABLE AS SELECTによる全件再作成,カレンダーテーブル側の日付。vbi012002とのCROSS JOINにより、ストール情報と全日付の組み合わせを作成している。
