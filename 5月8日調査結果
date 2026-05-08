@@ -1,0 +1,305 @@
+以下の前提で整理します。
+
+**前提**：ここでいう「AutoScaling」は、Cloudera DataHub の標準機能だけで完結する Kudu 専用のディスク容量 AutoScaling ではなく、**Kudu/ホストのディスク使用率を監視し、閾値超過時に外部処理または Cloudera Manager 経由で `cdp datahub scale-cluster` を実行する“カスタム自動化”**として扱うのが正しいです。DataHub の標準 AutoScaling は、公式上は YARN NodeManager を持つホストグループの負荷またはスケジュールに基づくスケール制御として説明されています。([docs.cloudera.com][1])
+
+---
+
+## 1. 質問内容の概要と整理
+
+PMからの質問内容は、簡単に言うと次の話です。
+
+**Kudu のディスク使用率が高くなったら、自動で DataHub の Kudu ノードを増やせないか**という相談です。
+
+構成としては、以下の流れが想定されています。
+
+| 項目     | 内容                                                                                            |
+| ------ | --------------------------------------------------------------------------------------------- |
+| 監視対象   | Kudu Tablet Server を持つホスト単位のディスク使用率                                                           |
+| 監視元    | DataHub、Cloudera Manager、Kudu metrics、または外部監視基盤                                               |
+| 判定条件   | ディスク使用率が一定閾値を超える                                                                              |
+| 実行処理   | `cdp datahub scale-cluster` で対象ホストグループのノード数を増やす                                               |
+| 追加後の処理 | 新規 Kudu Tablet Server の登録確認、Kudu rebalancer 実行、`ksck` による健全性確認                                |
+| 実装方式候補 | Lambda / Step Functions、Cloud Run、運用サーバー上のスクリプト、Cloudera Manager Alert Publisher のカスタムスクリプトなど |
+
+`cdp datahub scale-cluster` は、DataHub クラスターのノード追加・削除を行う CLI で、`--cluster-name`、`--instance-group-name`、`--instance-group-desired-count` を指定して希望ノード数へ変更できます。([cloudera.github.io][2])
+
+---
+
+# 最も正しい見解 1
+
+## 「方向性は妥当。ただし“DataHub標準のKuduディスクAutoScaling”ではなく“カスタム運用自動化”として扱うべき」
+
+### 概要
+
+この案は技術的には妥当です。
+ただし、PMへは **“Clouderaの標準機能としてKuduディスク使用率ベースのAutoScalingがそのまま用意されている”とは言わない方が安全**です。
+
+DataHub の標準 AutoScaling は、公式ドキュメント上では YARN の pending demand / available capacity やスケジュールに基づいて、NodeManager を持つホストグループのノードを増減・停止/開始する仕組みとして説明されています。([docs.cloudera.com][1])
+そのため、Kudu のディスク容量を起点に自動でノード追加する場合は、**Cloudera標準AutoScalingの設定ではなく、監視＋判定＋CLI実行を組み合わせた独自の自動化**として設計するのが正しい見解です。
+
+### ユースケース
+
+| ユースケース             | 内容                             |
+| ------------------ | ------------------------------ |
+| Kudu のデータ量が継続的に増える | 履歴データ、明細データ、時系列データなどが増え続ける     |
+| 特定ホストだけディスク使用率が高い  | Tablet 配置や書き込み偏りで一部ノードに負荷が集中する |
+| 夜間・週末に急増する         | バッチ投入や大量ロードで短時間にディスク使用率が上がる    |
+| 手動監視では対応が遅れる       | ディスク逼迫による障害を未然に防ぎたい            |
+
+### メリット
+
+| メリット         | 説明                                      |
+| ------------ | --------------------------------------- |
+| 障害予防になる      | ディスク使用率が危険域に入る前にノードを追加できる               |
+| 運用負荷を下げられる   | 毎回手動で監視・申請・スケールする必要が減る                  |
+| クラウド運用に合っている | DataHub は CLI でライフサイクル管理できるため、自動化と相性がよい |
+| 監視基準を明文化できる  | 「何%を超えたら追加」という運用ルールを作れる                 |
+
+### デメリット
+
+| デメリット            | 説明                                     |
+| ---------------- | -------------------------------------- |
+| 標準機能だけでは完結しにくい   | Kuduディスク使用率を直接トリガーにする標準AutoScalingではない |
+| 誤検知・過剰スケールのリスク   | 一時的な増加でノード追加が走るとコストが増える                |
+| 実装責任が発生する        | スクリプト、認証、リトライ、排他制御、ログ管理が必要             |
+| スケール後すぐに効くとは限らない | Kudu はノード追加後に既存データを自動で均等再配置するわけではない    |
+
+### 注意事項
+
+Kudu は、追加した Tablet Server がすぐ既存データの保存先として均等に使われるわけではありません。Cloudera の公式ドキュメントでも、新規追加された Tablet Server は既存 tablet の再配置なしにはすぐ利用されず、追加後に rebalancer を実行することが推奨されています。([docs.cloudera.com][3])
+
+また、Kudu は sparse file を利用するため、`ls -l` のような見かけ上のファイルサイズでは実ディスク使用量を正しく判断できない場合があります。ディスク閾値は、OSの実使用量、Cloudera Manager のホスト/ファイルシステムメトリクス、Kudu metrics など、実態に合う値で設計する必要があります。([docs.cloudera.com][4])
+
+### PMへの解答
+
+Kudu のディスク使用率を起点にした AutoScaling については、方向性としては妥当です。
+
+ただし、Cloudera DataHub の標準 AutoScaling 機能だけで Kudu のディスク使用率を直接見て自動拡張する、というよりは、Cloudera Manager / DataHub / Kudu metrics でディスク使用率を監視し、閾値超過時に `cdp datahub scale-cluster` を実行するカスタム自動化として設計するのが現実的です。
+
+そのため、まずは「監視対象のメトリクス」「閾値」「ノード追加後の Kudu rebalancer 実行」「誤検知防止」「実行権限・ログ・リトライ」を設計した上で、PoC → 半自動 → 自動化の順で進めるのが安全だと考えます。
+
+### まとめ
+
+この見解では、**PMには「実装可能。ただし標準AutoScalingではなく、カスタム自動化として設計すべき」と回答するのが最も正確**です。
+
+---
+
+# 最も正しい見解 2
+
+## 「Kuduでは“ノードを増やす”だけでは不十分。追加後の rebalancer と健全性確認までを1セットにする必要がある」
+
+### 概要
+
+Kudu の場合、単純に DataHub のノードを増やすだけでは不十分です。
+Kudu は Tablet Server に tablet replica を配置してデータを分散管理しますが、ノード追加直後は既存 tablet が新ノードへ自動で均等に移動するとは限りません。
+
+Cloudera の公式ドキュメントでは、Kudu Tablet Server を追加した後、Kudu Master Web UI の `/tablet-servers` で新しい Tablet Server が登録・heartbeat していることを確認し、その後 rebalancer を実行して既存 tablet replica を新ノードへ分散させる流れが示されています。([docs.cloudera.com][3])
+
+### ユースケース
+
+| ユースケース         | 内容                                       |
+| -------------- | ---------------------------------------- |
+| Kudu 容量不足対策    | 既存ノードのディスク使用率が高い                         |
+| Kudu ノード間の偏り解消 | 一部 Tablet Server に tablet replica が偏っている |
+| 書き込み・読み取り負荷の分散 | 容量だけでなく、I/OやCPU負荷も分散したい                  |
+| 将来的なデータ増加への予防  | 危険域に入る前に余裕を持たせる                          |
+
+### メリット
+
+| メリット             | 説明                                         |
+| ---------------- | ------------------------------------------ |
+| 容量不足への実効性が高い     | ノード追加後に rebalancer まで実行すれば、既存データの偏りを解消しやすい |
+| Kudu の推奨運用に沿う    | 公式にも追加後の rebalancer 実行が推奨されている             |
+| 障害予防になる          | 単一ノード逼迫を早めに解消できる                           |
+| 後続の書き込み先にも余裕ができる | 新ノードがクラスタに参加することで将来の配置余地が増える               |
+
+### デメリット
+
+| デメリット               | 説明                                            |
+| ------------------- | --------------------------------------------- |
+| rebalancer 中に負荷がかかる | tablet replica の移動が発生するため、ネットワーク・ディスクI/Oに影響する |
+| 即時解消ではない            | ノード追加後、データ再配置が完了するまで時間がかかる                    |
+| 実行タイミング設計が必要        | 業務ピーク中に rebalancer を走らせると影響が出る可能性がある          |
+| 自動 scale-in は難しい    | Kudu Tablet Server の削除はデータ移動を伴うため、安易な自動縮退は危険  |
+
+### 注意事項
+
+Kudu rebalancer は、tablet replica 数を Tablet Server 間でバランスさせるための CLI ツールです。公式ドキュメントでは、`sudo -u kudu kudu cluster rebalance <master addresses>` のように Kudu 管理ユーザーで実行する例が示されています。([docs.cloudera.com][5])
+
+Cloudera Manager からも Kudu rebalancer は実行できますが、Cloudera Manager UI から実行する場合はデフォルトフラグで動作します。細かい制御、例えば対象テーブルを絞る、実行時間を制限する、リソース使用量を抑えるなどを行う場合は CLI 実行の方が設計しやすいです。([docs.cloudera.com][6])
+
+Kudu のスケール設計では、1 Tablet Server あたりの保存データ量、tablet 数、tablet サイズも重要です。Cloudera は、通常運用での目安として Tablet Server あたり 8 TiB、Tablet Server あたり 1000 tablets 推奨・2000 tablets 最大、tablet あたり 50 GiB 推奨上限、target tablet size は 10 GiB 未満を示しています。([docs.cloudera.com][7])
+
+### PMへの解答
+
+Kudu の場合、ノード追加だけでは容量問題が十分に解消されない可能性があります。
+
+新しい Tablet Server を追加しても、既存の tablet replica がすぐ自動で均等配置されるわけではないため、ノード追加後に Kudu Master への登録確認、rebalancer 実行、`ksck` による健全性確認までを一連の処理として設計する必要があります。
+
+そのため、AutoScaling の処理フローは「監視 → 閾値判定 → DataHub scale-out → Kudu Tablet Server 登録確認 → rebalancer → 健全性確認 → 通知」まで含めるのが安全です。
+
+### まとめ
+
+この見解では、**“cdp scale を叩けば完了”ではなく、“Kuduの再配置処理まで含めてAutoScaling”と定義することが重要**です。
+
+---
+
+# 最も正しい見解 3
+
+## 「実装方式は Lambda 等の外部オーケストレーター推奨。Cloudera Manager trigger は検知には使えるが、実行基盤としては慎重に扱うべき」
+
+### 概要
+
+実装方式は大きく3つあります。
+
+| 方式                                              | 内容                                                        | 推奨度 |
+| ----------------------------------------------- | --------------------------------------------------------- | --- |
+| A. 外部オーケストレーター方式                                | Lambda / Step Functions / Cloud Run / 運用サーバーから監視・判定・CLI実行 | 高   |
+| B. Cloudera Manager Alert Publisher カスタムスクリプト方式 | CM の alert を受けてスクリプトを起動                                   | 中   |
+| C. Cloudera Manager trigger 単体方式                | trigger で health を Bad/Concerning にする                     | 低〜中 |
+
+Cloudera Manager の trigger は、条件が満たされたときに対象の health を `Concerning` または `Bad` に変える仕組みです。つまり、trigger 自体は任意のシェルコマンドを直接実行する仕組みではなく、基本的には health 状態を変えるものです。([docs.cloudera.com][8])
+
+一方で、Cloudera Manager の Alert Publisher には、alert に応じてユーザー作成のスクリプトを呼び出す仕組みがあります。スクリプトには alert 情報を含む JSON ファイルが引数として渡され、Alert Publisher が動くホスト上で `cloudera-scm` ユーザーにより実行されます。([docs.cloudera.com][9])
+
+### ユースケース
+
+| ユースケース                       | 向いている方式                           |
+| ---------------------------- | --------------------------------- |
+| AWS/Azure/GCP 側の権限管理と連携したい   | 外部オーケストレーター                       |
+| リトライ・排他制御・承認フローを入れたい         | 外部オーケストレーター                       |
+| CM の alert を起点に簡易スクリプトを起動したい | Alert Publisher カスタムスクリプト         |
+| まずは検知だけしたい                   | CM trigger                        |
+| 本番で安全に自動実行したい                | 外部オーケストレーター + 通知 + 手動承認、または段階的自動化 |
+
+### メリット
+
+| 方式                 | メリット                                  |
+| ------------------ | ------------------------------------- |
+| 外部オーケストレーター        | IAM/Secret管理、リトライ、排他制御、ログ、承認フローを作りやすい |
+| CM Alert Publisher | Cloudera Manager の alert と近い場所で処理できる  |
+| CM trigger         | 監視条件を Cloudera Manager 上で管理しやすい       |
+| 外部＋CM併用            | CMで検知、外部で実行という責務分離ができる                |
+
+### デメリット
+
+| 方式                 | デメリット                                          |
+| ------------------ | ---------------------------------------------- |
+| 外部オーケストレーター        | 実装部品が増える                                       |
+| CM Alert Publisher | CMホスト上のスクリプト管理、実行権限、認証情報管理に注意が必要               |
+| CM trigger         | trigger の主目的は health 変更であり、直接 scale コマンド実行ではない |
+| 完全自動化              | 誤検知時に不要なノード追加やコスト増加が起きる                        |
+
+### 注意事項
+
+Cloudera Manager のカスタムアラートスクリプトは一度に1インスタンスだけ実行され、標準出力・標準エラーは Alert Publisher のログへ出ます。これはシンプルな通知には向きますが、複雑な scale-out ワークフローでは、排他制御・リトライ・タイムアウト・認証情報管理を別途慎重に設計する必要があります。([docs.cloudera.com][9])
+
+また、Cloudera Manager のチャートから trigger を作る機能については、DataHub クラスターを Cloudera Manager で管理している場合は利用できないと記載されているため、実環境で「どの trigger 作成・alert 連携が利用できるか」は事前確認が必要です。([docs.cloudera.com][10])
+
+### PMへの解答
+
+実装方式としては、Cloudera Manager trigger だけで完結させるより、外部オーケストレーターを使う構成が安全だと考えます。
+
+理由は、Cloudera Manager の trigger は基本的に health を Bad/Concerning にする仕組みであり、scale-out のような運用操作を安全に完結させるには、リトライ、排他制御、認証情報管理、ログ、通知、必要に応じた承認フローが必要になるためです。
+
+実装案としては、まず Cloudera Manager / Kudu metrics でディスク使用率を監視し、閾値超過時に Lambda / Step Functions 等で `cdp datahub scale-cluster` を実行、その後 Kudu rebalancer と健全性確認まで行う構成を推奨します。
+
+### まとめ
+
+この見解では、**検知は Cloudera Manager / Kudu metrics、実行は外部オーケストレーター、Kudu再配置は rebalancer、という責務分離が最も安全**です。
+
+---
+
+# 全体の実装イメージ
+
+```text
+1. Kudu Tablet Server / ホスト単位のディスク使用率を監視
+        ↓
+2. 閾値超過を検知
+        ↓
+3. 一時的なスパイクではないか確認
+   例：5分連続、10分連続、複数回連続など
+        ↓
+4. 現在の DataHub スケール状況を確認
+        ↓
+5. 上限ノード数・直近実行履歴・メンテナンス中でないことを確認
+        ↓
+6. cdp datahub scale-cluster を実行
+        ↓
+7. 新規ノード / Kudu Tablet Server の登録確認
+        ↓
+8. Kudu rebalancer 実行
+        ↓
+9. ksck で健全性確認
+        ↓
+10. Slack / Teams / メールに結果通知
+```
+
+---
+
+# 閾値設計の考え方
+
+初期値としては、いきなり自動実行ではなく、段階を分けるのが安全です。
+
+| レベル | ディスク使用率の例 | 対応                             |
+| --- | --------: | ------------------------------ |
+| 注意  |       70% | 通知のみ                           |
+| 警告  |       80% | scale-out 候補として通知、手動判断         |
+| 危険  |   85%〜90% | 自動 scale-out または承認付き scale-out |
+| 緊急  |     90%以上 | 即時対応、書き込み停止・追加ノード・不要データ確認なども検討 |
+
+ただし、これは一般的な初期案です。実際には、以下を見て調整するべきです。
+
+| 観点              | 確認内容                            |
+| --------------- | ------------------------------- |
+| データ増加速度         | 1日あたり何GB/TB増えるか                 |
+| スケール所要時間        | ノード追加から Kudu 登録完了まで何分かかるか       |
+| rebalancer 所要時間 | tablet replica の移動にどれくらい時間がかかるか |
+| 業務ピーク時間         | rebalancer を避けるべき時間帯があるか        |
+| 最大ノード数          | コスト・設計上どこまで増やせるか                |
+| Tablet 数        | Kudu の推奨範囲に収まっているか              |
+
+---
+
+# 自動 scale-in についての見解
+
+**scale-out は自動化対象にしてよいが、scale-in は原則として自動化しない方が安全**です。
+
+理由は、Kudu Tablet Server を減らす場合、対象ノード上の tablet replica を安全に退避させる必要があるためです。Kudu の rebalancer は replica 再配置に使えますが、縮退はデータ移動・可用性・配置ポリシーへの影響が大きいため、少なくとも初期フェーズでは **scale-in は手動運用**にするのが安全です。rebalancer 自体も、全 Tablet Server が稼働していることを前提に進める説明があり、途中で利用不可の Tablet Server がある場合は停止するなどの制約があります。([docs.cloudera.com][5])
+
+---
+
+# PM向けの最終回答案
+
+Kudu のディスク使用率ベース AutoScaling について、見解としては「実装可能だが、Cloudera DataHub 標準のKudu専用AutoScalingではなく、監視・判定・scaleコマンド実行・Kudu再配置を組み合わせたカスタム自動化として設計するのが妥当」です。
+
+具体的には、Cloudera Manager / Kudu metrics / ホストメトリクスで Kudu Tablet Server のディスク使用率を監視し、一定閾値を継続的に超えた場合に `cdp datahub scale-cluster` で対象ホストグループを拡張します。その後、新規ノードが Kudu Master に登録されていることを確認し、Kudu rebalancer を実行して既存 tablet replica を新ノードへ分散させ、最後に `ksck` で健全性確認する流れが必要です。
+
+実装方式としては、Cloudera Manager trigger 単体で完結させるよりも、Lambda / Step Functions 等の外部オーケストレーターで実行制御する方が安全です。理由は、scale-out には認証情報管理、排他制御、リトライ、上限ノード数チェック、ログ、通知、必要に応じた承認フローが必要になるためです。
+
+進め方としては、まずは通知のみ、次に手動承認付き scale-out、最後に完全自動化という段階的な導入が安全だと考えます。scale-out は自動化候補にできますが、scale-in は Kudu のデータ退避・再配置を伴うため、初期フェーズでは自動化せず手動運用にする方針がよいです。
+
+---
+
+# まとめ
+
+今回のPM質問に対する最も正しい整理は、次の3点です。
+
+| No | 見解       | 結論                                                                       |
+| -: | -------- | ------------------------------------------------------------------------ |
+|  1 | 方向性      | Kuduディスク使用率ベースの拡張は妥当。ただし標準機能ではなくカスタム自動化として扱う                             |
+|  2 | Kudu固有対応 | ノード追加だけでは不十分。Kudu rebalancer と `ksck` まで含める必要がある                         |
+|  3 | 実装方式     | 本番運用では Lambda / Step Functions 等の外部制御基盤を推奨。CM trigger は主に検知・alert起点として使う |
+
+最終的には、**「監視 → 閾値判定 → scale-out → Kudu登録確認 → rebalancer → 健全性確認 → 通知」までを一連の運用フローとして設計する**のが、PMに対して最も正確で安全な回答です。
+
+[1]: https://docs.cloudera.com/data-hub/cloud/manage-clusters/topics/dh-autoscale.html "Autoscaling clusters"
+[2]: https://cloudera.github.io/cdp-dev-docs/cli-docs/datahub/scale-cluster.html "scale-cluster — CDP CLI 0.9.159 documentation"
+[3]: https://docs.cloudera.com/runtime/7.3.1/kudu-management/topics/kudu-adding-new-tablet-servers.html "Best practices when adding new tablet servers"
+[4]: https://docs.cloudera.com/runtime/7.3.1/troubleshooting-kudu/topics/kudu-disk-space-usage.html "Disk space usage issue"
+[5]: https://docs.cloudera.com/runtime/7.3.1/kudu-management/topics/kudu-running-tablet-rebalancing-tool.html "Run the tablet rebalancing tool"
+[6]: https://docs.cloudera.com/runtime/7.3.1/kudu-management/topics/kudu-running-tablet-rebalancing-tool-in-cloudera-manager.html "Run a tablet rebalancing tool in Cloudera Manager"
+[7]: https://docs.cloudera.com/runtime/7.3.1/kudu-overview/topics/kudu-scaling-recommendations-and-limitations.html "Scaling recommendations and limitations"
+[8]: https://docs.cloudera.com/cdp-private-cloud-base/7.1.8/monitoring-and-diagnostics/topics/cm-triggers.html "Triggers"
+[9]: https://docs.cloudera.com/cdp-private-cloud-base/7.1.9/monitoring-and-diagnostics/topics/cm-alerts-script.html "Configuring Custom Alert Scripts"
+[10]: https://docs.cloudera.com/cdp-private-cloud-base/7.1.8/monitoring-and-diagnostics/topics/cm-creating-triggers-from-charts.html "Creating Triggers from Charts"
