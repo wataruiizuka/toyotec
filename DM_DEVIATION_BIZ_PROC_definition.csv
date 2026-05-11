@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,uslim_ve.PROCLTMAINT,cd_hansya,t_plm.cd_hansyaをそのまま設定。t_ppm.cd_proc = t_plm.cd_procでPROCPHASEMAINTと結合し、t_ppm.kb_proc_type = '1'のプロセスのみ対象。さらにt_plm.cd_proc_devが工程区分マスタ条件に一致するデータのみ採用。,販社を識別するコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,uslim_ve.PROCLTMAINT,cd_kaisya,t_plm.cd_kaisyaをそのまま設定。t_ppm.cd_proc = t_plm.cd_procでPROCPHASEMAINTと結合し、t_ppm.kb_proc_type = '1'のプロセスのみ対象。さらにt_plm.cd_proc_devが工程区分マスタ条件に一致するデータのみ採用。,会社を識別するコード。DDL上はNOT NULL。
+3,cd_proc,プロセスコード,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,uslim_ve.PROCPHASEMAINT,cd_proc,t_ppm.cd_procを設定。t_ppm.kb_proc_type = '1'のプロセスのみ対象。PROCLTMAINTとはt_ppm.cd_proc = t_plm.cd_procで結合。,業務プロセスを識別するコード。DDL上はNOT NULL。
+4,kj_proc,プロセス名,STRING,有,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,uslim_ve.PROCPHASEMAINT,kj_proc,t_ppm.kj_procをそのまま設定。SQL上、名称のTRIMやREGEXP_REPLACE等の加工はなし。,プロセスコードに対応する名称。DDL上はNULL許容。
+5,cd_proc_dev,工程区分コード,STRING,有,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,uslim_ve.PROCLTMAINT,cd_proc_dev,t_plm.cd_proc_devを設定。t_ppmd側のPROCPHASEMAINTに対してkb_proc_type = '3'、su_hyojijun = 1、t_plm.cd_proc_dev = t_ppmd.cd_procの条件で存在確認される。,プロセスが属する工程区分を表すコードと考えられる。DDL上はNULL許容。
+6,su_hyojijun,表示順,STRING,有,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,uslim_ve.PROCPHASEMAINT,su_hyojijun,t_ppm.su_hyojijunを設定。DDL上はINTEGERだが、要件によりImpala向け定義書ではSTRINGとして扱う。,画面表示や並び順制御に利用される順序項目。DDL上はNULL許容。
+7,mart_created_at,マート作成日時,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,CURRENT_TIMESTAMP（DDL上。SQL投入時はNOW()を明示設定）,なし（SQL関数）,NOW(),INSERT実行時点の日時をNOW()で設定。DDL上はTIMESTAMPだが、要件によりImpala向け定義書ではSTRINGとして扱う。,goldテーブルへデータを作成した日時を管理する項目。DDL上はNOT NULL。
