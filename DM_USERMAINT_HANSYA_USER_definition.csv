@@ -1,0 +1,24 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hansya,USERINFO.cd_hanbaitn = HANSYAINFO.cd_hanbaitn でINNER JOINし、HANSYAINFO の cd_hansya を設定。,販社を識別するコード。DDL上 NOT NULL。HANSYAINFOに紐づかないユーザーはINNER JOINにより対象外。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_kaisya,USERINFO.cd_hanbaitn = HANSYAINFO.cd_hanbaitn でINNER JOINし、HANSYAINFO の cd_kaisya を設定。,会社を識別するコード。DDL上 NOT NULL。
+3,cd_hanbaitn,販売店コード,STRING,無,なし,なし,なし,uslim_ve.USERINFO,cd_hanbaitn,USERINFO の cd_hanbaitn をそのまま設定。HANSYAINFOとの結合キーにも使用。,ユーザーが所属する販売店コード。DDL上 NOT NULL。
+4,cd_user,ユーザーコード,STRING,無,なし,なし,なし,uslim_ve.USERINFO,cd_user,USERINFO の cd_user をそのまま設定。USERINFO は mj_sakujo IS DISTINCT FROM '1' により削除済みユーザーを除外。,ユーザーを識別するコード。DDL上 NOT NULL。
+5,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_tenpo,USERINFO の cd_tenpo をそのまま設定。店舗マスタ・KPI対象店舗との結合キーにも使用。,ユーザーが所属する店舗コード。
+6,cd_syain,社員コード,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_syain,USERINFO の cd_syain をそのまま設定。TBV0014Mとの結合キーにも使用。,ユーザーに紐づく社員コード。
+7,mj_name,氏名,STRING,有,なし,なし,なし,uslim_ve.USERINFO,mj_name,USERINFO の mj_name をそのまま設定。,ユーザーの氏名。
+8,mj_role,ロール,STRING,有,なし,なし,なし,uslim_ve.USERINFO,mj_role,USERINFO の mj_role をそのまま設定。cd_chiiki のCASE判定にも使用。,ユーザーの役割区分。SQL上は DEV、TMC、それ以外の分岐に使用。
+9,kb_access_honten,本店アクセス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_access_honten,USERINFO の kb_access_honten をそのまま設定。,本店アクセスに関する権限区分。値の詳細意味はDDL・SQLのみでは判断不可。
+10,kb_access_hansya,販社アクセス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_access_hansya,USERINFO の kb_access_hansya をそのまま設定。,販社アクセスに関する権限区分。値の詳細意味はDDL・SQLのみでは判断不可。
+11,kb_access_yoyaku,予約アクセス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_access_yoyaku,USERINFO の kb_access_yoyaku をそのまま設定。,予約系機能へのアクセス権限区分。値の詳細意味はDDL・SQLのみでは判断不可。
+12,kb_hansya_mente,販社メンテナンス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_hansya_mente,USERINFO の kb_hansya_mente をそのまま設定。,販社メンテナンス機能に関する権限区分。
+13,kb_user_mente,ユーザーメンテナンス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_user_mente,USERINFO の kb_user_mente をそのまま設定。,ユーザーメンテナンス機能に関する権限区分。
+14,kb_notice_mente,お知らせメンテナンス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_notice_mente,USERINFO の kb_notice_mente をそのまま設定。,お知らせメンテナンス機能に関する権限区分。
+15,kb_view_kpi,KPI閲覧権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_view_kpi,USERINFO の kb_view_kpi をそのまま設定。,KPI画面・KPI情報の閲覧権限区分。
+16,kb_view_proc,プロセス閲覧権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_view_proc,USERINFO の kb_view_proc をそのまま設定。,プロセス系画面・情報の閲覧権限区分。
+17,kb_view_ucar,U-Car閲覧権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_view_ucar,USERINFO の kb_view_ucar をそのまま設定。,U-Car系画面・情報の閲覧権限区分。
+18,cd_chiiki,地域コード,STRING,有,なし,なし,なし,uslim_ve.USERINFO / uslim_ve.HANSYAINFO,mj_role / cd_chiiki,CASE t_user.mj_role WHEN 'DEV' THEN '001' WHEN 'TMC' THEN '002' ELSE t_hsif.cd_chiiki END を設定。,ユーザーのロールに応じて地域コードを補正する項目。DEVは001、TMCは002、それ以外はHANSYAINFOの地域コード。
+19,kj_kaisyatn,会社・販売店名,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,kj_hanbaitn,HANSYAINFO の kj_hanbaitn を設定。,販売店名または会社・販売店表示名として利用される項目。名称の厳密な業務定義はDDL・SQLのみでは判断不可。
+20,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.kj_tentanms / KPITARGETSTORE.kj_tentanms,"NVL(REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', ''), t_kts.kj_tentanms) を設定。TBV0201M側の店舗名は末尾の全角・半角スペースを削除し、NULLの場合はKPITARGETSTORE側を使用。",ユーザー所属店舗の表示名称。TBV0201M側を優先し、不足時にKPITARGETSTORE側で補完。
+21,kb_edit,編集可否区分,STRING,有,なし,なし,なし,ai21rep_ve.TBV0014M,cd_syain,TBV0014Mを販社コード・会社コード・社員コードでLEFT JOINし、退職日 dd_taisyoku IS NULL の社員が存在しない場合に'1'、存在する場合にNULLを設定。SQL式：CASE WHEN tbv0014m.cd_syain IS NULL THEN '1' ELSE NULL END,編集可否を示す区分と考えられる。SQL上は現役社員マスタに該当しない場合に'1'を設定している。値の業務的意味はDDL・SQLのみでは断定不可。
+22,kb_chg_view,表示切替可否区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_hanbaitn / cd_user,USERINFOから削除フラグが'1'ではない、かつ kb_access_honten = '2' のユーザーを cd_hanbaitn 単位で集約した t_ten と結合し、t_ten.cd_user が存在すれば'1'、存在しなければ'0'を設定。SQL式：CASE WHEN t_ten.cd_user IS NULL THEN '0' ELSE '1' END,販売店単位で表示切替が可能かを示す区分と考えられる。値の詳細意味はDDL・SQLのみでは判断不可。
+23,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。INSERTではNOW()を明示設定）,システム日時,NOW(),SQL実行時点の現在日時を設定。,DDLではTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、要件によりSTRINGとして記載。
