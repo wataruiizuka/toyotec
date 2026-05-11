@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_chiiki,地域コード,STRING,無,なし,なし,なし,uslim_ve.AREAMASTER,cd_chiiki,uslim_ve.HANSYAINFO.cd_chiiki = uslim_ve.AREAMASTER.cd_chiiki でINNER JOINし、AREAMASTER側の cd_chiiki を設定,地域を識別するコード。販社情報と地域マスタが一致するデータのみ出力対象。
+2,mj_chiiki,地域名,STRING,有,なし,なし,なし,uslim_ve.AREAMASTER,mj_chiiki,AREAMASTER の mj_chiiki をそのまま設定,地域コードに紐づく地域名称。
+3,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hansya,HANSYAINFO の cd_hansya をそのまま設定,販社を識別するコード。
+4,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_kaisya,HANSYAINFO の cd_kaisya をそのまま設定,会社を識別するコード。
+5,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hanbaitn,HANSYAINFO の cd_hanbaitn をそのまま設定,販売店を識別するコード。
+6,kj_hansya,販社表示名,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,"cd_hanbaitn, kj_hanbaitn",cd_hanbaitn || '_' || kj_hanbaitn を連結して設定,販売店コードと販売店名を連結した画面表示用の名称。
+7,mart_target_date,データ対象日,DATE,有,なし,なし,なし,システム日付,"UTC_TIMESTAMP(), FROM_UTC_TIMESTAMP(...) ",UTC_TIMESTAMP() を JST に変換し、DATE型にCASTして設定,マート作成時点のJST日付。対象日・処理日として利用される項目。
+8,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。INSERTではNOW()を明示設定）,システム日時,NOW(),SQL実行時点の現在日時を設定,DDLではTIMESTAMP NOT NULLだが、要件によりSTRINGとして記載。
