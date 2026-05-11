@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0014M,cd_hansya,TBV0014M の cd_hansya をそのまま設定。退職日 dd_taisyoku IS NULL の社員のみ対象。,販社を識別するコード。DDL上 NOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0014M,cd_kaisya,TBV0014M の cd_kaisya をそのまま設定。TBV0201M との結合キーにも使用。,会社を識別するコード。DDL上 NOT NULL。
+3,cd_user,ユーザーコード,STRING,有,なし,なし,なし,固定値,NULL,SQL上で NULL AS cd_user を設定。,本テーブルでは USERINFO 由来の既存ユーザーコードではなく、社員情報から取得候補を作るためNULL固定。
+4,cd_syain,社員コード,STRING,有,なし,なし,なし,ai21rep_ve.TBV0014M,cd_syain,TBV0014M の cd_syain をそのまま設定。,社員を識別するコード。ユーザー登録・取得候補の識別に利用される項目。
+5,mj_name,氏名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0014M,kj_syainmei,TBV0014M の kj_syainmei を mj_name として設定。,社員名をユーザー名表示用の項目として設定。
+6,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M,cd_tenpo,TBV0014M.cd_hansya = TBV0201M.cd_hansya、TBV0014M.cd_kaisya = TBV0201M.cd_kaisya、TBV0014M.cd_syozoten = TBV0201M.cd_tenpo でLEFT JOINし、TBV0201M の cd_tenpo を設定。,社員の所属店舗に紐づく店舗コード。LEFT JOINのため、店舗マスタに該当がない場合はNULLになり得る。
+7,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M,kj_tentanms,"REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', '') により、TBV0201M の店舗名から末尾の全角・半角スペースを削除して設定。",社員の所属店舗名。画面表示用に余分な末尾スペースを除去している。
+8,kb_lexusten,レクサス店区分,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M,kb_duotenpo,CASE tbv0201m.kb_duotenpo WHEN '6' THEN '1' ELSE '0' END を設定。,店舗区分 kb_duotenpo が '6' の場合にレクサス店として '1' を設定し、それ以外は '0' を設定。
+9,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。INSERTではNOW()を明示設定）,システム日時,NOW(),SQL実行時点の現在日時を設定。,DDLではTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、要件によりSTRINGとして記載。
