@@ -1,0 +1,24 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,dd_ym,対象年月,INT,無,なし,なし,なし,パラメータ,#{ddYm},実行時パラメータ #{ddYm} をそのまま設定,月次KPIの対象年月。例：202605 のような年月形式を想定。
+2,cd_chiiki,地域コード,STRING,有,なし,なし,なし,uslim_ve.AREAMASTER,CD_CHIIKI,T_HSIF.CD_CHIIKI = T_AREA.CD_CHIIKI で結合し、T_AREA.CD_CHIIKI を設定,ユーザーが所属する販社に紐づく地域コード。
+3,cd_hanbaitn,販社/販売店コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,CD_HANBAITN,T_ACCESS.CD_HANBAITN = T_HSIF.CD_HANBAITN で結合し、T_HSIF.CD_HANBAITN を設定,ユーザーが所属する販社/販売店のコード。
+4,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,uslim_ve.KPITARGETSTORE,CD_TENPO,T_ACCESS.CD_TENPO = T_KTS.CD_TENPO 等で結合し、T_KTS.CD_TENPO を設定,ユーザーが紐づくKPI対象店舗のコード。
+5,cd_syain,社員コード,STRING,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,CD_SYAIN,T_ACCESS.CD_SYAIN をそのまま設定,アクセス情報に紐づく社員コード。USLIM/REG実績との結合にも使用。
+6,cd_user,ユーザーコード,STRING,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,CD_USER,T_ACCESS.CD_USER をそのまま設定,アクセス情報に紐づくユーザーコード。予定情報との結合にも使用。
+7,mj_chiiki,地域名,STRING,有,なし,なし,なし,uslim_ve.AREAMASTER,MJ_CHIIKI,T_HSIF.CD_CHIIKI = T_AREA.CD_CHIIKI で結合し、T_AREA.MJ_CHIIKI を設定,地域コードに対応する地域名称。
+8,kj_kaisyatn,会社/販売店名,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,KJ_HANBAITN,T_HSIF.KJ_HANBAITN を設定,販社/販売店の名称。DDL上のカラム名は kj_kaisyatn だが、SQLでは販社名 KJ_HANBAITN を設定している。
+9,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M; uslim_ve.KPITARGETSTORE,KJ_TENTANMS; KJ_TENTANMS,"NVL(REGEXP_REPLACE(TBV0201M.KJ_TENTANMS, '[　 ]+$', ''), T_KTS.KJ_TENTANMS) を設定",TBV0201M側の店舗名を優先し、末尾の全角/半角スペースを除去。TBV0201M側がNULLの場合はKPITARGETSTORE側の店舗名を使用。
+10,mj_name,ユーザー名/氏名,STRING,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,MJ_NAME,T_ACCESS.MJ_NAME をそのまま設定,アクセス情報に紐づくユーザー名または氏名。
+11,su_accessday_w1,第1週アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,SU_ACCESS,"NVL(COUNTSET(T_ACCESS.SU_ACCESS & 1), 0) を設定",SU_ACCESSのビット情報から第1週のアクセス日数を算出。COUNTSETの正確な内部仕様はSQL内に定義がないため断定不可。
+12,su_accessday_w2,第2週アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,SU_ACCESS,"NVL(COUNTSET(T_ACCESS.SU_ACCESS & 2), 0) を設定",SU_ACCESSのビット情報から第2週のアクセス日数を算出。COUNTSETの正確な内部仕様はSQL内に定義がないため断定不可。
+13,su_accessday_w3,第3週アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,SU_ACCESS,"NVL(COUNTSET(T_ACCESS.SU_ACCESS & 4), 0) を設定",SU_ACCESSのビット情報から第3週のアクセス日数を算出。COUNTSETの正確な内部仕様はSQL内に定義がないため断定不可。
+14,su_accessday_w4,第4週アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,SU_ACCESS,"NVL(COUNTSET(T_ACCESS.SU_ACCESS & 8), 0) を設定",SU_ACCESSのビット情報から第4週のアクセス日数を算出。COUNTSETの正確な内部仕様はSQL内に定義がないため断定不可。
+15,su_accessday_w5,第5週アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_ACCESS_TMP,SU_ACCESS,"NVL(COUNTSET(T_ACCESS.SU_ACCESS & 16), 0) を設定",SU_ACCESSのビット情報から第5週のアクセス日数を算出。COUNTSETの正確な内部仕様はSQL内に定義がないため断定不可。
+16,su_monyote,月予定数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_YOTE_TMP,SU_MONYOTE,"T_ACCESS.CD_USER = T_YOTE.MJ_SAKUSEIMAIL で結合し、NVL(T_YOTE.SU_MONYOTE, 0) を設定",ユーザー単位の月予定数。NULLは0として扱う。
+17,su_uslim_monjucyu,USLIM月受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_USLIM_TMP,SU_USLIM_MONJUCYU,"販社/会社/社員コードで結合し、NVL(T_USLIM_JUCYU.SU_USLIM_MONJUCYU, 0) を設定",USLIM側の月受注数。NULLは0として扱う。
+18,su_uslim_monsiirelt,USLIM月仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_USLIM_TMP,SU_USLIM_MONSIIRELT,"販社/会社/社員コードで結合し、NVL(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT, 0) を設定",USLIM側の月仕入関連件数。NULLは0として扱う。
+19,nu_uslim_monsiirelt,USLIM月仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_USLIM_TMP,NU_USLIM_MONSIIRELT,"販社/会社/社員コードで結合し、NVL(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT, 0) を設定",USLIM側の月仕入関連数値。nu_系の業務単位はDDL/SQLのみでは断定不可。
+20,su_monjucyu,月受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_USLIM_TMP; uslim_ve.DM_USER_KPI_REG_TMP,SU_USLIM_MONJUCYU; SU_REG_MONJUCYU,"NVL(T_USLIM_JUCYU.SU_USLIM_MONJUCYU, 0) + NVL(T_REG_JUCYU.SU_REG_MONJUCYU, 0) で算出",USLIM側とREG側を合算した月受注数。
+21,su_monsiirelt,月仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_USLIM_TMP; uslim_ve.DM_USER_KPI_REG_TMP,SU_USLIM_MONSIIRELT; SU_REG_MONSIIRELT,"NVL(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT, 0) + NVL(T_REG_JUCYU.SU_REG_MONSIIRELT, 0) で算出",USLIM側とREG側を合算した月仕入関連件数。
+22,nu_monsiirelt,月仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_USER_KPI_USLIM_TMP; uslim_ve.DM_USER_KPI_REG_TMP,NU_USLIM_MONSIIRELT; NU_REG_MONSIIRELT,"NVL(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT, 0) + NVL(T_REG_JUCYU.NU_REG_MONSIIRELT, 0) で算出",USLIM側とREG側を合算した月仕入関連数値。nu_系の業務単位はDDL/SQLのみでは断定不可。
+23,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,NOW(),INSERT時にNOW()を設定。DDL上はDEFAULT CURRENT_TIMESTAMPだが、SQLでは明示的にNOW()を投入,データマートへの登録日時。Impala向けにTIMESTAMPはSTRINGとして扱う前提。
