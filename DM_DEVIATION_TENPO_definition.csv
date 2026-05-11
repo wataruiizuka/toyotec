@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,ai21rep_ve.TBV0201M,cd_hansya,cd_hansyaをそのまま設定。対象テーブルをTRUNCATE後、ai21rep_ve.TBV0201MからINSERT INTO ... SELECTで全件再投入する。,販社を識別するコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,ai21rep_ve.TBV0201M,cd_kaisya,cd_kaisyaをそのまま設定。対象テーブルをTRUNCATE後、ai21rep_ve.TBV0201MからINSERT INTO ... SELECTで全件再投入する。,会社を識別するコード。DDL上はNOT NULL。
+3,cd_tenpo,店舗コード,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,ai21rep_ve.TBV0201M,cd_tenpo,cd_tenpoをそのまま設定。対象テーブルをTRUNCATE後、ai21rep_ve.TBV0201MからINSERT INTO ... SELECTで全件再投入する。,店舗を識別するコード。DDL上はNOT NULL。
+4,kj_tentanms,店舗名,STRING,有,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,なし,ai21rep_ve.TBV0201M,kj_tentanms,"REGEXP_REPLACE(kj_tentanms, '[　 ]+$', '') により、店舗名の末尾にある全角スペース・半角スペースを削除して設定する。",店舗コードに対応する名称。DDL上はNULL許容。名称の末尾スペースを除去することで、表示・集計時の表記揺れを抑制する。
+5,mart_created_at,マート作成日時,STRING,無,無（DDL上PRIMARY KEY定義なし）,なし（DDL上未定義）,CURRENT_TIMESTAMP（DDL上。SQL投入時はNOW()を明示設定）,なし（SQL関数）,NOW(),INSERT実行時点の日時をNOW()で設定。DDL上はTIMESTAMPだが、要件によりImpala向け定義書ではSTRINGとして扱う。,goldテーブルへデータを作成した日時を管理する項目。DDL上はNOT NULL。
