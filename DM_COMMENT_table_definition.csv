@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,cd_hansya,元カラムをそのまま設定,販社を識別するコード。DDL上は VARCHAR(50) NOT NULL だが、Impala向けに STRING として整理。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,cd_kaisya,元カラムをそのまま設定,会社を識別するコード。DDL上は VARCHAR(50) NOT NULL だが、Impala向けに STRING として整理。
+3,kb_koumoku,項目区分,STRING,無,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,kb_koumoku,元カラムをそのまま設定,コメントまたはキー値の項目カテゴリを表す区分。DDL上は VARCHAR(100) NOT NULL だが、Impala向けに STRING として整理。
+4,mj_key,キー文字列,STRING,無,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,mj_key,元カラムをそのまま設定,値やコメントを識別するためのキー。DDL上は VARCHAR(255) NOT NULL だが、Impala向けに STRING として整理。
+5,mj_report,レポート名,STRING,無,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,mj_report,元カラムをそのまま設定,対象レポートまたはレポート識別情報。DDL上は VARCHAR(255) NOT NULL だが、Impala向けに STRING として整理。
+6,mj_value,値,STRING,有,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,mj_value,元カラムをそのまま設定,キーに対応する値、コメント本文、または設定値を保持する項目。
+7,dt_sakusei,作成日時,STRING,有,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,dt_sakusei,元カラムをそのまま設定,元データ側の作成日時。DDL上は TIMESTAMP だが、Impala向けに STRING として整理。
+8,dt_saisinup,最新更新日時,STRING,有,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,dt_saisinup,元カラムをそのまま設定,元データ側の最新更新日時。DDL上は TIMESTAMP だが、Impala向けに STRING として整理。
+9,mj_kosinsyamail,更新者メールアドレス,STRING,有,なし,なし,なし,${uslimDb}.KEYVALUEMAINT,mj_kosinsyamail,元カラムをそのまま設定,元データを更新した担当者のメールアドレス。DDL上は VARCHAR(255) だが、Impala向けに STRING として整理。
+10,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし,なし,INSERT実行時に CURRENT_TIMESTAMP を設定,DM_COMMENTへ取り込んだ処理実行日時。DDL上は TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP だが、Impala向けに STRING として整理。
