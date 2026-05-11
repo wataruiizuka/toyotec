@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_chiiki,地域コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,cd_chiiki,HANSYAINFO の cd_chiiki をそのまま設定。HANSYAINFO は利用開始日・利用終了日で現在有効なデータのみ対象。,販社・販売店に紐づく地域を識別するコード。
+2,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hansya,HANSYAINFO の cd_hansya をそのまま設定。,販社を識別するコード。
+3,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_kaisya,HANSYAINFO の cd_kaisya をそのまま設定。,会社を識別するコード。
+4,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hanbaitn,HANSYAINFO の cd_hanbaitn をそのまま設定。,販売店を識別するコード。
+5,cd_tenpo,店舗コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.cd_tenpo / KPITARGETSTORE.cd_tenpo,"TBV0201M と KPITARGETSTORE を FULL JOIN し、NVL(tbv0201m.cd_tenpo, t_kts.cd_tenpo) で店舗コードを設定。",店舗を識別するコード。片方の店舗マスタにしか存在しない店舗も補完対象。
+6,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.kj_tentanms / KPITARGETSTORE.kj_tentanms,"NVL(REGEXP_REPLACE(tbv0201m.kj_tentanms, '[　 ]+$', ''), t_kts.kj_tentanms) を設定。TBV0201M側の店舗名は末尾の全角・半角スペースを削除。",店舗の表示名称。TBV0201M側を優先し、存在しない場合はKPITARGETSTORE側を使用。
+7,disp,表示フラグ,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_tenpo,"USERINFOから削除フラグが'1'ではないユーザーを cd_hanbaitn, cd_tenpo 単位で集約し、該当店舗が存在すれば'1'、存在しなければ'0'を設定。SQL式：NVL2(t_user.cd_tenpo, '1', '0')",有効ユーザーが紐づく店舗かどうかを示す画面表示用フラグと考えられる。
+8,sort_cd_chiiki,地域並び順コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,cd_chiiki,HANSYAINFO の cd_chiiki をそのまま設定。,地域単位での並び順・ソート用コード。
+9,sort_cd_hanbaitn,販売店並び順コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hanbaitn,HANSYAINFO の cd_hanbaitn をそのまま設定。,販売店単位での並び順・ソート用コード。
+10,sort_cd_tenpo,店舗並び順コード,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.cd_tenpo / KPITARGETSTORE.cd_tenpo,"t_ten.cd_tenpo をそのまま設定。t_ten.cd_tenpo は NVL(tbv0201m.cd_tenpo, t_kts.cd_tenpo) で作成。",店舗単位での並び順・ソート用コード。
+11,mart_target_date,データ対象日,DATE,有,なし,なし,なし,システム日付,"UTC_TIMESTAMP(), FROM_UTC_TIMESTAMP(...)","UTC_TIMESTAMP() を JST に変換し、DATE型にCASTして設定。SQL式：CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE)",マート作成時点のJST日付。対象日・処理日として利用される項目。
+12,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。INSERTではNOW()を明示設定）,システム日時,NOW(),SQL実行時点の現在日時を設定。,DDLではTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、要件によりSTRINGとして記載。
