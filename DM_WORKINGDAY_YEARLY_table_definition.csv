@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,year_num,対象年,INT,無,なし,なし,なし,uslim_ve.WORKINGDAY,DD_YM,FLOOR(t_wd.dd_ym / 100) により、対象年月 dd_ym から年部分を算出,対象年月から算出した年。例：dd_ym=202605 の場合、year_num=2026。
+2,dd_ym,対象年月,INT,無,なし,なし,なし,uslim_ve.WORKINGDAY,DD_YM,t_wd.dd_ym をそのまま設定,年月単位の管理キー。例：202605 のような年月形式を想定。
+3,su_riyofuka,利用不可日数,BIGINT,有,なし,なし,なし,uslim_ve.WORKINGDAY,SU_RIYOFUKA,"NVL(t_wd.su_riyofuka, 0) により、NULLの場合は0として設定",対象年月における利用不可日数、または稼働不可日数に相当する指標。業務上の厳密な定義はDDL/SQLのみでは断定不可。
+4,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,NOW(),INSERT時に NOW() を設定。DDL上は DEFAULT CURRENT_TIMESTAMP だが、SQLでは明示的に NOW() を投入,データマートへの登録日時。Impala向けにTIMESTAMPはSTRINGとして扱う前提。
