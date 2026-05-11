@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,cd_hansya,"cd_hansyaをそのまま設定。対象テーブルをTRUNCATE後、uslim_ve.PROCCONDITIONからmj_kubunid IN ('02', '03')の条件に一致するデータをINSERT INTO ... SELECTで全件再投入する。",販社を識別するコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,cd_kaisya,"cd_kaisyaをそのまま設定。対象テーブルをTRUNCATE後、uslim_ve.PROCCONDITIONからmj_kubunid IN ('02', '03')の条件に一致するデータをINSERT INTO ... SELECTで全件再投入する。",会社を識別するコード。DDL上はNOT NULL。
+3,kb_type,種別区分,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,mj_kubunid,"mj_kubunidをkb_typeとして設定。SQLではmj_kubunid IN ('02', '03')の条件により、区分IDが'02'または'03'のデータのみ抽出する。",条件種別を表す区分。DDL上はNOT NULL。
+4,kb_sagyou,作業区分,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,cd_kubun,"cd_kubunをkb_sagyouとして設定。SQLではmj_kubunid IN ('02', '03')の条件に一致するPROCCONDITIONの区分コードを作業区分として扱う。",作業内容または作業区分を識別するコード。DDL上はNOT NULL。
+5,cd_kasyu_list,架種コードリスト,STRING,有,なし,なし,なし,uslim_ve.PROCCONDITION,mj_fukainfo,mj_fukainfoをcd_kasyu_listとして設定。SQL上、文字列加工や分割処理は行わず、PROCCONDITIONの付加情報をそのまま設定する。,作業区分に紐づく対象コードのリスト。カラム名から架種・車種等の対象リストと考えられるが、正式名称はDDL・SQLのみでは断定不可。DDL上はNULL許容。
+6,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。SQL投入時はNOW()を明示設定）,なし（SQL関数）,NOW(),INSERT実行時点の日時をNOW()で設定。DDL上はTIMESTAMPだが、要件によりImpala向け定義書ではSTRINGとして扱う。,goldテーブルへデータを作成した日時を管理する項目。DDL上はNOT NULL。
