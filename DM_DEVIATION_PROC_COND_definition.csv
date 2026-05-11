@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,cd_hansya,cd_hansyaをそのまま設定。対象テーブルをTRUNCATE後、uslim_ve.PROCCONDITIONからINSERT INTO ... SELECTで全件再投入する。,販社を識別するコード。DDL上はNOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,cd_kaisya,cd_kaisyaをそのまま設定。対象テーブルをTRUNCATE後、uslim_ve.PROCCONDITIONからINSERT INTO ... SELECTで全件再投入する。,会社を識別するコード。DDL上はNOT NULL。
+3,mj_kubunid,区分ID,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,mj_kubunid,mj_kubunidをそのまま設定。DM_DEVIATION_PROC_CONDではWHERE句による区分IDの絞り込みはなく、PROCCONDITIONの条件情報を全件対象とする。,プロセス条件の分類を表す区分ID。DDL上はNOT NULL。
+4,cd_kubun,区分コード,STRING,無,なし,なし,なし,uslim_ve.PROCCONDITION,cd_kubun,cd_kubunをそのまま設定。DM_DEVIATION_PROC_CONDではWHERE句による区分コードの絞り込みはなく、PROCCONDITIONの条件情報を全件対象とする。,区分IDに紐づく具体的な区分コード。DDL上はNOT NULL。
+5,mj_fukainfo,付加情報,STRING,有,なし,なし,なし,uslim_ve.PROCCONDITION,mj_fukainfo,mj_fukainfoをそのまま設定。SQL上、文字列加工や分割処理は行わず、PROCCONDITIONの付加情報をそのまま保持する。,プロセス条件に紐づく追加情報。DDL上はNULL許容。
+6,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。SQL投入時はNOW()を明示設定）,なし（SQL関数）,NOW(),INSERT実行時点の日時をNOW()で設定。DDL上はTIMESTAMPだが、要件によりImpala向け定義書ではSTRINGとして扱う。,goldテーブルへデータを作成した日時を管理する項目。DDL上はNOT NULL。
