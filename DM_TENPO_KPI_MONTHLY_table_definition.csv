@@ -1,0 +1,27 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,dd_ym,対象年月,INT,無,なし,なし,なし,パラメータ,#{ddYm},実行時パラメータ #{ddYm} をそのまま設定,月次KPIの対象年月。例：202605 のような年月形式を想定。
+2,cd_chiiki,地域コード,STRING,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,CD_CHIIKI,店舗KPI詳細一時テーブルの地域コードを取得。GROUPING SETSにより全国合計行ではNULLになり得る,地域別集計の単位となるコード。
+3,cd_hanbaitn,販社/販売店コード,STRING,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,CD_HANBAITN,店舗KPI詳細一時テーブルの販社/販売店コードを取得。地域合計行・全国合計行ではGROUPING SETSによりNULLになり得る,DETAIL行では店舗が属する販社/販売店を表す。
+4,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,CD_TENPO,店舗KPI詳細一時テーブルの店舗コードを取得。地域合計行・全国合計行ではGROUPING SETSによりNULLになり得る,DETAIL行では店舗単位、AREA_TOTAL/NATIONAL_TOTAL行では合計行のためNULLになり得る。
+5,mj_chiiki,地域名,STRING,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,MJ_CHIIKI,MAX(MJ_CHIIKI) を設定,地域コードに対応する地域名称。集計単位内で代表値としてMAXを使用。
+6,kj_kaisyatn,会社/販売店名,STRING,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,KJ_KAISYATN,MAX(KJ_KAISYATN) を設定,会社/販売店名称。集計単位内で代表値としてMAXを使用。地域合計・全国合計では集計元の最大値が入るため、表示上の合計名として適切かは後続確認が必要。
+7,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,KJ_TENPOMEI,MAX(KJ_TENPOMEI) を設定,店舗名称。DETAIL行では店舗名、合計行ではMAX値となるため表示用途では注意が必要。
+8,su_accessuser_w1,第1週アクセスユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_ACCESSUSER_W1,SUM(SU_ACCESSUSER_W1) を設定,第1週のアクセスユーザー数。
+9,su_user_w1,第1週ユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USER_W1,SUM(SU_USER_W1) を設定,第1週のユーザー数。
+10,su_accessuser_w2,第2週アクセスユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_ACCESSUSER_W2,SUM(SU_ACCESSUSER_W2) を設定,第2週のアクセスユーザー数。
+11,su_user_w2,第2週ユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USER_W2,SUM(SU_USER_W2) を設定,第2週のユーザー数。
+12,su_accessuser_w3,第3週アクセスユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_ACCESSUSER_W3,SUM(SU_ACCESSUSER_W3) を設定,第3週のアクセスユーザー数。
+13,su_user_w3,第3週ユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USER_W3,SUM(SU_USER_W3) を設定,第3週のユーザー数。
+14,su_accessuser_w4,第4週アクセスユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_ACCESSUSER_W4,SUM(SU_ACCESSUSER_W4) を設定,第4週のアクセスユーザー数。
+15,su_user_w4,第4週ユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USER_W4,SUM(SU_USER_W4) を設定,第4週のユーザー数。
+16,su_accessuser_w5,第5週アクセスユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_ACCESSUSER_W5,SUM(SU_ACCESSUSER_W5) を設定,第5週のアクセスユーザー数。
+17,su_user_w5,第5週ユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USER_W5,SUM(SU_USER_W5) を設定,第5週のユーザー数。
+18,su_monyote,月予定数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_MONYOTE,SUM(SU_MONYOTE) を設定,月単位の予定数。
+19,su_uslim_monjucyu,USLIM月受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USLIM_MONJUCYU,SUM(SU_USLIM_MONJUCYU) を設定,USLIM側の月受注数。
+20,su_uslim_monsiirelt,USLIM月仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_USLIM_MONSIIRELT,SUM(SU_USLIM_MONSIIRELT) を設定,USLIM側の月仕入関連件数。
+21,nu_uslim_monsiirelt,USLIM月仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,NU_USLIM_MONSIIRELT,SUM(NU_USLIM_MONSIIRELT) を設定,USLIM側の月仕入関連数値。nu_系の業務単位はDDL/SQLのみでは断定不可。
+22,su_monjucyu,月受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_MONJUCYU,SUM(SU_MONJUCYU) を設定,月受注数。詳細一時テーブル側で作成済みの値を集計。
+23,su_monsiirelt,月仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,SU_MONSIIRELT,SUM(SU_MONSIIRELT) を設定,月仕入関連件数。詳細一時テーブル側で作成済みの値を集計。
+24,nu_monsiirelt,月仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_TENPO_KPI_DETAIL_TMP,NU_MONSIIRELT,SUM(NU_MONSIIRELT) を設定,月仕入関連数値。nu_系の業務単位はDDL/SQLのみでは断定不可。
+25,row_type,行区分,STRING,有,なし,なし,なし,集計ロジック,GROUPING(CD_TENPO); GROUPING(CD_CHIIKI),GROUPING(CD_TENPO)=0ならDETAIL、GROUPING(CD_CHIIKI)=0ならAREA_TOTAL、それ以外はNATIONAL_TOTAL,DETAIL=店舗別明細、AREA_TOTAL=地域合計、NATIONAL_TOTAL=全国合計。
+26,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,NOW(),INSERT時にNOW()を設定。DDL上はDEFAULT CURRENT_TIMESTAMPだが、SQLでは明示的にNOW()を投入,データマートへの登録日時。Impala向けにTIMESTAMPはSTRINGとして扱う前提。
