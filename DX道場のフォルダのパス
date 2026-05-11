@@ -1,1 +1,9 @@
 C:\Users\00496_990801\Desktop\data-transformation\data-transformation\ddl
+
+
+$targetPath = "C:\Users\00496_990801\Desktop\data-transformation\data-transformation\ddl"
+
+$fileCount = (Get-ChildItem -Path $targetPath -File).Count
+
+Write-Host "対象フォルダ: $targetPath"
+Write-Host "ファイル総数: $fileCount"
