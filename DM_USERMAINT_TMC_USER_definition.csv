@@ -1,0 +1,17 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_user,ユーザーコード,STRING,無,なし,なし,なし,uslim_ve.USERINFO,cd_user,USERINFO の cd_user をそのまま設定。mj_role = 'TMC' かつ削除フラグが'1'ではないユーザーのみ対象。,ユーザーを識別するコード。DDL上 NOT NULL。TMCロールのユーザーのみ格納。
+2,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_hanbaitn,USERINFO の cd_hanbaitn をそのまま設定。,ユーザーに紐づく販売店コード。TMCユーザーの場合、値が設定されない可能性があるためNULL許容。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_tenpo,USERINFO の cd_tenpo をそのまま設定。,ユーザーに紐づく店舗コード。TMCユーザーの場合、値が設定されない可能性があるためNULL許容。
+4,cd_syain,社員コード,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_syain,USERINFO の cd_syain をそのまま設定。,ユーザーに紐づく社員コード。
+5,mj_name,氏名,STRING,有,なし,なし,なし,uslim_ve.USERINFO,mj_name,USERINFO の mj_name をそのまま設定。,ユーザーの氏名。
+6,mj_role,ロール,STRING,有,なし,なし,なし,uslim_ve.USERINFO,mj_role,USERINFO の mj_role をそのまま設定。WHERE句で mj_role = 'TMC' に限定。,ユーザーの役割区分。本テーブルではTMCユーザーのみ対象。
+7,kb_access_honten,本店アクセス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_access_honten,USERINFO の kb_access_honten をそのまま設定。,本店アクセスに関する権限区分。値の詳細意味はDDL・SQLのみでは判断不可。
+8,kb_access_hansya,販社アクセス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_access_hansya,USERINFO の kb_access_hansya をそのまま設定。,販社アクセスに関する権限区分。値の詳細意味はDDL・SQLのみでは判断不可。
+9,kb_access_yoyaku,予約アクセス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_access_yoyaku,USERINFO の kb_access_yoyaku をそのまま設定。,予約系機能へのアクセス権限区分。値の詳細意味はDDL・SQLのみでは判断不可。
+10,kb_hansya_mente,販社メンテナンス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_hansya_mente,USERINFO の kb_hansya_mente をそのまま設定。,販社メンテナンス機能に関する権限区分。
+11,kb_user_mente,ユーザーメンテナンス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_user_mente,USERINFO の kb_user_mente をそのまま設定。,ユーザーメンテナンス機能に関する権限区分。
+12,kb_notice_mente,お知らせメンテナンス権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_notice_mente,USERINFO の kb_notice_mente をそのまま設定。,お知らせメンテナンス機能に関する権限区分。
+13,kb_view_kpi,KPI閲覧権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_view_kpi,USERINFO の kb_view_kpi をそのまま設定。,KPI画面・KPI情報の閲覧権限区分。
+14,kb_view_proc,プロセス閲覧権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_view_proc,USERINFO の kb_view_proc をそのまま設定。,プロセス系画面・情報の閲覧権限区分。
+15,kb_view_ucar,U-Car閲覧権限区分,STRING,有,なし,なし,なし,uslim_ve.USERINFO,kb_view_ucar,USERINFO の kb_view_ucar をそのまま設定。,U-Car系画面・情報の閲覧権限区分。
+16,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。INSERTではNOW()を明示設定）,システム日時,NOW(),SQL実行時点の現在日時を設定。,DDLではTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、要件によりSTRINGとして記載。
