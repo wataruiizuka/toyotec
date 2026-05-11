@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_hansya,HANSYAINFO の cd_hansya をそのまま設定。店舗一覧 t_ten とは CROSS JOIN で組み合わせられる。,販社を識別するコード。DDL上 NOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,uslim_ve.HANSYAINFO,cd_kaisya,HANSYAINFO の cd_kaisya をそのまま設定。,会社を識別するコード。DDL上 NOT NULL。
+3,cd_hanbaitn,販売店コード,STRING,無,なし,なし,なし,uslim_ve.USERINFO,cd_hanbaitn,"USERINFO から削除フラグが'1'ではないユーザーを cd_hanbaitn, cd_tenpo, cd_hansya, cd_kaisya 単位で集約した t_userbase の cd_hanbaitn を設定。t_hsif.cd_hansya = t_userbase.cd_hansya かつ t_hsif.cd_kaisya = t_userbase.cd_kaisya で結合。",販売店を識別するコード。SQL上は USERINFO 由来の販売店コードを設定。DDL上 NOT NULL。
+4,cd_chiiki,地域コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,cd_chiiki,HANSYAINFO の cd_chiiki をそのまま設定。,販社・会社に紐づく地域を識別するコード。
+5,cd_tenpo,店舗コード,STRING,無,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.cd_tenpo / KPITARGETSTORE.cd_tenpo,"TBV0201M と KPITARGETSTORE を FULL JOIN し、NVL(t_cmn.cd_tenpo, t_kts.cd_tenpo) で店舗コードを設定。",店舗を識別するコード。店舗マスタまたはKPI対象店舗のどちらかに存在する店舗を補完して作成。DDL上 NOT NULL。
+6,kj_tenpomei,店舗名,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.kj_tentanms / KPITARGETSTORE.kj_tentanms,"TBV0201M側は REGEXP_REPLACE(kj_tentanms, '[　 ]+$', '') で末尾の全角・半角スペースを削除したうえで、NVL(t_cmn.kj_tentanms, t_kts.kj_tentanms) によりTBV0201M側を優先し、NULLの場合はKPITARGETSTORE側を設定。",店舗の表示名称。画面表示用に余分な末尾スペースを除去している。
+7,disp,表示フラグ,STRING,有,なし,なし,なし,uslim_ve.USERINFO,cd_tenpo,"USERINFO から削除フラグが'1'ではないユーザーを cd_hanbaitn, cd_tenpo 単位で集約した t_user と結合し、該当店舗が存在すれば'1'、存在しなければ'0'を設定。SQL式：NVL2(t_user.cd_tenpo, '1', '0')",販売店・店舗に有効ユーザーが紐づいているかを示す表示制御用フラグと考えられる。
+8,sort_cd_tenpo,店舗並び順コード,STRING,有,なし,なし,なし,ai21rep_ve.TBV0201M / uslim_ve.KPITARGETSTORE,TBV0201M.cd_tenpo / KPITARGETSTORE.cd_tenpo,"t_ten.cd_tenpo をそのまま設定。t_ten.cd_tenpo は NVL(t_cmn.cd_tenpo, t_kts.cd_tenpo) で作成。",店舗単位での並び順・ソート用コード。
+9,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP（DDL上。INSERTではNOW()を明示設定）,システム日時,NOW(),SQL実行時点の現在日時を設定。,DDLではTIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMPだが、要件によりSTRINGとして記載。
