@@ -1,0 +1,31 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,dd_ym,対象年月,INT,無,なし,なし,なし,パラメータ,#{ddYm},実行時パラメータ #{ddYm} をそのまま設定,月次KPIの対象年月。例：202605 のような年月形式を想定。
+2,cd_chiiki,地域コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,CD_CHIIKI,販社情報から地域コードを取得。GROUPING SETSにより地域合計行でも使用,地域別集計の単位となるコード。
+3,cd_hanbaitn,販社/販売店コード,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO,CD_HANBAITN,販社情報から販社/販売店コードを取得。地域合計行ではGROUPING SETSによりNULLになり得る,DETAIL行では販社単位、AREA_TOTAL行では地域合計を表すためNULLになり得る。
+4,mj_chiiki,地域名,STRING,有,なし,なし,なし,uslim_ve.AREAMASTER,MJ_CHIIKI,HANSYAINFO.CD_CHIIKI = AREAMASTER.CD_CHIIKIで結合し、MAX(T_AREA.MJ_CHIIKI)を設定,地域コードに対応する地域名称。
+5,kj_kaisyatn,会社/販売店名,STRING,有,なし,なし,なし,uslim_ve.HANSYAINFO; uslim_ve.AREAMASTER,KJ_HANBAITN; MJ_CHIIKI,DETAIL行はMAX(T_HSIF.KJ_HANBAITN)、AREA_TOTAL行はMAX(T_AREA.MJ_CHIIKI) || '合計' を設定,行区分により販売店名または地域合計名を出力。
+6,su_hansya,販社数,BIGINT,有,なし,なし,なし,uslim_ve.HANSYAINFO,COUNT(1),集計単位ごとにCOUNT(1)で件数を算出,DETAIL行では対象販社件数、AREA_TOTAL行では地域内の対象販社件数を表す。
+7,su_accessday,アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_HONACC_TMP,SU_ACCESSDAY,"NVL(MAX(T_HONACC.SU_ACCESSDAY), 0)を設定",販社単位のアクセス日数。NULLは0として扱う。
+8,su_kado,稼働日数,BIGINT,有,なし,なし,なし,パラメータ; uslim_ve.WORKINGDAY,#{suKadonisu}; SU_RIYOFUKA,"#{suKadonisu} - NVL(MAX(T_WD.SU_RIYOFUKA), 0)で算出",当月の稼働可能日数から利用不可日数を差し引いた値。
+9,su_prev_accessday,前月アクセス日数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_HONACC_TMP,SU_PREV_ACCESSDAY,"NVL(MAX(T_HONACC.SU_PREV_ACCESSDAY), 0)を設定",前月のアクセス日数。NULLは0として扱う。
+10,su_prev_kado,前月稼働日数,BIGINT,有,なし,なし,なし,パラメータ; uslim_ve.WORKINGDAY,#{suPrevKadonisu}; SU_RIYOFUKA,"#{suPrevKadonisu} - NVL(MAX(T_PREV_WD.SU_RIYOFUKA), 0)で算出",前月の稼働可能日数から前月の利用不可日数を差し引いた値。
+11,su_accessten,アクセス店舗数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_TENACC1_TMP,SU_ACCESSTEN,"NVL(SUM(T_TENACC1.SU_ACCESSTEN), 0)を設定",対象集計単位におけるアクセス店舗数。NULLは0として扱う。
+12,su_ten,店舗数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_TENACC1_TMP,SU_TEN,"NVL(SUM(T_TENACC1.SU_TEN), 0)を設定",対象集計単位における店舗数。NULLは0として扱う。
+13,su_accessuser,アクセスユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_TENACC2_TMP,SU_ACCESSUSER,"NVL(SUM(T_TENACC2.SU_ACCESSUSER), 0)を設定",対象集計単位におけるアクセスユーザー数。NULLは0として扱う。
+14,su_user,ユーザー数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_TENACC2_TMP,SU_USER,"NVL(SUM(T_TENACC2.SU_USER), 0)を設定",対象集計単位におけるユーザー数。NULLは0として扱う。
+15,su_monyote,月予定数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_YOTE_TMP,SU_MONYOTE,"NVL(SUM(T_YOTE.SU_MONYOTE), 0)を設定",月単位の予定数。NULLは0として扱う。
+16,su_uslim_monjucyu,USLIM月受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP,SU_USLIM_MONJUCYU,"NVL(SUM(T_USLIM_JUCYU.SU_USLIM_MONJUCYU), 0)を設定",USLIM側の月受注数。NULLは0として扱う。
+17,nu_uslim_monsiirelt,USLIM月仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP,NU_USLIM_MONSIIRELT,"NVL(SUM(T_USLIM_JUCYU.NU_USLIM_MONSIIRELT), 0)を設定",nu系のため金額または数量系の数値と考えられるが、DDL/SQLのみでは業務定義は断定不可。
+18,su_uslim_monsiirelt,USLIM月仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP,SU_USLIM_MONSIIRELT,"NVL(SUM(T_USLIM_JUCYU.SU_USLIM_MONSIIRELT), 0)を設定",USLIM側の月仕入関連件数。NULLは0として扱う。
+19,su_monjucyu,月受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP; uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP,SU_USLIM_MONJUCYU; SU_REG_MONJUCYU,"NVL(SUM(SU_USLIM_MONJUCYU),0) + NVL(SUM(SU_REG_MONJUCYU),0)で算出",USLIM側とREG側を合算した月受注数。
+20,nu_monsiirelt,月仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP; uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP,NU_USLIM_MONSIIRELT; NU_REG_MONSIIRELT,"NVL(SUM(NU_USLIM_MONSIIRELT),0) + NVL(SUM(NU_REG_MONSIIRELT),0)で算出",USLIM側とREG側を合算した月仕入関連数値。業務上の単位はDDL/SQLのみでは断定不可。
+21,su_monsiirelt,月仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP; uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP,SU_USLIM_MONSIIRELT; SU_REG_MONSIIRELT,"NVL(SUM(SU_USLIM_MONSIIRELT),0) + NVL(SUM(SU_REG_MONSIIRELT),0)で算出",USLIM側とREG側を合算した月仕入関連件数。
+22,su_yote,予定数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_YOTE_TMP,SU_YOTE,"NVL(SUM(T_YOTE.SU_YOTE), 0)を設定",予定数。月予定数との違いはDDL/SQLのみでは詳細不明。
+23,su_uslim_jucyu,USLIM受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP,SU_USLIM_JUCYU,"NVL(SUM(T_USLIM_JUCYU.SU_USLIM_JUCYU), 0)を設定",USLIM側の受注数。NULLは0として扱う。
+24,nu_uslim_siirelt,USLIM仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP,NU_USLIM_SIIRELT,"NVL(SUM(T_USLIM_JUCYU.NU_USLIM_SIIRELT), 0)を設定",USLIM側の仕入関連数値。業務上の単位はDDL/SQLのみでは断定不可。
+25,su_uslim_siirelt,USLIM仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP,SU_USLIM_SIIRELT,"NVL(SUM(T_USLIM_JUCYU.SU_USLIM_SIIRELT), 0)を設定",USLIM側の仕入関連件数。NULLは0として扱う。
+26,su_jucyu,受注数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP; uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP,SU_USLIM_JUCYU; SU_REG_JUCYU,"NVL(SUM(SU_USLIM_JUCYU),0) + NVL(SUM(SU_REG_JUCYU),0)で算出",USLIM側とREG側を合算した受注数。
+27,nu_siirelt,仕入関連数値,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP; uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP,NU_USLIM_SIIRELT; NU_REG_SIIRELT,"NVL(SUM(NU_USLIM_SIIRELT),0) + NVL(SUM(NU_REG_SIIRELT),0)で算出",USLIM側とREG側を合算した仕入関連数値。業務上の単位はDDL/SQLのみでは断定不可。
+28,su_siirelt,仕入関連件数,BIGINT,有,なし,なし,なし,uslim_ve.DM_HANSYA_KPI_USLIM_JUCYU_TMP; uslim_ve.DM_HANSYA_KPI_REG_JUCYU_TMP,SU_USLIM_SIIRELT; SU_REG_SIIRELT,"NVL(SUM(SU_USLIM_SIIRELT),0) + NVL(SUM(SU_REG_SIIRELT),0)で算出",USLIM側とREG側を合算した仕入関連件数。
+29,row_type,行区分,STRING,有,なし,なし,なし,集計ロジック,GROUPING(T_HSIF.CD_HANBAITN),GROUPING(T_HSIF.CD_HANBAITN)=0ならDETAIL、それ以外はAREA_TOTAL,DETAIL=販社別明細、AREA_TOTAL=地域合計。
+30,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,NOW(),INSERT時にNOW()を設定。DDL上はDEFAULT CURRENT_TIMESTAMPだが、Impala向けにTIMESTAMPはSTRINGとして扱う前提。,データマートへの登録日時。
