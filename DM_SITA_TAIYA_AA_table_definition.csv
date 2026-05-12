@@ -1,0 +1,18 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_sti,査定番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSti},実行時パラメータを設定,対象査定を識別する番号
+4,cd_bui,部位コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,CD_FGBUI,CD_FGBUI='064' は 'L'、'065' は 'R'、'066' は 'LE'、'067' は 'RE'、'069' は 'LI'、'070' は 'RI'、'068' は 'S1' に変換,タイヤ位置・部位を画面表示用コードへ変換した項目
+5,nu_tiyhaba,タイヤ幅,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,NU_TIYHABA,TBNH014G.NU_TIYHABA を直接設定,タイヤ幅を表す項目
+6,nu_tiyhpr,タイヤ扁平率,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,NU_TIYHPR,TBNH014G.NU_TIYHPR を直接設定,タイヤ扁平率を表す項目
+7,kb_tiykz,タイヤ構造区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,KB_TIYKZ,TBNH014G.KB_TIYKZ を直接設定,タイヤ構造を表す区分
+8,nu_tiyrimk,タイヤリム径,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,NU_TIYRIMK,TBNH014G.NU_TIYRIMK を直接設定,タイヤのリム径を表す項目
+9,nu_tiymz,タイヤ状態区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,KB_TIYJT,TBNH014G.KB_TIYJT を直接設定,カラム名は数値系に見えるが、SQL上は KB_TIYJT を設定。正式な業務名称は要確認
+10,mj_tiyjtkb,タイヤ交換要否,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,KB_TIYJT,CASE TBNH014G.KB_TIYJT WHEN 'X' THEN '要' ELSE '否' END により、'X' の場合は '要'、それ以外は '否' に変換,タイヤ状態区分から交換要否を表示用に変換した項目
+11,mj_hsbu,補修有無,STRING,有,なし,なし,なし,${ai21Db}.TBNH014G,MJ_HSBU,MJ_HSBU='1' は '有'、'0' は '無'、それ以外は空文字に変換,補修有無を表示する項目
+12,mj_tiysyu,タイヤ種類,STRING,有,なし,なし,なし,${ai21Db}.TBV0231M,MJ_KUBUNNAI,"TBNH014G.CD_TIYSYU と TBV0231M.CD_KUBUN を結合し、TBV0231M.MJ_BLOCKID='10'、MJ_KUBUNID='0003' の区分名称を取得。REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') により末尾空白を除去",タイヤ種類コードを区分マスタ名称へ変換した項目
+13,mj_nskbhsy,NSK補修名称,STRING,有,なし,なし,なし,なし（固定値）,NULL,NULL を固定設定,AA系タイヤではSQL上、NSK補修名称は設定されない
+14,mj_nskssysy,NSK査定種別名称,STRING,有,なし,なし,なし,なし（固定値）,NULL,NULL を固定設定,AA系タイヤではSQL上、NSK査定種別名称は設定されない
+15,mj_nskbhsy1,NSK補修名称1,STRING,有,なし,なし,なし,なし（固定値）,NULL,NULL を固定設定,AA系タイヤではSQL上、NSK補修名称1は設定されない
+16,mj_nskbhsy2,NSK補修名称2,STRING,有,なし,なし,なし,なし（固定値）,NULL,NULL を固定設定,AA系タイヤではSQL上、NSK補修名称2は設定されない
+17,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
