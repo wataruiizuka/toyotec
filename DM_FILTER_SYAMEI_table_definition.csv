@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,パラメータ,#{cdHansya},#{cdHansya} を固定値として設定,実行対象の販社を識別するコード。フィルタ候補を販社単位で管理するための項目。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,パラメータ,#{cdKaisya},#{cdKaisya} を固定値として設定,実行対象の会社を識別するコード。フィルタ候補を会社単位で管理するための項目。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,パラメータ,#{cdHanbaitn},#{cdHanbaitn} を固定値として設定,実行対象の販売店を識別するコード。フィルタ候補を販売店単位で管理するための項目。
+4,mj_syamei,車名,STRING,無,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,mj_syamei,mj_syamei をそのまま設定。mj_syamei IS NOT NULL のデータのみ対象。GROUP BY mj_syamei により車名単位で集約。,車名フィルタの表示単位。DDL上は NOT NULL。
+5,value,車名コード一覧,STRING,有,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,cd_syamei,"GROUP_CONCAT(DISTINCT(cd_syamei), ',') により、同一車名に紐づく車名コードを重複排除してカンマ区切りで集約。",画面・BIのフィルタ内部値として利用する車名コード集合。
+6,link_key,連動フィルタキー,STRING,有,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,"status, cd_maker","'{""status"": [' || GROUP_CONCAT(DISTINCT('""' || status || '""')) || '], ""maker"": [' || GROUP_CONCAT(DISTINCT('""' || cd_maker || '""')) || ']}' により、車名に紐づく状態区分とメーカーコードをJSON風文字列で集約。",車名選択時に、ステータスやメーカーなど他フィルタとの連動制御に使う想定。
+7,disp,表示フラグ,STRING,有,なし,なし,なし,固定値,'1','1' を固定値として設定,画面・BI上で表示対象とすることを示すフラグと考えられる。
+8,mart_created_at,データ作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時に CURRENT_TIMESTAMP を設定。DDL上は DEFAULT CURRENT_TIMESTAMP だが、SQLでも明示的に CURRENT_TIMESTAMP を投入。,当該フィルタデータを作成した日時。ご指定により TIMESTAMP ではなく STRING として記載。
