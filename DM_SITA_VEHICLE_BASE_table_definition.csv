@@ -1,0 +1,45 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,source_type,データソース種別,STRING,無,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,source_type,直接設定,DDLコメント上は SITA / ZAIKO / KYOYU を表す種別
+2,cd_hansya,販社コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_hansya,直接設定,販社を識別するコード
+3,cd_kaisya,会社コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_kaisya,直接設定,会社を識別するコード
+4,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_hanbaitn,直接設定,販売店を識別するコード
+5,status,ステータス,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,status,直接設定,車両または査定の状態を表す区分
+6,cd_teanyote,提案予定コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_teanyote,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+7,no_syadaiba,車台番号,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,no_syadaiba,直接設定,車台を識別する番号
+8,no_syaryou,車両番号,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,no_syaryou,直接設定,車両を識別する番号
+9,no_siretyum,仕入注文番号,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,no_siretyum,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+10,cd_syamei,車名コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_syamei,直接設定,車名を識別するコード
+11,mj_syamei,車名,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,mj_syamei,直接設定,車両の名称
+12,cd_maker,メーカーコード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_maker,直接設定,メーカーを識別するコード
+13,su_syodotor,初度登録年月,INT,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,su_syodotor,直接設定,後続の明細テーブルでは yyyyMM 相当として日付変換に利用
+14,nu_soukoukm,走行距離,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,nu_soukoukm,直接設定,走行距離を表す項目
+15,cd_syufukre,修復歴コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_syufukre,直接設定,後続の明細テーブルでは空なら「無」、値ありなら「有」に変換
+16,kb_uriagyot,売上業態区分,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kb_uriagyot,直接設定,後続処理では 1=小売、2=卸売 に変換
+17,kb_engine,エンジン区分,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kb_engine,直接設定,エンジン種別を表す区分
+18,kb_kudohoho,駆動方式区分,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kb_kudohoho,直接設定,駆動方式を表す区分
+19,mj_katasiki,型式,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,mj_katasiki,直接設定,車両型式
+20,no_siteruib,指定類別番号,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,no_siteruib,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+21,kb_web,Web掲載区分,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kb_web,直接設定,Web掲載有無・状態を表す区分
+22,dd_sitayote,査定予定日,DATE,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,dd_sitayote,直接設定,査定予定日
+23,dd_sintyaku,新着日,DATE,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,dd_sintyaku,直接設定,新着日
+24,dd_syknmanr,車検満了日,DATE,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,dd_syknmanr,直接設定,車検満了日
+25,ki_hnbsijik,販売指示価格,BIGINT,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,ki_hnbsijik,直接設定,販売指示価格を表す金額項目
+26,cd_sitastaf,査定スタッフコード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_sitastaf,直接設定,査定担当スタッフを識別するコード
+27,cd_sitadote,査定予定店コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_sitadote,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+28,kj_syainmei,社員名,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kj_syainmei,直接設定,担当社員名
+29,kj_tentanms,店舗担当名,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kj_tentanms,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+30,kj_zaikoten,在庫店名,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kj_zaikoten,直接設定,在庫店舗名
+31,mj_ncfr,NCFR,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,mj_ncfr,直接設定,正式名称はDDL/SQL内にコメントなし
+32,id_syaryou,車両ID,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,id_syaryou,直接設定,車両を識別するID
+33,cd_zaiksyys,在庫種別コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_zaiksyys,直接設定,在庫種別を表すコード
+34,no_sti,査定番号,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,no_sti,直接設定,査定を識別する番号
+35,nu_suhkt,評価点,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,nu_suhkt,直接設定,正式名称はDDL/SQL内にコメントなし。SITA/査定文脈上の暫定名
+36,ki_nesita,値下価格,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,ki_nesita,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+37,mj_nejknbk,値付条件備考,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,mj_nejknbk,直接設定,値付条件に関する備考とみられる項目
+38,mj_comment,コメント,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,mj_comment,直接設定,コメント欄
+39,cd_tmchancd,TMチャンネルコード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_tmchancd,直接設定,正式名称はDDL/SQL内にコメントなし。カラム名からの整理
+40,kj_kaisya,会社名,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kj_kaisya,直接設定,会社名
+41,cd_todofken,都道府県コード,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,cd_todofken,直接設定,都道府県を識別するコード
+42,mj_todofkenfl,都道府県表示名,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,mj_todofkenfl,直接設定,都道府県の表示用名称
+43,kb_sintyaku,新着区分,STRING,有,なし,なし,なし,DM_SITA_VEHICLE_BASE_TMP,kb_sintyaku,直接設定,新着状態を表す区分
+44,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上は TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP。Impala向けにSTRING化
