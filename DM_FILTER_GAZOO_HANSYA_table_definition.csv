@@ -1,0 +1,4 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,value,GAZOO販社コード,STRING,無,なし,なし,なし,${uslimDb}.GAZOOKYOUZAIKOINFO,CD_TMCHANCD,"CD_TMCHANCD をそのまま設定。GROUP BY CD_TMCHANCD, KJ_KAISYA により重複する販社コード・会社名の組み合わせを集約。",GAZOO共通在庫に存在する販社/店舗チャネルを識別するコード。DDL上は NOT NULL。画面・BIのフィルタ内部値として利用する想定。
+2,label,GAZOO販社名,STRING,有,なし,なし,なし,${uslimDb}.GAZOOKYOUZAIKOINFO,KJ_KAISYA,"KJ_KAISYA をそのまま設定。GROUP BY CD_TMCHANCD, KJ_KAISYA により重複する販社コード・会社名の組み合わせを集約。",GAZOO販社/会社の表示名称。ユーザー画面ではこの名称が表示される想定。
+3,mart_created_at,データ作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時に CURRENT_TIMESTAMP を設定。DDL上は DEFAULT CURRENT_TIMESTAMP だが、SQLでも明示的に CURRENT_TIMESTAMP を投入。,当該フィルタデータを作成した日時。ご指定により TIMESTAMP ではなく STRING として記載。
