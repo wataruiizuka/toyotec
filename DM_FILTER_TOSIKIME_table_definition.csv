@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,value,検索色コード,STRING,無,なし,なし,なし,${uslimDb}.GAZOOSEARCHCOLOR,SEARCH_COLOR_CD,SEARCH_COLOR_CDをそのまま設定,検索色を識別するコード。DDL上はNOT NULL。画面・BIで色フィルタの内部値として利用する想定。
+2,label,検索色名,STRING,有,なし,なし,なし,${uslimDb}.GAZOOSEARCHCOLOR,SEARCH_COLOR_NM,SEARCH_COLOR_NMをそのまま設定,検索色の表示名称。画面・BIでユーザーに表示するラベルとして利用する想定。
+3,disp_order,表示順,INT,有,なし,なし,なし,${uslimDb}.GAZOOSEARCHCOLOR,DISP_ORDER,DISP_ORDERをそのまま設定,検索色候補を画面表示する際の並び順。
+4,mart_created_at,データ作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時にCURRENT_TIMESTAMPを設定。DDL上はDEFAULT CURRENT_TIMESTAMPだが、SQLでも明示的にCURRENT_TIMESTAMPを投入,当該フィルタデータを作成した日時。ご指定によりTIMESTAMPではなくSTRINGとして記載。
