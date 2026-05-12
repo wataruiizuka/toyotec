@@ -1,0 +1,26 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_syaryou,車両番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSyaryou},実行時パラメータを設定,予約情報を取得する対象車両番号
+4,kn_yoykkya1,予約顧客1,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,KN_YOYKKYA1,RTRIM(TBBC015G.KN_YOYKKYA1) により右側空白を除去,1件目の予約顧客情報
+5,cd_yoykten1,予約店舗コード1,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,CD_YOYKTEN1,直接設定,1件目の予約店舗コード
+6,kj_tenpomei1,予約店舗名1,STRING,有,なし,なし,なし,${ai21Db}.TBV0201M,KJ_TENPOMEI,TBBC015G.CD_YOYKTEN1 と TBV0201M.CD_TENPO が一致する場合の店舗名を取得し、REGEXP_REPLACE で末尾の全角/半角空白を除去。MAX(...) OVER() で1値化,1件目の予約店舗名
+7,cd_yoyksta1,予約スタッフコード1,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,CD_YOYKSTA1,RTRIM(TBBC015G.CD_YOYKSTA1) により右側空白を除去,1件目の予約スタッフコード
+8,kj_syainmei1,予約スタッフ名1,STRING,有,なし,なし,なし,${ai21Db}.TBV0014M,KJ_SYAINMEI,TBBC015G.CD_YOYKSTA1 と TBV0014M.CD_SYAIN が一致する場合の社員名を取得し、REGEXP_REPLACE で末尾の全角/半角空白を除去。MAX(...) OVER() で1値化,1件目の予約スタッフ名
+9,dd_yoykin1,予約日1,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,DD_YOYKIN1,"NVL(FROM_TIMESTAMP(TBBC015G.DD_YOYKIN1, 'yyyy/MM/dd'), '') により日付を yyyy/MM/dd 形式へ変換し、NULLを空文字へ変換",1件目の予約日
+10,kb_yyktsir1,予約種別1,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,KB_YYKTSIR1,RTRIM(TBBC015G.KB_YYKTSIR1) により右側空白を除去,1件目の予約種別区分
+11,kn_yoykkya2,予約顧客2,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,KN_YOYKKYA2,RTRIM(TBBC015G.KN_YOYKKYA2) により右側空白を除去,2件目の予約顧客情報
+12,cd_yoykten2,予約店舗コード2,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,CD_YOYKTEN2,直接設定,2件目の予約店舗コード
+13,kj_tenpomei2,予約店舗名2,STRING,有,なし,なし,なし,${ai21Db}.TBV0201M,KJ_TENPOMEI,TBBC015G.CD_YOYKTEN2 と TBV0201M.CD_TENPO が一致する場合の店舗名を取得し、REGEXP_REPLACE で末尾の全角/半角空白を除去。MAX(...) OVER() で1値化,2件目の予約店舗名
+14,cd_yoyksta2,予約スタッフコード2,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,CD_YOYKSTA2,RTRIM(TBBC015G.CD_YOYKSTA2) により右側空白を除去,2件目の予約スタッフコード
+15,kj_syainmei2,予約スタッフ名2,STRING,有,なし,なし,なし,${ai21Db}.TBV0014M,KJ_SYAINMEI,TBBC015G.CD_YOYKSTA2 と TBV0014M.CD_SYAIN が一致する場合の社員名を取得し、REGEXP_REPLACE で末尾の全角/半角空白を除去。MAX(...) OVER() で1値化,2件目の予約スタッフ名
+16,dd_yoykin2,予約日2,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,DD_YOYKIN2,"NVL(FROM_TIMESTAMP(TBBC015G.DD_YOYKIN2, 'yyyy/MM/dd'), '') により日付を yyyy/MM/dd 形式へ変換し、NULLを空文字へ変換",2件目の予約日
+17,kb_yyktsir2,予約種別2,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,KB_YYKTSIR2,RTRIM(TBBC015G.KB_YYKTSIR2) により右側空白を除去,2件目の予約種別区分
+18,kn_yoykkya3,予約顧客3,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,KN_YOYKKYA3,RTRIM(TBBC015G.KN_YOYKKYA3) により右側空白を除去,3件目の予約顧客情報
+19,cd_yoykten3,予約店舗コード3,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,CD_YOYKTEN3,直接設定,3件目の予約店舗コード
+20,kj_tenpomei3,予約店舗名3,STRING,有,なし,なし,なし,${ai21Db}.TBV0201M,KJ_TENPOMEI,TBBC015G.CD_YOYKTEN3 と TBV0201M.CD_TENPO が一致する場合の店舗名を取得し、REGEXP_REPLACE で末尾の全角/半角空白を除去。MAX(...) OVER() で1値化,3件目の予約店舗名
+21,cd_yoyksta3,予約スタッフコード3,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,CD_YOYKSTA3,RTRIM(TBBC015G.CD_YOYKSTA3) により右側空白を除去,3件目の予約スタッフコード
+22,kj_syainmei3,予約スタッフ名3,STRING,有,なし,なし,なし,${ai21Db}.TBV0014M,KJ_SYAINMEI,TBBC015G.CD_YOYKSTA3 と TBV0014M.CD_SYAIN が一致する場合の社員名を取得し、REGEXP_REPLACE で末尾の全角/半角空白を除去。MAX(...) OVER() で1値化,3件目の予約スタッフ名
+23,dd_yoykin3,予約日3,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,DD_YOYKIN3,"NVL(FROM_TIMESTAMP(TBBC015G.DD_YOYKIN3, 'yyyy/MM/dd'), '') により日付を yyyy/MM/dd 形式へ変換し、NULLを空文字へ変換",3件目の予約日
+24,kb_yyktsir3,予約種別3,STRING,有,なし,なし,なし,${ai21Db}.TBBC015G,KB_YYKTSIR3,RTRIM(TBBC015G.KB_YYKTSIR3) により右側空白を除去,3件目の予約種別区分
+25,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
