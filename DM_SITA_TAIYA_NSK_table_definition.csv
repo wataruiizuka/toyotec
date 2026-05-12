@@ -1,0 +1,19 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_sti,査定番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSti},実行時パラメータを設定,対象査定を識別する番号
+4,dd_tstisgjs,訂正査定実施日,STRING,無,なし,なし,なし,実行パラメータ,#{ddTstisgjs},実行時パラメータを設定,NSK系マスタの適用期間判定にも使用される基準日
+5,cd_bui,部位コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,CD_NSKBIDTL,"CD_NSKBIDTL IN ('1185','1189','1193') は 'L'、('1186','1190','1194') は 'R'、('1187','1191','1195') は 'LE'、('1188','1192','1196') は 'RE'、'1197' は 'LI'、'1198' は 'RI'、('1203','1204','1206') は 'S1'、'1207' は 'S2' に変換",NSK部位明細コードをタイヤ位置・部位の表示用コードへ変換した項目
+6,nu_tiyhaba,タイヤ幅,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,NU_TIYHABA,TBNH030G.NU_TIYHABA を直接設定,タイヤ幅を表す項目
+7,nu_tiyhpr,タイヤ扁平率,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,NU_TIYHPR,TBNH030G.NU_TIYHPR を直接設定,タイヤ扁平率を表す項目
+8,kb_tiykz,タイヤ構造区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,KB_TIYKZ,TBNH030G.KB_TIYKZ を直接設定,タイヤ構造を表す区分
+9,nu_tiyrimk,タイヤリム径,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,NU_TIYRIMK,TBNH030G.NU_TIYRIMK を直接設定,タイヤのリム径を表す項目
+10,nu_tiymz,タイヤ溝/状態値,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,NU_TIYMZ,TBNH030G.NU_TIYMZ を直接設定,カラム名と元カラムからタイヤ溝または状態値と整理。正式な業務名称はSQL内にコメントなし
+11,mj_tiyjtkb,タイヤ交換要否,STRING,有,なし,なし,なし,${ai21Db}.TBNH030G,KB_TIYJT,CASE TBNH030G.KB_TIYJT WHEN 'X' THEN '要' ELSE '否' END により、'X' の場合は '要'、それ以外は '否' に変換,タイヤ状態区分から交換要否を表示用に変換した項目
+12,mj_hsbu,補修有無,STRING,有,なし,なし,なし,なし（固定値）,NULL,NULL を固定設定,NSK系タイヤではSQL上、この項目は設定されない
+13,mj_tiysyu,タイヤ種類,STRING,有,なし,なし,なし,なし（固定値）,NULL,NULL を固定設定,NSK系タイヤではSQL上、この項目は設定されない
+14,mj_nskbhsy,NSK補修名称,STRING,有,なし,なし,なし,${ai21Db}.TBNH057M / ${ai21Db}.TBNH059M,MJ_NSKBHSY1 / MJ_NSKBHSY2,"REGEXP_REPLACE(TBNH057M.MJ_NSKBHSY1, '[　 ]+$', '') と REGEXP_REPLACE(TBNH059M.MJ_NSKBHSY2, '[　 ]+$', '') を CONCAT_WS(' ', ...) で半角スペース区切りで連結",NSK系の補修分類名1・補修分類名2を連結した表示用名称
+15,mj_nskssysy,NSK査定種別名称,STRING,有,なし,なし,なし,${ai21Db}.TBNH048M,MJ_NSKSSYSY,"REGEXP_REPLACE(TBNH048M.MJ_NSKSSYSY, '[　 ]+$', '') により末尾空白を除去",NSK査定種別コードに対応する名称
+16,mj_nskbhsy1,NSK補修名称1,STRING,有,なし,なし,なし,${ai21Db}.TBNH057M,MJ_NSKBHSY1,"REGEXP_REPLACE(TBNH057M.MJ_NSKBHSY1, '[　 ]+$', '') により末尾空白を除去",NSK補修分類1の名称。SQL上は 'ﾀｲﾔ' または 'ｽﾍﾟｱ' に該当する名称に限定
+17,mj_nskbhsy2,NSK補修名称2,STRING,有,なし,なし,なし,${ai21Db}.TBNH059M,MJ_NSKBHSY2,"REGEXP_REPLACE(TBNH059M.MJ_NSKBHSY2, '[　 ]+$', '') により末尾空白を除去",NSK補修分類2の名称
+18,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
