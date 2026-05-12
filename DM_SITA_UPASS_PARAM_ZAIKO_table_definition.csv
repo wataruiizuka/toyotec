@@ -1,0 +1,29 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,cd_hanbaitn,販売店コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHanbaitn},実行時パラメータを設定,対象販売店を識別するコード
+4,no_syadaiba,車台番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSyadaiba},実行時パラメータを設定,車台を識別する番号
+5,no_syaryou,車両番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSyaryou},実行時パラメータを設定,車両を識別する番号
+6,mj_katasiki,型式,STRING,有,なし,なし,なし,実行パラメータ,#{mjKatasiki},"NVL(#{mjKatasiki}, '') によりNULLを空文字へ変換",UPASS連携用に設定する車両型式
+7,dd_syodotor,初度登録日,STRING,有,なし,なし,なし,実行パラメータ,#{ddSyodotor},"NVL(#{ddSyodotor}, '') によりNULLを空文字へ変換",初度登録日。値は実行時パラメータから受け取る
+8,cd_zaiksyys,在庫種別コード,STRING,有,なし,なし,なし,実行パラメータ,#{cdZaiksyys},"NVL(#{cdZaiksyys}, '') によりNULLを空文字へ変換",在庫種別を表すコード
+9,nu_soukoukm,走行距離,STRING,有,なし,なし,なし,実行パラメータ,#{nuSoukoukm},"NVL(#{nuSoukoukm}, '') によりNULLを空文字へ変換",走行距離
+10,nu_suhkt,評価点,STRING,有,なし,なし,なし,実行パラメータ,#{nuSuhkt},"NVL(RTRIM(#{nuSuhkt}), '') により右側空白を除去し、NULLを空文字へ変換",正式名称はSQL内にコメントなし。SITA/査定文脈上の暫定名
+11,no_siteruib,指定類別番号,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,NO_SITERUIB,"NVL(T1.NO_SITERUIB, '') によりNULLを空文字へ変換",車両の指定類別番号
+12,mj_doasu,ドア数,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,MJ_DOASU,"NVL(T1.MJ_DOASU, '') によりNULLを空文字へ変換",ドア数を表す項目
+13,nu_haikiryo,排気量,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,NU_HAIKIRYO,"NVL(CAST(T1.NU_HAIKIRYO AS STRING), '') により文字列化し、NULLを空文字へ変換",排気量
+14,kb_engine,エンジン区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,KB_ENGINE,"NVL(T1.KB_ENGINE, '') によりNULLを空文字へ変換",エンジン種別を表す区分
+15,dd_syknmanr,車検満了日,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,DD_SYKNMANR,"NVL(FROM_TIMESTAMP(T1.DD_SYKNMANR, 'yyyy-MM-dd'), '') により日付を yyyy-MM-dd 形式へ変換し、NULLを空文字へ変換",車検満了日をUPASS連携向けの日付文字列に整形
+16,cd_mission,ミッションコード,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,CD_MISSION,"NVL(T1.CD_MISSION, '') によりNULLを空文字へ変換",ミッション種別を表すコード
+17,kb_handle,ハンドル区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,KB_HANDLE,"NVL(RTRIM(T1.KB_HANDLE), '') により右側空白を除去し、NULLを空文字へ変換",ハンドル種別を表す区分
+18,kb_kudohoho,駆動方式区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC002G,KB_KUDOHOHO,"NVL(T2.KB_KUDOHOHO, '') によりNULLを空文字へ変換",駆動方式を表す区分
+19,nu_josya1,乗車定員1,STRING,有,なし,なし,なし,${ai21Db}.TBBC002G,NU_JOSYA1,"NVL(RTRIM(T2.NU_JOSYA1), '') により右側空白を除去し、NULLを空文字へ変換",乗車定員を表す項目
+20,cd_siyoreki,使用歴コード,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,CD_SIYOREKI,"NVL(RTRIM(T1.CD_SIYOREKI), '') により右側空白を除去し、NULLを空文字へ変換",使用歴を表すコード
+21,kb_arumiumu,アルミ有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,KB_ARUMIUMU,"NVL(T1.KB_ARUMIUMU, '') によりNULLを空文字へ変換",アルミ装備有無を表す区分
+22,kb_kanabumu,カーナビ有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC002G,KB_KANABUMU,"NVL(T2.KB_KANABUMU, '') によりNULLを空文字へ変換",カーナビ装備有無を表す区分
+23,kb_sanrufuu,サンルーフ有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,KB_SANRUFUU,"NVL(T1.KB_SANRUFUU, '') によりNULLを空文字へ変換",サンルーフ有無を表す区分
+24,kb_seatszai,シート素材区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC002G,KB_SEATSZAI,"NVL(T2.KB_SEATSZAI, '') によりNULLを空文字へ変換",シート素材を表す区分
+25,kb_airconum,エアコン有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,KB_AIRCONUM,"NVL(T1.KB_AIRCONUM, '') によりNULLを空文字へ変換",エアコン有無を表す区分
+26,kb_sobi1um,装備1有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC002G,KB_SOBI1UM,"NVL(T2.KB_SOBI1UM, '') によりNULLを空文字へ変換",装備1の有無を表す区分。正式名称はSQL内にコメントなし
+27,kb_ninucar,任意項目区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,KB_NINUCAR,"NVL(RTRIM(T1.KB_NINUCAR), '') により右側空白を除去し、NULLを空文字へ変換",正式名称はSQL内にコメントなし。カラム名からの整理
+28,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
