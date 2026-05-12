@@ -1,0 +1,19 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,パラメータ,#{cdHansya},#{cdHansya} をそのまま設定,DDL上は NOT NULL。SQL実行時に外部から渡される販社コードを設定する。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,パラメータ,#{cdKaisya},#{cdKaisya} をそのまま設定,DDL上は NOT NULL。SQL実行時に外部から渡される会社コードを設定する。
+3,no_sti,査定番号,STRING,無,なし,なし,なし,パラメータ,#{noSti},#{noSti} をそのまま設定,DDL上は NOT NULL。査定データを識別する番号として使用される。
+4,no_syadai,車台番号,STRING,有,なし,なし,なし,${ai21Db}.TBNH001G,NO_SYADAI,RTRIM(T1.NO_SYADAI),車台番号の末尾空白を除去して設定する。
+5,mj_carsbt,車種名,STRING,有,なし,なし,なし,${ai21Db}.TBNH003G,MJ_CARSBT,T2.MJ_CARSBT を設定,査定対象車両の車種情報。
+6,no_trknosri,登録番号,STRING,有,なし,なし,なし,${ai21Db}.TBNH003G,"CD_TRKNORKS, KB_TRKNOSY, CD_TRKNOGTI, NO_TRKNOSRI","TRIM(REPLACE(CD_TRKNORKS,'　',' ')) || ' ' || KB_TRKNOSY || CD_TRKNOGTI || IF(LENGTH(NO_TRKNOSRI) BETWEEN 1 AND 3, LPAD(NO_TRKNOSRI,4,'0'), NO_TRKNOSRI)",登録番号を複数カラムから結合して作成する。全角スペースを半角に置換し、番号部分が1～3桁の場合は4桁ゼロ埋めする。
+7,mj_katasiki,型式,STRING,有,なし,なし,なし,${ai21Db}.TBNH003G,MJ_KATASIKI,T2.MJ_KATASIKI を設定,査定対象車両の型式情報。
+8,mj_furusyam,古車名,STRING,有,なし,なし,なし,${ai21Db}.TBNH004G,MJ_FURUSYAM,T3.MJ_FURUSYAM を設定,SQL上のカラム名に基づく名称。車両名または古車名に相当する情報。
+9,mj_stihzsm,査定表示済区分,STRING,有,なし,なし,なし,固定値,'1','1' を固定設定,SQLでは対象条件も MJ_STIHZSM = '1' に固定されている。
+10,kb_stikt,査定区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH004G,KB_STIKT,T3.KB_STIKT を設定。T3側は MAX(KB_STIKT) OVER() で最大KB_STIKTのレコードを採用,査定区分。複数候補がある場合、TBNH004G内の最大KB_STIKTが採用される。
+11,nu_suhkt,数量/走行系数値,STRING,有,なし,なし,なし,${ai21Db}.TBNH007G,NU_SUHKT,T4.NU_SUHKT を設定。T4側は MAX(KB_STIKT) OVER() で最大KB_STIKTのレコードを採用,カラム名から数量または走行系の数値項目と考えられるが、業務上の正式名称はDDL/SQL上では断定不可。
+12,ki_nesita,値下げ金額,STRING,有,なし,なし,なし,${ai21Db}.TBNH013G / ${ai21Db}.TBNH021G,KI_NSTI / KI_NESITA,"CAST(TRUNC(ISNULL(NVL2(T7.KB_STIKT, T7.KI_NSTI, T5.KI_NESITA), 0) / 1000) AS STRING)",T7が採用できる場合はT7.KI_NSTI、そうでなければT5.KI_NESITAを使用し、NULL時は0。1000で割って切り捨て後、STRING化する。
+13,kb_sitakit,下取区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH021G / ${ai21Db}.TBNH013G,KB_SITAKIT / KB_STIKT,"NVL2(T7.KB_STIKT, '', T5.KB_SITAKIT)",T7.KB_STIKTが存在する場合は空文字、存在しない場合はT5.KB_SITAKITを設定する。
+14,mj_nejknbk,値引条件備考,STRING,有,なし,なし,なし,${ai21Db}.TBNH013G / ${ai21Db}.TBNH022G,MJ_NSTIBIKO / MJ_NEJKNBK,"NVL2(T7.KB_STIKT, T7.MJ_NSTIBIKO, T6.MJ_NEJKNBK)",T7.KB_STIKTが存在する場合はT7.MJ_NSTIBIKO、存在しない場合はT6.MJ_NEJKNBKを設定する。
+15,cd_stijstan,査定実施担当者コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH002G,CD_STIJSTAN,T8.CD_STIJSTAN を設定。T8側は MAX(KB_STIKT) OVER() で最大KB_STIKTのレコードを採用,査定実施担当者の社員コードと考えられる。
+16,dd_stisgjs,査定実施日,STRING,有,なし,なし,なし,${ai21Db}.TBNH002G,DD_STISGJS,"FROM_UNIXTIME(UNIX_TIMESTAMP(T8.DD_STISGJS, 'yyyyMMdd'), 'yyyy/MM/dd')",元の日付文字列を yyyyMMdd から yyyy/MM/dd 形式へ変換する。
+17,kj_syainmei,社員名,STRING,有,なし,なし,なし,${ai21Db}.TBV0014M,KJ_SYAINMEI,"REGEXP_REPLACE(T9.KJ_SYAINMEI, '[　 ]+$', '')",社員名の末尾にある全角・半角スペースを除去して設定する。
+18,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP を設定,DDL上は TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP だが、Impala向け方針により定義書上はSTRINGとして記載する。SQLではINSERT時にCURRENT_TIMESTAMPを明示設定している。
