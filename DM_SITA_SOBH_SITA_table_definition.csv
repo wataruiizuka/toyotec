@@ -1,0 +1,50 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_siretyum,仕入注文番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSiretyum},実行時パラメータを設定,SITA側の仕入注文番号。正式名称はSQL内にコメントなし
+4,no_syaryou,車両番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSyaryou},実行時パラメータを設定,対象車両を識別する番号
+5,kb_idlnum,アイドリング有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_IDLNUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+6,kb_syotum,衝突関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SYOTUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+7,kb_pedaum,ペダル関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_PEDAUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+8,kb_sysnum,システム関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SYSNUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+9,kb_snsnum,SNS関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SNSNUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+10,kb_airbakum,エアバッグ区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_AIRBAKUM / MJ_KUBUNNAI,KB_AIRBAKUM が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0078' の区分名称を取得し、末尾空白を除去,区分マスタから名称変換する装備項目
+11,kb_absum,ABS有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_ABSUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,ABS装備有無を表す項目
+12,cd_hidum,HID区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,CD_HIDUM / MJ_KUBUNNAI,CD_HIDUM が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0297' の区分名称を取得し、末尾空白を除去,区分マスタから名称変換する装備項目
+13,kb_backmum,バックモニター有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_BACKMUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,バックモニター有無を表す項目
+14,kb_blndum,ブラインド関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_BLNDUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+15,kb_panoum,パノラマ関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_PANOUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+16,kb_drrcum,ドライブレコーダー関連装備有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_DRRCUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+17,kb_kanabumu,カーナビ区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_KANABUMU / MJ_KUBUNNAI,KB_KANABUMU が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0079' の区分名称を取得し、末尾空白を除去,カーナビ関連の区分名称
+18,kb_tvumu,TV区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_TVUMU / MJ_KUBUNNAI,KB_TVUMU が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0273' の区分名称を取得し、末尾空白を除去,TV関連の区分名称
+19,kb_dvdumu,DVD有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_DVDUMU,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,DVD装備有無を表す項目
+20,cd_cdumu,CD区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,CD_CDUMU / MJ_KUBUNNAI,CD_CDUMU が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0275' の区分名称を取得し、末尾空白を除去,CD関連の区分名称
+21,kb_sobi10um,装備10有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI10UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+22,kb_sobi11um,装備11有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI11UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+23,kb_consum,コンソール関連区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_CONSUM / MJ_KUBUNNAI,KB_CONSUM が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='9037' の区分名称を取得し、末尾空白を除去,正式名称はSQL内にコメントなし。カラム名からの整理
+24,kb_seatszai,シート素材区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_SEATSZAI / MJ_KUBUNNAI,KB_SEATSZAI が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0082' の区分名称を取得し、末尾空白を除去,シート素材の区分名称
+25,kb_arumiumu,アルミ区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC003G / ${ai21Db}.TBV0231M,KB_ARUMIUMU / MJ_KUBUNNAI,KB_ARUMIUMU が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0288' の区分名称を取得し、末尾空白を除去,アルミ関連の区分名称
+26,kb_pwseatum,パワーシート有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_PWSEATUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,パワーシート有無を表す項目
+27,kb_sobi9um,装備9有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI9UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+28,kb_sobi6um,装備6有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI6UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+29,kb_sobi7um,装備7有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI7UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+30,kb_sobi8um,装備8有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI8UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+31,kb_keylesum,キーレス区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_KEYLESUM / MJ_KUBUNNAI,KB_KEYLESUM が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0284' の区分名称を取得し、末尾空白を除去,キーレス関連の区分名称
+32,kb_autodum,オートドア関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_AUTODUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+33,kb_dendodum,電動ドア関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_DENDODUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+34,kb_rmconum,リモコン関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_RMCONUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+35,kb_etcum,ETC有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_ETCUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,ETC装備有無を表す項目
+36,kb_kanreium,寒冷地仕様区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_KANREIUM / MJ_KUBUNNAI,KB_KANREIUM が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0268' の区分名称を取得し、末尾空白を除去,寒冷地仕様関連の区分名称
+37,kb_sobi4um,装備4有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI4UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+38,kb_sobi5um,装備5有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_SOBI5UM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+39,kb_supum,サスペンション関連区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_SUPUM / MJ_KUBUNNAI,KB_SUPUM が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0294' の区分名称を取得し、末尾空白を除去,正式名称はSQL内にコメントなし。カラム名からの整理
+40,kb_djmatum,DJマット関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_DJMATUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+41,kb_tracontr,トラクションコントロール区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_TRACONTR / MJ_KUBUNNAI,KB_TRACONTR が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0081' の区分名称を取得し、末尾空白を除去,トラクションコントロール関連の区分名称
+42,kb_hirufum,ヒルスタート関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_HIRUFUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+43,kb_rufum,ルーフ関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_RUFUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+44,kb_kudohoho,駆動方式区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G / ${ai21Db}.TBV0231M,KB_KUDOHOHO / MJ_KUBUNNAI,KB_KUDOHOHO が空の場合は 'ー'。値がある場合は TBV0231M の MJ_KUBUNID='0080' の区分名称を取得し、末尾空白を除去,駆動方式の区分名称
+45,nu_josya1,乗車定員1,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,NU_JOSYA1,RTRIM後に空文字の場合は '0'、それ以外は右側空白除去後の値を設定,乗車定員を表す項目
+46,nu_josya2,乗車定員2,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,NU_JOSYA2,RTRIM後に空文字の場合は '0'、それ以外は右側空白除去後の値を設定,乗車定員を表す項目
+47,kb_haimenum,排面関連有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC004G,KB_HAIMENUM,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,正式名称はSQL内にコメントなし。カラム名からの整理
+48,kb_sanrufuu,サンルーフ有無区分,STRING,有,なし,なし,なし,${ai21Db}.TBBC003G,KB_SANRUFUU,'0' は '無'、'1' は '有'、それ以外は 'ー' に変換,サンルーフ有無を表す項目
+49,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
