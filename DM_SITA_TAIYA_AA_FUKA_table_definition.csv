@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_sti,査定番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSti},実行時パラメータを設定,対象査定を識別する番号
+4,mj_tiymeigar,タイヤ銘柄,STRING,有,なし,なし,なし,${ai21Db}.TBV0231M,MJ_KUBUNNAI,"サブクエリ内で TBV0231M.MJ_KUBUNID='0005' の MJ_KUBUNNAI を取得し、REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') で末尾空白を除去。その後、外側SELECTで MAX(CASE MJ_KUBUNID WHEN '0005' THEN MJ_KUBUNNAI END) により1値化","AA系タイヤの銘柄を表す項目。TBV0231M は MJ_BLOCKID='10'、MJ_KUBUNID IN ('0005','0006') に限定"
+5,mj_tiysyu,タイヤ種類,STRING,有,なし,なし,なし,${ai21Db}.TBV0231M,MJ_KUBUNNAI,"サブクエリ内で TBV0231M.MJ_KUBUNID='0006' の MJ_KUBUNNAI を取得し、REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') で末尾空白を除去。その後、外側SELECTで MAX(CASE MJ_KUBUNID WHEN '0006' THEN MJ_KUBUNNAI END) により1値化","AA系タイヤの種類を表す項目。TBV0231M は MJ_BLOCKID='10'、MJ_KUBUNID IN ('0005','0006') に限定"
+6,mj_nejknbk,値付条件備考,STRING,有,なし,なし,なし,${ai21Db}.TBNH022G,MJ_NEJKNBK,UNION ALL の2つ目のSELECTで TBNH022G.MJ_NEJKNBK を取得し、外側SELECTで MAX(MJ_NEJKNBK) により1値化,AA系タイヤ付加情報として保持する値付条件備考。正式名称はカラム名からの整理
+7,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
