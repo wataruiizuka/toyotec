@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータ #{cdHansya} を設定,集計対象の販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータ #{cdKaisya} を設定,集計対象の会社を識別するコード
+3,cd_hanbaitn,販売店コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHanbaitn},実行時パラメータ #{cdHanbaitn} を設定,集計対象の販売店を識別するコード
+4,kb_honten,本店/販売店区分,STRING,無,なし,なし,なし,実行パラメータ,#{kbHonTen},実行時パラメータ #{kbHonTen} を設定,月単位/週単位の集計表示を切り替える条件として利用
+5,category,集計カテゴリ,INTEGER,無,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,"dd_sitayote, status, mj_syamei",GROUPING(sita_month_week)=0 の場合は1、GROUPING(status)=0 の場合は2、GROUPING(mj_syamei)=0 の場合は3を設定,1=査定予定月/週別、2=ステータス・売上業態別、3=車名別の集計カテゴリ
+6,sita_month_week,査定予定月/週,STRING,有,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,"dd_sitayote, status",status='2' または dd_sitayote IS NULL の場合はNULL。kb_honten='1' の場合は月単位、kb_honten='2' の場合は週開始日形式へ変換。過去日付は前日までを表す形式に変換,category=1 の行で主に使用。査定予定日を月または週の表示単位に変換した項目
+7,status,ステータス,STRING,有,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,status,"GROUPING SETS の (status, kb_uriagyot) 集計で使用し、元の status を設定",category=2 の行で主に使用。車両または査定状態を表す区分
+8,kb_uriagyot,売上業態,STRING,有,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,"status, kb_uriagyot",status='2' の場合は空文字。kb_uriagyot='1' は '小売'、'2' は '卸売'、それ以外は空文字に変換,category=2 の行で主に使用。売上業態区分を画面表示向けに日本語化した項目
+9,syamei,車名,STRING,有,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,mj_syamei,mj_syamei AS syamei として設定,category=3 の行で主に使用。車名別台数ランキングの集計軸
+10,daisu,台数,BIGINT,無,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,レコード件数,COUNT(1) により集計,各集計カテゴリにおける車両台数
+11,daisu_rank,台数順位,BIGINT,無,なし,なし,なし,${uslimDb}.DM_SITA_VEHICLE_BASE,"COUNT(1), mj_syamei",DENSE_RANK() OVER (PARTITION BY GROUPING(mj_syamei) ORDER BY COUNT(1) DESC) により順位を算出,車名別集計では上位10件のみ出力対象。category=1/2でもSQL上は順位が算出される
+12,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
