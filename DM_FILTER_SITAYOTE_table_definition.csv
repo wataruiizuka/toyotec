@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,パラメータ,#{cdHansya},#{cdHansya} を固定値として設定,実行対象の販社を識別するコード。フィルタ候補を販社単位で管理するための項目。DDL上はNULL許容。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,パラメータ,#{cdKaisya},#{cdKaisya} を固定値として設定,実行対象の会社を識別するコード。フィルタ候補を会社単位で管理するための項目。DDL上はNULL許容。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,パラメータ,#{cdHanbaitn},#{cdHanbaitn} を固定値として設定,実行対象の販売店を識別するコード。SQLでは値を設定しているが、抽出条件には使用されていない。DDL上はNULL許容。
+4,dd_sitayote,仕入予定日,DATE,無,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,dd_sitayote,dd_sitayote をそのまま設定。source_type = 'SITA'、cd_hansya = #{cdHansya}、cd_kaisya = #{cdKaisya}、dd_sitayote IS NOT NULL のデータのみ対象。GROUP BY dd_sitayote により仕入予定日単位で集約。,仕入予定日フィルタの基準日。DDL上はNOT NULL。SITAデータのみを対象に候補を作成。
+5,value,仕入予定日値,STRING,有,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,dd_sitayote,"FROM_TIMESTAMP(dd_sitayote, 'yyyy/MM/dd') AS value により、仕入予定日を yyyy/MM/dd 形式の文字列に変換して設定。",画面・BIのフィルタ内部値として利用する日付文字列。DDL上はVARCHAR(20)だが、ご指定に従いSTRINGとして記載。
+6,label,仕入予定日表示名,STRING,有,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,dd_sitayote,CASEで日付に応じた和暦記号を付与。2019-05-01以降はR、1989-01-08以降はH、1926-12-25以降はS、1912-07-30以降はT、1868-09-08以降はMを使用し、LPADで和暦年を2桁化。該当しない場合は空文字。,画面表示用の仕入予定日ラベル。例：2026-05-12の場合、形式上は 26(R08)/05/12 のような表示になる想定。
+7,disp,表示フラグ,STRING,有,なし,なし,なし,固定値,'1','1' を固定値として設定,画面・BI上で表示対象とすることを示すフラグと考えられる。DDL上はVARCHAR(1)だが、ご指定に従いSTRINGとして記載。
+8,mart_created_at,データ作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時に CURRENT_TIMESTAMP を設定。DDL上はDEFAULT CURRENT_TIMESTAMPだが、SQLでも明示的にCURRENT_TIMESTAMPを投入。,当該フィルタデータを作成した日時。ご指定によりTIMESTAMPではなくSTRINGとして記載。
