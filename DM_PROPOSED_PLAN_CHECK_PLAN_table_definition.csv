@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行時パラメータ,#{cdHansya},#{cdHansya} を設定,販社を識別するコード。DDL上 NOT NULL。SQLのWHERE条件でも TBBC003G.CD_HANSYA = #{cdHansya} として使用。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行時パラメータ,#{cdKaisya},#{cdKaisya} を設定,会社を識別するコード。DDL上 NOT NULL。SQLのWHERE条件でも TBBC003G.CD_KAISYA = #{cdKaisya} として使用。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,実行時パラメータ,#{cdHanbaitn},#{cdHanbaitn} を設定,販売店を識別するコード。SQL上は元テーブルから取得せず、実行時パラメータをそのまま設定。
+4,kb_honten,本店区分,STRING,有,なし,なし,なし,実行時パラメータ,#{kbHonTen},#{kbHonTen} を設定,本店・販売店などの区分を表す項目と考えられる。SQL上は実行時パラメータをそのまま設定。
+5,no_syadaiba,車台番号,STRING,無,なし,なし,なし,${ai21Db}.TBBC003G,NO_SYADAIBA,RTRIM(TBBC003G.NO_SYADAIBA),車両を識別する車台番号。末尾空白を削除して格納。DDL上 NOT NULL。
+6,no_siretyum,仕入注文番号,STRING,有,なし,なし,なし,${ai21Db}.TBBC003G,NO_SIRETYUM,TBBC003G.NO_SIRETYUM をそのまま取得,仕入注文を識別する番号。
+7,is_target_plan,提案対象フラグ,STRING,有,なし,なし,なし,固定値,'1','1' を固定設定,抽出条件に合致したレコードを提案対象として扱うためのフラグ。SQL上は全件 '1' を設定。
+8,mart_created_at,データマート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム生成,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP を設定,データマートへの登録・作成時刻。DDL上 NOT NULL かつ DEFAULT CURRENT_TIMESTAMP。
