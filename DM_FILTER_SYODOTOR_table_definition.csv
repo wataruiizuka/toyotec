@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,パラメータ,#{cdHansya},#{cdHansya} を固定値として設定,実行対象の販社を識別するコード。フィルタ候補を販社単位で管理するための項目。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,パラメータ,#{cdKaisya},#{cdKaisya} を固定値として設定,実行対象の会社を識別するコード。フィルタ候補を会社単位で管理するための項目。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,パラメータ,#{cdHanbaitn},#{cdHanbaitn} を固定値として設定,実行対象の販売店を識別するコード。フィルタ候補を販売店単位で管理するための項目。
+4,syodotor_year,初度登録年,INT,無,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,syodotor_year,syodotor_year をそのまま設定。syodotor_year IS NOT NULL のデータのみ対象。対象範囲は ((cd_hansya = #{cdHansya} AND cd_kaisya = #{cdKaisya}) OR source_type = 'GAZOO')。GROUP BY syodotor_year により初度登録年単位で集約。,年式フィルタの基準となる年。DDL上は NOT NULL。DM_FILTER_VEHICLE_BASE 側では su_syodotor から年部分を算出済み。
+5,value,初度登録年値,STRING,有,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,syodotor_year,CAST(syodotor_year AS STRING) AS value,画面・BIのフィルタ内部値として利用する年式値。例：2024。DDL上は VARCHAR(20) だが、ご指定に従い STRING として記載。
+6,label,初度登録年表示名,STRING,有,なし,なし,なし,${uslimDb}.DM_FILTER_VEHICLE_BASE,syodotor_year,CASEで西暦年に和暦表記を付与。2019年以降は R、1989年以降は H、1926年以降は S、1912年以降は T、1868年以降は M を付与し、LPADで和暦年を2桁化。該当しない場合は空文字。,画面表示用の年式ラベル。例：2024(R06)、2018(H30)。
+7,disp,表示フラグ,STRING,有,なし,なし,なし,固定値,'1','1' を固定値として設定,画面・BI上で表示対象とすることを示すフラグと考えられる。DDL上は VARCHAR(1) だが、ご指定に従い STRING として記載。
+8,mart_created_at,データ作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時に CURRENT_TIMESTAMP を設定。DDL上は DEFAULT CURRENT_TIMESTAMP だが、SQLでも明示的に CURRENT_TIMESTAMP を投入。,当該フィルタデータを作成した日時。ご指定により TIMESTAMP ではなく STRING として記載。
