@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,CD_HANSYA,T_RI.CD_HANSYA をそのまま取得,販社を識別するコード。DDL上 NOT NULL。TBBC001G との結合キーにも使用。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,CD_KAISYA,T_RI.CD_KAISYA をそのまま取得,会社を識別するコード。DDL上 NOT NULL。TBBC001G との結合キーにも使用。
+3,no_syadaiba,車台番号,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,NO_SYADAIBA,T_RI.NO_SYADAIBA をそのまま取得,車両を識別する車台番号。DDL上 NOT NULL。TBBC001G との結合キーにも使用。
+4,dt_sakusei_key,作成日時キー,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,DT_SAKUSEI,"FROM_TIMESTAMP(T_RI.DT_SAKUSEI, 'yyyy/MM/dd HH:mm:ss.SSSSSS')",作成日時を指定フォーマットで文字列化したキー項目。DDL上 NOT NULL。
+5,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,${uslimDb}.RESERVEINFO,CD_TENPO,T_RI.CD_TENPO をそのまま取得,店舗を識別するコード。
+6,mj_sakuseimail,作成者メールアドレス,STRING,有,なし,なし,なし,${uslimDb}.RESERVEINFO,MJ_SAKUSEIMAIL,T_RI.MJ_SAKUSEIMAIL をそのまま取得,作成者のメールアドレス。権限判定や表示制御に利用される可能性がある。
+7,mj_kousinmail,更新者メールアドレス,STRING,有,なし,なし,なし,${uslimDb}.RESERVEINFO,MJ_KOUSINMAIL,T_RI.MJ_KOUSINMAIL をそのまま取得,更新者のメールアドレス。権限判定や表示制御に利用される可能性がある。
+8,mj_sakujo,削除区分,STRING,有,なし,なし,なし,${uslimDb}.RESERVEINFO,MJ_SAKUJO,T_RI.MJ_SAKUJO をそのまま取得,削除状態を表す区分値。
+9,mj_zaikost,在庫ステータス,STRING,有,なし,なし,なし,${ai21Db}.TBBC001G,MJ_ZAIKOST,RESERVEINFO と TBBC001G を LEFT JOIN し、TBBC001G.MJ_ZAIKOST を取得。結合条件は CD_HANSYA・CD_KAISYA・車台番号一致、DT_SAKUSEI <= DD_SIIRE、DD_TORIKESI IS NULL。,車両の在庫状態を表す項目。LEFT JOIN のため、結合できない場合はNULLになり得る。
+10,mart_created_at,データマート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム生成,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP を設定,データマートへの登録・作成時刻。DDL上 NOT NULL かつ DEFAULT CURRENT_TIMESTAMP。
