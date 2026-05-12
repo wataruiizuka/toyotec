@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,CD_HANSYA,CD_HANSYA をそのまま取得。GROUP BY の集計キーとして使用。,販社を識別するコード。DDL上 NOT NULL。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,CD_KAISYA,CD_KAISYA をそのまま取得。GROUP BY の集計キーとして使用。,会社を識別するコード。DDL上 NOT NULL。
+3,no_syadaiba,車台番号,STRING,無,なし,なし,なし,${uslimDb}.RESERVEINFO,NO_SYADAIBA,RTRIM(NO_SYADAIBA) により末尾空白を削除して取得。GROUP BY も RTRIM(NO_SYADAIBA) 単位。,車両を識別する車台番号。DDL上 NOT NULL。
+4,exists_ren_status,連携ステータス存在件数,BIGINT,有,なし,なし,なし,${uslimDb}.RESERVEINFO,COUNT(1),"条件に合致した RESERVEINFO のレコードを CD_HANSYA・CD_KAISYA・RTRIM(NO_SYADAIBA) 単位で COUNT(1) 集計。抽出条件は MJ_STETAS <> '0'、MJ_SAKUJO = '0'、かつ MJ_ZAIKOST IS NULL OR MJ_ZAIKOST NOT IN ('4','5')。",項目名は存在フラグのように見えるが、SQL上は0/1ではなく件数を格納。条件に合致しない車台番号は出力されない。
+5,mart_created_at,データマート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム生成,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP を設定。,データマートへの登録・作成時刻。DDL上 NOT NULL かつ DEFAULT CURRENT_TIMESTAMP。
