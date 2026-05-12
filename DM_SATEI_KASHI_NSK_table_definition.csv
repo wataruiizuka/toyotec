@@ -1,0 +1,12 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,パラメータ,#{cdHansya},#{cdHansya} をそのまま設定,DDL上は NOT NULL。SQL実行時に外部から渡される販社コードを設定する。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,パラメータ,#{cdKaisya},#{cdKaisya} をそのまま設定,DDL上は NOT NULL。SQL実行時に外部から渡される会社コードを設定する。
+3,no_sti,査定番号,STRING,無,なし,なし,なし,パラメータ,#{noSti},#{noSti} をそのまま設定,DDL上は NOT NULL。査定データを識別する番号として使用される。
+4,kb_stikt,査定区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH032G,KB_STIKT,TBNH032G.KB_STIKT を設定。TBNH002G.KB_STIKT と一致するレコードを INNER JOIN で抽出,査定区分。TBNH032Gは CD_KAISYA、CD_HANSYA、NO_STI、MJ_STIHZSM='1' で対象査定に絞り込まれる。
+5,cd_nskbidtl,値下げ分類明細コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH055M,CD_NSKBIDTL,TBNH032G.CD_NSKBIDTL = TBNH055M.CD_NSKBIDTL でJOINし、TBNH055M.CD_NSKBIDTLを設定。査定実施日がTBNH055Mの有効期間内であることを条件にする,カラム名と参照マスタ名から値下げ分類明細コードとして整理。正式な業務名称はDDL/SQL上では断定不可。
+6,mj_nskbidtl,値下げ分類明細名,STRING,有,なし,なし,なし,${ai21Db}.TBNH055M,MJ_NSKBIDTL,TBNH032G.CD_NSKBIDTL = TBNH055M.CD_NSKBIDTL でJOINし、TBNH055M.MJ_NSKBIDTLを設定。査定実施日がTBNH055Mの有効期間内であることを条件にする,値下げ分類明細コードに対応する名称項目として設定される。
+7,cd_nskssysy,値下げ査定要素コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH048M,CD_NSKSSYSY,CASE WHEN TBNH064M.CD_HANSYA IS NULL THEN TBNH074M.CD_NSKSSYSY ELSE TBNH064M.CD_NSKSSYSY END = TBNH048M.CD_NSKSSYSY でJOINし、TBNH048M.CD_NSKSSYSYを設定。査定実施日がTBNH048Mの有効期間内であることを条件にする,TBNH064Mに該当がある場合はTBNH064M側、ない場合はTBNH074M側の要素コードを使ってTBNH048Mを参照する。
+8,mj_nskssysy,値下げ査定要素名,STRING,有,なし,なし,なし,${ai21Db}.TBNH048M,MJ_NSKSSYSY,TBNH048M.MJ_NSKSSYSY を設定。JOIN条件は cd_nskssysy と同じ,値下げ査定要素コードに対応する名称項目として設定される。
+9,mj_nskkasi,値下げ加修内容,STRING,有,なし,なし,なし,${ai21Db}.TBNH048M,MJ_NSKKASI,TBNH048M.MJ_NSKKASI を設定。JOIN条件は cd_nskssysy と同じ,加修内容または加修名称に相当する項目。正式な業務名称はDDL/SQL上では断定不可。
+10,nu_nskkgt,値下げ加修金額/係数,STRING,有,なし,なし,なし,${ai21Db}.TBNH064M / ${ai21Db}.TBNH074M,NU_NSKKGT,CASE WHEN TBNH064M.CD_HANSYA IS NULL THEN TBNH074M.NU_NSKKGT ELSE TBNH064M.NU_NSKKGT END,TBNH064Mに該当データがある場合はTBNH064M.NU_NSKKGTを使用し、ない場合はTBNH074M.NU_NSKKGTを使用する。単位・意味はDDL/SQL上では断定不可。
+11,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP を設定,DDL上は TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP だが、Impala向け方針により定義書上はSTRINGとして記載する。SQLではINSERT時にCURRENT_TIMESTAMPを明示設定している。
