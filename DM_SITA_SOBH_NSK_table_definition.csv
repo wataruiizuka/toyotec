@@ -1,0 +1,12 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_sti,査定番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSti},実行時パラメータを設定,対象査定を識別する番号
+4,dd_tstisgjs,訂正査定実施日,STRING,無,なし,なし,なし,実行パラメータ,#{ddTstisgjs},実行時パラメータを設定,マスタの適用期間判定にも使用される基準日
+5,cd_nskbidtl,NSK部位明細コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH055M,CD_NSKBIDTL,TBNH055M.CD_NSKBIDTL を直接設定,NSK系の部位・明細を識別するコード。WHERE条件で先頭2桁が '39' または '40'、かつ '4042' 以外に限定
+6,mj_komok,NSK項目名,STRING,有,なし,なし,なし,${ai21Db}.TBNH055M,MJ_NSKBDTT3,TBNH055M.MJ_NSKBDTT3 を直接設定,NSK部位明細コードに対応する表示項目名
+7,mj_sobi,装備/補修内容,STRING,有,なし,なし,なし,${ai21Db}.TBNH031G / ${ai21Db}.TBNH057M / ${ai21Db}.TBNH059M / ${ai21Db}.TBNH055M,MJ_NSKSBARI / MJ_NSKBHSY1 / MJ_NSKBHSY2 / MJ_NSKBDTNS,TBNH031G.MJ_NSKSBARI='0' の場合は '無'。'1' の場合、TBNH057M.MJ_NSKBHSY1 が空白のみでなければ TBNH057M.MJ_NSKBHSY1 と TBNH059M.MJ_NSKBHSY2 を全角スペース区切りで連結し、末尾空白を除去。CD_NSKBIDTL='4050' の場合は TBNH055M.MJ_NSKBDTNS を末尾空白除去して設定。TBNH057M.MJ_NSKBHSY1 がNULLでなければ '有'。それ以外は空文字,NSK系の装備有無または補修内容を画面表示向けに整形した項目
+8,mj_err,欠品/エラー内容,STRING,有,なし,なし,なし,${ai21Db}.TBNH031G / ${ai21Db}.TBNH048M,KB_NSKSBSBT / MJ_NSSSYTAN,TBNH031G.KB_NSKSBSBT='2' の場合は '欠'。それ以外は TBNH048M.MJ_NSSSYTAN を設定,欠品またはNSK査定種別名称を表示する項目
+9,nu_gt,合計額/合計値,STRING,有,なし,なし,なし,${ai21Db}.TBNH035G / ${ai21Db}.TBNH031G,NU_SYNSKKGT / NU_NHYKPGT,"TBNH035G.NU_SYNSKKGT と TBNH031G.NU_NHYKPGT がどちらもNULLの場合は空文字。それ以外は NVL(TBNH035G.NU_SYNSKKGT,0) + NVL(TBNH031G.NU_NHYKPGT,0) をSTRINGへ変換",正式な業務名称はSQL内にコメントなし。2つの数値項目を加算した値
+10,nu_kt,加点/減点値,STRING,有,なし,なし,なし,${ai21Db}.TBNH031G,NU_NSKOPKT,TBNH031G.NU_NSKOPKT がNULLの場合は空文字。それ以外はSTRINGへ変換,正式な業務名称はSQL内にコメントなし。NSK系の点数または評価値とみられる項目
+11,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
