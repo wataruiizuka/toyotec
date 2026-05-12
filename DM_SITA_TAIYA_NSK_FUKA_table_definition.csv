@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_sti,査定番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSti},実行時パラメータを設定,対象査定を識別する番号
+4,mj_nejknbk,値付条件備考,STRING,有,なし,なし,なし,${ai21Db}.TBNH022G,MJ_NEJKNBK,TBNH022G.MJ_NEJKNBK を直接設定,NSK系タイヤ付加情報として保持する値付条件備考。正式名称はカラム名からの整理
+5,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
