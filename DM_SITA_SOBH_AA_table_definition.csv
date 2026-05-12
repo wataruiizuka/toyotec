@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdHansya},実行時パラメータを設定,対象販社を識別するコード
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,実行パラメータ,#{cdKaisya},実行時パラメータを設定,対象会社を識別するコード
+3,no_sti,査定番号,STRING,無,なし,なし,なし,実行パラメータ,#{noSti},実行時パラメータを設定,対象査定を識別する番号
+4,no_sobi,装備番号,STRING,有,なし,なし,なし,${ai21Db}.TBBC094G,NO_SOBI,TBBC094G.NO_SOBI を直接設定。TBNH030M.NO_SOBI と INNER JOIN して対象装備を紐付け,装備項目を識別する番号
+5,mj_komok,装備項目名,STRING,有,なし,なし,なし,${ai21Db}.TBBC094G,MJ_SOBIHITA,RTRIM(TBBC094G.MJ_SOBIHITA) により右側空白を除去,装備の表示項目名
+6,mj_sobi,装備内容,STRING,有,なし,なし,なし,${ai21Db}.TBV0231M,MJ_KUBUNNAI,"TBNH030M の MJ_BLOCKID / MJ_KUBUNID と TBNH017G.KB_SBDTL を用いて TBV0231M の区分名称を取得し、REGEXP_REPLACE(TBV0231M.MJ_KUBUNNAI, '[　 ]+$', '') で末尾空白を除去",AA系装備の区分名称を表示用に整形した項目
+7,mj_err,装備エラー有無,STRING,有,なし,なし,なし,${ai21Db}.TBNH017G,MJ_SBERRU,CASE TBNH017G.MJ_SBERRU WHEN '1' THEN '有' ELSE '' END により、'1' の場合のみ '有' を設定,装備に関するエラー有無を表示する項目
+8,mart_created_at,Mart作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,なし（SQL関数）,CURRENT_TIMESTAMP,SQL実行時に CURRENT_TIMESTAMP を設定,DDL上はTIMESTAMP想定。Impala向けルールによりSTRINGとして整理
