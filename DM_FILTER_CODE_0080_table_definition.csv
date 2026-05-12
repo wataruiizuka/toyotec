@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_kaisya,会社コード,STRING,無,なし,なし,なし,${ai21Db}.TBV0231M,CD_KAISYA,CD_KAISYA をそのまま設定。抽出条件は MJ_BLOCKID = '03'、MJ_KUBUNID = '0080'、CD_KUBUN <> '**'。,会社を識別するコード。DDL上は NOT NULL。区分マスタを会社単位で管理するための項目。
+2,cd_hansya,販社コード,STRING,無,なし,なし,なし,${ai21Db}.TBV0231M,CD_HANSYA,CD_HANSYA をそのまま設定。抽出条件は MJ_BLOCKID = '03'、MJ_KUBUNID = '0080'、CD_KUBUN <> '**'。,販社を識別するコード。DDL上は NOT NULL。区分マスタを販社単位で管理するための項目。
+3,value,区分コード,STRING,無,なし,なし,なし,${ai21Db}.TBV0231M,CD_KUBUN,RTRIM(CD_KUBUN) により、CD_KUBUN の末尾空白を除去して設定。CD_KUBUN = '**' は除外。,画面・BIのフィルタ内部値として利用する区分コード。DDL上は NOT NULL。
+4,label,区分名称,STRING,有,なし,なし,なし,${ai21Db}.TBV0231M,MJ_KUBUNNAI,"REGEXP_REPLACE(MJ_KUBUNNAI, '[　 ]+$', '') により、末尾の全角スペース・半角スペースを除去して設定。",区分コードに対応する表示名称。ユーザー画面ではこの名称が表示される想定。
+5,mart_created_at,データ作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,INSERT実行時に CURRENT_TIMESTAMP を設定。DDL上は DEFAULT CURRENT_TIMESTAMP だが、SQLでも明示的に CURRENT_TIMESTAMP を投入。,当該フィルタデータを作成した日時。ご指定により TIMESTAMP ではなく STRING として記載。
