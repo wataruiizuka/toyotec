@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,無,なし,なし,なし,パラメータ,#{cdHansya},#{cdHansya} をそのまま設定,DDL上は NOT NULL。SQL実行時に外部から渡される販社コードを設定する。
+2,cd_kaisya,会社コード,STRING,無,なし,なし,なし,パラメータ,#{cdKaisya},#{cdKaisya} をそのまま設定,DDL上は NOT NULL。SQL実行時に外部から渡される会社コードを設定する。
+3,no_sti,査定番号,STRING,無,なし,なし,なし,パラメータ,#{noSti},#{noSti} をそのまま設定,DDL上は NOT NULL。査定データを識別する番号として使用される。
+4,kb_stikt,査定区分,STRING,有,なし,なし,なし,${ai21Db}.TBNH008G,KB_STIKT,TBNH008G.KB_STIKT を設定。TBNH002G.KB_STIKT と一致するレコードを INNER JOIN で抽出,査定区分。TBNH008Gは CD_HANSYA、CD_KAISYA、NO_STI、MJ_STIHZSM='1' で対象査定に絞り込まれる。
+5,cd_fgbui,部位コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH019M,CD_FGBUI,TBNH008G.CD_STIKASI = TBNH019M.CD_STIKASI でJOINし、TBNH019M.CD_FGBUIを設定。査定実施日がTBNH019Mの有効期間内であることを条件にする,査定加修コードに紐づく部位コードとして設定される。
+6,mj_fgbui,部位名,STRING,有,なし,なし,なし,${ai21Db}.TBNH016M,MJ_FGBUI,TBNH019M.CD_FGBUI = TBNH016M.CD_FGBUI でJOINし、TBNH016M.MJ_FGBUIを設定。査定実施日がTBNH016Mの有効期間内であることを条件にする,部位コードに対応する名称項目として設定される。
+7,cd_snsyo,損傷コード,STRING,有,なし,なし,なし,${ai21Db}.TBNH019M,CD_SNSYO,TBNH008G.CD_STIKASI = TBNH019M.CD_STIKASI でJOINし、TBNH019M.CD_SNSYOを設定。査定実施日がTBNH019Mの有効期間内であることを条件にする,査定加修コードに紐づく損傷コードとして設定される。
+8,mj_snsyona,損傷名,STRING,有,なし,なし,なし,${ai21Db}.TBNH011M,MJ_SNSYONA,TBNH019M.CD_SNSYO = TBNH011M.CD_SNSYO でJOINし、TBNH011M.MJ_SNSYONAを設定。査定実施日がTBNH011Mの有効期間内であることを条件にする,損傷コードに対応する名称項目として設定される。
+9,mj_snsyokg,損傷区分/損傷内容,STRING,有,なし,なし,なし,${ai21Db}.TBNH011M,MJ_SNSYOKG,TBNH019M.CD_SNSYO = TBNH011M.CD_SNSYO でJOINし、TBNH011M.MJ_SNSYOKGを設定。査定実施日がTBNH011Mの有効期間内であることを条件にする,損傷に関する区分または内容の項目と考えられる。正式な業務名称はDDL/SQL上では断定不可。
+10,mart_created_at,マート作成日時,STRING,無,なし,なし,CURRENT_TIMESTAMP,システム日時,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP を設定,DDL上は TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP だが、Impala向け方針により定義書上はSTRINGとして記載する。SQLではINSERT時にCURRENT_TIMESTAMPを明示設定している。
