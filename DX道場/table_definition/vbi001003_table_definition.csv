@@ -1,0 +1,21 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,ソート順,ソート順,STRING,有,なし,なし,なし,SQL出力なし,SQL出力なし,提示DDLには存在するが、SQLの最終SELECTには `ソート順` として出力されていない。,DROP後にCREATE TABLE AS SELECTを実行する場合、実テーブルにはこのカラムは作成されない可能性が高い。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,内側SELECTで t201m.cd_hansya を取得し、最終SELECTで `販社コード` として出力。,販社を識別するコード。tbi999003m、tbv0047m、tbv0033m、vbi001001、vbi001002、tbi999008mとの結合・集計キーにも使用。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,内側SELECTで t201m.cd_kaisya を取得し、最終SELECTで `会社コード` として出力。,会社を識別するコード。各種結合・集計キーにも使用。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,内側SELECTで t201m.cd_tenpo を取得し、最終SELECTで `店舗コード` として出力。tbi999003m.mj_cyohyoid = '001'、最終WHEREで tbi999003m.kb_tenji = 1 の店舗に絞り込み。,店舗を識別するコード。店舗別の日報集計キー。
+5,車名,車名,STRING,有,なし,なし,なし,dx_ve.vbi001001 / dx_ve.vbi001002,kn_syame,vbi001001とvbi001002をUNION ALLしたall_viewから kn_syame を取得し、syameサブクエリで集約後、最終SELECTで `車名` として出力。,新車受注・新車販売の集計に紐づく車名。tbi999008mでkb_tenji = 1の車名コードに絞り込み。
+6,店舗名称,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,内側SELECTで t201m.kj_tenpomei を取得し、最終SELECTで `店舗名称` として出力。,店舗の正式名称。
+7,店舗短縮名称,店舗短縮名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tentanms,内側SELECTで t201m.kj_tentanms を取得し、最終SELECTで `店舗短縮名称` として出力。,店舗の短縮表示名称。
+8,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m / ai21rep_ve_dx.tbv0047m,tbv0033m.cd_zon / tbv0047m.cd_nczon / tbv0033m.kj_zonmei,tbv0201mからtbv0047mを経由してtbv0033mへLEFT JOIN。ゾーン名称がNULLまたは空白の場合は'999999'、ゾーンコードがNULLまたは空白の場合は'999998'、それ以外はt033m.cd_zonを設定。,店舗のゾーン分類コード。ソート順算出にも使用。
+9,ゾーン名称,ゾーン名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,tbv0047m.cd_nczon = tbv0033m.cd_zon、かつtbv0033m.kb_syohin = '1'でLEFT JOINし、t033m.kj_zonmeiを取得。,店舗のゾーン名称。
+10,新車受注実績,新車受注実績,STRING,有,なし,なし,なし,dx_ve.vbi001001,su_sinsya_jucyu,vbi001001側のsu_sinsya_jucyuをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_jucyu) を算出し、最終SELECTで `新車受注実績` として出力。,店舗・車名・受注日付単位の新車受注実績。SQL上は集計値だが、定義書ではDDLに合わせてSTRINGとする。
+11,新車受注取消,新車受注取消,STRING,有,なし,なし,なし,dx_ve.vbi001001,su_sinsya_jucyu_torikesi,vbi001001側のsu_sinsya_jucyu_torikesiをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_jucyu_torikesi) を算出し、最終SELECTで `新車受注取消` として出力。,新車受注取消の集計値。
+12,新車受注合計,新車受注合計,STRING,有,なし,なし,なし,dx_ve.vbi001001,su_sinsya_jucyu_goukei,vbi001001側のsu_sinsya_jucyu_goukeiをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_jucyu_goukei) を算出し、最終SELECTで `新車受注合計` として出力。,新車受注実績から取消を反映した合計値。
+13,新車受注残,新車受注残,STRING,有,なし,なし,なし,dx_ve.vbi001001,su_sinsya_jucyucan,vbi001001側のsu_sinsya_jucyucanをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_jucyucan) を算出し、最終SELECTで `新車受注残` として出力。,新車受注残の集計値。
+14,新車販売実績,新車販売実績,STRING,有,なし,なし,なし,dx_ve.vbi001002,su_sinsya_hanbai,vbi001002側のsu_sinsya_hanbaiをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_hanbai) を算出し、最終SELECTで `新車販売実績` として出力。,店舗・車名・販売日付単位の新車販売実績。
+15,新車販売取消,新車販売取消,STRING,有,なし,なし,なし,dx_ve.vbi001002,su_sinsya_hanbai_torikesi,vbi001002側のsu_sinsya_hanbai_torikesiをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_hanbai_torikesi) を算出し、最終SELECTで `新車販売取消` として出力。,新車販売取消の集計値。
+16,新車販売合計,新車販売合計,STRING,有,なし,なし,なし,dx_ve.vbi001002,su_sinsya_hanbai_goukei,vbi001002側のsu_sinsya_hanbai_goukeiをall_viewに取り込み、syameサブクエリで SUM(su_sinsya_hanbai_goukei) を算出し、最終SELECTで `新車販売合計` として出力。,新車販売実績から取消を反映した合計値。
+17,受注日付,受注日付,STRING,有,なし,なし,なし,dx_ve.vbi001001,dd_date,vbi001001のdd_dateをall_viewでdd_jucyuとして取り込み、syameサブクエリでdd_jucyuとして保持し、最終SELECTで `受注日付` として出力。,新車受注系指標に対応する日付。
+18,新車販売日付,新車販売日付,STRING,有,なし,なし,なし,dx_ve.vbi001002,dd_date,vbi001002のdd_dateをall_viewでdd_sinsya_hanbaiとして取り込み、syameサブクエリでdd_sinsya_hanbaiとして保持し、最終SELECTで `新車販売日付` として出力。,新車販売系指標に対応する日付。
+19,店舗ソート順,店舗ソート順,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m / dx_ve.tbi999003m / ai21rep_ve_dx.tbv0033m,cd_hansya / cd_kaisya / cd_zon / mj_sortjyun,"内側でRANK() OVER(PARTITION BY t201m.cd_hansya,t201m.cd_kaisya ORDER BY tbi999003m.mj_sortjyun,t201m.cd_tenpo) によりmj_sortjyunを生成。最終SELECTでDENSE_RANK() OVER(PARTITION BY cd_hansya,cd_kaisya ORDER BY cd_zon,mj_sortjyun) を算出。",ゾーンコードと店舗表示順に基づく店舗ソート順。SQL上は数値だが、定義書ではDDLに合わせてSTRINGとする。
+20,車名ソート順,車名ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999008m,mj_sortjyun / cd_ncsyamei / kn_syamei,"sort_car_sinサブクエリでkb_tenji = 1の車名表示マスタを車名単位に集約し、sort_sinとsyamei_sinを生成。最終SELECTでDENSE_RANK() OVER(PARTITION BY cd_hansya,cd_kaisya ORDER BY sort_sin,syamei_sin,kn_syame) を算出。",車名表示マスタに基づく車名ソート順。SQL上は数値だが、定義書ではDDLに合わせてSTRINGとする。提示SQLのsort_car_sinサブクエリには `SELECT ON` と読める構文があり、実行前に確認が必要。
