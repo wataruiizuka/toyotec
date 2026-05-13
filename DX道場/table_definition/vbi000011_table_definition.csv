@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_hansya,t206m.cd_hansya を `販社コード` として取得。tbfj001g、vbi000002_enとの結合条件にも使用。GROUP BY対象。,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_kaisya,t206m.cd_kaisya を `会社コード` として取得。tbfj001g、vbi000002_enとの結合条件にも使用。GROUP BY対象。,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,cd_tenpo,ta001g.cd_tenpo を `店舗コード` として取得。tbi999003mでmj_cyohyoid = '000' かつ kb_tenji = 1 の表示対象店舗に絞り込み。tbfa008gとの結合条件にも使用。GROUP BY対象。,入庫予約または愛車受注情報に紐づく店舗コード。DDL上はNOT NULL指定なし。
+4,取替部品品番,取替部品品番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,mj_toribhhn,"trim(t206m.mj_toribhhn) により前後スペースを除去して `取替部品品番` として取得。t206m側では left(t206m.mj_toribhhn, 3) = '040' の条件で先頭3桁が040の部品に絞り込み。vbi000002_enとの結合時もtrim済み品番で照合。GROUP BY対象。",取替部品の品番。部品品名取得のためdx_ve.vbi000002_enと照合している。DDL上はNOT NULL指定なし。
+5,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,no_seiri,t206m.no_seiri を `整理ＮＯ` として取得。tbfj001gとの結合条件にも使用。GROUP BY対象。,リコール等の情報を整理するための番号。DDL上はNOT NULL指定なし。
+6,フレーム型式,フレーム型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,mj_framekat,t206m.mj_framekat を `フレーム型式` として取得。tbfj001gとの結合時は trim(t206m.mj_framekat) = t001g.mj_framekat で照合。GROUP BY対象。,フレーム型式。SQL上、結合条件ではt206m側のみtrimしており、t001g側はtrimしていない点に注意。DDL上はNOT NULL指定なし。
+7,支払区分,支払区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfa008g,cd_seibi,"right(trim(t008g.cd_seibi), 1) により、整備コードの末尾1桁を `支払区分` として取得。tbfy206m.kb_siharaiとの結合条件にも使用。GROUP BY対象。",整備コード末尾から生成される支払区分。DDL上はNOT NULL指定なし。
+8,販社会社整理ＮＯフレーム型式支払区分,販社会社整理ＮＯフレーム型式支払区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m / ai21rep_ve_dx.tbfa008g,cd_hansya / cd_kaisya / no_seiri / mj_framekat / cd_seibi,"concat(t206m.cd_hansya, t206m.cd_kaisya, t206m.no_seiri, trim(t206m.mj_framekat), right(trim(t008g.cd_seibi), 1)) により、販社コード・会社コード・整理NO・trim済みフレーム型式・支払区分を連結して作成。",複数項目を結合した照合用/集計用の複合キー。DDL上は主キー指定なし。
+9,取替部品個数,取替部品個数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,su_toribhsu,t206m.su_toribhsu を `取替部品個数` としてそのまま取得。GROUP BY対象。,取替部品の個数。SQL上は数値項目の可能性があるが、定義書ではDDLに合わせてSTRINGとする。
+10,取替部品品名,取替部品品名,STRING,有,なし,なし,なし,dx_ve.vbi000002_en,mj_torihnme,t206mの販社コード・会社コード・trim済み取替部品品番でdx_ve.vbi000002_enをLEFT JOINし、v0002.mj_torihnme を `取替部品品名` として取得。GROUP BY対象。,取替部品品番に紐づく品名。LEFT JOINのため、対応する品名がない場合はNULLになり得る。
