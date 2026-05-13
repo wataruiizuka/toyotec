@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,mj_sortjyun,mj_sortjyun を `ソート順` としてそのまま取得,店舗一覧や帳票表示時の並び順を制御するための項目。DDL上はNOT NULL指定なし。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,cd_hansya,cd_hansya を `販社コード` としてそのまま取得,販社を識別するコード。DDL上はNOT NULL指定なし。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,cd_kaisya,cd_kaisya を `会社コード` としてそのまま取得,会社を識別するコード。DDL上はNOT NULL指定なし。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,cd_tenpo,cd_tenpo を `店舗コード` としてそのまま取得,店舗を識別するコード。DDL上はNOT NULL指定なし。
+5,店舗名称,店舗名称,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,kj_tenpomei,kj_tenpomei を `店舗名称` としてそのまま取得,店舗の表示名称。DDL上はNOT NULL指定なし。
