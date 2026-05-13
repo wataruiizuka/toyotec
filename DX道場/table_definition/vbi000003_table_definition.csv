@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_hansya,t001g.cd_hansya を `販社コード` としてそのまま取得。GROUP BY対象。,販社を識別するコード。tbsa001g、tbfy205mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_kaisya,t001g.cd_kaisya を `会社コード` としてそのまま取得。GROUP BY対象。,会社を識別するコード。tbsa001g、tbfy205mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+3,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,no_seiri,t001g.no_seiri を `整理ＮＯ` としてそのまま取得。GROUP BY対象。,整理番号。tbfy205mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+4,フレーム型式,フレーム型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,mj_framekat,t001g.mj_framekat を `フレーム型式` としてそのまま取得。GROUP BY対象。tbfy205mとの結合時は trim(t205m.mj_framekat) = trim(t001g.mj_framekat) で前後スペースを除去して照合。,フレーム型式。結合時のみtrimして照合しているが、出力値自体はt001g.mj_framekatをそのまま取得。DDL上はNOT NULL指定なし。
+5,データ分類,データ分類,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy205m,dd_tekkikst,販社コード・会社コード・整理NO・trim済みフレーム型式でtbfy205mをLEFT JOINし、max(t205m.dd_tekkikst) が JST現在日から24か月前以降であれば '2年のみ'、それ以外は '過去全部' を設定。,整理NO・フレーム型式単位の対象期間分類。tbfy205mに該当データがない場合、max(dd_tekkikst)はNULLになり得るため、SQL上は条件不一致側の分類になる可能性がある。
