@@ -1,0 +1,28 @@
+CREATE TABLE gold.vbi021004 (
+    `cd_hansya` STRING,
+    `kj_kaisyatn` STRING,
+    `cd_hanbaitn` STRING,
+    `cd_kaisya` STRING,
+    `kj_tenpomei` STRING,
+    `NO_SYADAIBA` STRING,
+    `MJ_KATASIKI` STRING,
+    `KJ_SITAMEIG` STRING,
+    `MJ_FURUSYAM` STRING,
+    `KB_SIIRE` STRING,
+    `DD_KEIRIKEI` STRING,
+    `DD_SIRETORO` STRING,
+    `DD_SIREJYTY` STRING,
+    `CD_SYOYUSYA` STRING,
+    `KJ_SAISSYYU` STRING,
+    `min_non_null_date_zaiko` STRING,
+    `NO_SYADAIBA_shinsya` STRING,
+    `kj_meigime1_shinsya` STRING,
+    `dd_jucyu_shinsya` STRING,
+    `dd_touroku_shinsya` STRING,
+    `mj_katasiki_shinsya` STRING,
+    `no_cyumon_shinsya` STRING,
+    `kj_kurumame_shinsya` STRING,
+    `KB_SIREHANB` STRING,
+    `DD_1JTOROKU` STRING
+) USING PARQUET
+;

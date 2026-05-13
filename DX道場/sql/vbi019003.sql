@@ -1,4 +1,4 @@
-CREATE TABLE gold.vbi017003 (
+CREATE TABLE gold.vbi019003 (
     `販社コード` STRING,
     `会社コード` STRING,
     `店舗コード` STRING,
@@ -16,7 +16,6 @@ CREATE TABLE gold.vbi017003 (
     `販売除軽キャンセル反映` STRING,
     `割賦` STRING,
     `メンテナンスパック` STRING,
-    `下取り` STRING,
     `ソート順` STRING
 ) USING PARQUET
 ;
