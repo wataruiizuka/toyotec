@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_hansya,t206m.cd_hansya を `販社コード` としてそのまま取得。vbi000002_enとの照合条件にも使用。,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_kaisya,t206m.cd_kaisya を `会社コード` としてそのまま取得。vbi000002_enとの照合条件にも使用。,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,no_seiri,t206m.no_seiri を `整理ＮＯ` としてそのまま取得。,リコール等の情報を整理するための番号。連結キー作成にも使用。DDL上はNOT NULL指定なし。
+4,フレーム型式,フレーム型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,mj_framekat,t206m.mj_framekat を `フレーム型式` としてそのまま取得。連結キー作成時は trim(t206m.mj_framekat) を使用。,フレーム型式。出力値自体はtrimせずそのまま取得している点に注意。DDL上はNOT NULL指定なし。
+5,支払区分,支払区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,kb_siharai,t206m.kb_siharai を `支払区分` としてそのまま取得。連結キー作成にも使用。,支払区分を表すコード。DDL上はNOT NULL指定なし。
+6,取替部品品番,取替部品品番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,mj_toribhhn,trim(t206m.mj_toribhhn) により前後スペースを除去して `取替部品品番` として取得。vbi000002_en.mj_toribhhnと照合し、取替部品マスタに存在する品番のみ抽出。,取替部品の品番。LEFT SEMI JOINにより、dx_ve.vbi000002_enに存在する品番だけが残る。DDL上はNOT NULL指定なし。
+7,取替部品個数,取替部品個数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,su_toribhsu,t206m.su_toribhsu を `取替部品個数` としてそのまま取得。,取替部品の個数。SQL上は数値項目の可能性があるが、定義書ではDDLに合わせてSTRINGとする。
+8,販社会社整理ＮＯフレーム型式支払区分,販社会社整理ＮＯフレーム型式支払区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_hansya / cd_kaisya / no_seiri / mj_framekat / kb_siharai,"concat(t206m.cd_hansya, t206m.cd_kaisya, t206m.no_seiri, trim(t206m.mj_framekat), t206m.kb_siharai) により、販社コード・会社コード・整理NO・trim済みフレーム型式・支払区分を連結して作成。",複数項目を結合した照合用/集計用の複合キー。DDL上は主キー指定なし。
