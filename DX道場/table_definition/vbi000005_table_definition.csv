@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_hansya,t001g.cd_hansya を `販社コード` としてそのまま取得。GROUP BY対象。,販社を識別するコード。tbi999003m、vbi000004_en、tbfy205mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_kaisya,t001g.cd_kaisya を `会社コード` としてそのまま取得。GROUP BY対象。,会社を識別するコード。tbi999003m、vbi000004_en、tbfy205mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+3,フォロー店舗コード,フォロー店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_flwtenp,t001g.cd_flwtenp を `フォロー店舗コード` としてそのまま取得。GROUP BY対象。,フォロー担当店舗を示すコード。DDL上はNOT NULL指定なし。
+4,入庫予定店舗,入庫予定店舗,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_nyuukoyt,t001g.cd_nyuukoyt を `入庫予定店舗` としてそのまま取得。GROUP BY対象。LEFT SEMI JOINでtbi999003mの表示対象店舗、またはtrim(t001g.cd_nyuukoyt) = '' の行に絞り込み。,入庫予定店舗コード。SQL上の別名は `入庫予定店舗 ` と末尾にスペースがあるため、CTAS実行時の実カラム名がDDLの `入庫予定店舗` と一致しない可能性がある点に注意。
+5,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,no_seiri,t001g.no_seiri を `整理ＮＯ` としてそのまま取得。GROUP BY対象。,リコール等の情報を整理するための番号。vbi000004_en、tbfy205mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+6,フレーム型式,フレーム型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,mj_framekat,t001g.mj_framekat を `フレーム型式` としてそのまま取得。GROUP BY対象。tbfy205mとの結合時はtrim済みフレーム型式同士で照合。,フレーム型式。適用期間始期を取得するtbfy205mサブクエリとの結合条件にも使用。DDL上はNOT NULL指定なし。
+7,リコール名称,リコール名称,STRING,有,なし,なし,なし,dx_ve.vbi000004_en,kj_recallme,t001gの販社コード・会社コード・整理NOでdx_ve.vbi000004_enをLEFT JOINし、v0004.kj_recallme を `リコール名称` として取得。GROUP BY対象。,整理NOに紐づくリコール名称。LEFT JOINのため、対応するリコール名称がない場合はNULLになり得る。
+8,適用期間始期,適用期間始期,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy205m,dd_tekkikst,tbfy205mを販社コード・会社コード・整理NO・trim済みフレーム型式単位でGROUP BYし、max(t205m.dd_tekkikst) を取得したサブクエリをLEFT JOIN。取得した最大値を `適用期間始期` として出力。,整理NO・フレーム型式単位の適用期間始期。複数候補がある場合は最大値を採用。LEFT JOINのため、該当がない場合はNULLになり得る。
+9,一時抹消,一時抹消,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,kb_massyo / kb_jissi,GROUP BY単位で sum(t001g.kb_massyo = '1' AND t001g.kb_jissi = '0') を算出。kb_massyoが'1'かつkb_jissiが'0'の行を一時抹消対象として件数集計。,一時抹消対象件数。SQL上は真偽条件をsumしているため、実行環境によってはBOOLEANを数値に扱える前提。DDL上はSTRINGとして定義。
