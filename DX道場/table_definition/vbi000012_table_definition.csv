@@ -1,0 +1,14 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,mj_sortjyun,v0001.mj_sortjyun を `ソート順` としてそのまま取得。vbi000001_enは販社コード・会社コード・店舗コードでINNER JOIN。,店舗表示順を表す項目。DDL上はNOT NULL指定なし。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_hansya,t001g.cd_hansya を `販社コード` としてそのまま取得。tbsa001g、tbfa008g、tbfy206m、vbi000001_enとの結合条件にも使用。,販社を識別するコード。DDL上はNOT NULL指定なし。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_kaisya,t001g.cd_kaisya を `会社コード` としてそのまま取得。tbsa001g、tbfa008g、tbfy206m、vbi000001_enとの結合条件にも使用。,会社を識別するコード。DDL上はNOT NULL指定なし。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,cd_tenpo,ta001g.cd_tenpo を `店舗コード` として取得。tbfa008gとの結合条件、およびdx_ve.vbi000001_enとの結合条件にも使用。,入庫予定に紐づく店舗コード。vbi000001_enに存在する店舗のみINNER JOINで取得される。DDL上はNOT NULL指定なし。
+5,店舗名称,店舗名称,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,kj_tenpomei,v0001.kj_tenpomei を `店舗名称` としてそのまま取得。vbi000001_enは販社コード・会社コード・店舗コードでINNER JOIN。,店舗の表示名称。DDL上はNOT NULL指定なし。
+6,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,no_seiri,"t001g.no_seiri を `整理ＮＯ` としてそのまま取得。tbfa008gとの結合では left(t008g.cd_seibi, 5) = t001g.no_seiri、tbfy206mとの結合条件にも使用。",リコール等の情報を整理するための番号。DDL上はNOT NULL指定なし。
+7,フレーム型式,フレーム型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,mj_framekat,t001g.mj_framekat を `フレーム型式` としてそのまま取得。tbfy206mとの結合時は trim(t206m.mj_framekat) = trim(t001g.mj_framekat) で前後スペースを除去して照合。,フレーム型式。出力値自体はtrimせず、元値をそのまま取得。DDL上はNOT NULL指定なし。
+8,フレームＮＯ,フレームＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,no_frame,t001g.no_frame を `フレームＮＯ` としてそのまま取得。,車両のフレーム番号。DDL上はNOT NULL指定なし。
+9,受注ＮＯ,受注ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,no_jucyu,t001g.no_jucyu を `受注ＮＯ` としてそのまま取得。tbsa001gとの結合では ta001g.no_aijutyu = t001g.no_jucyu、tbfa008gとの結合では t008g.no_jucyu = t001g.no_jucyu に使用。,受注番号。予約/入庫情報および整備情報との紐付けに使用。DDL上はNOT NULL指定なし。
+10,入庫予定日時,入庫予定日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,dt_nyuukoyt,ta001g.dt_nyuukoyt を `入庫予定日時` としてそのまま取得。WHERE条件でJST現在日より後、かつJST現在日から6か月後より前の入庫予定日時に絞り込み。,入庫予定日時。SQL上は日付/日時型の可能性があるが、定義書ではDDLに合わせてSTRINGとする。
+11,販社会社整理ＮＯフレーム型式支払区分,販社会社整理ＮＯフレーム型式支払区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g / ai21rep_ve_dx.tbfa008g,cd_hansya / cd_kaisya / no_seiri / mj_framekat / cd_seibi,"concat(t001g.cd_hansya, t001g.cd_kaisya, t001g.no_seiri, trim(t001g.mj_framekat), right(trim(t008g.cd_seibi), 1)) により、販社コード・会社コード・整理NO・trim済みフレーム型式・整備コード末尾1桁の支払区分を連結して作成。",複数項目を結合した照合用/集計用の複合キー。DDL上は主キー指定なし。
+12,入庫予定日0,入庫予定日0,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,dt_nyuukoyt,"concat(from_timestamp(ta001g.dt_nyuukoyt, 'yyyyMM'), '0') により、入庫予定日時を年月形式yyyyMMに変換し、末尾に'0'を付与。",入庫予定月を表す集計用キーと考えられる項目。例：202605に'0'を付与して2026050のような値を生成。
+13,台数,台数,STRING,有,なし,なし,なし,固定値,固定値 1,1 AS `台数` により、条件を満たす1明細を1台として固定値1を設定。,明細1行あたりの台数を表す固定値。SQL上は数値だが、定義書ではDDLに合わせてSTRINGとする。
