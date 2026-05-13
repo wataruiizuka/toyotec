@@ -1,11 +1,11 @@
-CREATE TABLE gold.vbi012003 (
+CREATE TABLE gold.vbi012002 (
     `cd_hansya` STRING,
     `cd_kaisya` STRING,
     `cd_tenpo` STRING,
     `no_stall` STRING,
     `mj_stallmei` STRING,
     `kb_stallsentaku` STRING,
-    `kb_kyukei` STRING,
-    `dd_date` STRING
+    `cd_hansyakaisyatenpo` STRING,
+    `mj_sortjyun` STRING
 ) USING PARQUET
 ;
