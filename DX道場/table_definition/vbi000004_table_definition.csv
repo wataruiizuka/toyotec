@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi000004_en,cd_hansya,cd_hansya を `販社コード` としてそのまま取得,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi000004_en,cd_kaisya,cd_kaisya を `会社コード` としてそのまま取得,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,dx_ve.vbi000004_en,no_seiri,no_seiri を `整理ＮＯ` としてそのまま取得,リコール等の情報を整理するための番号。DDL上はNOT NULL指定なし。
+4,リコール名称,リコール名称,STRING,有,なし,なし,なし,dx_ve.vbi000004_en,kj_recallme,kj_recallme を `リコール名称` としてそのまま取得,整理NOに紐づくリコール名称。DDL上はNOT NULL指定なし。
