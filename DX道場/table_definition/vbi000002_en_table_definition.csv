@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_hansya,t206m.cd_hansya をそのまま取得。GROUP BY対象。,販社を識別するコード。tbfj022gとの結合条件にも使用。DDL上はNOT NULL指定なし。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,cd_kaisya,t206m.cd_kaisya をそのまま取得。GROUP BY対象。,会社を識別するコード。tbfj022gとの結合条件にも使用。DDL上はNOT NULL指定なし。
+3,mj_toribhhn,取替部品品番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy206m,mj_toribhhn,"trim(t206m.mj_toribhhn) で前後スペースを除去して取得。WHERE left(t206m.mj_toribhhn, 3) = '040' により、先頭3桁が040の取替部品のみ抽出。GROUP BY対象。",取替部品の品番。tbfj022gとの結合時もtrim後の品番同士で照合。DDL上はNOT NULL指定なし。
+4,mj_torihnme,取替部品品名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj022g,mj_torihnme,"tbfy206mの販社コード・会社コード・trim済み取替部品品番でtbfj022gへLEFT JOINし、nvl(trim(t022g.mj_torihnme), '') <> '' の空白除外条件を満たす品名から max(t022g.mj_torihnme) を取得。",取替部品の品名。LEFT JOINのため、対応する品名が存在しない場合はNULLになり得る。複数候補がある場合はmax()で1つに集約。
