@@ -1,0 +1,113 @@
+DROP TABLE IF EXISTS gold.vbi013003;
+CREATE TABLE gold.vbi013003 AS
+WITH months AS (
+  SELECT 1 AS month
+  UNION ALL
+  SELECT 2 AS month
+  UNION ALL
+  SELECT 3 AS month
+  UNION ALL
+  SELECT 4 AS month
+  UNION ALL
+  SELECT 5 AS month
+  UNION ALL
+  SELECT 6 AS month
+  UNION ALL
+  SELECT 7 AS month
+  UNION ALL
+  SELECT 8 AS month
+  UNION ALL
+  SELECT 9 AS month
+  UNION ALL
+  SELECT 10 AS month
+  UNION ALL
+  SELECT 11 AS month
+  UNION ALL
+  SELECT 12 AS month
+)
+SELECT
+  months.month AS `月`
+  , tbg7005m.cd_hansya AS `販社コード`
+  , tbg7005m.cd_kaisya AS `会社コード`
+  , tbg7005m.cd_hansya || tbg7005m.cd_kaisya || tbg7005m.cd_tenpo AS `販社会社店舗コード`
+  , SUM(CASE
+        WHEN tbg7005m.nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP() ,'JST') ,4)) -1 AND tbg7005m.cd_kanjyou = '10402  '
+          THEN
+            CASE
+              WHEN months.month = 4 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 - tbg7005m.ki_toykas01
+              WHEN months.month = 5 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02
+              WHEN months.month = 6 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03
+              WHEN months.month = 7 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04
+              WHEN months.month = 8 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05
+              WHEN months.month = 9 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06
+              WHEN months.month = 10 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07
+              WHEN months.month = 11 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08
+              WHEN months.month = 12 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09
+              WHEN months.month = 1 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 + tbg7005m.ki_toykar10 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09 - tbg7005m.ki_toykas10
+              WHEN months.month = 2 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 + tbg7005m.ki_toykar10 + tbg7005m.ki_toykar11 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09 - tbg7005m.ki_toykas10 - tbg7005m.ki_toykas11
+              WHEN months.month = 3 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 + tbg7005m.ki_toykar10 + tbg7005m.ki_toykar11 + tbg7005m.ki_toykar12 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09 - tbg7005m.ki_toykas10 - tbg7005m.ki_toykas11 - tbg7005m.ki_toykas12
+  END END)/1000000 AS 前年売掛金残高,
+  SUM(CASE
+        WHEN tbg7005m.nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP() ,'JST') ,4)) -1 AND tbg7005m.cd_kanjyou BETWEEN '50301  ' AND '50303  '
+          THEN
+            CASE
+              WHEN months.month = 4 THEN tbg7005m.ki_toykas01 - tbg7005m.ki_toykar01
+              WHEN months.month = 5 THEN tbg7005m.ki_toykas02 - tbg7005m.ki_toykar02
+              WHEN months.month = 6 THEN tbg7005m.ki_toykas03 - tbg7005m.ki_toykar03
+              WHEN months.month = 7 THEN tbg7005m.ki_toykas04 - tbg7005m.ki_toykar04
+              WHEN months.month = 8 THEN tbg7005m.ki_toykas05 - tbg7005m.ki_toykar05
+              WHEN months.month = 9 THEN tbg7005m.ki_toykas06 - tbg7005m.ki_toykar06
+              WHEN months.month = 10 THEN tbg7005m.ki_toykas07 - tbg7005m.ki_toykar07
+              WHEN months.month = 11 THEN tbg7005m.ki_toykas08 - tbg7005m.ki_toykar08
+              WHEN months.month = 12 THEN tbg7005m.ki_toykas09 - tbg7005m.ki_toykar09
+              WHEN months.month = 1 THEN  tbg7005m.ki_toykas10 - tbg7005m.ki_toykar10
+              WHEN months.month = 2 THEN  tbg7005m.ki_toykas11 - tbg7005m.ki_toykar11
+              WHEN months.month = 3 THEN  tbg7005m.ki_toykas12 - tbg7005m.ki_toykar12
+  END END)/1000000 AS 前年売上額,
+  SUM(CASE
+        WHEN tbg7005m.nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP() ,'JST') ,4)) AND tbg7005m.cd_kanjyou = '10402  ' AND ((MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')) > 4 AND months.month > 3 AND months.month < MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'))) OR (MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')) <= 4 AND (months.month > 3 OR months.month < MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')))))
+          THEN
+            CASE
+              WHEN months.month = 4 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 - tbg7005m.ki_toykas01
+              WHEN months.month = 5 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02
+              WHEN months.month = 6 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03
+              WHEN months.month = 7 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04
+              WHEN months.month = 8 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05
+              WHEN months.month = 9 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06
+              WHEN months.month = 10 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07
+              WHEN months.month = 11 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08
+              WHEN months.month = 12 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09
+              WHEN months.month = 1 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 + tbg7005m.ki_toykar10 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09 - tbg7005m.ki_toykas10
+              WHEN months.month = 2 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 + tbg7005m.ki_toykar10 + tbg7005m.ki_toykar11 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09 - tbg7005m.ki_toykas10 - tbg7005m.ki_toykas11
+              WHEN months.month = 3 THEN tbg7005m.ki_toyjkksy + tbg7005m.ki_toykar01 + tbg7005m.ki_toykar02 + tbg7005m.ki_toykar03 + tbg7005m.ki_toykar04 + tbg7005m.ki_toykar05 + tbg7005m.ki_toykar06 + tbg7005m.ki_toykar07 + tbg7005m.ki_toykar08 + tbg7005m.ki_toykar09 + tbg7005m.ki_toykar10 + tbg7005m.ki_toykar11 + tbg7005m.ki_toykar12 - tbg7005m.ki_toykas01 - tbg7005m.ki_toykas02 - tbg7005m.ki_toykas03 - tbg7005m.ki_toykas04 - tbg7005m.ki_toykas05 - tbg7005m.ki_toykas06 - tbg7005m.ki_toykas07 - tbg7005m.ki_toykas08 - tbg7005m.ki_toykas09 - tbg7005m.ki_toykas10 - tbg7005m.ki_toykas11 - tbg7005m.ki_toykas12
+  END END)/1000000 AS 売掛金残高,
+  SUM(CASE
+        WHEN tbg7005m.nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP() ,'JST') ,4)) AND tbg7005m.cd_kanjyou BETWEEN '50301  ' AND '50303  ' AND ((MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')) > 4 AND months.month > 3 AND months.month < MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'))) OR (MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')) <= 4 AND (months.month > 3 OR months.month < MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')))))
+          THEN
+            CASE
+              WHEN months.month = 4 THEN tbg7005m.ki_toykas01 - tbg7005m.ki_toykar01
+              WHEN months.month = 5 THEN tbg7005m.ki_toykas02 - tbg7005m.ki_toykar02
+              WHEN months.month = 6 THEN tbg7005m.ki_toykas03 - tbg7005m.ki_toykar03
+              WHEN months.month = 7 THEN tbg7005m.ki_toykas04 - tbg7005m.ki_toykar04
+              WHEN months.month = 8 THEN tbg7005m.ki_toykas05 - tbg7005m.ki_toykar05
+              WHEN months.month = 9 THEN tbg7005m.ki_toykas06 - tbg7005m.ki_toykar06
+              WHEN months.month = 10 THEN tbg7005m.ki_toykas07 - tbg7005m.ki_toykar07
+              WHEN months.month = 11 THEN tbg7005m.ki_toykas08 - tbg7005m.ki_toykar08
+              WHEN months.month = 12 THEN tbg7005m.ki_toykas09 - tbg7005m.ki_toykar09
+              WHEN months.month = 1 THEN  tbg7005m.ki_toykas10 - tbg7005m.ki_toykar10
+              WHEN months.month = 2 THEN  tbg7005m.ki_toykas11 - tbg7005m.ki_toykar11
+              WHEN months.month = 3 THEN  tbg7005m.ki_toykas12 - tbg7005m.ki_toykar12
+  END END)/1000000 AS 売上額
+FROM
+  months months,ai21rep_ve_dx.tbg7005m tbg7005m
+INNER JOIN dx_ve.vbi013001_en vbi013001
+    ON vbi013001.cd_hansya = tbg7005m.cd_hansya
+    AND vbi013001.cd_kaisya = tbg7005m.cd_kaisya
+    AND vbi013001.cd_tenpo = tbg7005m.cd_tenpo
+WHERE
+  (tbg7005m.cd_hansya <> '03601' OR tbg7005m.cd_kaisya <> '01' OR tbg7005m.cd_tenpo <> 'ZZZ')
+GROUP BY
+  months.month,
+  tbg7005m.cd_hansya,
+  tbg7005m.cd_kaisya,
+  tbg7005m.cd_tenpo
