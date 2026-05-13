@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,mj_sortjyun,ソート順,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m / dx_ve.tbi999003m,cd_hansya / cd_kaisya / t9003m.mj_sortjyun / cd_tenpo,"row_number() over(order by t201m.cd_hansya, t201m.cd_kaisya, t9003m.mj_sortjyun, t201m.cd_tenpo) で表示順を採番",店舗一覧の表示順を表す採番項目。DDL上はSTRING。SQL上はrow_number()で生成されるが、定義書ではDDLに合わせてSTRINGとする。
+2,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま取得,販社を識別するコード。dx_ve.tbi999003mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+3,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま取得,会社を識別するコード。dx_ve.tbi999003mとの結合条件にも使用。DDL上はNOT NULL指定なし。
+4,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま取得,店舗を識別するコード。dx_ve.tbi999003mとの結合条件およびソート順のORDER BYにも使用。DDL上はNOT NULL指定なし。
+5,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,"regexp_replace(t201m.kj_tenpomei, '　+$', '') により、店舗名称末尾の全角スペースを除去",店舗の表示名称。末尾の全角スペースを除去して整形している。DDL上はNOT NULL指定なし。
