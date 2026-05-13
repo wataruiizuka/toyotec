@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,cd_hansya,t001g.cd_hansya を `販社コード` としてそのまま取得。GROUP BY対象。tbi999003m、vbi000002_en、vbi000001_enとの結合条件にも使用。,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,cd_kaisya,t001g.cd_kaisya を `会社コード` としてそのまま取得。GROUP BY対象。tbi999003m、vbi000002_en、vbi000001_enとの結合条件にも使用。,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,cd_tenpo,t001g.cd_tenpo を `店舗コード` としてそのまま取得。GROUP BY対象。tbi999003mでmj_cyohyoid = '000' かつ kb_tenji = 1 の表示対象店舗に絞り込み。さらにvbi000001_enに存在する店舗に絞り込み。,店舗を識別するコード。表示対象店舗および店舗一覧マスタとの照合に使用。DDL上はNOT NULL指定なし。
+4,品番,品番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,mj_hinban,trim(t001g.mj_hinban) により前後スペースを除去して `品番` として取得。GROUP BY対象。vbi000002_en.mj_toribhhn と照合し、取替部品マスタに存在する品番のみ抽出。,部品の品番。trim後の値で集計・照合している。DDL上はNOT NULL指定なし。
+5,在庫数,在庫数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,su_zaikosu,販社コード・会社コード・店舗コード・trim済み品番単位でGROUP BYし、sum(t001g.su_zaikosu) を算出。,店舗・品番単位の在庫数合計。SQL上は集計値のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
+6,発注数,発注数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,su_hacyusu,販社コード・会社コード・店舗コード・trim済み品番単位でGROUP BYし、sum(t001g.su_hacyusu) を算出。,店舗・品番単位の発注数合計。SQL上は集計値のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
