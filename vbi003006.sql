@@ -1,0 +1,25 @@
+CREATE TABLE gold.vbi003006 (
+    `販社コード` STRING,
+    `会社コード` STRING,
+    `店舗コード` STRING,
+    `予約ＩＤ` STRING,
+    `予約明細ＩＤ` STRING,
+    `ストール番号` STRING,
+    `ご用命` STRING,
+    `工程区分` STRING,
+    `入庫予定日時` STRING,
+    `出庫予定日時` STRING,
+    `使用所要時間` STRING,
+    `入庫区分` STRING,
+    `実績ステータス` STRING,
+    `実績ステータス名` STRING,
+    `休憩跨ぎ区分` STRING,
+    `ＳＭＢ削除フラグ` STRING,
+    `販社会社店舗ストール番号日付` STRING,
+    `入庫予定日` STRING,
+    `予約` STRING,
+    `出勤時間` STRING,
+    `退勤時間` STRING,
+    `残業時間` STRING
+) USING PARQUET
+;
