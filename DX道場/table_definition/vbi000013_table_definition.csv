@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,mj_sortjyun,v0001.mj_sortjyun を `ソート順` としてそのまま取得。vbi000001_enは販社コード・会社コード・店舗コードでINNER JOIN。,店舗表示順を表す項目。DDL上はNOT NULL指定なし。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,cd_hansya,t001g.cd_hansya を `販社コード` としてそのまま取得。vbi000002_en、vbi000001_enとの結合条件にも使用。,販社を識別するコード。DDL上はNOT NULL指定なし。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,cd_kaisya,t001g.cd_kaisya を `会社コード` としてそのまま取得。vbi000002_en、vbi000001_enとの結合条件にも使用。,会社を識別するコード。DDL上はNOT NULL指定なし。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,cd_tenpo,t001g.cd_tenpo を `店舗コード` としてそのまま取得。vbi000001_enとの結合条件にも使用。,店舗を識別するコード。vbi000001_enに存在する店舗のみINNER JOINで取得される。DDL上はNOT NULL指定なし。
+5,店舗名称,店舗名称,STRING,有,なし,なし,なし,dx_ve.vbi000001_en,kj_tenpomei,v0001.kj_tenpomei を `店舗名称` としてそのまま取得。vbi000001_enは販社コード・会社コード・店舗コードでINNER JOIN。,店舗の表示名称。DDL上はNOT NULL指定なし。
+6,品番,品番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,mj_hinban,trim(t001g.mj_hinban) により前後スペースを除去して `品番` として取得。vbi000002_en.mj_toribhhnと照合し、取替部品マスタに存在する品番のみ抽出。,部品の品番。trim後の値で取替部品マスタと照合している。DDL上はNOT NULL指定なし。
+7,品名,品名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,mj_hinmei,t001g.mj_hinmei を `品名` としてそのまま取得。,部品の品名。取替部品マスタ側の品名ではなく、在庫元テーブルtbfb001g側の品名を取得している。DDL上はNOT NULL指定なし。
+8,在庫数,在庫数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfb001g,su_zaikosu,t001g.su_zaikosu を `在庫数` としてそのまま取得。WHERE t001g.su_zaikosu > 0 により、在庫数が0より大きい行のみ抽出。,店舗・品番単位の在庫数。SQL上は数値項目の可能性があるが、定義書ではDDLに合わせてSTRINGとする。
