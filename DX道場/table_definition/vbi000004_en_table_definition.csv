@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj022g,cd_hansya,t022g.cd_hansya をそのまま取得。GROUP BY対象。,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj022g,cd_kaisya,t022g.cd_kaisya をそのまま取得。GROUP BY対象。,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,no_seiri,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj022g,no_seiri,t022g.no_seiri をそのまま取得。GROUP BY対象。,リコール等の情報を整理するための番号。DDL上はNOT NULL指定なし。
+4,kj_recallme,リコール名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj022g,kj_recallme,販社コード・会社コード・整理NO単位でGROUP BYし、max(t022g.kj_recallme) を取得。,整理NO単位のリコール名称。複数候補がある場合はmax()により代表値を1つ取得。DDL上はNOT NULL指定なし。
