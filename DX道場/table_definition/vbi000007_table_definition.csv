@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_hansya,t001g.cd_hansya を `販社コード` としてそのまま取得。GROUP BY対象。tbsa001g、tbfa008g、tbfy206mとの結合条件にも使用。,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,cd_kaisya,t001g.cd_kaisya を `会社コード` としてそのまま取得。GROUP BY対象。tbsa001g、tbfa008g、tbfy206mとの結合条件にも使用。,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,cd_tenpo,ta001g.cd_tenpo を `店舗コード` として取得。GROUP BY対象。dx_ve.tbi999003mでmj_cyohyoid = '000' かつ kb_tenji = 1 の表示対象店舗に絞り込み。,入庫予定に紐づく店舗コード。tbfa008gとの結合条件にも使用。DDL上はNOT NULL指定なし。
+4,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g,no_seiri,"t001g.no_seiri を `整理ＮＯ` としてそのまま取得。GROUP BY対象。tbfa008gとの結合では left(t008g.cd_seibi, 5) = t001g.no_seiri、tbfy206mとの結合条件にも使用。",リコール等の情報を整理するための番号。店舗別・整理NO別・入庫予定月別集計のキー項目。DDL上はNOT NULL指定なし。
+5,入庫予定日0,入庫予定日0,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,dt_nyuukoyt,"concat(from_timestamp(ta001g.dt_nyuukoyt, 'yyyyMM'), '0') で入庫予定日を年月形式(yyyyMM)に変換し、末尾に'0'を付与。WHERE条件でJST現在日より後、かつJST現在日から6か月後より前の入庫予定日に絞り込み。GROUP BYは元の日付ta001g.dt_nyuukoyt単位。",入庫予定月を表す集計用キーと考えられる項目。例：202605に'0'を付与して2026050のような値を生成。DDL上はNOT NULL指定なし。
+6,予約済台数,予約済台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj001g / ai21rep_ve_dx.tbsa001g / ai21rep_ve_dx.tbfa008g / ai21rep_ve_dx.tbfy206m,*,tbfj001g、tbsa001g、tbfa008g、tbfy206mの結合条件および入庫予定日の期間条件を満たす行を、販社コード・会社コード・店舗コード・整理NO・入庫予定日単位で count(*) 集計。,予約済台数の件数。SQL上はcount(*)のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
