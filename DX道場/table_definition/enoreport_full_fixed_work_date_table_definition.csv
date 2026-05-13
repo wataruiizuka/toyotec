@@ -1,0 +1,4 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf018m,cd_hansya,t.cd_hansya をそのまま取得,販社を識別するコード。DDL上はNOT NULL指定なし。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf018m,cd_kaisya,t.cd_kaisya をそのまま取得,会社を識別するコード。DDL上はNOT NULL指定なし。
+3,mj_youbi,対象日付,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf018m / 生成日付(1〜31),nu_yyyy / nu_tuki / mj_kyjium1〜mj_kyjium31 / day,"t.nu_yyyy、t.nu_tuki、CROSS JOINで生成したday(1〜31)を連結し、TO_TIMESTAMP(..., 'yyyy-MM-dd')で日付化。WHERE句でnu_karend = 10、かつ該当日のmj_kyjium1〜31が'0'または'1'の行のみ抽出。運用上はDDL指定に合わせSTRINGとして扱う。",カラム名は曜日を示すように見えるが、SQL上は年月日から生成した日付/TIMESTAMP相当の値。'0'/'1'の業務的意味はSQLだけでは断定不可。
