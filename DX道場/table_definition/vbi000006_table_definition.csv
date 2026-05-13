@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,cd_hansya,t003g.cd_hansya を `販社コード` としてそのまま取得。GROUP BY対象。,販社を識別するコード。dx_ve.tbi999003mとの表示対象店舗絞り込み条件にも使用。DDL上はNOT NULL指定なし。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,cd_kaisya,t003g.cd_kaisya を `会社コード` としてそのまま取得。GROUP BY対象。,会社を識別するコード。dx_ve.tbi999003mとの表示対象店舗絞り込み条件にも使用。DDL上はNOT NULL指定なし。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,cd_tenpo,t003g.cd_tenpo を `店舗コード` としてそのまま取得。GROUP BY対象。LEFT SEMI JOINにより、dx_ve.tbi999003mでmj_cyohyoid = '000' かつ kb_tenji = 1 の表示対象店舗のみ抽出。,店舗を識別するコード。表示対象店舗の判定条件にも使用。DDL上はNOT NULL指定なし。
+4,整理ＮＯ,整理ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,no_seiri,t003g.no_seiri を `整理ＮＯ` としてそのまま取得。GROUP BY対象。,リコール等の情報を整理するための番号。店舗別・整理NO別集計のキー項目。DDL上はNOT NULL指定なし。
+5,対象車両台数,対象車両台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,su_taisyasu,GROUP BY単位で sum(t003g.su_taisyasu) を算出。,対象車両台数の合計値。SQL上は集計値のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
+6,自店実施台数,自店実施台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,su_jitejida,GROUP BY単位で sum(t003g.su_jitejida) を算出。,自店で実施した台数の合計値。SQL上は集計値のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
+7,他店実施台数,他店実施台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,su_tatenjis,GROUP BY単位で sum(t003g.su_tatenjis) を算出。,他店で実施した台数の合計値。SQL上は集計値のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
+8,他社実施台数,他社実施台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfj003g,su_tasyjiss,GROUP BY単位で sum(t003g.su_tasyjiss) を算出。,他社で実施した台数の合計値。SQL上は集計値のため数値になり得るが、定義書ではDDLに合わせてSTRINGとする。
