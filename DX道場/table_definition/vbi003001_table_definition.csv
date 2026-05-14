@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,日付,日付,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,dd_date,dd_date を `日付` として出力。,JST実行日を起点に上流テーブルで生成された日付。上流の vbi003001_en では当日から13日後までの14日分が生成される。
+2,日付_月,日付_月,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,dd_month,dd_month を `日付_月` として出力。,"対象日付が属する月の月初日。上流の vbi003001_en 側で `trunc(dd_date, 'MM')` により生成済み。"
+3,日付_yyyy/MM/dd,日付_yyyy/MM/dd,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,dd_yyyy/MM/dd,`dd_yyyy/MM/dd` を `日付_yyyy/MM/dd` として出力。,"yyyy/MM/dd形式の日付表示用項目。上流の vbi003001_en 側で `from_timestamp(dd_date, 'yyyy/MM/dd')` により生成済み。"
+4,日付_yyyyMMdd,日付_yyyyMMdd,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,dd_yyyyMMdd,`dd_yyyyMMdd` を `日付_yyyyMMdd` として出力。,"yyyyMMdd形式の8桁日付表示用項目。上流の vbi003001_en 側で `from_timestamp(dd_date, 'yyyyMMdd')` により生成済み。"
+5,週末判定,週末判定,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,kb_week,kb_week を `週末判定` として出力。,曜日区分。上流の vbi003001_en 側では `dayofweek(dd_date)` が日曜または土曜の場合は'2'、それ以外は'1'として生成される。
