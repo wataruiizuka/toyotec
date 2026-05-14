@@ -1,0 +1,14 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,店舗数,店舗数,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,su_store_number,su_store_number を 店舗数 として出力,店舗数を表す項目。DDL/SQL上はSTRINGとして作成。
+2,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_hansya_kaisya_tenpo,cd_hansya_kaisya_tenpo を 販社会社店舗コード として出力,販社・会社・店舗を組み合わせたコード項目。
+3,販社会社ゾーン店舗コード,販社会社ゾーン店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_hansya_kaisya_zon_tenpo,cd_hansya_kaisya_zon_tenpo を 販社会社ゾーン店舗コード として出力,販社・会社・ゾーン・店舗を組み合わせたコード項目。
+4,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_hansya,cd_hansya を 販社コード として出力,販社を識別するコード。
+5,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_kaisya,cd_kaisya を 会社コード として出力,会社を識別するコード。
+6,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_tenpo,cd_tenpo を 店舗コード として出力,店舗を識別するコード。
+7,店舗名称,店舗名称,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,kj_tenpomei,kj_tenpomei を 店舗名称 として出力,店舗の正式名称。
+8,店舗短縮名称,店舗短縮名称,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,kj_tentanms,kj_tentanms を 店舗短縮名称 として出力,店舗の短縮名称。
+9,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_zon,cd_zon を ゾーンコード として出力,ゾーンを識別するコード。
+10,ンゾン,ンゾン,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_nczon,cd_nczon を ンゾン として出力,DDL/SQL上の出力名は「ンゾン」。名称の意味は提示コードからは確定不可。
+11,ゾーン名称,ゾーン名称,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,kj_zonmei,kj_zonmei を ゾーン名称 として出力,ゾーンの名称。
+12,ゾーン名略,ゾーン名略,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,zone_name_abbreviation,zone_name_abbreviation を ゾーン名略 として出力,ゾーン名称の略称。
+13,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,sort_order,sort_order を ソート順 として出力,表示・並び替えに使用するソート順。
