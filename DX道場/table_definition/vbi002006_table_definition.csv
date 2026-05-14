@@ -1,0 +1,31 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,pk_販社会社注文no枝番,PK_販社会社注文NO枝番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"cd_hansya, cd_kaisya, no_cyumon, no_cyumoned",tbba001g.cd_hansya || tbba001g.cd_kaisya || tbba001g.no_cyumon || TRIM(tbba001g.no_cyumoned) により連結して cd_pk を作成し、pk_販社会社注文no枝番 として出力。,販社・会社・注文NO・注文枝番を連結した注文単位の識別キー。DDL上は主キー制約なし。
+2,pk_販社会社店舗コード,PK_販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"cd_hansya, cd_kaisya, cd_tenpo",tbba001g.cd_hansya || tbba001g.cd_kaisya || tbba001g.cd_tenpo により連結して cd_hankaisya_tenpo を作成し、pk_販社会社店舗コード として出力。,販社・会社・店舗を連結した店舗単位の識別キー。DDL上は主キー制約なし。
+3,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,base_data で tbba001g.cd_hansya を取得し、販社コードとして出力。,販社を識別するコード。
+4,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_kaisya,base_data で tbba001g.cd_kaisya を取得し、会社コードとして出力。,会社を識別するコード。
+5,アラート判断,アラート判断,STRING,有,なし,なし,なし,maintable（派生）,"flg_1, flg_2, flg_3, flg_4, flg_5, flg_6, flg_a, flg_b, flg_c, flg_d, flg_e, flg_f","CONCAT_WS('', flg_1〜flg_f) が空文字の場合は '99'、空でない場合は各フラグを連結した文字列を出力。",該当したアラートフラグを連結した総合判定項目。該当なしは99。
+6,注文ＮＯ,注文NO,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,no_cyumon,base_data で tbba001g.no_cyumon を取得し、注文ＮＯとして出力。,注文番号。枝番はPK項目側でTRIMして連結される。
+7,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_tenpo,base_data で tbba001g.cd_tenpo を取得し、店舗コードとして出力。,店舗を識別するコード。
+8,納車日,納車日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_nosya,base_data で tbba001g.dd_nosya を取得し、納車日として出力。,納車日。flg_3、flg_4、flg_6、flg_bなどの判定に使用。
+9,登録日,登録日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_touroku,base_data で tbba001g.dd_touroku を取得し、登録日として出力。,登録日。登録済・未回収・経過日系アラート判定に使用。
+10,振当日,振当日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_fr,base_data で tbba001g.dd_fr を取得し、振当日として出力。,振当日。リードタイム日やflg_d、flg_6の判定に使用。
+11,受注日,受注日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_jucyu,base_data で tbba001g.dd_jucyu を取得し、受注日として出力。,受注日。flg_eの受注経過判定に使用。
+12,flg_1,アラートフラグ1,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba052g,"dd_minasksy, dd_kaisyuyo, ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk","COALESCE(dd_minasksy, dd_kaisyuyo) がNULLではなく、JST当日より過去日、かつ未回収額（NVL(ki_haseirui,0)-NVL(ki_genknykg,0)-NVL(ki_sitanykg,0)-NVL(ki_fuharnyk,0)）が0以外の場合は '1'、それ以外は空文字。",回収予定日または見直し回収予定日を超過しており、未回収額が残っている場合のアラート。
+13,flg_2,アラートフラグ2,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk","登録日がNULLではなく、未回収額（NVL(ki_haseirui,0)-NVL(ki_genknykg,0)-NVL(ki_sitanykg,0)-NVL(ki_fuharnyk,0)）が0未満の場合は '2'、それ以外は空文字。",登録済で未回収額がマイナスになっている場合のアラート。
+14,flg_3,アラートフラグ3,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"dd_touroku, dd_nosya",登録日がNULLではなく、納車日がNULLの場合は '3'、それ以外は空文字。,登録済だが未納車の状態を示すアラート。
+15,flg_4,アラートフラグ4,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_nosya, ki_genkhasg, ki_genknykg, ki_fuharhsk, ki_fuharnyk, mj_keiykeit","納車日がNULLではなく、現金未回収額（NVL(ki_genkhasg,0)-NVL(ki_genknykg,0)）または割賦未回収額（NVL(ki_fuharhsk,0)-NVL(ki_fuharnyk,0)）が0以外で、mj_keiykeit <> '4' の場合は '4'、それ以外は空文字。",納車済だが現金または割賦の未回収が残っている場合のアラート。
+16,flg_5,アラートフラグ5,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m / dx_ve.tbi999013m,"kb_nyuukin, kb_urinyuki, ki_nyukinur","入金明細サブクエリで、現金系・クレジットカード系の正入金件数と負入金件数の差分を算出し、NVL(ki_nyukinur2 - ki_nyukinur3,0) + NVL(positive_count - negative_count,0) >= 3 の場合は '5'、それ以外は空文字。",現金・クレジットカード系入金の発生回数差分が3以上の場合のアラート。入金区分の分類は tbi999013m の kb_genkin/kb_crejcard に基づく。
+17,flg_6,アラートフラグ6,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / dx_ve.tbi002001m,"dd_nosya, dd_fr, su_leadtime","DATEDIFF(dd_nosya, dd_fr) != 0 かつ DATEDIFF(dd_nosya, dd_fr) >= su_leadtime の場合は '6'、それ以外は空文字。su_leadtime は tbi002001m.su_leadtime、NULL時は20。",納車日と振当日の差が閾値以上の場合のリードタイム超過アラート。
+18,flg_a,アラートフラグa,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"dd_touroku, dd_urikzumi",登録日が当月月初より前かつNULLではなく、売上済日が前月末より後またはNULLの場合は 'a'、それ以外は空文字。,前月末時点で登録済かつ未回収または当月以降回収となる対象を示す基礎フラグ。
+19,flg_b,アラートフラグb,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / dx_ve.tbi002001m,"dd_touroku, dd_urikzumi, dd_nosya, su_minosya","flg_a相当条件に加え、DATEDIFF(last_month_end, dd_touroku) >= su_minosya かつ納車日がNULLの場合は 'b'、それ以外は空文字。su_minosya は tbi002001m.su_minosya、NULL時は30。",登録後、未納車状態の経過日数が閾値以上となる場合のアラート。
+20,flg_c,アラートフラグc,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / dx_ve.tbi002001m,"dd_touroku, dd_urikzumi, su_touroku","flg_a相当条件に加え、DATEDIFF(last_month_end, dd_touroku) >= su_touroku の場合は 'c'、それ以外は空文字。su_touroku は tbi002001m.su_touroku、NULL時は90。",登録日から前月末までの経過日数が閾値以上の場合のアラート。
+21,flg_d,アラートフラグd,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / dx_ve.tbi002001m,"dd_touroku, dd_urikzumi, dd_fr, su_fr","flg_a相当条件に加え、DATEDIFF(last_month_end, dd_fr) >= su_fr の場合は 'd'、それ以外は空文字。su_fr は tbi002001m.su_fr、NULL時は90。",振当日から前月末までの経過日数が閾値以上の場合のアラート。
+22,flg_e,アラートフラグe,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / dx_ve.tbi002001m,"dd_touroku, dd_urikzumi, dd_jucyu, su_jucyu","flg_a相当条件に加え、DATEDIFF(last_month_end, dd_jucyu) >= su_jucyu の場合は 'e'、それ以外は空文字。su_jucyu は tbi002001m.su_jucyu、NULL時は365。",受注日から前月末までの経過日数が閾値以上の場合のアラート。
+23,flg_f,アラートフラグf,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_torikesi, dd_torotrkk, ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk","取消日がNULLではなく、登録取消日がNULLで、未回収額（NVL(ki_haseirui,0)-NVL(ki_genknykg,0)-NVL(ki_sitanykg,0)-NVL(ki_fuharnyk,0)）が0以外の場合は 'f'、それ以外は空文字。",取消済かつ登録取消なしで未回収額が残っている場合のアラート。
+24,見直し回収予定日,見直し回収予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba052g,dd_minasksy,base_data で tbba052g.dd_minasksy を取得し、見直し回収予定日として出力。,見直し後の回収予定日。flg_1では回収予定日より優先してCOALESCEで使用される。
+25,回収予定日,回収予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba052g,dd_kaisyuyo,base_data で tbba052g.dd_kaisyuyo を取得し、回収予定日として出力。,当初または通常の回収予定日。flg_1の判定に使用。
+26,リードタイム日,リードタイム日,STRING,有,なし,なし,なし,dx_ve.tbi002001m,su_leadtime,tbi002001m.su_leadtime を取得し、NULLの場合は COALESCE により20を設定。,flg_6の閾値として使用するリードタイム日数。
+27,未納車経過日,未納車経過日,STRING,有,なし,なし,なし,dx_ve.tbi002001m,su_minosya,tbi002001m.su_minosya を取得し、NULLの場合は COALESCE により30を設定。,flg_bの閾値として使用する未納車経過日数。
+28,登録経過日,登録経過日,STRING,有,なし,なし,なし,dx_ve.tbi002001m,su_touroku,tbi002001m.su_touroku を取得し、NULLの場合は COALESCE により90を設定。,flg_cの閾値として使用する登録経過日数。
+29,振当経過日,振当経過日,STRING,有,なし,なし,なし,dx_ve.tbi002001m,su_fr,tbi002001m.su_fr を取得し、NULLの場合は COALESCE により90を設定。,flg_dの閾値として使用する振当経過日数。
+30,受注経過日,受注経過日,STRING,有,なし,なし,なし,dx_ve.tbi002001m,su_jucyu,tbi002001m.su_jucyu を取得し、NULLの場合は COALESCE により365を設定。,flg_eの閾値として使用する受注経過日数。
