@@ -1,0 +1,15 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,tbba001g.cd_hansya を 販社コード として出力。,販社を識別するコード。dx_ve.vbi002001_en と販社・会社・店舗コードでINNER JOINされ、対象店舗に絞り込まれる。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_kaisya,tbba001g.cd_kaisya を 会社コード として出力。,会社を識別するコード。
+3,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"cd_hansya, cd_kaisya, cd_tenpo",tbba001g.cd_hansya || tbba001g.cd_kaisya || tbba001g.cd_tenpo により連結して出力。,販社コード・会社コード・店舗コードを連結した店舗識別用コード。
+4,登録済件数,登録済件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"dd_touroku, dd_urikzumi",登録日がNULLではなく、登録日が前月末以前、かつ売上済日が当月月初以降またはNULLの場合は1、それ以外は0。,前月末時点までに登録済で、当月以降に回収済または未回収のものを示す件数フラグ。
+5,下取車なし総件数,下取車なし総件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, su_sitadori","COALESCE(tbba052g.su_sitadori, 0) = 0 かつ、登録済件数と同じ登録日・売上済日条件を満たす場合は1、それ以外は0。",登録済件数のうち、下取車がないものを示す件数フラグ。
+6,未回収総件数,未回収総件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk",登録日がNULLではなく、登録日が前月末以前、売上済日がNULL、かつ未回収額（ki_haseirui - ki_genknykg - ki_sitanykg - ki_fuharnyk）が0以外の場合は1、それ以外は0。,未回収総額が残っている登録済未回収案件の件数フラグ。
+7,未回収総金額,未回収総金額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk",未回収総件数と同じ条件を満たす場合、ki_haseirui - ki_genknykg - ki_sitanykg - ki_fuharnyk を出力。それ以外は0。,未回収総金額。SQL上では/1000などの単位変換は行われていない。
+8,未回収現金総件数,未回収現金総件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_genkhasg, ki_genknykg",登録日がNULLではなく、登録日が前月末以前、売上済日がNULL、かつ現金未回収額（ki_genkhasg - ki_genknykg）が0以外の場合は1、それ以外は0。,現金部分の未回収がある案件の件数フラグ。
+9,未回収現金総金額,未回収現金総金額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_genkhasg, ki_genknykg",未回収現金総件数と同じ条件を満たす場合、ki_genkhasg - ki_genknykg を出力。それ以外は0。,現金部分の未回収金額。
+10,未回収割賦総総件数,未回収割賦総総件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_fuharhsk, ki_fuharnyk",登録日がNULLではなく、登録日が前月末以前、売上済日がNULL、かつ割賦未回収額（ki_fuharhsk - ki_fuharnyk）が0以外の場合は1、それ以外は0。,割賦部分の未回収がある案件の件数フラグ。DDL/SQL上の名称は「未回収割賦総総件数」。
+11,未回収割賦総総金額,未回収割賦総総金額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_fuharhsk, ki_fuharnyk",未回収割賦総総件数と同じ条件を満たす場合、ki_fuharhsk - ki_fuharnyk を出力。それ以外は0。,割賦部分の未回収金額。DDL/SQL上の名称は「未回収割賦総総金額」。
+12,未回収下取総件数,未回収下取総件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_sitahasg, ki_sitanykg",登録日がNULLではなく、登録日が前月末以前、売上済日がNULL、かつ下取未回収額（ki_sitahasg - ki_sitanykg）が0以外の場合は1、それ以外は0。,下取部分の未回収がある案件の件数フラグ。
+13,未回収下取総金額,未回収下取総金額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba052g,"dd_touroku, dd_urikzumi, ki_sitahasg, ki_sitanykg",未回収下取総件数と同じ条件を満たす場合、ki_sitahasg - ki_sitanykg を出力。それ以外は0。,下取部分の未回収金額。
+14,登録済未納車件数,登録済未納車件数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,"dd_touroku, dd_urikzumi, dd_nosya",登録日がNULLではなく、登録日が前月末以前、売上済日が当月月初以降またはNULL、かつ納車日がNULLの場合は1、それ以外は0。,登録済だが納車されていない案件の件数フラグ。
