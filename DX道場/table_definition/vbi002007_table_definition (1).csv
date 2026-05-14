@@ -1,0 +1,16 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,主キー,主キー,STRING,有,なし,なし,なし,table_8014m（CTE） / ai21rep_ve_dx.tbg8014m,logic_pk,CTE `table_8014m`で `ROW_NUMBER() OVER(ORDER BY 1) AS logic_pk` を生成し、`主キー`として出力。,DDL上の主キー制約ではなく、SQL上で付与する連番キー。`ORDER BY 1`のため、実行環境によっては採番順が安定しない可能性がある。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,cd_hansya,`t014m.cd_hansya`をそのまま出力。,販社を識別するコード。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,cd_kaisya,`t014m.cd_kaisya`をそのまま出力。,会社を識別するコード。
+4,注文ＮＯ,注文NO,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,no_cyumon,`t014m.no_cyumon`をそのまま出力。,注文番号。`販社会社注文no`ではTRIMした注文番号を連結に使用。
+5,販社会社注文no,販社会社注文NO,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"cd_hansya, cd_kaisya, no_cyumon","`CONCAT(t014m.cd_hansya, t014m.cd_kaisya, TRIM(t014m.no_cyumon))`により連結。",販社コード・会社コード・注文番号を連結した注文識別用コード。
+6,日付_順番用,日付_順番用,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,dd_keijyou,`CAST(t014m.dd_keijyou AS STRING)`として出力。,計上日を文字列化した並び順用日付。元の`dd_keijyou`は`yyyyMMdd`形式として扱われている。
+7,日付,日付,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,dd_keijyou,"`TO_TIMESTAMP(CAST(t014m.dd_keijyou AS STRING), 'yyyyMMdd')`でタイムスタンプ化して出力。",計上日を日付/タイムスタンプ型に変換した表示用項目。DDL上はSTRINGのため、型を厳密に合わせる場合は`CAST(... AS STRING)`の検討余地あり。
+8,項目名,項目名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf053m / ai21rep_ve_dx.tbgm024m / ai21rep_ve_dx.tbv0208m,"kb_syohmei, kj_nasemei, kj_nyuukinm","`COALESCE(t053m.kb_syohmei, t204m.kj_nasemei, t208m.kj_nyuukinm)`として出力。",発生・入金区分に応じた項目名称。発生側の一部コードは`tbbf053m`、その他発生側は`tbgm024m`、入金側は`tbv0208m`から名称を取得。
+9,発生額,発生額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"kb_urinyuki, ki_nyukinur",`kb_urinyuki = '1'`の場合は`ki_nyukinur`、それ以外はNULL。,発生区分の金額。SQL上は数値項目のため、DDLのSTRINGへ厳密に合わせる場合はCAST検討余地あり。
+10,入金額,入金額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"kb_urinyuki, KI_NYUKINUR",`kb_urinyuki = '2'`の場合は`KI_NYUKINUR`、それ以外はNULL。,入金区分の金額。SQL上では大文字表記`KI_NYUKINUR`を参照しているが、元カラムの大文字小文字扱いは実行環境依存。
+11,空白欄,空白欄,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"kb_urinyuki, kb_nyuukin, kb_nyukkanr","意図としては、`kb_urinyuki = '1'`の場合に`SUBSTR(kb_nyuukin,3,1)`をもとに`1:取消`、`2:売上`、`3:条変`へ変換し、`kb_urinyuki = '2'`の場合に`kb_nyukkanr`をもとに`01:現金`、`02:割賦`、`03:下取`、`04:約手`、`05:残債`へ変換する想定。","提示SQLでは`IF (t014m.kb_urinyuki = '1' CASE ...`のカンマ不足、および`AS 空白欄,`の後にさらにカンマがあるため構文修正が必要。"
+12,伝票番号,伝票番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,no_denpyo,`t014m.no_denpyo`をそのまま出力。,伝票番号。
+13,業務区分,業務区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,kb_gyoumu,`t014m.kb_gyoumu`をそのまま出力。,業務区分コード。
+14,入金区分,入金区分,STRING,有,なし,なし,なし,table_8014m（CTE） / ai21rep_ve_dx.tbg8014m,kb_nyuukin,"メインSELECTでは`t014m.kb_nyuukin`をそのまま出力。名称解決やJOIN条件では`LEFT(kb_nyuukin,2)`または`SUBSTR(kb_nyuukin,3,1)`を使用。",入金区分コード。項目名・空白欄の判定にも使用される。
+15,件数,件数,STRING,有,なし,なし,なし,なし（固定値）,1,`1 AS 件数`として固定値を出力。,明細1行を1件として数えるための件数項目。DDL上はSTRINGだがSQL上は数値リテラル。
