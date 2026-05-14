@@ -1,0 +1,25 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,cd_hansya,1本目SELECTでは`t005g.cd_hansya`、2本目SELECTでは`tb05s.cd_hansya`をそのまま出力。,販社を識別するコード。`dx_ve.vbi003002`と販社・会社・店舗・ストール番号でLEFT SEMI JOINされ、対象ストールに絞り込まれる。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,cd_kaisya,1本目SELECTでは`t005g.cd_kaisya`、2本目SELECTでは`tb05s.cd_kaisya`をそのまま出力。,会社を識別するコード。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,cd_tenpo,1本目SELECTでは`t005g.cd_tenpo`、2本目SELECTでは`tb05s.cd_tenpo`をそのまま出力。,店舗を識別するコード。
+4,no_yoyakuid,予約ID,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,no_yoyakuid,1本目SELECTでは`t005g.no_yoyakuid`、2本目SELECTでは`tb05s.no_yoyakuid`をそのまま出力。,予約を識別するID。
+5,cd_yoykmsai,予約明細コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,cd_yoykmsai,1本目SELECTでは`t005g.cd_yoykmsai`、2本目SELECTでは`tb05s.cd_yoykmsai`をそのまま出力。,予約明細を識別するコード。
+6,no_msaiedmx,明細枝番最大番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,no_msaiedmx,1本目SELECTでは`t005g.no_msaiedmx`、2本目SELECTでは`tb05s.no_msaiedmx`をそのまま出力。,予約明細の枝番・管理番号相当。2本目SELECTでは同一予約明細・同一ストールで異なる`no_msaiedmx`が存在する場合、LEFT ANTI JOINにより除外される。
+7,no_stall,ストール番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,no_stall,1本目SELECTでは`t005g.no_stall`、2本目SELECTでは`tb05s.no_stall`をそのまま出力。,ストールを識別する番号。`dx_ve.vbi003002`に存在する対象ストールのみ抽出。
+8,mj_stallno,ストール番号文字列,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,no_stall,`cast(no_stall AS string)`により、ストール番号を文字列化して出力。,表示用のストール番号文字列。
+9,mj_gyme,作業名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,mj_gyme,1本目SELECTでは`t005g.mj_gyme`、2本目SELECTでは`tb05s.mj_gyme`をそのまま出力。,予約・作業の名称。
+10,kb_koutei,工程区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,kb_koutei,1本目SELECTでは`t005g.kb_koutei`、2本目SELECTでは`tb05s.kb_koutei`をそのまま出力。,工程を表す区分コード。
+11,dt_siyost,使用開始日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_siyost,1本目SELECTでは`t005g.dt_siyost`、2本目SELECTでは`tb05s.dt_siyost`をそのまま出力。,ストール使用開始日時。JST実行日以上、JST実行日+14日未満のデータのみ抽出。
+12,dd_nyuukoyt,入庫予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_siyost,"`trunc(dt_siyost, 'J')`により、使用開始日時から日付相当を算出して出力。",入庫予定日相当。SQL上は日時/日付処理結果のため、DDLのSTRINGへ厳密に合わせる場合はCAST検討余地あり。
+13,tm_nyuukoytsecond,入庫予定時刻秒数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_siyost,"`unix_timestamp(concat('1970-01-01 ', from_timestamp(dt_siyost, 'HH:mm:ss')))`により、使用開始時刻を基準日のUNIX秒へ変換。",入庫予定時刻を秒数化した項目。SQL上は数値。
+14,dt_siyoed,使用終了日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_siyoed,1本目SELECTでは`t005g.dt_siyoed`、2本目SELECTでは`tb05s.dt_siyoed`をそのまま出力。,ストール使用終了日時。
+15,dd_shukkoyt,出庫予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_siyoed,"`trunc(dt_siyoed, 'J')`により、使用終了日時から日付相当を算出して出力。",出庫予定日相当。SQL上は日時/日付処理結果のため、DDLのSTRINGへ厳密に合わせる場合はCAST検討余地あり。
+16,tm_shukkoytsecond,出庫予定時刻秒数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_siyoed,"`unix_timestamp(concat('1970-01-01 ', from_timestamp(dt_siyoed, 'HH:mm:ss')))`により、使用終了時刻を基準日のUNIX秒へ変換。",出庫予定時刻を秒数化した項目。SQL上は数値。
+17,tm_siyotime,使用時間,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,tm_siyotime,1本目SELECTでは`t005g.tm_siyotime`、2本目SELECTでは`tb05s.tm_siyotime`をそのまま出力。,予約・作業の使用時間。
+18,kb_nyuuko,入庫区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,kb_nyuuko,1本目SELECTでは`t005g.kb_nyuuko`、2本目SELECTでは`tb05s.kb_nyuuko`をそのまま出力。,入庫状態・入庫種別を表す区分コード。
+19,cd_jisekist,実績ステータスコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,cd_jisekist,"1本目SELECTでは`t005g.cd_jisekist`、2本目SELECTでは`tb05s.cd_jisekist`をそのまま出力。WHERE句で`isnottrue(cd_jisekist IN('00','01','02'))`の条件を適用。","実績ステータスコード。SQL上、`00`,`01`,`02`は除外対象。"
+20,cd_restcros,REST/CROSコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,cd_restcros,1本目SELECTでは`t005g.cd_restcros`、2本目SELECTでは`tb05s.cd_restcros`をそのまま出力。,REST/CROS連携・識別コード相当。意味は提示SQLのみでは確定不可。
+21,su_sgyninz,作業人数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,su_sgyninz,1本目SELECTでは`t005g.su_sgyninz`、2本目SELECTでは`tb05s.su_sgyninz`をそのまま出力。,作業人数。SQL上は数値の可能性あり。
+22,dt_nyukjisk,入庫実績日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_nyukjisk,1本目SELECTでは`t005g.dt_nyukjisk`、2本目SELECTでは`tb05s.dt_nyukjisk`をそのまま出力。,入庫実績日時。
+23,dt_sesnjisk,清算/精算実績日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,dt_sesnjisk,1本目SELECTでは`t005g.dt_sesnjisk`、2本目SELECTでは`tb05s.dt_sesnjisk`をそのまま出力。,清算/精算実績日時相当。正確な業務名は提示SQLのみでは確定不可。
+24,mj_sakujyo,削除フラグ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g / ai21rep_ve_dx.tbsab05s,mj_sakujyo,1本目SELECTでは`t005g.mj_sakujyo`、2本目SELECTでは`tb05s.mj_sakujyo`をそのまま出力。WHERE句で`mj_sakujyo = '0'`のデータのみ抽出。,削除フラグ。SQL上は未削除を示す`0`のみ対象。
