@@ -1,0 +1,21 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,mj_sortjyun,ソート順,STRING,有,なし,なし,なし,dx_ve.tbi003002m / ai21rep_ve_dx.tbv0033m / dx_ve.tbi999003m,"cd_hansya, cd_kaisya, cd_tenpo, cd_zon, kj_zonmei, mj_sortjyun",販社コード・会社コード単位で、補正後ゾーンコード、tbi999003m.mj_sortjyun、店舗コードの順に `dense_rank()` を採番。,表示順。ゾーン名称がNULLまたは空白の場合は'999999'、ゾーンコードがNULLまたは空白の場合は'999998'として並び順に使用。
+2,cd_hansya,販社コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,cd_hansya,t3002m.cd_hansya をそのまま出力。,販社を識別するコード。
+3,cd_kaisya,会社コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,cd_kaisya,t3002m.cd_kaisya をそのまま出力。,会社を識別するコード。
+4,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,cd_tenpo,t3002m.cd_tenpo をそのまま出力。,店舗を識別するコード。
+5,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,"`regexp_replace(t201m.kj_tenpomei, '　+$', '')` により、末尾の全角空白を除去して出力。",店舗名称。店舗マスタをLEFT JOINして取得。
+6,cd_zon,ゾーンコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,"cd_zon, kj_zonmei",ゾーン名称がNULLまたは空白の場合は'999999'、ゾーンコードがNULLまたは空白の場合は'999998'、それ以外は`t033m.cd_zon`を出力。,ゾーンコード。未設定時の補正値を付与している。
+7,kj_zonmei,ゾーン名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,"`regexp_replace(t033m.kj_zonmei, '　+$', '')` により、末尾の全角空白を除去して出力。",ゾーン名称。tbv0202m経由でゾーンマスタをLEFT JOINして取得。
+8,no_stall,ストール番号,STRING,有,なし,なし,なし,dx_ve.tbi003002m,no_stall,t3002m.no_stall をそのまま出力。,ストールを識別する番号。
+9,mj_stallmei,ストール名称,STRING,有,なし,なし,なし,dx_ve.tbi003002m,mj_stallmei,t3002m.mj_stallmei をそのまま出力。,ストール名称。WHERE句で名称に'コント'または'外注'を含むものは除外。
+10,kb_shuukeitaishou,集計対象区分,STRING,有,なし,なし,なし,dx_ve.tbi003002m,kb_shuukeitaishou,t3002m.kb_shuukeitaishou をそのまま出力。,集計対象区分。WHERE句で `kb_shuukeitaishou = '1'` のデータのみ抽出。
+11,cd_hansyakaisyatenpostall,販社会社店舗ストールコード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,"cd_hansya, cd_kaisya, cd_tenpo, no_stall","`concat(t3002m.cd_hansya, t3002m.cd_kaisya, t3002m.cd_tenpo, cast(t3002m.no_stall AS string))` により連結。",販社・会社・店舗・ストールを連結したストール単位の識別コード。
+12,kb_stallsentaku,ストール選択区分,STRING,有,なし,なし,なし,dx_ve.tbi003002m,"no_stall, mj_stallmei","`concat(cast(t3002m.no_stall AS string), '　', t3002m.mj_stallmei)` により、ストール番号とストール名称を全角スペース区切りで連結。",画面表示や選択肢表示用のストール名称。
+13,tm_kaiten,開店時刻,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_kaiten,t3001m.tm_kaiten をそのまま出力。,店舗の開店時刻。tbi003001mを販社・会社・店舗コードでINNER JOINして取得。
+14,tm_shukkinsecond,出勤秒数,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_kaiten,"`unix_timestamp(concat('1970-01-01 ', t3001m.tm_kaiten))` により、開店時刻を基準日のUNIX秒に変換。",開店時刻を秒数化した項目。DDL上はSTRINGだがSQL上は数値。
+15,tm_heiten,閉店時刻,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_heiten,t3001m.tm_heiten をそのまま出力。,店舗の閉店時刻。
+16,tm_taikinsecond,退勤秒数,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_heiten,"`unix_timestamp(concat('1970-01-01 ', t3001m.tm_heiten))` により、閉店時刻を基準日のUNIX秒に変換。",閉店時刻を秒数化した項目。DDL上はSTRINGだがSQL上は数値。
+17,tm_zangyo,残業時刻,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_heiten,"`from_timestamp(hours_add(concat('1970-01-01 ', t3001m.tm_heiten), 2), 'HH:mm:ss')` により、閉店時刻に2時間加算した時刻を出力。",残業判定用の時刻。閉店時刻+2時間。
+18,kb_teigaikitei,定外規定,STRING,有,なし,なし,なし,なし（固定計算）,1440 / 12,`1440 / 12` を出力。,固定計算値。SQL上は120。DDL上はSTRINGだがSQL上は数値。
+19,kb_teinaikitei,定内規定,STRING,有,なし,なし,なし,dx_ve.tbi003001m,"tm_kaiten, tm_heiten",`(unix_timestamp('1970-01-01 ' || tm_heiten) - unix_timestamp('1970-01-01 ' || tm_kaiten)) / 60 - 60` により算出。,開店から閉店までの分数から60分を差し引いた値。DDL上はSTRINGだがSQL上は数値。
+20,cd_hansyakaisyatenpo,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,"cd_hansya, cd_kaisya, cd_tenpo","`concat(t3002m.cd_hansya, t3002m.cd_kaisya, t3002m.cd_tenpo)` により連結。",販社・会社・店舗を連結した店舗単位の識別コード。
