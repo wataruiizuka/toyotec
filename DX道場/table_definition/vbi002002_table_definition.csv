@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,エリア統括部と店舗,エリア統括部と店舗,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,zone_name_abbreviation / kj_tentanms,区分コード='1'のゾーン行では v2001.zone_name_abbreviation を出力。区分コード='2'の店舗行では v2001.kj_tentanms を出力。,ゾーン行はエリア統括部・ゾーン名称相当、店舗行は店舗略称を表示する項目。
+2,区分名称,区分名称,STRING,有,なし,なし,なし,なし（固定値）,'ゾーン名称' / '店舗略称',ゾーン行では固定値 'ゾーン名称'、店舗行では固定値 '店舗略称' を出力。,行の粒度がゾーン単位か店舗単位かを表す名称。DDL上はNULL制約なし。
+3,区分コード,区分コード,STRING,有,なし,なし,なし,なし（固定値）,'1' / '2',ゾーン行では固定値 '1'、店舗行では固定値 '2' を出力。,行の粒度を識別するコード。1=ゾーン名称、2=店舗略称。DDL上はNULL制約なし。
+4,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_hansya,v2001.cd_hansya をそのまま出力。,販社を識別するコード。
+5,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_kaisya,v2001.cd_kaisya をそのまま出力。,会社を識別するコード。
+6,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_zon,v2001.cd_zon をそのまま出力。,ゾーンを識別するコード。ゾーン行・店舗行の両方で使用。
+7,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_tenpo,ゾーン行では NULL を出力。店舗行では v2001.cd_tenpo を出力。,店舗単位行のみ店舗コードを保持。ゾーン集計行ではNULL。
+8,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_hansya_kaisya_tenpo,ゾーン行では NULL を出力。店舗行では v2001.cd_hansya_kaisya_tenpo を出力。,販社・会社・店舗を連結した店舗識別用コード。店舗行のみ設定。
+9,販社会社ゾーン店舗コード,販社会社ゾーン店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_hansya_kaisya_zon_tenpo,ゾーン行では NULL を出力。店舗行では v2001.cd_hansya_kaisya_zon_tenpo を出力。,販社・会社・ゾーン・店舗を連結した識別用コード。店舗行のみ設定。
+10,件数,件数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_pieces,vbi002001_en と vbi002004_en を販社コード・会社コード・店舗コードでLEFT JOINし、SUM(v2004.su_pieces) を集計。ゾーン行はゾーン単位、店舗行は店舗単位でGROUP BY。,件数の集計値。LEFT JOINのため、vbi002004_enに一致データがない場合はNULLになる可能性あり。
+11,金額,金額,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_amount,vbi002001_en と vbi002004_en を販社コード・会社コード・店舗コードでLEFT JOINし、SUM(v2004.su_amount) を集計。ゾーン行はゾーン単位、店舗行は店舗単位でGROUP BY。,金額の集計値。LEFT JOINのため、vbi002004_enに一致データがない場合はNULLになる可能性あり。
+12,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi002001_en,cd_zon / sort_order,ゾーン行では CAST(v2001.cd_zon AS INT) を出力。店舗行では v2001.sort_order を出力。,表示順制御用の項目。DDL上はSTRINGだが、SQLのゾーン行ではINT変換しているため、型を厳密に固定する場合はCAST AS STRINGの検討余地あり。
