@@ -1,0 +1,18 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,cd_hansya,cd_hansya を 販社コード として出力,販社を識別するコード。vbi002004_en側で対象店舗に絞り込まれた値を日本語名で出力する。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,cd_kaisya,cd_kaisya を 会社コード として出力,会社を識別するコード。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,cd_tenpo,cd_tenpo を 店舗コード として出力,店舗を識別するコード。
+4,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,cd_hansya_kaisya_tenpo,cd_hansya_kaisya_tenpo を 販社会社店舗コード として出力,販社コード・会社コード・店舗コードを連結した店舗識別用コード。
+5,受注台数,受注台数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_order,su_order を 受注台数 として出力,当月受注を示す件数項目。詳細な判定ロジックは vbi002004_en 側で生成済み。
+6,登録台数,登録台数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_registered_vehicle,su_registered_vehicle を 登録台数 として出力,当月登録車両を示す件数項目。詳細な判定ロジックは vbi002004_en 側で生成済み。
+7,当月登録内下取車なし,当月登録内下取車なし,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_no_trade_in_vehicle_registered_this_month,su_no_trade_in_vehicle_registered_this_month を 当月登録内下取車なし として出力,当月登録車両のうち、下取車なしを示す件数項目。
+8,当月回収完了分平均リードタイム,当月回収完了分平均リードタイム,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_average_lead_time_for_collections_completed_this_month,su_average_lead_time_for_collections_completed_this_month を 当月回収完了分平均リードタイム として出力,当月回収完了分の平均リードタイム。vbi002004_en 側で平均日数として算出済み。
+9,現在登録済未回収件数,現在登録済未回収件数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_currently_registered_but_uncollected_case,su_currently_registered_but_uncollected_case を 現在登録済未回収件数 として出力,登録済だが回収未完了の現在件数。
+10,現在登録済未回収金額,現在登録済未回収金額,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_currently_registered_uncollected_amount,su_currently_registered_uncollected_amount を 現在登録済未回収金額 として出力,登録済だが回収未完了の現在金額。
+11,前月登録済未回収件数,前月登録済未回収件数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_registered_but_uncollected_items_from_the_previous_month,su_registered_but_uncollected_items_from_the_previous_month を 前月登録済未回収件数 として出力,前月に登録された未回収案件の件数。
+12,前月登録済未回収金額,前月登録済未回収金額,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_uncollected_amount_registered_in_the_previous_month,su_uncollected_amount_registered_in_the_previous_month を 前月登録済未回収金額 として出力,前月に登録された未回収案件の金額。
+13,前月以前登録済未回収件数,前月以前登録済未回収件数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_registered_but_uncollected_items_from_the_previous_month_or_earlier,su_registered_but_uncollected_items_from_the_previous_month_or_earlier を 前月以前登録済未回収件数 として出力,前月以前に登録された未回収案件の件数。詳細条件は vbi002004_en 側で生成済み。
+14,前月以前登録済未回収金額,前月以前登録済未回収金額,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_uncollected_amount_registered_in_the_previous_month_or_earlier,su_uncollected_amount_registered_in_the_previous_month_or_earlier を 前月以前登録済未回収金額 として出力,前月以前に登録された未回収案件の金額。詳細条件は vbi002004_en 側で生成済み。
+15,件数,件数,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_pieces,su_pieces を 件数 として出力,未回収件数の集計用項目。vbi002002など後続集計でSUM対象となる項目。
+16,金額,金額,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,su_amount,su_amount を 金額 として出力,未回収金額の集計用項目。vbi002004_en 側で千円単位として生成済み。
+17,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi002004_en,sort_order,sort_order を ソート順 として出力,表示順制御用の項目。vbi002001_en由来のソート順を vbi002004_en 経由で出力する。
