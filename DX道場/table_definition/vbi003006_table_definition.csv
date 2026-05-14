@@ -1,0 +1,23 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_hansya,cd_hansya を `販社コード` として出力。,販社を識別するコード。上流のvbi003006_enでは、vbi003004由来の予約・ストール使用データから取得。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_kaisya,cd_kaisya を `会社コード` として出力。,会社を識別するコード。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_tenpo,cd_tenpo を `店舗コード` として出力。,店舗を識別するコード。
+4,予約ＩＤ,予約ID,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,no_yoyakuid,no_yoyakuid を `予約ＩＤ` として出力。,予約を識別するID。
+5,予約明細ＩＤ,予約明細ID,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_yoykmsai,cd_yoykmsai を `予約明細ＩＤ` として出力。,予約明細を識別するID/コード。
+6,ストール番号,ストール番号,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,no_stall,no_stall を `ストール番号` として出力。,ストールを識別する番号。
+7,ご用命,ご用命,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,mj_gyme,mj_gyme を `ご用命` として出力。,予約・作業の名称。上流のvbi003006_enではvbi003004の作業名を引き継ぐ。
+8,工程区分,工程区分,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,kb_koutei,kb_koutei を `工程区分` として出力。,工程を表す区分コード。
+9,入庫予定日時,入庫予定日時,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,dt_nyuukoyt,dt_nyuukoyt を `入庫予定日時` として出力。,入庫予定日時。上流のvbi003006_en SQLでは、vbi003004.dt_siyost を dt_nyuukoyt として別名出力している。
+10,出庫予定日時,出庫予定日時,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,dt_shukkoyt,dt_shukkoyt を `出庫予定日時` として出力。,出庫予定日時。上流のvbi003006_en SQLでは、vbi003004.dt_siyoed を dt_shukkoyt として別名出力している。
+11,使用所要時間,使用所要時間,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,tm_siyotime,tm_siyotime を `使用所要時間` として出力。,予約・作業の使用所要時間。
+12,入庫区分,入庫区分,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,kb_nyuuko,kb_nyuuko を `入庫区分` として出力。,入庫状態・入庫種別を表す区分コード。
+13,実績ステータス,実績ステータス,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_jisekist,cd_jisekist を `実績ステータス` として出力。,実績ステータスコード。
+14,実績ステータス名,実績ステータス名,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,mj_jisekist,mj_jisekist を `実績ステータス名` として出力。,実績ステータス名称。上流のvbi003006_enではtbv0231mから取得している。
+15,休憩跨ぎ区分,休憩跨ぎ区分,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_restcros,cd_restcros を `休憩跨ぎ区分` として出力。,予約時間から休憩時間を控除するかどうかの判定に使用される区分。上流では`cd_restcros = '0' OR '2'`の場合、休憩控除なしとして扱われる。
+16,ＳＭＢ削除フラグ,SMB削除フラグ,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,mj_sakujyo,mj_sakujyo を `ＳＭＢ削除フラグ` として出力。,削除フラグ。上流のvbi003004側で未削除データに絞り込み済み。
+17,販社会社店舗ストール番号日付,販社会社店舗ストール番号日付,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,cd_hansyakaisyatenpostalldate,cd_hansyakaisyatenpostalldate を `販社会社店舗ストール番号日付` として出力。,販社・会社・店舗・ストール番号と日付を連結した、ストール×日付単位の識別用コード。
+18,入庫予定日,入庫予定日,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,dd_nyuukoyt,dd_nyuukoyt を `入庫予定日` として出力。,入庫予定日のみを表す項目。上流では稼働対象日判定にも使用される。
+19,予約,予約,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,mj_yoyaku,mj_yoyaku を `予約` として出力。,上流のvbi003006_enで、営業時間内の予約使用時間から休憩時間を控除して算出された予約時間相当の値。SQL上は数値計算結果の可能性あり。
+20,出勤時間,出勤時間,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,tm_shukkin,tm_shukkin を `出勤時間` として出力。,上流のvbi003006_enでは、vbi003002.tm_kaitenを出勤時間として取得。
+21,退勤時間,退勤時間,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,tm_taikin,tm_taikin を `退勤時間` として出力。,上流のvbi003006_enでは、vbi003002.tm_heitenを退勤時間として取得。
+22,残業時間,残業時間,STRING,有,なし,なし,なし,dx_ve.vbi003006_en,tm_zangyo,tm_zangyo を `残業時間` として出力。,上流のvbi003006_enでは、vbi003002側で閉店時刻+2時間として生成された残業判定用時刻を出力。
