@@ -1,0 +1,6 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,dd_date,日付,STRING,有,なし,なし,なし,なし（VALUES句による生成）,i,"JSTの実行日 `CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE)` に対して、VALUES句で生成した `i=0〜13` を `days_add(..., i)` で加算して出力。",実行日を起点とした14日分の日付。DDL上はSTRINGだが、SQL上はDATE相当の値として生成されるため、型を厳密に合わせる場合はCAST検討余地あり。
+2,dd_month,月初日,STRING,有,なし,なし,なし,なし（dd_dateから派生）,dd_date,"`trunc(bt.dd_date, 'MM')` により、dd_dateの月初日を出力。",対象日付が属する月の月初日。DDL上はSTRINGだが、SQL上はDATE相当の値。
+3,dd_yyyy/MM/dd,日付_yyyy/MM/dd形式,STRING,有,なし,なし,なし,なし（dd_dateから派生）,dd_date,"`from_timestamp(bt.dd_date, 'yyyy/MM/dd')` により、dd_dateを `yyyy/MM/dd` 形式の文字列として出力。",スラッシュ区切りの日付表示用項目。
+4,dd_yyyyMMdd,日付_yyyyMMdd形式,STRING,有,なし,なし,なし,なし（dd_dateから派生）,dd_date,"`from_timestamp(bt.dd_date, 'yyyyMMdd')` により、dd_dateを `yyyyMMdd` 形式の文字列として出力。",8桁の日付表示用項目。
+5,kb_week,曜日区分,STRING,有,なし,なし,なし,なし（dd_dateから派生）,dd_date,`dayofweek(bt.dd_date)` が1（日曜）または7（土曜）の場合は '2'、それ以外は '1' を出力。,曜日区分。SQL上の定義では、土日が'2'、平日が'1'。
