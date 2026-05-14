@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi003002,mj_sortjyun,v3002.mj_sortjyun を `ソート順` として出力。GROUP BY対象。,店舗・エリア表示用のソート順。上流のvbi003002側で生成済み。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_hansya,v3002.cd_hansya を `販社コード` として出力。GROUP BY対象。,販社を識別するコード。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_kaisya,v3002.cd_kaisya を `会社コード` として出力。GROUP BY対象。,会社を識別するコード。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_tenpo,v3002.cd_tenpo を `店舗コード` として出力。GROUP BY対象。,店舗を識別するコード。
+5,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,"cd_hansya, cd_kaisya, cd_tenpo","concat(v3002.cd_hansya, v3002.cd_kaisya, v3002.cd_tenpo) により連結して出力。",販社コード・会社コード・店舗コードを連結した店舗単位の識別コード。
+6,エリアコード,エリアコード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_zon,v3002.cd_zon を `エリアコード` として出力。GROUP BY対象。,エリア・ゾーンを識別するコード。上流のvbi003002側で未設定補正済み。
+7,エリア名,エリア名,STRING,有,なし,なし,なし,dx_ve.vbi003002,kj_zonmei,v3002.kj_zonmei を `エリア名` として出力。GROUP BY対象。,エリア・ゾーン名称。
+8,店舗名,店舗名,STRING,有,なし,なし,なし,dx_ve.vbi003002,kj_tenpomei,v3002.kj_tenpomei を `店舗名` として出力。GROUP BY対象。,店舗名称。vbi003002はストール単位の情報を含むため、本テーブルではGROUP BYにより店舗・エリア単位へ重複排除して出力する。
