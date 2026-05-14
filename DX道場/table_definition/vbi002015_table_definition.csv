@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.tbi002001m,cd_hansya,alert_text CTE と dx_ve.tbi002001m を CROSS JOIN し、tbi002001m.cd_hansya を販社コードとして出力。,販社を識別するコード。アラート値マスタを販社・会社単位に展開するために使用。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.tbi002001m,cd_kaisya,alert_text CTE と dx_ve.tbi002001m を CROSS JOIN し、tbi002001m.cd_kaisya を会社コードとして出力。,会社を識別するコード。アラート値マスタを販社・会社単位に展開するために使用。
+3,Value,アラート値,STRING,有,なし,なし,なし,alert_text（CTE）,Value,"alert_text CTEで固定値として定義された '0','1','2','3','4','5','6','a','b','c','d','e','f' を出力。",アラート判定値。vbi002006などで生成されるアラートフラグ値と対応する想定。
+4,アラート文言,アラート文言,STRING,有,なし,なし,なし,alert_text（CTE） / dx_ve.tbi002001m,"aler_text, su_leadtime","Value = '6' の場合は CONCAT('リードタイム', CAST(COALESCE(tbi002001m.su_leadtime, 20) AS STRING), '日以上チェック') を出力。それ以外は alert_text CTE の aler_text を出力。","アラート値に対応する表示文言。Value='6'のみ販社・会社別のリードタイム日数を反映し、未設定時は20日を使用。Value='0','a'〜'f'はSQL上、空文字として定義。"
