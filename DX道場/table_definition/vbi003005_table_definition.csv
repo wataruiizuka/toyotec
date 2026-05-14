@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,cd_hansya,t021m.cd_hansya をそのまま出力。,販社を識別するコード。dx_ve.tbi999003m および dx_ve.tbi003001m とのLEFT SEMI JOINにより、対象店舗・営業時間条件を満たすデータに絞り込まれる。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,cd_kaisya,t021m.cd_kaisya をそのまま出力。,会社を識別するコード。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,cd_tenpo,t021m.cd_tenpo をそのまま出力。,店舗を識別するコード。
+4,no_stall,ストール番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,no_stall,t021m.no_stall をそのまま出力。,休憩設定の対象となるストール番号。
+5,no_stlkyuke,ストール休憩番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,no_stlkyuke,t021m.no_stlkyuke をそのまま出力。,ストール休憩設定を識別する番号。
+6,mj_kyukeyko,休憩有効区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,mj_kyukeyko,t021m.mj_kyukeyko をそのまま出力。WHERE句で mj_kyukeyko = '1' のデータのみ抽出。,休憩設定の有効区分。SQL上は'1'のみ対象。
+7,tm_kyukest,休憩開始時刻,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,tm_kyukest,t021m.tm_kyukest をそのまま出力。,休憩開始時刻。dx_ve.tbi003001m の開店時刻より後であることがLEFT SEMI JOIN条件に含まれる。
+8,tm_kyukestsecond,休憩開始時刻秒数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,tm_kyukest,"unix_timestamp(concat('1970-01-01 ', t021m.tm_kyukest)) により、休憩開始時刻を基準日のUNIX秒へ変換。",休憩開始時刻を秒数化した項目。DDL上はSTRINGだが、SQL上は数値。
+9,tm_kyukeen,休憩終了時刻,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,tm_kyukeen,t021m.tm_kyukeen をそのまま出力。,休憩終了時刻。dx_ve.tbi003001m の閉店時刻より前であることがLEFT SEMI JOIN条件に含まれる。
+10,tm_kyukeensecond,休憩終了時刻秒数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa021m,tm_kyukeen,"unix_timestamp(concat('1970-01-01 ', t021m.tm_kyukeen)) により、休憩終了時刻を基準日のUNIX秒へ変換。",休憩終了時刻を秒数化した項目。DDL上はSTRINGだが、SQL上は数値。
