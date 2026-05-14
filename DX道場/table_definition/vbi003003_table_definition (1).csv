@@ -1,0 +1,18 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,mj_sortjyun,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi003002,mj_sortjyun,v3002.mj_sortjyun をそのまま出力。,ストール・店舗マスタ側で生成済みの表示順。販社・会社単位の表示順として利用する想定。
+2,cd_hansya,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_hansya,v3002.cd_hansya をそのまま出力。,販社を識別するコード。
+3,cd_kaisya,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_kaisya,v3002.cd_kaisya をそのまま出力。,会社を識別するコード。
+4,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_tenpo,v3002.cd_tenpo をそのまま出力。,店舗を識別するコード。
+5,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,dx_ve.vbi003002,kj_tenpomei,v3002.kj_tenpomei をそのまま出力。,店舗名称。上流の vbi003002 側で店舗マスタから取得・整形済み。
+6,cd_hansyakaisyatenpostall,販社会社店舗ストールコード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_hansyakaisyatenpostall,v3002.cd_hansyakaisyatenpostall をそのまま出力。,販社・会社・店舗・ストールを連結したストール単位の識別コード。
+7,no_stall,ストール番号,STRING,有,なし,なし,なし,dx_ve.vbi003002,no_stall,v3002.no_stall をそのまま出力。,ストールを識別する番号。
+8,mj_stallmei,ストール名称,STRING,有,なし,なし,なし,dx_ve.vbi003002,mj_stallmei,v3002.mj_stallmei をそのまま出力。,ストール名称。上流の vbi003002 側で集計対象、かつ「コント」「外注」を含まない名称に絞り込み済み。
+9,kb_stallsentaku,ストール選択区分,STRING,有,なし,なし,なし,dx_ve.vbi003002,kb_stallsentaku,v3002.kb_stallsentaku をそのまま出力。,ストール番号とストール名称を連結した表示・選択用項目。
+10,cd_zon,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.vbi003002,cd_zon,v3002.cd_zon をそのまま出力。,ゾーンを識別するコード。上流の vbi003002 側で未設定補正済み。
+11,kj_zonmei,ゾーン名称,STRING,有,なし,なし,なし,dx_ve.vbi003002,kj_zonmei,v3002.kj_zonmei をそのまま出力。,ゾーン名称。
+12,kb_teigaikitei,定外規定,STRING,有,なし,なし,なし,dx_ve.vbi003002,kb_teigaikitei,v3002.kb_teigaikitei をそのまま出力。,上流の vbi003002 側で固定計算値 `1440 / 12` として生成された定外規定値。SQL上は数値の可能性あり。
+13,kb_teinaikitei,定内規定,STRING,有,なし,なし,なし,dx_ve.vbi003002 / ai21rep_ve_dx.tbfy275m / ai21rep_ve_dx.tbsa002m,"kb_teinaikitei, kb_kado, kb_hikado","t275m.kb_kado が '1','9' 以外、または t002m.kb_hikado = '1' の場合は 0。それ以外は v3002.kb_teinaikitei を出力。",日別の稼働/非稼働状態を反映した定内規定値。非稼働日またはストール非稼働日は0。
+14,kb_kyukei,休憩/休業判定,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbfy275m / ai21rep_ve_dx.tbsa002m,"kb_kado, kb_hikado","t275m.kb_kado が '1','9' 以外、または t002m.kb_hikado = '1' の場合は 1。それ以外は 0。",非稼働または休業相当の判定フラグ。SQL上は数値リテラル。
+15,dd_date,日付,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,dd_date,v3001.dd_date をそのまま出力。,対象日付。vbi003001_en 側でJST実行日から13日後までの14日分として生成される。
+16,cd_hansyakaisyatenpostalldate,販社会社店舗ストール日付コード,STRING,有,なし,なし,なし,dx_ve.vbi003002 / dx_ve.vbi003001_en,"cd_hansyakaisyatenpostall, dd_yyyy/MM/dd","concat(v3002.cd_hansyakaisyatenpostall, v3001.`dd_yyyy/MM/dd`) により連結。",ストール単位コードと日付表示文字列を連結した、ストール×日付単位の識別用コード。
+17,kb_week,週末判定,STRING,有,なし,なし,なし,dx_ve.vbi003001_en,kb_week,v3001.kb_week をそのまま出力。,曜日区分。上流の vbi003001_en 側では、日曜または土曜の場合は'2'、それ以外は'1'として生成される。
