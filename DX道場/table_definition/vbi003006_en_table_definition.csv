@@ -1,0 +1,27 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi003004,cd_hansya,v3004.cd_hansya をbtで取得し、外側SELECTで bt.cd_hansya をそのまま出力。,販社を識別するコード。vbi003003に稼働対象として存在するストール×日付のみLEFT SEMI JOINで抽出。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi003004,cd_kaisya,v3004.cd_kaisya をbtで取得し、外側SELECTで bt.cd_kaisya をそのまま出力。,会社を識別するコード。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi003004,cd_tenpo,v3004.cd_tenpo をbtで取得し、外側SELECTで bt.cd_tenpo をそのまま出力。,店舗を識別するコード。
+4,no_yoyakuid,予約ID,STRING,有,なし,なし,なし,dx_ve.vbi003004,no_yoyakuid,v3004.no_yoyakuid をbtで取得し、外側SELECTで bt.no_yoyakuid をそのまま出力。,予約を識別するID。
+5,cd_yoykmsai,予約明細コード,STRING,有,なし,なし,なし,dx_ve.vbi003004,cd_yoykmsai,v3004.cd_yoykmsai をbtで取得し、外側SELECTで bt.cd_yoykmsai をそのまま出力。,予約明細を識別するコード。
+6,no_stall,ストール番号,STRING,有,なし,なし,なし,dx_ve.vbi003004,no_stall,v3004.no_stall をbtで取得し、外側SELECTで bt.no_stall をそのまま出力。,ストールを識別する番号。
+7,mj_gyme,作業名,STRING,有,なし,なし,なし,dx_ve.vbi003004,mj_gyme,v3004.mj_gyme をbtで取得し、外側SELECTで bt.mj_gyme をそのまま出力。,予約・作業の名称。
+8,kb_koutei,工程区分,STRING,有,なし,なし,なし,dx_ve.vbi003004,kb_koutei,v3004.kb_koutei をbtで取得し、外側SELECTで bt.kb_koutei をそのまま出力。,工程を表す区分コード。
+9,dt_siyost,使用開始日時,STRING,有,なし,なし,なし,dx_ve.vbi003004,dt_siyost,bt内では v3004.dt_siyost を保持しているが、外側SELECTでは `bt.dt_siyost AS dt_nyuukoyt` として出力されている。,DDLには`dt_siyost`が存在するが、提示SQLの実出力カラム名は`dt_nyuukoyt`。DDLとSQLのカラム名が不一致。
+10,dt_siyoed,使用終了日時,STRING,有,なし,なし,なし,dx_ve.vbi003004,dt_siyoed,bt内では v3004.dt_siyoed を保持しているが、外側SELECTでは `bt.dt_siyoed AS dt_shukkoyt` として出力されている。,DDLには`dt_siyoed`が存在するが、提示SQLの実出力カラム名は`dt_shukkoyt`。DDLとSQLのカラム名が不一致。
+11,tm_siyotime,使用時間,STRING,有,なし,なし,なし,dx_ve.vbi003004,tm_siyotime,v3004.tm_siyotime をbtで取得し、外側SELECTで bt.tm_siyotime をそのまま出力。,予約・作業の使用時間。
+12,kb_nyuuko,入庫区分,STRING,有,なし,なし,なし,dx_ve.vbi003004,kb_nyuuko,v3004.kb_nyuuko をbtで取得し、外側SELECTで bt.kb_nyuuko をそのまま出力。,入庫状態・入庫種別を表す区分コード。
+13,cd_jisekist,実績ステータスコード,STRING,有,なし,なし,なし,dx_ve.vbi003004,cd_jisekist,v3004.cd_jisekist をbtで取得し、外側SELECTで bt.cd_jisekist をそのまま出力。,実績ステータスコード。SQLでは別途、tbv0231mから実績ステータス名称`mj_jisekist`も取得しているが、DDLには存在しない。
+14,cd_restcros,REST/CROSコード,STRING,有,なし,なし,なし,dx_ve.vbi003004,cd_restcros,v3004.cd_restcros をbtで取得し、外側SELECTで bt.cd_restcros をそのまま出力。,予約時間の休憩控除処理で、`cd_restcros = '0' OR '2'` の場合は休憩控除しない条件に使用。意味は提示SQLのみでは確定不可。
+15,mj_sakujyo,削除フラグ,STRING,有,なし,なし,なし,dx_ve.vbi003004,mj_sakujyo,v3004.mj_sakujyo をbtで取得し、外側SELECTで bt.mj_sakujyo をそのまま出力。,削除フラグ。上流のvbi003004側で未削除データに絞り込み済み。
+16,cd_hansyakaisyatenpostall,販社会社店舗ストールコード,STRING,有,なし,なし,なし,dx_ve.vbi003004,"cd_hansya, cd_kaisya, cd_tenpo, mj_stallno","bt内では `concat(v3004.cd_hansya, v3004.cd_kaisya, v3004.cd_tenpo, v3004.mj_stallno)` として生成。ただし外側SELECTではこのカラム単体では出力されず、`cd_hansyakaisyatenpostalldate`の生成に使用。",DDLには`cd_hansyakaisyatenpostall`が存在するが、提示SQLの実出力には同名カラムが存在しない。
+17,dd_nyuukoyt,入庫予定日,STRING,有,なし,なし,なし,dx_ve.vbi003004,dd_nyuukoyt,v3004.dd_nyuukoyt をbtで取得し、外側SELECTで bt.dd_nyuukoyt をそのまま出力。,入庫予定日。vbi003003とのLEFT SEMI JOINでは、v3003.dd_date = v3004.dd_nyuukoyt かつ休業判定0のデータのみ対象。
+18,kb_shukkonyuko,出庫入庫跨ぎ区分,STRING,有,なし,なし,なし,dx_ve.vbi003004,"dd_nyuukoyt, dd_shukkoyt","bt内では `IF(v3004.dd_nyuukoyt <> v3004.dd_shukkoyt, 1, 0)` として生成。ただし外側SELECTでは出力されていない。",DDLには存在するが、提示SQLの実出力には同名カラムが存在しない。日跨ぎ予約かどうかの内部判定に使用。
+19,kb_stall_syasumi_dif,ストール休み差分区分,STRING,有,なし,なし,なし,dx_ve.vbi003005,no_stlkyuke,bt内では、入庫時刻側休憩v3005iと出庫時刻側休憩v3005oの有無・差異から、両方なしなら2、休憩番号が異なれば1、それ以外は0を生成。ただし外側SELECTでは出力されていない。,DDLには存在するが、提示SQLの実出力には同名カラムが存在しない。予約時間から休憩時間を控除する内部判定に使用。
+20,tm_nyuukoytsecond,入庫予定時刻秒数,STRING,有,なし,なし,なし,dx_ve.vbi003004,tm_nyuukoytsecond,v3004.tm_nyuukoytsecond をbtで取得。ただし外側SELECTでは出力されていない。,DDLには存在するが、提示SQLの実出力には同名カラムが存在しない。予約時間計算の内部項目として使用。
+21,tm_shukkoytsecond,出庫予定時刻秒数,STRING,有,なし,なし,なし,dx_ve.vbi003004,tm_shukkoytsecond,v3004.tm_shukkoytsecond をbtで取得。ただし外側SELECTでは出力されていない。,DDLには存在するが、提示SQLの実出力には同名カラムが存在しない。予約時間計算の内部項目として使用。
+22,tm_shukkin,出勤時刻,STRING,有,なし,なし,なし,dx_ve.vbi003002,tm_kaiten,v3002.tm_kaiten をbt内で `tm_shukkin` として取得し、外側SELECTで bt.tm_shukkin を出力。,店舗・ストール側の開店時刻を出勤時刻として扱う。
+23,tm_shukkinsecond,出勤時刻秒数,STRING,有,なし,なし,なし,dx_ve.vbi003002,tm_shukkinsecond,v3002.tm_shukkinsecond をbtで取得。ただし外側SELECTでは出力されていない。,DDLには存在するが、提示SQLの実出力には同名カラムが存在しない。予約時間の勤務時間内判定に使用。
+24,tm_taikin,退勤時刻,STRING,有,なし,なし,なし,dx_ve.vbi003002,tm_heiten,v3002.tm_heiten をbt内で `tm_taikin` として取得し、外側SELECTで bt.tm_taikin を出力。,店舗・ストール側の閉店時刻を退勤時刻として扱う。
+25,tm_taikinsecond,退勤時刻秒数,STRING,有,なし,なし,なし,dx_ve.vbi003002,tm_taikinsecond,v3002.tm_taikinsecond をbtで取得。ただし外側SELECTでは出力されていない。,DDLには存在するが、提示SQLの実出力には同名カラムが存在しない。予約時間の勤務時間内判定に使用。
+26,tm_zangyo,残業時刻,STRING,有,なし,なし,なし,dx_ve.vbi003002,tm_zangyo,v3002.tm_zangyo をbtで取得し、外側SELECTで bt.tm_zangyo をそのまま出力。,上流のvbi003002側で閉店時刻+2時間として生成済みの残業判定用時刻。
