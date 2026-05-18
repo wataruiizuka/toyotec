@@ -1,0 +1,22 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz030m,cd_hansya,tz030m.cd_hansya をそのまま取得,メイン元テーブルの販社コード。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz030m,cd_kaisya,tz030m.cd_kaisya をそのまま取得,メイン元テーブルの会社コード。
+3,お客様コード,お客様コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz030m,cd_okyaku,tz030m.cd_okyaku をそのまま取得,お客様を識別するコード。dx_ve.vbi011005 との INNER JOIN キーにも使用。
+4,スタッフエリアコード,スタッフエリアコード,STRING,有,なし,なし,なし,dx_ve.vbi011005,cd_zon,vbi011005.cd_zon を取得,お客様に紐づくスタッフ店舗のエリアコード。
+5,スタッフエリア名,スタッフエリア名,STRING,有,なし,なし,なし,dx_ve.vbi011005,kj_zonmei,vbi011005.kj_zonmei を取得,お客様に紐づくスタッフ店舗のエリア名。
+6,スタッフ店舗名,スタッフ店舗名,STRING,有,なし,なし,なし,dx_ve.vbi011005,kj_tenpomei,vbi011005.kj_tenpomei を取得,スタッフ店舗名。
+7,テーブル店舗名,テーブル店舗名,STRING,有,なし,なし,なし,dx_ve.vbi011005,kj_tenpomei,vbi011005.kj_tenpomei を取得,SQL上はスタッフ店舗名と同じ vbi011005.kj_tenpomei を設定。
+8,スタッフ名,スタッフ名,STRING,有,なし,なし,なし,dx_ve.vbi011005,kj_syainmei,vbi011005.kj_syainmei を取得,スタッフコードに紐づく社員名。
+9,店舗スタッフ,店舗スタッフ,STRING,有,なし,なし,なし,dx_ve.vbi011005,"cd_stafften, cd_staff","CONCAT(vbi011005.cd_stafften, vbi011005.cd_staff) で連結",スタッフ店舗コードとスタッフコードを連結した値。
+10,実施区分,実施区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz031m,kb_jissi,tz031m.kb_jissi を取得,メンテパック等の実施区分。tbaz031m は契約・車両キーおよび no_table と vbi011001.no_renban で結合。
+11,メンテパック名称,メンテパック名称,STRING,有,なし,なし,なし,dx_ve.vbi011001,kj_kanyusyu,vbi011001.kj_kanyusyu を取得,メンテパックの加入種別・名称に相当する項目。
+12,項目利用整備名称,項目利用整備名称,STRING,有,なし,なし,なし,dx_ve.vbi011001,kj_riyoseim,vbi011001.kj_riyoseim を取得,利用整備項目名。入庫区分漢字の判定にも使用。
+13,契約区分,契約区分,STRING,有,なし,なし,なし,dx_ve.vbi011001,kb_keiyaku,vbi011001.kb_keiyaku を取得,tz030m.kb_mntkeiya = TRIM(vbi011001.kb_keiyaku) の条件で結合される契約区分。
+14,税込金額,税込金額,STRING,有,なし,なし,なし,dx_ve.vbi011001,totalcount,vbi011001.totalcount を取得,税込金額として出力。SQL上の元カラム名は totalcount。
+15,新規連番,新規連番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz030m / ai21rep_ve_dx.tbaz031m / dx_ve.vbi011001,"cd_okyaku, cd_norikusi, kb_nosyasyu, cd_nogyotai, no_noseiri, kb_keiyaku, kj_kanyusyu, dd_jisiyote, no_renban","DENSE_RANK() OVER (PARTITION BY CONCAT(tz030m.cd_okyaku, tz030m.cd_norikusi, tz030m.kb_nosyasyu, tz030m.cd_nogyotai, tz030m.no_noseiri, vbi011001.kb_keiyaku, vbi011001.kj_kanyusyu) ORDER BY tz031m.dd_jisiyote ASC, vbi011001.no_renban ASC) で採番",お客様・車両・契約区分・メンテパック名称単位で、実施予定年月日と連番順に密順位を採番。
+16,実施予定年月日,実施予定年月日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz031m,dd_jisiyote,tz031m.dd_jisiyote を取得,実施予定日。実施予定年月スライサーおよび SMB予約入庫日時の期間判定に使用。
+17,実施予定年月スライサー,実施予定年月スライサー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz031m,dd_jisiyote,"tz031m.dd_jisiyote が NULL の場合は NULL。JST基準の当日から3か月前以降の場合は FROM_TIMESTAMP(tz031m.dd_jisiyote, 'yy年MM月') || '分'、それより前の場合は JST基準の当日から3か月前の年月 || '以前分' を設定","実施予定年月をスライサー表示用に加工した項目。現在日時は FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') を使用。"
+18,契約終了予定年月スライサー,契約終了予定年月スライサー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz030m,dd_mntkanry,tz030m.dd_mntkanry が NULL の場合は NULL。JST基準の当月(yyyyMM)が dd_mntkanry の年月より後の場合は当月の 'yy年MM月以前分'、それ以外は dd_mntkanry の 'yy年MM月分' を設定,契約終了予定年月をスライサー表示用に加工した項目。
+19,登録ＮＯ,登録ＮＯ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz030m,"cd_hansya, cd_kaisya, cd_okyaku, cd_norikusi, kb_nosyasyu, cd_nogyotai, no_noseiri","CONCAT(tz030m.cd_hansya, tz030m.cd_kaisya, tz030m.cd_okyaku, tz030m.cd_norikusi, tz030m.kb_nosyasyu, tz030m.cd_nogyotai, tz030m.no_noseiri) で連結",販社・会社・お客様・車両関連キーを連結した登録番号。
+20,入庫区分漢字,入庫区分漢字,STRING,有,なし,なし,なし,dx_ve.vbi011001,kj_riyoseim,"CASE WHEN INSTR(vbi011001.kj_riyoseim, '無') > 0 THEN '無点' WHEN INSTR(vbi011001.kj_riyoseim, '１２') > 0 THEN '１２点' WHEN INSTR(vbi011001.kj_riyoseim, '６') > 0 THEN '６点' WHEN INSTR(vbi011001.kj_riyoseim, '車検') > 0 THEN '車検' ELSE NULL END",項目利用整備名称の文字列から入庫区分を判定。tbfy232m との結合条件にも同じ判定ロジックを使用。
+21,SMB予約入庫日時,SMB予約入庫日時,STRING,有,なし,なし,なし,dx_ve.vbi011004 / ai21rep_ve_dx.tbaz031m,"dt_nyuukoyt, dd_jisiyote",vbi011004 側で登録キー・入庫区分ごとに max(dt_nyuukoyt) を取得し、dt_nyuukoyt が tz031m.dd_jisiyote の2か月前以上かつ1か月後以下の場合のみ dt_nyuukoyt を設定。それ以外は NULL,SMB予約の入庫予定日時。vbi011004.kb_nyuuko = tbfy232m.kb_nyuuko で入庫区分を対応付け。
