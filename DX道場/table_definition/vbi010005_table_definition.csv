@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま出力,店舗マスタ側の販社コード
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま出力,店舗マスタ側の会社コード
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま出力,店舗マスタ側の店舗コード
+4,販社会社店舗,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"cd_hansya, cd_kaisya, cd_tenpo","CONCAT(t201m.cd_hansya, t201m.cd_kaisya, t201m.cd_tenpo)",販社コード・会社コード・店舗コードを連結した店舗識別キー
+5,新車代替,新車代替数,STRING,有,なし,なし,なし,集計サブクエリ newcar_daitei（主: ai21rep_ve_dx.tbba001g / ai21rep_ve_dx.tbba056g）,"calflg, mj_jucyuke4","NVL(newcar_daitei.新車代替, 0)。newcar_daitei内で SUM(IF(tbba056g.mj_jucyuke4 IN ('02','03'), calflg, 0)) により算出",TBBA056G の受注受付区分 mj_jucyuke4 が '02' または '03' の新車実績を代替として集計。売上側は calflg=1、取消側は calflg=-1 として正味化
+6,新車実績,新車実績数,STRING,有,なし,なし,なし,集計サブクエリ newcar_daitei（主: ai21rep_ve_dx.tbba001g）,calflg,"NVL(newcar_daitei.新車実績, 0)。newcar_daitei内で SUM(calflg) により算出",tbba001g の売上側レコードを +1、売上取消側レコードを -1 として、販社・会社・店舗単位で正味の新車実績を集計
