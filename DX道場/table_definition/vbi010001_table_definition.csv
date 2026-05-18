@@ -1,0 +1,14 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま出力,店舗マスタ側の販社コード。主テーブル t201m から取得
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま出力,店舗マスタ側の会社コード。主テーブル t201m から取得
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま出力,店舗を識別するコード
+4,店舗名称,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,t201m.kj_tenpomei をそのまま出力,店舗の正式名称
+5,店舗短縮名称,店舗短縮名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tentanms,t201m.kj_tentanms をそのまま出力,店舗の短縮名称
+6,ソート順,ソート順,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m / ai21rep_ve_dx.tbv0033m,"cd_hansya, cd_kaisya, cd_tenpo, kj_zonmei","RANK() OVER (PARTITION BY t201m.cd_hansya, t201m.cd_kaisya ORDER BY IF(NVL(t033m.kj_zonmei, t033m_2.kj_zonmei) = '', 0, 1), NVL(t033m.kj_zonmei, t033m_2.kj_zonmei), t201m.cd_tenpo)",販社コード・会社コード単位で、ゾーン名称の有無、ゾーン名称、店舗コード順にランク付け
+7,販社会社店舗,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"cd_hansya, cd_kaisya, cd_tenpo","CONCAT(t201m.cd_hansya, t201m.cd_kaisya, t201m.cd_tenpo)",販社コード・会社コード・店舗コードを連結した店舗識別キー
+8,ゾーン名称,ゾーン名称,STRING,有,なし,なし,なし,なし（固定値）,なし,'' を固定出力,SQL上は空文字固定。ソート順では t033m/t033m_2 のゾーン名称を参照しているが、この出力カラムには設定していない
+9,商品区分,商品区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kb_syohin,t033m.kb_syohin をそのまま出力,t033m は t047m.cd_nczon と kb_syohin = '1' の条件で結合したゾーンマスタ。該当なしの場合はNULL
+10,pn区分,PN区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,KJ_KAISYA,CASE WHEN tbv0200m.KJ_KAISYA LIKE '%トヨペット%' THEN 'P' WHEN tbv0200m.KJ_KAISYA LIKE '%ネッツトヨタ%' THEN 'N' ELSE NULL END,会社名称からトヨペット/ネッツトヨタを判定。該当しない場合はNULL
+11,tl区分,トヨタ/レクサス区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_lexhan,"CASE WHEN NVL(TRIM(t201m.cd_lexhan), '') = '' THEN 'ﾄﾖﾀ' ELSE 'ﾚｸｻｽ' END",レクサス販売店コード相当の cd_lexhan が空ならトヨタ、値ありならレクサスとして判定
+12,新U区分,新車/U-Car区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"kb_ncbumumu, kb_ucbumumu","CASE WHEN t201m.kb_ncbumumu = '1' AND t201m.kb_ucbumumu = '1' THEN '11' WHEN t201m.kb_ncbumumu = '1' AND NVL(t201m.kb_ucbumumu, '') <> '1' THEN '10' WHEN NVL(t201m.kb_ncbumumu, '') <> '1' AND t201m.kb_ucbumumu = '1' THEN '01' ELSE '00' END",新車部門有無・U-Car部門有無の組み合わせを2桁コードで表現
+13,本部店舗区分,本部/店舗区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0047m,"kb_nchonsya, kb_uchonsya","CASE WHEN (t047m.kb_nchonsya = '2' OR t047m.kb_uchonsya = '2') AND (t047m.kb_nchonsya = '1' OR t047m.kb_uchonsya = '1') THEN '11' WHEN (t047m.kb_nchonsya = '2' OR t047m.kb_uchonsya = '2') AND (NVL(t047m.kb_nchonsya, '') <> '1' AND NVL(t047m.kb_uchonsya, '') <> '1') THEN '10' WHEN (t047m.kb_nchonsya = '1' OR t047m.kb_uchonsya = '1') AND (NVL(t047m.kb_nchonsya, '') <> '2' AND NVL(t047m.kb_uchonsya, '') <> '2') THEN '01' ELSE '00' END",新車本社/中古車本社の区分値から、本部・店舗の組み合わせを2桁コードで表現
