@@ -1,0 +1,14 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,su_store,店舗数,STRING,有,なし,なし,なし,SQL定数,1,`1 AS su_store` により固定値1を設定,店舗1件を表すカウント用の固定値。`UNION ALL` の両SELECTで同じく1を設定。
+2,cd_hansya_kaisya_tenpo,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"cd_hansya, cd_kaisya, cd_tenpo","`CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv201m.cd_tenpo)` で連結",販社・会社・店舗を連結した店舗識別用コード。
+3,cd_hansya_kaisya_zon_tenpo,販社会社ゾーン店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m / dx_ve.tbi002003m / ai21rep_ve_dx.tbv0033m,"cd_hansya, cd_kaisya, cd_tenpo, cd_zon",`tntenpo.cd_zon` がNULLでなければ `cd_hansya + cd_kaisya + tntenpo.cd_zon + cd_tenpo`、NULLの場合は `cd_hansya + cd_kaisya + tbv003m.cd_zon + cd_tenpo` を連結,販社・会社・ゾーン・店舗を連結した表示/集計用コード。個別店舗ゾーンがある場合は `tbi002003m` 側のゾーンを優先。
+4,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,`tbv201m.cd_hansya` をそのまま取得,店舗マスタの販社コード。1つ目のSELECTでは `03601` のみ、2つ目のSELECTでは `03601` 以外を対象。
+5,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,`tbv201m.cd_kaisya` をそのまま取得,店舗マスタの会社コード。1つ目のSELECTでは `01` のみを対象。
+6,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,`tbv201m.cd_tenpo` をそのまま取得,店舗マスタの店舗コード。帳票表示順、NCゾーン、個別店舗ゾーンとの結合キー。
+7,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,`tbv201m.kj_tenpomei` をそのまま取得,店舗名称。`kj_tenpomei NOT LIKE '%廃）%'` により廃止店舗名を含むデータは除外。
+8,kj_tentanms,店舗短縮名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tentanms,`tbv201m.kj_tentanms` をそのまま取得,店舗短縮名称。
+9,cd_zon,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.tbi002003m / ai21rep_ve_dx.tbv0033m,cd_zon,"内側SELECTでは `NVL(tntenpo.cd_zon, tbv003m.cd_zon)` を設定。外側SELECTで `zone_name` がNULLまたは空白の場合は `999999`、`cd_zon` がNULLまたは空白の場合は `999998`、それ以外は元の `cd_zon` を設定",ゾーンコード。ゾーン名が取得できない場合とゾーンコードが取得できない場合で補完値を分けて設定。
+10,cd_nczon,NCゾーンコード,STRING,有,なし,なし,なし,dx_ve.tbi002003m / ai21rep_ve_dx.tbv0047m,"cd_zon, cd_nczon","`NVL(tntenpo.cd_zon, tbv0047m.cd_nczon)` を設定",個別店舗ゾーンがある場合は `tbi002003m.cd_zon` を優先し、ない場合は `tbv0047m.cd_nczon` を使用。
+11,kj_zonmei,ゾーン名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,"`NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei)` を設定",個別店舗ゾーン側のゾーン名称が存在する場合はそれを優先し、ない場合はNCゾーン側のゾーン名称を使用。
+12,zone_name,ゾーン表示名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,"1つ目のSELECTでは `tbv003m1.kj_zonmei` または `tbv003m.kj_zonmei` を基に、特定形式の場合は `レ`→`L-`、`ト`→`T-`、全角数字→半角数字へ変換し、それ以外は全角スペースを半角スペースに置換してTRIM。2つ目のSELECTでは `NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei)` をそのまま設定",ゾーン名の表示用項目。`03601/01` 向けの1つ目のSELECTでは特殊な名称整形を実施。
+13,mj_sortjyun,表示順,STRING,有,なし,なし,なし,dx_ve.tbi999003m / dx_ve.tbi002003m / ai21rep_ve_dx.tbv0033m / ai21rep_ve_dx.tbv0201m,"mj_sortjyun, cd_zon, cd_tenpo","`RANK() OVER (PARTITION BY tbv201m.cd_hansya, tbv201m.cd_kaisya ORDER BY NVL(tntenpo.cd_zon, tbv003m.cd_zon), tbi999003m.mj_sortjyun, tbv201m.cd_tenpo)` で採番",販社・会社単位で、ゾーン、帳票表示順、店舗コードの順に順位付け。DDL上はSTRINGだがSQL上はRANKの数値。
