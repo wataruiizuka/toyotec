@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g,cd_hansya,t005g.cd_hansya をそのまま出力,入庫情報側の販社コード。tbsa001gとの結合キーにも使用
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g,cd_kaisya,t005g.cd_kaisya をそのまま出力,入庫情報側の会社コード。tbsa001gとの結合キーにも使用
+3,cd_okyaku,お客様コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,cd_okyaku,ta001g.cd_okyaku をそのまま出力,tbsa005gとtbsa001gを販社・会社・店舗・予約IDでLEFT JOINして取得
+4,cd_norikusi,陸運支局コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,cd_norikusi,ta001g.cd_norikusi をそのまま出力,tbsa001g側のcd_norikusi != '' の条件を満たす予約基本情報から取得
+5,kb_nosyasyu,登録車種区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,kb_nosyasyu,ta001g.kb_nosyasyu をそのまま出力,登録番号構成要素の1つとして取得
+6,cd_nogyotai,登録業態コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,cd_nogyotai,ta001g.cd_nogyotai をそのまま出力,登録番号構成要素の1つとして取得
+7,no_noseiri,登録番号整理番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,no_noseiri,ta001g.no_noseiri をそのまま出力,登録番号構成要素の1つとして取得
+8,dt_nyuukoyt,入庫予定日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001g,dt_nyuukoyt,ta001g.dt_nyuukoyt をそのまま出力,予約基本情報側の入庫予定日時。DDL上はSTRING
+9,kb_nyuuko,入庫区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa005g,kb_nyuuko,t005g.kb_nyuuko をそのまま出力,WHERE条件で kb_nyuuko が空文字・'0'・'8'・'9' ではないレコードに限定
