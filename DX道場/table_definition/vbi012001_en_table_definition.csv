@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,dd_date,日付,STRING,有,なし,なし,なし,なし（VALUES句による生成）,i,"JST基準の現在日付をDATE化し、VALUES句で生成した i（0〜13）を加算して日付を生成。`days_add(cast(from_utc_timestamp(utc_timestamp(), 'JST') AS date), i)`",基準日から14日分の日付を生成する項目。物理的な元テーブルはなく、SQL内のVALUES句で行を生成。
+2,dd_month,月初日,STRING,有,なし,なし,なし,サブクエリ bt,dd_date,"`trunc(bt.dd_date, 'MM')` により、dd_date の月初日を取得。",日付を月単位で扱うための月初日。DDL上はSTRING。
+3,dd_yyyy/MM/dd,日付（yyyy/MM/dd形式）,STRING,有,なし,なし,なし,サブクエリ bt,dd_date,"`from_timestamp(bt.dd_date, 'yyyy/MM/dd')` により、dd_date を yyyy/MM/dd 形式の文字列に変換。",表示用の日付文字列。
+4,dd_yyyyMMdd,日付（yyyyMMdd形式）,STRING,有,なし,なし,なし,サブクエリ bt,dd_date,"`from_timestamp(bt.dd_date, 'yyyyMMdd')` により、dd_date を yyyyMMdd 形式の文字列に変換。",キーや並び替えに利用しやすい年月日形式の文字列。
+5,dd_week,日付・曜日表示,STRING,有,なし,なし,なし,サブクエリ bt,dd_date,"`from_timestamp(bt.dd_date, 'MM/dd')`、`CHR(10)`、`dayofweek(bt.dd_date)` のCASE判定結果（日〜土）を連結。想定形式は `MM/dd` + 改行 + `(曜日)`。",曜日付きの日付表示項目。提示SQLでは concat 内のカンマ、および `AS dd_week` 後のカンマに構文上の要確認箇所あり。定義書ではSQLの意図に基づき記載。
+6,kb_senshuraishu,先週来週区分,STRING,有,なし,なし,なし,なし（VALUES句による生成）,i,"VALUES句で生成した i に対して、`if(i < 7, '先週', '来週')` を設定。",SQLロジック上は i=0〜6 が「先週」、i=7〜13 が「来週」。ただし dd_date は現在日付に i を加算しているため、名称と日付方向の整合性は要確認。
