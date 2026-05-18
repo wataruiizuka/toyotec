@@ -1,0 +1,29 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,cd_hansya,tbg7005m_3.cd_hansya をそのまま取得,会計データ側の販社コード。dx_ve.vbi013001_en との INNER JOIN キー。GROUP BY対象。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,cd_kaisya,tbg7005m_3.cd_kaisya をそのまま取得,会計データ側の会社コード。dx_ve.vbi013001_en との INNER JOIN キー。GROUP BY対象。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,cd_tenpo,tbg7005m_3.cd_tenpo をそのまま取得,会計データ側の店舗コード。dx_ve.vbi013001_en との INNER JOIN キー。GROUP BY対象。
+4,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,"cd_hansya, cd_kaisya, cd_tenpo",tbg7005m_3.cd_hansya || tbg7005m_3.cd_kaisya || tbg7005m_3.cd_tenpo で連結,販社・会社・店舗を一意に表す連結キー。
+5,当年借方金額０１,当年借方金額０１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar01,SUM(tbg7005m_3.ki_toykar01) を集計,当年の第01月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+6,当年借方金額０２,当年借方金額０２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar02,SUM(tbg7005m_3.ki_toykar02) を集計,当年の第02月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+7,当年借方金額０３,当年借方金額０３,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar03,SUM(tbg7005m_3.ki_toykar03) を集計,当年の第03月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+8,当年借方金額０４,当年借方金額０４,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar04,SUM(tbg7005m_3.ki_toykar04) を集計,当年の第04月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+9,当年借方金額０５,当年借方金額０５,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar05,SUM(tbg7005m_3.ki_toykar05) を集計,当年の第05月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+10,当年借方金額０６,当年借方金額０６,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar06,SUM(tbg7005m_3.ki_toykar06) を集計,当年の第06月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+11,当年借方金額０７,当年借方金額０７,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar07,SUM(tbg7005m_3.ki_toykar07) を集計,当年の第07月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+12,当年借方金額０８,当年借方金額０８,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar08,SUM(tbg7005m_3.ki_toykar08) を集計,当年の第08月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+13,当年借方金額０９,当年借方金額０９,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar09,SUM(tbg7005m_3.ki_toykar09) を集計,当年の第09月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+14,当年借方金額１０,当年借方金額１０,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar10,SUM(tbg7005m_3.ki_toykar10) を集計,当年の第10月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+15,当年借方金額１１,当年借方金額１１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar11,SUM(tbg7005m_3.ki_toykar11) を集計,当年の第11月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+16,当年借方金額１２,当年借方金額１２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar12,SUM(tbg7005m_3.ki_toykar12) を集計,当年の第12月次の借方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+17,当年貸方金額０１,当年貸方金額０１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas01,SUM(tbg7005m_3.ki_toykas01) を集計,当年の第01月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+18,当年貸方金額０２,当年貸方金額０２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas02,SUM(tbg7005m_3.ki_toykas02) を集計,当年の第02月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+19,当年貸方金額０３,当年貸方金額０３,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas03,SUM(tbg7005m_3.ki_toykas03) を集計,当年の第03月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+20,当年貸方金額０４,当年貸方金額０４,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas04,SUM(tbg7005m_3.ki_toykas04) を集計,当年の第04月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+21,当年貸方金額０５,当年貸方金額０５,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas05,SUM(tbg7005m_3.ki_toykas05) を集計,当年の第05月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+22,当年貸方金額０６,当年貸方金額０６,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas06,SUM(tbg7005m_3.ki_toykas06) を集計,当年の第06月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+23,当年貸方金額０７,当年貸方金額０７,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas07,SUM(tbg7005m_3.ki_toykas07) を集計,当年の第07月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+24,当年貸方金額０８,当年貸方金額０８,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas08,SUM(tbg7005m_3.ki_toykas08) を集計,当年の第08月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+25,当年貸方金額０９,当年貸方金額０９,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas09,SUM(tbg7005m_3.ki_toykas09) を集計,当年の第09月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+26,当年貸方金額１０,当年貸方金額１０,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas10,SUM(tbg7005m_3.ki_toykas10) を集計,当年の第10月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+27,当年貸方金額１１,当年貸方金額１１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas11,SUM(tbg7005m_3.ki_toykas11) を集計,当年の第11月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
+28,当年貸方金額１２,当年貸方金額１２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas12,SUM(tbg7005m_3.ki_toykas12) を集計,当年の第12月次の貸方金額合計。対象は当年度、かつ勘定コードが '50301  '〜'50303  ' のデータ。SQL上は集計値だがDDL上はSTRING。
