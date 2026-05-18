@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,エリア統括部と店舗,エリア統括部と店舗,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,zone_name / kj_tentanms,UNION ALLの1つ目では v2001.zone_name を設定。2つ目では v2001.kj_tentanms を設定。,ゾーン行ではゾーン表示名、店舗行では店舗短縮名称を表示する項目。区分コードにより粒度が異なる。
+2,区分名称,区分名称,STRING,有,なし,なし,なし,SQL定数,'ゾーン名称' / '店舗略称',UNION ALLの1つ目では固定値 'ゾーン名称'、2つ目では固定値 '店舗略称' を設定。,行の粒度を表す名称。ゾーン集計行か店舗集計行かを判別するための項目。
+3,区分コード,区分コード,STRING,有,なし,なし,なし,SQL定数,'1' / '2',UNION ALLの1つ目では固定値 '1'、2つ目では固定値 '2' を設定。,区分名称に対応するコード。'1' はゾーン名称、'2' は店舗略称。
+4,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,cd_hansya,v2001.cd_hansya をそのまま取得。,店舗・ゾーンマスタ側の販社コード。vbi013004_en との結合キーにも使用。
+5,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,cd_kaisya,v2001.cd_kaisya をそのまま取得。,店舗・ゾーンマスタ側の会社コード。vbi013004_en との結合キーにも使用。
+6,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,cd_zon,v2001.cd_zon をそのまま取得。,ゾーン集計および店舗集計の共通項目。vbi013001_en 側で補完済みのゾーンコードを使用。
+7,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en / SQL定数,cd_tenpo / NULL,UNION ALLの1つ目では NULL を設定。2つ目では v2001.cd_tenpo を設定。,ゾーン集計行では店舗単位ではないためNULL。店舗集計行では店舗コードを設定。
+8,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en / SQL定数,cd_hansya_kaisya_tenpo / NULL,UNION ALLの1つ目では NULL を設定。2つ目では v2001.cd_hansya_kaisya_tenpo を設定。,ゾーン集計行ではNULL。店舗集計行では販社・会社・店舗を連結したコードを設定。
+9,販社会社ゾーン店舗コード,販社会社ゾーン店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en / SQL定数,cd_hansya_kaisya_zon_tenpo / NULL,UNION ALLの1つ目では NULL を設定。2つ目では v2001.cd_hansya_kaisya_zon_tenpo を設定。,ゾーン集計行ではNULL。店舗集計行では販社・会社・ゾーン・店舗を連結したコードを設定。
+10,件数,件数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,su_pieces,v2001 と v2004 を販社コード・会社コード・店舗コードで LEFT JOIN し、SUM(v2004.su_pieces) を集計。,ゾーン行ではゾーン単位、店舗行では店舗単位の件数合計。LEFT JOINのため、該当する vbi013004_en がない場合はNULLになり得る。SQL上は集計値だがDDL上はSTRING。
+11,金額,金額,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,su_amount,v2001 と v2004 を販社コード・会社コード・店舗コードで LEFT JOIN し、SUM(v2004.su_amount) を集計。,ゾーン行ではゾーン単位、店舗行では店舗単位の金額合計。LEFT JOINのため、該当する vbi013004_en がない場合はNULLになり得る。SQL上は集計値だがDDL上はSTRING。
+12,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,cd_zon / mj_sortjyun,UNION ALLの1つ目では CAST(v2001.cd_zon AS INT) を設定。2つ目では v2001.mj_sortjyun を設定。,ゾーン行ではゾーンコードを数値化して並び順に使用。店舗行では vbi013001_en 側で生成済みの表示順を使用。DDL上はSTRINGだが、ゾーン行のSQL式はINT。
