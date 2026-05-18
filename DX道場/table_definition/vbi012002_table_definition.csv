@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,cd_hansya,t3002m.cd_hansya をそのまま取得,ストール情報の販社コード。tbi003001mに存在する店舗のみLEFT SEMI JOINで抽出対象。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,cd_kaisya,t3002m.cd_kaisya をそのまま取得,ストール情報の会社コード。tbi003001mに存在する店舗のみLEFT SEMI JOINで抽出対象。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,cd_tenpo,t3002m.cd_tenpo をそのまま取得,ストールが所属する店舗コード。tbi003001mおよびtbi999003mとの結合キー。
+4,no_stall,ストール番号,STRING,有,なし,なし,なし,dx_ve.tbi003002m,no_stall,t3002m.no_stall をそのまま取得,ストールを識別する番号。
+5,mj_stallmei,ストール名,STRING,有,なし,なし,なし,dx_ve.tbi003002m,mj_stallmei,t3002m.mj_stallmei をそのまま取得,ストール名称。WHERE条件で名称に「コント」「外注」を含むデータは除外。
+6,kb_stallsentaku,ストール選択表示,STRING,有,なし,なし,なし,dx_ve.tbi003002m,"no_stall, mj_stallmei","concat(cast(t3002m.no_stall AS string), '　', t3002m.mj_stallmei) でストール番号とストール名を全角スペース区切りで連結",画面や帳票でストールを選択・表示するための表示用項目。
+7,cd_hansyakaisyatenpo,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.tbi003002m,"cd_hansya, cd_kaisya, cd_tenpo","concat(t3002m.cd_hansya, t3002m.cd_kaisya, t3002m.cd_tenpo) で販社コード・会社コード・店舗コードを連結",販社・会社・店舗を一意に表すための連結キー。
+8,mj_sortjyun,表示順,STRING,有,なし,なし,なし,dx_ve.tbi999003m,mj_sortjyun,t9003m.mj_sortjyun を取得,帳票ID '012' かつ表示区分 kb_tenji = 1 の店舗表示順。INNER JOINのため該当する表示順設定が存在するデータのみ取得。
