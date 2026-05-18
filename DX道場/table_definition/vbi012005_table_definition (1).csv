@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi012003,cd_hansya,v12003.cd_hansya をそのまま取得,ストール×日付単位の元データである vbi012003 の販社コード。tbi003001m との INNER JOIN により店舗マスタに存在する店舗のみ対象。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi012003,cd_kaisya,v12003.cd_kaisya をそのまま取得,ストール×日付単位の元データである vbi012003 の会社コード。tbi003001m、vbi012004 との結合キーにも使用。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi012003,cd_tenpo,v12003.cd_tenpo をそのまま取得,ストールが所属する店舗コード。tbi003001m、vbi012004 との結合キーにも使用。
+4,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi012003,"cd_hansya, cd_kaisya, cd_tenpo","concat(v12003.cd_hansya, v12003.cd_kaisya, v12003.cd_tenpo) で販社コード・会社コード・店舗コードを連結",販社・会社・店舗を一意に表すための連結キー。
+5,ストール番号,ストール番号,STRING,有,なし,なし,なし,dx_ve.vbi012003,no_stall,v12003.no_stall をそのまま取得,ストールを識別する番号。vbi012004 との結合キーにも使用。
+6,ストール名称,ストール名称,STRING,有,なし,なし,なし,dx_ve.vbi012003,mj_stallmei,v12003.mj_stallmei をそのまま取得,ストール名称。vbi012003 側で生成済みのストール情報を使用。
+7,ストール選択,ストール選択,STRING,有,なし,なし,なし,dx_ve.vbi012003,kb_stallsentaku,v12003.kb_stallsentaku をそのまま取得,ストール番号とストール名を連結した表示用項目。vbi012003 側で生成済みの値を使用。
+8,日付,日付,STRING,有,なし,なし,なし,dx_ve.vbi012003,dd_date,v12003.dd_date をそのまま取得,ストール×日付単位の日付。vbi012004 の使用開始・使用終了日時との日単位の重なり判定に使用。
+9,時刻,時刻,STRING,有,なし,なし,なし,SQL内VALUES句 / dx_ve.tbi003001m,"tm_jikoku / tm_kaiten, tm_heiten","SQL内VALUES句で '08:00'〜'19:30' まで30分刻みの時刻を生成し、CROSS JOINで付与。WHERE条件で left(t3001m.tm_kaiten, 5) <= bt.tm_jikoku かつ left(t3001m.tm_heiten, 5) > bt.tm_jikoku の営業時間内に限定",予約枠の30分単位時刻。店舗の開店時刻・閉店時刻の範囲内のみ出力される。提示SQLでは CROSS JOIN の VALUES 句に構文上の要確認箇所あり。
+10,予約不可フラグ,予約不可フラグ,STRING,有,なし,なし,なし,dx_ve.vbi012003 / dx_ve.vbi012004 / SQL内VALUES句,"kb_kyukei, dd_date, dt_siyost, dt_siyoed, tm_jikoku","v12003.kb_kyukei = 1 の場合は 1。そうでない場合は、各30分枠について minutes_add(v12003.dd_date, 開始分) < v12004.dt_siyoed かつ minutes_add(v12003.dd_date, 終了分) > v12004.dt_siyost を満たす場合に 1、それ以外は 0",休憩・非稼働または既存予約との時間重複がある枠を予約不可として判定するフラグ。SQL上は 1/0 の数値式だが、DDL上は STRING。vbi012004 との LEFT JOIN は v12003.kb_kyukei = 0 の場合のみ予約情報を結合する条件になっている。
