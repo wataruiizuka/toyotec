@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi012002,cd_hansya,v12002.cd_hansya をそのまま取得,ストール一覧テーブルの販社コード。vbi012002 と vbi012001_en の CROSS JOIN により、ストール×日付単位で出力される。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi012002,cd_kaisya,v12002.cd_kaisya をそのまま取得,ストール一覧テーブルの会社コード。tbfy275m、tbsa002m との結合キーにも使用。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi012002,cd_tenpo,v12002.cd_tenpo をそのまま取得,ストールが所属する店舗コード。tbfy275m、tbsa002m との結合キーにも使用。
+4,no_stall,ストール番号,STRING,有,なし,なし,なし,dx_ve.vbi012002,no_stall,v12002.no_stall をそのまま取得,ストールを識別する番号。tbsa002m の非稼働日情報との結合キーにも使用。
+5,mj_stallmei,ストール名,STRING,有,なし,なし,なし,dx_ve.vbi012002,mj_stallmei,v12002.mj_stallmei をそのまま取得,ストール名称。vbi012002 側で集計対象かつ名称に「コント」「外注」を含まないストールに絞られている。
+6,kb_stallsentaku,ストール選択表示,STRING,有,なし,なし,なし,dx_ve.vbi012002,kb_stallsentaku,v12002.kb_stallsentaku をそのまま取得,ストール番号とストール名を連結した表示用項目。vbi012002 側で生成済みの値を使用。
+7,kb_kyukei,休憩区分,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbfy275m / ai21rep_ve_stg_kudu.tbsa002m,"kb_kado1〜kb_kado31, kb_hikado","CTE t275m で vbi012001_en.dd_date の日付日に対応する kb_kado1〜kb_kado31 を CASE で kb_kado に展開。最終SELECTで t275m.kb_kado NOT IN ('1','9') または t002m.kb_hikado = '1' の場合は 1、それ以外は 0 を設定",店舗稼働区分またはストール非稼働区分から休憩/非稼働対象を判定するフラグ。t275m.kb_kado <> 'Z' の条件で結合される。DDL上はSTRINGだがSQL上は 1/0 の数値式。
+8,dd_date,日付,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_date,v12001.dd_date をそのまま取得,日付補助テーブルの日付。vbi012002 と CROSS JOIN することで、各ストールに対して対象日付分の行を生成する。
