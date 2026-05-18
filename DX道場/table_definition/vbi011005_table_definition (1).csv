@@ -1,0 +1,11 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_hansya,tz006m.cd_hansya をそのまま取得,メイン元テーブルの販社コード。WHERE tz006m.kb_tantobun = '1' の対象のみ。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_kaisya,tz006m.cd_kaisya をそのまま取得,メイン元テーブルの会社コード。WHERE tz006m.kb_tantobun = '1' の対象のみ。
+3,cd_okyaku,お客様コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_okyaku,tz006m.cd_okyaku をそのまま取得,お客様を識別するコード。WHERE tz006m.kb_tantobun = '1' の対象のみ。
+4,cd_stafften,スタッフ店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_stafften,tz006m.cd_stafften をそのまま取得,スタッフ所属店舗コード。vbi011002.cd_tenpo と INNER JOIN するキー。
+5,cd_staff,スタッフコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,cd_staff,tz006m.cd_staff をそのまま取得,スタッフを識別するコード。tbv0014m.cd_syain と LEFT JOIN するキー。
+6,cd_zon,スタッフエリアコード,STRING,有,なし,なし,なし,dx_ve.vbi011002,cd_zon,vbi011002.cd_zon を取得,スタッフ店舗に紐づくエリアコード。tz006m.cd_stafften = vbi011002.cd_tenpo で結合。
+7,kj_zonmei,スタッフエリア名,STRING,有,なし,なし,なし,dx_ve.vbi011002,kj_zonmei,vbi011002.kj_zonmei を取得,スタッフ店舗に紐づくエリア名。INNER JOIN で店舗情報が存在する対象のみ取得。
+8,kj_tenpomei,スタッフ店舗名,STRING,有,なし,なし,なし,dx_ve.vbi011002,kj_tenpomei,vbi011002.kj_tenpomei を取得,スタッフ店舗名。INNER JOIN で店舗情報が存在する対象のみ取得。
+9,mj_sortjyun,店舗ソート順,STRING,有,なし,なし,なし,dx_ve.vbi011002,mj_sortjyun,vbi011002.mj_sortjyun を取得,スタッフ店舗の表示・並び順に利用される値。
+10,kj_syainmei,スタッフ名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0014m,kj_syainmei,t0014m.kj_syainmei を取得,スタッフコードに紐づく社員名。LEFT JOIN のため、該当社員がない場合はNULLになり得る。
