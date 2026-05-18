@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,日付,日付,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_date,`dd_date AS `日付`` により、元カラムを日本語名にリネームして取得,日付補助テーブル vbi012001_en の日付をそのまま取得。
+2,日付_月,日付_月,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_month,`dd_month AS `日付_月`` により、元カラムを日本語名にリネームして取得,日付の月初日相当の項目。vbi012001_en 側で生成済みの値を使用。
+3,日付_yyyy/MM/dd,日付_yyyy/MM/dd,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_yyyy/MM/dd,``dd_yyyy/MM/dd` AS `日付_yyyy/MM/dd`` により、元カラムを日本語名にリネームして取得,yyyy/MM/dd形式の表示用日付。
+4,日付_yyyyMMdd,日付_yyyyMMdd,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_yyyyMMdd,``dd_yyyyMMdd` AS `日付_yyyyMMdd`` により、元カラムを日本語名にリネームして取得,yyyyMMdd形式の表示用日付またはキー用日付。
+5,日付_曜日,日付_曜日,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,dd_week,`dd_week AS `日付_曜日`` により、元カラムを日本語名にリネームして取得,曜日付きの日付表示。vbi012001_en 側で生成済みの値を使用。
+6,先週/来週,先週/来週,STRING,有,なし,なし,なし,dx_ve.vbi012001_en,kb_senshuraishu,`kb_senshuraishu AS `先週/来週`` により、元カラムを日本語名にリネームして取得,先週/来週の区分。vbi012001_en 側で生成済みの値を使用。
