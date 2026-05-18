@@ -1,0 +1,46 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,cd_hansya,tbbc017g.cd_hansya をそのまま取得,受注・登録データの販社コード。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,cd_kaisya,tbbc017g.cd_kaisya をそのまま取得,受注・登録データの会社コード。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g / ai21rep_ve_dx.tbg8014m,"cd_jytyuten, no_cyumon, no_cyumoned, no_denpyo","注文番号先頭3桁が TAD かつ no_min_denpyo が存在する場合は LEFT(no_min_denpyo,3)、それ以外は tbbc017g.cd_jytyuten を設定",TAD注文では入金伝票の最小伝票番号から店舗コード相当を補正。
+4,注文no,注文no,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,no_cyumon,tbbc017g.no_cyumon をそのまま取得,注文番号。
+5,注文枝番,注文枝番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,no_cyumoned,TRIM(tbbc017g.no_cyumoned) を取得,注文枝番。前後空白を除去して出力。
+6,pk_販社会社注文no枝番,pk_販社会社注文no枝番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"cd_hansya, cd_kaisya, no_cyumon, no_cyumoned","CONCAT(cd_hansya, cd_kaisya, no_cyumon, TRIM(no_cyumoned)) で連結",販社・会社・注文NO・注文枝番を連結した注文単位キー。カラム名はpkだがDDL上の主キー制約はなし。
+7,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g / ai21rep_ve_dx.tbg8014m,"cd_hansya, cd_kaisya, cd_jytyuten, no_denpyo","TAD注文かつ no_min_denpyo が存在する場合は cd_hansya || cd_kaisya || LEFT(no_min_denpyo,3)、それ以外は cd_hansya || cd_kaisya || cd_jytyuten",販社・会社・店舗を連結した店舗識別コード。
+8,店舗略称,店舗略称,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,kj_tentanms,v2001.kj_tentanms を取得,補正後店舗コードで vbi013001_en と結合して取得する店舗短縮名称。
+9,エリア統括部,エリア統括部,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,zone_name,v2001.zone_name を取得,店舗に紐づくゾーン表示名。
+10,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,cd_zon,v2001.cd_zon を取得,店舗に紐づくゾーンコード。vbi013001_en側で補完済みの値。
+11,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi013001_en,mj_sortjyun,v2001.mj_sortjyun を取得,店舗・ゾーンマスタ側の表示順。
+12,登録,登録状態,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_touroku,dd_touroku IS NOT NULL の場合は '登録済'、それ以外は '未登録',登録有無の表示用区分。
+13,納車,納車状態,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_nosya,dd_nosya IS NOT NULL の場合は '納車済'、それ以外は '未納車',納車有無の表示用区分。
+14,売掛残高,売掛残高有無,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,"ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk",ki_haseirui - ki_genknykg - ki_sitanykg - ki_fuharnyk = 0 の場合は '残高なし'、それ以外は '残高あり',売掛金残高の有無を表示する区分。
+15,社員名,社員名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0014m,kj_syainmei,t014m.kj_syainmei を取得,受注担当者コード cd_hanstaff に紐づく社員名。LEFT JOINのためNULLになり得る。
+16,売上経過日数,売上経過日数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_touroku,"DATEDIFF(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(),'JST'), dd_touroku) を算出",JST基準の現在日時と登録日の差分日数。
+17,買主名,買主名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"kj_kainmei1, kj_kainmei2",REGEXP_REPLACEで各項目末尾の全角空白を除去後、kj_kainmei1 と kj_kainmei2 を連結,買主名の表示用項目。
+18,名義人,名義人,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"kj_meigime1, kj_meigime2",REGEXP_REPLACEで各項目末尾の全角空白を除去後、kj_meigime1 と kj_meigime2 を連結,名義人名の表示用項目。
+19,契約形態,契約形態,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,mj_keiykeit,CASE mj_keiykeit WHEN '1' THEN '現金' WHEN '2' THEN '後払い' WHEN '3' THEN '自社割賦' WHEN '4' THEN '信用購入斡旋' WHEN '5' THEN '債権譲渡' WHEN '' THEN 'その他' END,契約形態コードを日本語名称へ変換。
+20,注文NO_枝番,注文NO_枝番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"no_cyumon, no_cyumoned","TRIM(CONCAT(no_cyumon, no_cyumoned)) で連結",注文番号と枝番を連結した表示用注文番号。
+21,型式,型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc001g,mj_katasiki,mj_katasiki に '-' が含まれる場合は '-' より前を取得し、それ以外は mj_katasiki をそのまま取得,車両型式。車両番号 no_syaryou で tbbc001g と結合。
+22,受注日,受注日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_jucyu,tbbc017g.dd_jucyu をそのまま取得,受注日。
+23,申込金受領日,申込金受領日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,dd_maeuknyu,tbbc020g.dd_maeuknyu を取得,申込金の受領日。
+24,登録日,登録日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_touroku,tbbc017g.dd_touroku をそのまま取得,登録日。
+25,納車日,納車日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_nosya,tbbc017g.dd_nosya をそのまま取得,納車日。
+26,回収予定日,回収予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,"dd_minasksy, dd_kaisyuyo","NVL(tbbc020g.dd_minasksy, tbbc020g.dd_kaisyuyo) を設定",見直し回収予定日を優先し、なければ通常の回収予定日を使用。
+27,最終入金日（現金）,最終入金日（現金）,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"dd_keijyou, kb_nyukkanr","nt8014mで kb_nyukkanr='01' の最大 dd_keijyou を取得し、TO_TIMESTAMP(CAST(... AS STRING),'yyyyMMdd') で変換",現金入金の最終計上日。
+28,最終入金日（割賦）,最終入金日（割賦）,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"dd_keijyou, kb_nyukkanr","nt8014mで kb_nyukkanr='02' の最大 dd_keijyou を取得し、TO_TIMESTAMP(CAST(... AS STRING),'yyyyMMdd') で変換",割賦入金の最終計上日。
+29,下取完了日,下取完了日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m,"dd_keijyou, kb_nyukkanr","nt8014mで kb_nyukkanr='03' の最大 dd_keijyou を取得し、TO_TIMESTAMP(CAST(... AS STRING),'yyyyMMdd') で変換",下取完了相当の最終計上日。
+30,完了,完了,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_urikzumi,tbbc017g.dd_urikzumi をそのまま取得,売上済/完了日として使用。
+31,売掛金残高合計,売掛金残高合計,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,"ki_haseirui, ki_genknykg, ki_sitanykg, ki_fuharnyk","NVL(ki_haseirui,0) - NVL(ki_genknykg,0) - NVL(ki_sitanykg,0) - NVL(ki_fuharnyk,0) を算出",売掛金残高の合計。
+32,現金残高,現金残高,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,"ki_genkhasg, ki_genknykg","NVL(ki_genkhasg,0) - NVL(ki_genknykg,0) を算出",現金部分の残高。
+33,割賦残高,割賦残高,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,"ki_fuharhsk, ki_fuharnyk","NVL(ki_fuharhsk,0) - NVL(ki_fuharnyk,0) を算出",割賦/不払部分の残高。
+34,下取車残高,下取車残高,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,"ki_sitahasg, ki_sitanykg","NVL(ki_sitahasg,0) - NVL(ki_sitanykg,0) を算出",下取車部分の残高。
+35,申込金,申込金,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g / ai21rep_ve_dx.tbg8014m,"dd_touroku, dd_keijyou1, ki_nyuruike, ki_nyukinur1","登録日がNULL、現金最終入金日がNULL、または現金最終入金日が登録日より前の場合は tbbc020g.ki_nyuruike、それ以外は NVL(kt8014m.ki_nyukinur1,0)",登録前入金額または申込金累計を使用する項目。
+36,現金入金回数,現金入金回数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m / dx_ve.tbi999013m,"kb_nyuukin, ki_nyukinur, kb_genkin","kt8014mで現金系入金区分の正入金回数 ki_nyukinur4 と負入金回数 ki_nyukinur5 を集計し、NVL(ki_nyukinur4 - ki_nyukinur5,0) を設定",現金入金回数の正味件数。
+37,カード入金回数,カード入金回数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg8014m / dx_ve.tbi999013m,"kb_nyuukin, ki_nyukinur, kb_crejcard","kt8014mでカード系入金区分の正入金回数 ki_nyukinur2 と負入金回数 ki_nyukinur3 を集計し、NVL(ki_nyukinur2 - ki_nyukinur3,0) を設定",カード入金回数の正味件数。
+38,振当-納車,振当-納車,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_nosya,tbbc017g.dd_nosya を設定,SQL上は納車日をそのまま出力。項目名の意味は業務上の表示名称に依存。
+39,登録-納車,登録-納車,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"dd_nosya, dd_touroku","DATEDIFF(tbbc017g.dd_nosya, tbbc017g.dd_touroku) を算出",登録日から納車日までの日数差。
+40,登録-完了,登録-完了,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"dd_urikzumi, dd_touroku","DATEDIFF(tbbc017g.dd_urikzumi, tbbc017g.dd_touroku) を算出",登録日から完了日までの日数差。
+41,払出区分,払出区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,kb_uriage,"CASE LEFT(kb_uriage,1) WHEN '1' THEN '一般売上' WHEN '3' THEN 'リース' END",売上区分の先頭1桁を日本語名称へ変換。
+42,法人個人区分,法人個人区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc018g,"kb_kokyaku, kb_seibetu",買主側 t051g1 と名義人側 t051g2 の kb_seibetu が 1/2 の組み合わせの場合は '個人'、それ以外は '法人',kb_kokyaku='1' と '2' の顧客情報をそれぞれ結合して判定。
+43,発生累計,発生累計,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc020g,ki_haseirui,tbbc020g.ki_haseirui を取得,発生額の累計。
+44,更新日時,更新日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dt_saisinup,tbbc017g.dt_saisinup を取得,受注・登録データ側の最終更新日時。
+45,納車～完了,納車～完了,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"dd_nosya, dd_urikzumi","納車日・完了日がともにNULLでない場合、DATEDIFF(dd_nosya, dd_urikzumi) が0でなければその差分、0なら0。どちらかNULLならNULL","納車日から完了日までの日数差。SQL式は DATEDIFF(納車日, 完了日) の向きで算出。"
