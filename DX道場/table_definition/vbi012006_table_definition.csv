@@ -1,0 +1,7 @@
+No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,ソート順,ソート順,STRING,有,なし,なし,なし,"dx_ve.vbi012002","cd_hansya, cd_kaisya, mj_sortjyun, cd_tenpo","row_number() OVER(PARTITION BY v12002.cd_hansya, v12002.cd_kaisya ORDER BY v12002.mj_sortjyun, v12002.cd_tenpo) で採番","販社コード・会社コード単位で、vbi012002.mj_sortjyun、店舗コード順に連番を付与。SQL上はrow_number()の結果だが、DDL上はSTRING。"
+2,販社コード,販社コード,STRING,有,なし,なし,なし,"dx_ve.vbi012002","cd_hansya","v12002.cd_hansya をそのまま取得","ストール一覧テーブル側の販社コード。GROUP BY対象。"
+3,会社コード,会社コード,STRING,有,なし,なし,なし,"dx_ve.vbi012002","cd_kaisya","v12002.cd_kaisya をそのまま取得","ストール一覧テーブル側の会社コード。GROUP BY対象。"
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,"dx_ve.vbi012002","cd_tenpo","v12002.cd_tenpo をそのまま取得","ストール一覧テーブル側の店舗コード。tbv0201mとの結合キー。GROUP BY対象。"
+5,店舗名,店舗名,STRING,有,なし,なし,なし,"ai21rep_ve_stg_kudu.tbv0201m","kj_tenpomei","regexp_replace(t201m.kj_tenpomei, '　+$', '') により、店舗名末尾の全角スペースを除去して取得","店舗マスタ側の店舗名。LEFT JOINのため、該当店舗マスタがない場合はNULLになり得る。GROUP BY対象。"
+6,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,"dx_ve.vbi012002","cd_hansya, cd_kaisya, cd_tenpo","concat(v12002.cd_hansya, v12002.cd_kaisya, v12002.cd_tenpo) で販社コード・会社コード・店舗コードを連結","販社・会社・店舗を一意に表すための連結キー。"
