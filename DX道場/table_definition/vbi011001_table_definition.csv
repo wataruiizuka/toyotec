@@ -1,0 +1,10 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,cd_hansya,t0021m.cd_hansya をそのまま出力,契約/利用明細側の販社コード。tbv0020m との結合キーにも使用
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,cd_kaisya,t0021m.cd_kaisya をそのまま出力,契約/利用明細側の会社コード。tbv0020m との結合キーにも使用
+3,kb_keiyaku,契約区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,kb_keiyaku,t0021m.kb_keiyaku をそのまま出力,契約種別を表す区分。tbv0020m との結合キーにも使用
+4,no_edaban,枝番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,no_edaban,t0021m.no_edaban をそのまま出力,契約情報の枝番。tbv0020m との結合キーにも使用
+5,nu_sotezert,想定税率,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,nu_sotezert,t0021m.nu_sotezert をそのまま出力,税率または税率区分に相当する項目。tbv0020m との結合キーにも使用
+6,no_renban,連番,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,no_renban,t0021m.no_renban をそのまま出力,tbv0021m 側の明細連番
+7,kj_riyoseim,利用整備名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,kj_riyoseim,t0021m.kj_riyoseim をそのまま出力,利用整備または利用サービス名に相当する名称項目
+8,kj_kanyusyu,加入種別名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0020m,kj_kanyusyu,t0020m.kj_kanyusyu をそのまま出力,"tbv0021m と tbv0020m を cd_hansya, cd_kaisya, kb_keiyaku, no_edaban, nu_sotezert でLEFT JOINして取得"
+9,totalcount,税込合計金額,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0021m,"ki_goukei, ki_syohizei",t0021m.ki_goukei + t0021m.ki_syohizei,合計金額と消費税を加算した税込合計相当の値。DDL上はSTRINGだが、SQL上では数値加算して作成
