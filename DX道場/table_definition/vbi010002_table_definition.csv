@@ -1,0 +1,22 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま出力,店舗マスタ側の販社コード
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま出力,店舗マスタ側の会社コード
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま出力,店舗マスタ側の店舗コード
+4,販社会社店舗,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"cd_hansya, cd_kaisya, cd_tenpo","CONCAT(t201m.cd_hansya, t201m.cd_kaisya, t201m.cd_tenpo)",販社コード・会社コード・店舗コードを連結した店舗識別キー
+5,新車軽OEM数,新車軽OEM販売数,STRING,有,なし,なし,なし,集計サブクエリ newcar（主: ai21rep_ve_dx.tbba001g）,"calflg, tbbf001m.kn_kei","NVL(newcar.新車軽OEM数, 0)。newcar内で SUM(CASE WHEN 軽区分 = '1' THEN 新車数 ELSE 0 END)。新車数は tbba001g の売上/取消を UNION ALL し calflg(+1/-1) で集計",軽区分='1'を軽OEMとして集計。対象期間は当月開始日以降の売上/取消データ
+6,新車登録車数,新車登録車販売数,STRING,有,なし,なし,なし,集計サブクエリ newcar（主: ai21rep_ve_dx.tbba001g）,"calflg, tbbf001m.kn_kei","NVL(newcar.新車登録車数, 0)。newcar内で SUM(CASE WHEN NVL(軽区分,'') != '1' THEN 新車数 ELSE 0 END)",軽区分が'1'以外の新車数を登録車として集計
+7,新車軽OEM収益,新車軽OEM収益,STRING,有,なし,なし,なし,集計サブクエリ newcar（主: ai21rep_ve_dx.tbba052g）,"rieki, tbbf001m.kn_kei","NVL(newcar.新車軽OEM収益, 0)。newcar内で SUM(CASE WHEN 軽区分 = '1' THEN rieki ELSE 0 END)。riekiは tbba052g の車両本体/値引/付属/手数料/原価等に、tbba054g・tbba053g・tbba055g・tbi010001m の集計値を加減算して算出",新車収益計算式はSQL内の複数金額項目を用いた合成式。軽区分='1'のみ対象
+8,新車登録収益,新車登録車収益,STRING,有,なし,なし,なし,集計サブクエリ newcar（主: ai21rep_ve_dx.tbba052g）,"rieki, tbbf001m.kn_kei","NVL(newcar.新車登録収益, 0)。newcar内で SUM(CASE WHEN NVL(軽区分,'') != '1' THEN rieki ELSE 0 END)",軽区分が'1'以外の新車収益を登録車収益として集計
+9,新車軽OEM売上,新車軽OEM売上,STRING,有,なし,なし,なし,集計サブクエリ newcar（主: ai21rep_ve_dx.tbba052g）,"uriage, tbbf001m.kn_kei","NVL(newcar.新車軽OEM売上, 0)。newcar内で SUM(CASE WHEN 軽区分 = '1' THEN uriage ELSE 0 END)。uriageは calflg × (ki_syryhnzk + SU_MAKOBY1〜16 - ki_syryhnez) の合計",軽区分='1'の売上を集計
+10,新車登録売上,新車登録車売上,STRING,有,なし,なし,なし,集計サブクエリ newcar（主: ai21rep_ve_dx.tbba052g）,"uriage, tbbf001m.kn_kei","NVL(newcar.新車登録売上, 0)。newcar内で SUM(CASE WHEN NVL(軽区分,'') != '1' THEN uriage ELSE 0 END)",軽区分が'1'以外の新車売上を登録車売上として集計
+11,TAD販売実績,TAD販売実績,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc017g）,"kb_uriage, calflg","NVL(ucar.TAD販売実績, 0)。ucar内で SUM(CASE WHEN 売上区分 = '14' THEN Ucar販売数 ELSE 0 END)。Ucar販売数は calflg(+1/-1) の合計",UCar系売上区分'14'をTADとして集計
+12,TAD売上実績,TAD売上実績,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc020g）,"kb_uriage, ucar売上","NVL(ucar.TAD売上実績, 0)。ucar内で SUM(CASE WHEN 売上区分 = '14' THEN ucar売上 ELSE 0 END)。ucar売上は calflg × (ki_syryhnzk - ki_syryhnez) で算出",UCar系売上区分'14'の売上実績
+13,TAD収益実績,TAD収益実績,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc020g）,"kb_uriage, 収益","NVL(ucar.TAD収益実績, 0)。ucar内で SUM(CASE WHEN 売上区分 = '14' THEN 収益 ELSE 0 END)。収益は tbbc020g の車両本体/値引/原価/付属/手数料等と tbbc001g・tbpf070m の項目を加減算して算出",UCar系売上区分'14'の収益実績
+14,新車スタッフ数,新車スタッフ数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0014m（tbv0014m_newcar）,"cd_hansya, cd_kaisya, cd_syozoten, kb_staffsin","NVL(tbv0014m_newcar.staffCount, 0)。tbv0014m を kb_staffsin = '1' で絞り、販社・会社・所属店舗単位に COUNT(1)",新車スタッフ数。SQL上は newcar の店舗キーと結合して取得
+15,UCar小売,UCar小売販売数,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc017g）,"kb_uriage, calflg","NVL(ucar.UCar小売, 0)。ucar内で SUM(CASE WHEN 売上区分 = '11' THEN Ucar販売数 ELSE 0 END)",売上区分'11'をUCar小売として集計
+16,UCar卸,UCar卸販売数,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc017g）,"kb_uriage, calflg","NVL(ucar.UCar卸, 0)。ucar内で SUM(CASE WHEN 売上区分 = '20' THEN Ucar販売数 ELSE 0 END)",売上区分'20'をUCar卸として集計
+17,UCar卸収益,UCar卸収益,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc020g）,"kb_uriage, 収益","NVL(ucar.UCar卸収益, 0)。ucar内で SUM(CASE WHEN 売上区分 = '20' THEN 収益 ELSE 0 END)",売上区分'20'の収益を集計
+18,UCar小売売上,UCar小売売上,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc020g）,"kb_uriage, ucar売上","NVL(ucar.UCar小売売上, 0)。ucar内で SUM(CASE WHEN 売上区分 = '11' THEN ucar売上 ELSE 0 END)",売上区分'11'のUCar売上を集計
+19,UCar卸売上,UCar卸売上,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc020g）,"kb_uriage, ucar売上","NVL(ucar.UCar卸売上, 0)。ucar内で SUM(CASE WHEN 売上区分 = '20' THEN ucar売上 ELSE 0 END)",売上区分'20'のUCar売上を集計
+20,UCar小売収益,UCar小売収益,STRING,有,なし,なし,なし,集計サブクエリ ucar（主: ai21rep_ve_dx.tbbc020g）,"kb_uriage, 収益","NVL(ucar.UCar小売収益, 0)。ucar内で SUM(CASE WHEN 売上区分 = '11' THEN 収益 ELSE 0 END)",売上区分'11'の収益を集計
+21,Ucarスタッフ数,U-Carスタッフ数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0014m（tbv0014m_ucar）,"cd_hansya, cd_kaisya, cd_syozoten, kb_stafftyu","NVL(tbv0014m_ucar.staffCount, 0)。tbv0014m を kb_stafftyu = '1' で絞り、販社・会社・所属店舗単位に COUNT(1)",U-Carスタッフ数。SQL上は ucar の店舗キーと結合して取得
