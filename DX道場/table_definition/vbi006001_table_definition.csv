@@ -1,0 +1,34 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,dx_ve.tbi006001m,cd_hanbaitn,tbi006001m.cd_hanbaitn をそのまま出力,tbi006001m は TBBA001G の販社コード・会社コードで内部結合し、cd_hanbaitn IS NOT NULL のレコードに限定
+2,CD_HANSYA,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,CD_HANSYA,TBBA001G.CD_HANSYA をそのまま出力,受注・登録情報側の販社コード
+3,CD_KAISYA,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,CD_KAISYA,TBBA001G.CD_KAISYA をそのまま出力,受注・登録情報側の会社コード
+4,DD_JUCYUKE,受注受付日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,DD_JUCYUKE,"FROM_TIMESTAMP(TBBA001G.DD_JUCYUKE, 'yyyy/MM/dd')",受注受付日を yyyy/MM/dd 形式の文字列として出力
+5,KB_SEIBETU,性別区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_1）,KB_SEIBETU,T_KOKYAKU_1.KB_SEIBETU をそのまま出力,T_KOKYAKU_1 は TBBA051G を KB_KOKYAKU = '1' で結合した顧客情報
+6,KAI_KANA,会員カナ氏名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_1）,"KN_SEI, KN_MEI","CONCAT(T_KOKYAKU_1.KN_SEI, T_KOKYAKU_1.KN_MEI)",KB_KOKYAKU = '1' の姓カナ・名カナを連結
+7,KJ_KAINMEI1,会員名1,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,KJ_KAINMEI1,TBBA001G.KJ_KAINMEI1 をそのまま出力,受注側に保持される会員名項目
+8,MEIGI_KANA,名義人カナ氏名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_2）,"KN_SEI, KN_MEI","CONCAT(T_KOKYAKU_2.KN_SEI, T_KOKYAKU_2.KN_MEI)",T_KOKYAKU_2 は TBBA051G を KB_KOKYAKU = '2' で結合した顧客情報
+9,KJ_MEIGIME1,名義人名1,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,KJ_MEIGIME1,TBBA001G.KJ_MEIGIME1 をそのまま出力,受注側に保持される名義人名項目
+10,NO_CYUMON,注文番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba008g,"NO_CYUMON, NO_CYUMONED","CONCAT(TBBA008G.NO_CYUMON, TBBA008G.NO_CYUMONED)",注文番号と枝番を連結。TBBA008G.NO_CYUMON IS NOT NULL の条件あり
+11,DD_JUCYU,受注日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,DD_JUCYU,"FROM_TIMESTAMP(TBBA001G.DD_JUCYU, 'yyyy/MM/dd')",受注日を yyyy/MM/dd 形式の文字列として出力
+12,NO_FRAME,フレーム番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba008g,NO_FRAME,TBBA008G.NO_FRAME をそのまま出力,車両フレーム番号
+13,KN_SYAME,車名カナ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,KN_SYAME,TBBF001M.KN_SYAME をそのまま出力,TBBF008M を経由して車名マスタ TBBF001M から取得
+14,KJ_KURUMAME,車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,KJ_KURUMAME,TBBF001M.KJ_KURUMAME をそのまま出力,TBBF008M を経由して車名マスタ TBBF001M から取得
+15,MJ_HANTENKT,販売店型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,MJ_HANTENKT,TBBA001G.MJ_HANTENKT をそのまま出力,TBBA001G と TBBF008M の結合条件にも使用
+16,KJ_DAIHYOSY,代表者名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba056g,KJ_DAIHYOSY,TBBA056G.KJ_DAIHYOSY をそのまま出力,TBBA056G は注文番号・枝番で TBBA001G と左外部結合
+17,SIYOUSYA_KANA,使用者カナ氏名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,"KN_SEI, KN_MEI","CONCAT(T_KOKYAKU_5.KN_SEI, T_KOKYAKU_5.KN_MEI)",T_KOKYAKU_5 は TBBA051G を KB_KOKYAKU = '5' で結合した顧客情報
+18,SYOUYUSYA_KANJI,所有者漢字氏名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba056g,"KJ_SYYUSME1, KJ_SYYUSME2","CONCAT(TBBA056G.KJ_SYYUSME1, TBBA056G.KJ_SYYUSME2)",所有者名1・所有者名2を連結
+19,NO_POST,郵便番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,NO_POST,T_KOKYAKU_5.NO_POST をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+20,CD_JYUSYO,住所コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,CD_JYUSYO,T_KOKYAKU_5.CD_JYUSYO をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+21,KN_JUSYO1,住所カナ1,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,KN_JUSYO1,T_KOKYAKU_5.KN_JUSYO1 をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+22,KN_JUSYO2,住所カナ2,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,KN_JUSYO2,T_KOKYAKU_5.KN_JUSYO2 をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+23,KN_JUSYO3,住所カナ3,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,KN_JUSYO3,T_KOKYAKU_5.KN_JUSYO3 をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+24,KJ_JUSYOKJ1,住所漢字1,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,KJ_JUSYOKJ1,T_KOKYAKU_5.KJ_JUSYOKJ1 をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+25,KJ_JUSYOKJ2,住所漢字2,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,KJ_JUSYOKJ2,T_KOKYAKU_5.KJ_JUSYOKJ2 をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+26,KJ_JUSYOKJ3,住所漢字3,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g（T_KOKYAKU_5）,KJ_JUSYOKJ3,T_KOKYAKU_5.KJ_JUSYOKJ3 をそのまま出力,KB_KOKYAKU = '5' の使用者情報から取得
+27,DD_TOROYOTE,登録予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba031g,DD_TOROYOTE,"FROM_TIMESTAMP(TBBA031G.DD_TOROYOTE, 'yyyy/MM/dd')",登録予定日を yyyy/MM/dd 形式の文字列として出力。TBBA031G は KB_SYOHIN = '1' で内部結合
+28,TOROKU_NO,登録番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba031g,"CD_NORIKUSI, KB_NOSYASYU, MJ_NOGYOTAI, NO_NOSEIRI","CONCAT(TBBA031G.CD_NORIKUSI, TBBA031G.KB_NOSYASYU, TBBA031G.MJ_NOGYOTAI, TBBA031G.NO_NOSEIRI)",登録番号構成要素を連結
+29,DD_TOUROKU,登録日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,DD_TOUROKU,"FROM_TIMESTAMP(TBBA001G.DD_TOUROKU, 'yyyy/MM/dd')",登録日を yyyy/MM/dd 形式の文字列として出力。抽出条件で登録日が前月、かつ NULL ではないことを確認
+30,KB_JCSINPO,JCS進捗区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,KB_JCSINPO,TBBA001G.KB_JCSINPO をそのまま出力,受注側の進捗区分項目
+31,DD_SYODOTOR,初度登録日,STRING,有,なし,なし,なし,"ai21rep_ve_dx.tbaz017m（TBAZ017M_1, TBAZ017M_2）",DD_SYODOTOR,"IF(TBAZ017M_2.DD_SYODOTOR IS NOT NULL, FROM_TIMESTAMP(TBAZ017M_2.DD_SYODOTOR, 'yyyy/MM/dd'), FROM_TIMESTAMP(TBAZ017M_1.DD_SYODOTOR, 'yyyy/MM/dd'))",名義人側（TBAZ017M_2）の初度登録日を優先し、なければ会員側（TBAZ017M_1）を使用
+32,DD_SYODOTOR_COLOR,初度登録日色分けフラグ,STRING,有,なし,なし,なし,"ai21rep_ve_dx.tbaz017m（TBAZ017M_1, TBAZ017M_2）",DD_SYODOTOR,"IF(TBAZ017M_2.DD_SYODOTOR IS NULL AND TBAZ017M_1.DD_SYODOTOR IS NOT NULL, '1', '0')",名義人側に初度登録日がなく、会員側に初度登録日がある場合は '1'、それ以外は '0'
+33,DT_SAISINUP,最終更新日時,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,DT_SAISINUP,TBBA001G.DT_SAISINUP をそのまま出力,DDL上は STRING。SQL上では日付変換せず出力
