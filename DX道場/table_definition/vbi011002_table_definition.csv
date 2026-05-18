@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t0201m.cd_hansya をそのまま出力,店舗マスタ側の販社コード。tbi999003mとの内部結合キー、tbv0047mとの外部結合キーにも使用
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t0201m.cd_kaisya をそのまま出力,店舗マスタ側の会社コード。tbi999003mとの内部結合キー、tbv0047mとの外部結合キーにも使用
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t0201m.cd_tenpo をそのまま出力,店舗マスタ側の店舗コード。tbi999003mとの内部結合キー、tbv0047mとの外部結合キーにも使用
+4,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,t0201m.kj_tenpomei をそのまま出力,店舗マスタ側の店舗名称
+5,cd_zon,ゾーンコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,"cd_zon, kj_zonmei","IF(t0033m.kj_zonmei IS NULL OR regexp_replace(t0033m.kj_zonmei, '[ 　]+', '') = '', '999999', IF(t0033m.cd_zon IS NULL OR regexp_replace(t0033m.cd_zon, '[ 　]+', '') = '', '999998', t0033m.cd_zon))",ゾーン名称がNULLまたは空白のみの場合は'999999'、ゾーンコードがNULLまたは空白のみの場合は'999998'、それ以外はt0033m.cd_zonを出力。t0033mはtbv0047m.CD_NCZONとkb_syohin='3'で結合
+6,kj_zonmei,ゾーン名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,t0033m.kj_zonmei をそのまま出力,tbv0047mの新車ゾーンコードCD_NCZONを介して取得するゾーン名称。t0033m.kb_syohin='3'の条件で結合
+7,mj_sortjyun,ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999003m,mj_sortjyun,t9003m.mj_sortjyun をそのまま出力,帳票ID mj_cyohyoid='011' かつ表示区分 kb_tenji=1 のレコードのみ内部結合して取得
