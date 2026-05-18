@@ -1,0 +1,17 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,cd_hansya,cd_hansya AS `販社コード` により、元カラムを日本語名にリネームして取得,販社コード。vbi013004_en側で作成済みの値をそのまま使用。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,cd_kaisya,cd_kaisya AS `会社コード` により、元カラムを日本語名にリネームして取得,会社コード。vbi013004_en側で作成済みの値をそのまま使用。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,cd_jytyuten,cd_jytyuten AS `店舗コード` により、元カラムを日本語名にリネームして取得,受注/登録等の集計対象店舗コード。元カラム名は cd_jytyuten。
+4,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,cd_hansya_kaisya_jytyuten,cd_hansya_kaisya_jytyuten AS `販社会社店舗コード` により、元カラムを日本語名にリネームして取得,販社・会社・受注店舗を連結した店舗識別用コード。vbi013004_en側で生成済み。
+5,受注台数,受注台数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,su_jucyu,su_jucyu AS `受注台数` により、元カラムを日本語名にリネームして取得,受注台数。SQL上はvbi013004_en側の集計済み値をそのまま取得。DDL上はSTRING。
+6,登録台数,登録台数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,su_touroku,su_touroku AS `登録台数` により、元カラムを日本語名にリネームして取得,登録台数。SQL上はvbi013004_en側の集計済み値をそのまま取得。DDL上はSTRING。
+7,当月登録内下取車なし,当月登録内下取車なし,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,no_trade_in_vehicles_registered_this_month,no_trade_in_vehicles_registered_this_month AS `当月登録内下取車なし` により、元カラムを日本語名にリネームして取得,当月登録分のうち下取車なしの件数または台数を表す項目。元テーブル側の定義値をそのまま使用。
+8,現在登録済未回収件数,現在登録済未回収件数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,currently_registered_but_uncollected_cases,currently_registered_but_uncollected_cases AS `現在登録済未回収件数` により、元カラムを日本語名にリネームして取得,現在登録済みで未回収の件数。vbi013004_en側で算出済み。
+9,現在登録済未回収金額,現在登録済未回収金額,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,currently_registered_uncollected_amount,currently_registered_uncollected_amount AS `現在登録済未回収金額` により、元カラムを日本語名にリネームして取得,現在登録済みで未回収の金額。vbi013004_en側で算出済み。DDL上はSTRING。
+10,前月登録済未回収件数,前月登録済未回収件数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,registered_but_uncollected_items_from_the_previous_month,registered_but_uncollected_items_from_the_previous_month AS `前月登録済未回収件数` により、元カラムを日本語名にリネームして取得,前月登録済みで未回収の件数。vbi013004_en側で算出済み。
+11,前月登録済未回収金額,前月登録済未回収金額,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,uncollected_amount_registered_in_the_previous_month,uncollected_amount_registered_in_the_previous_month AS `前月登録済未回収金額` により、元カラムを日本語名にリネームして取得,前月登録済みで未回収の金額。vbi013004_en側で算出済み。DDL上はSTRING。
+12,前々月以前登録済未回収件数,前々月以前登録済未回収件数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,uncollected_cases_registered_two_months_prior,uncollected_cases_registered_two_months_prior AS `前々月以前登録済未回収件数` により、元カラムを日本語名にリネームして取得,前々月以前登録済みで未回収の件数。vbi013004_en側で算出済み。
+13,前々月以前登録済未回収金額,前々月以前登録済未回収金額,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,uncollected_amount_registered_two_months_prior,uncollected_amount_registered_two_months_prior AS `前々月以前登録済未回収金額` により、元カラムを日本語名にリネームして取得,前々月以前登録済みで未回収の金額。vbi013004_en側で算出済み。DDL上はSTRING。
+14,件数,件数,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,su_pieces,su_pieces AS `件数` により、元カラムを日本語名にリネームして取得,集計件数。vbi013004_en側で算出済みの値を使用。DDL上はSTRING。
+15,金額,金額,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,su_amount,su_amount AS `金額` により、元カラムを日本語名にリネームして取得,集計金額。vbi013004_en側で算出済みの値を使用。DDL上はSTRING。
+16,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.vbi013004_en,mj_sortjyun,mj_sortjyun AS `ソート順` により、元カラムを日本語名にリネームして取得,表示順。vbi013004_en側で生成済みの値を使用。
