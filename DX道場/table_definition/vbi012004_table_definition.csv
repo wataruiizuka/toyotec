@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbsa005g / ai21rep_ve_stg_kudu.tbsab05s,cd_hansya,UNION ALLの各SELECTで cd_hansya をそのまま取得,販社コード。dx_ve.vbi012002 に存在するストールのみ LEFT SEMI JOIN で抽出対象。削除区分 mj_sakujyo = '0' かつ使用開始日または使用終了日がJST基準の当日から14日未満の範囲に入るデータが対象。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbsa005g / ai21rep_ve_stg_kudu.tbsab05s,cd_kaisya,UNION ALLの各SELECTで cd_kaisya をそのまま取得,会社コード。dx_ve.vbi012002 との照合キー。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbsa005g / ai21rep_ve_stg_kudu.tbsab05s,cd_tenpo,UNION ALLの各SELECTで cd_tenpo をそのまま取得,店舗コード。dx_ve.vbi012002 との照合キー。
+4,no_stall,ストール番号,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbsa005g / ai21rep_ve_stg_kudu.tbsab05s,no_stall,UNION ALLの各SELECTで no_stall をそのまま取得,ストール番号。dx_ve.vbi012002 に存在する販社・会社・店舗・ストールのみ抽出。
+5,dt_siyost,使用開始日時,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbsa005g / ai21rep_ve_stg_kudu.tbsab05s,dt_siyost,UNION ALLの各SELECTで dt_siyost をそのまま取得,使用開始日時。抽出条件では dt_siyost がJST基準の当日以上、当日+14日未満の場合に対象となる。dt_siyoed 側が条件に該当する場合も行は対象。
+6,dt_siyoed,使用終了日時,STRING,有,なし,なし,なし,ai21rep_ve_stg_kudu.tbsa005g / ai21rep_ve_stg_kudu.tbsab05s,dt_siyoed,UNION ALLの各SELECTで dt_siyoed をそのまま取得,使用終了日時。抽出条件では dt_siyoed がJST基準の当日以上、当日+14日未満の場合に対象となる。dt_siyost 側が条件に該当する場合も行は対象。
