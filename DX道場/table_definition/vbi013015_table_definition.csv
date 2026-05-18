@@ -1,0 +1,5 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.tbi013001m,cd_hansya,tbi013001m.cd_hansya をそのまま取得,アラート閾値マスタ側の販社コード。alert_text CTE と CROSS JOIN され、各販社・会社ごとにアラート値の一覧を生成する。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.tbi013001m,cd_kaisya,tbi013001m.cd_kaisya をそのまま取得,アラート閾値マスタ側の会社コード。alert_text CTE と CROSS JOIN され、各販社・会社ごとにアラート値の一覧を生成する。
+3,値,値,STRING,有,なし,なし,なし,SQL内CTE alert_text,value,"alert_text CTEで定義した value を取得。値は '0','1','2','3','4','5','6','a','b','c','d'。",アラート判断値。vbi013006等で生成されるフラグ値に対応する表示用コードとして使用される想定。
+4,アラート文言,アラート文言,STRING,有,なし,なし,なし,SQL内CTE alert_text / dx_ve.tbi013001m,"alert_text, su_minosya, su_touroku, su_jucyu","value='b' の場合は CONCAT('未納車', COALESCE(su_minosya,14), '日経過')、value='c' の場合は CONCAT('登録', COALESCE(su_touroku,30), '日経過')、value='d' の場合は CONCAT('受注', COALESCE(su_jucyu,30), '日経過')。それ以外は alert_text CTE の alert_text を設定。",アラート値に対応する表示文言。b/c/dは会社別の閾値マスタ値を反映し、NULL時はそれぞれ14日・30日・30日をデフォルトとして使用する。0〜6はSQL上は空文字、aは「売掛回収チェック」。
