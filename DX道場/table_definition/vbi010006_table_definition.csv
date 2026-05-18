@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま出力,店舗マスタ側の販社コード
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま出力,店舗マスタ側の会社コード
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま出力,店舗マスタ側の店舗コード
+4,販社会社店舗,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"cd_hansya, cd_kaisya, cd_tenpo","CONCAT(t201m.cd_hansya, t201m.cd_kaisya, t201m.cd_tenpo)",販社コード・会社コード・店舗コードを連結した店舗識別キー
+5,Ucar実績,UCar実績数,STRING,有,なし,なし,なし,集計サブクエリ ucar_daitei（主: ai21rep_ve_dx.tbbc017g）,"kb_uriage, calflg","NVL(ucar_daitei.Ucar実績, 0)。ucar_daitei内で SUM(IF(tbbc017g.kb_uriage = '11', calflg, 0)) により算出",売上区分 kb_uriage = '11' をUCar実績として集計。売上側は calflg=1、取消側は calflg=-1 として正味化
+6,Ucar代替,UCar代替数,STRING,有,なし,なし,なし,集計サブクエリ ucar_daitei（主: ai21rep_ve_dx.tbbc017g / ai21rep_ve_dx.tbbc034g）,"kb_uriage, mj_jucyuke4, calflg","NVL(ucar_daitei.Ucar代替, 0)。ucar_daitei内で SUM(IF(tbbc017g.kb_uriage = '11' AND tbbc034g.mj_jucyuke4 IN ('02','03'), calflg, 0)) により算出",UCar実績のうち、TBBC034G の受注受付区分 mj_jucyuke4 が '02' または '03' のものを代替として集計
+7,TAD実績,TAD実績数,STRING,有,なし,なし,なし,集計サブクエリ ucar_daitei（主: ai21rep_ve_dx.tbbc017g）,"kb_uriage, calflg","NVL(ucar_daitei.TAD実績, 0)。ucar_daitei内で SUM(IF(tbbc017g.kb_uriage = '14', calflg, 0)) により算出",売上区分 kb_uriage = '14' をTAD実績として集計。売上側は calflg=1、取消側は calflg=-1 として正味化
+8,TAD代替,TAD代替数,STRING,有,なし,なし,なし,集計サブクエリ ucar_daitei（主: ai21rep_ve_dx.tbbc017g / ai21rep_ve_dx.tbbc034g）,"kb_uriage, mj_jucyuke4, calflg","NVL(ucar_daitei.TAD代替, 0)。ucar_daitei内で SUM(IF(tbbc017g.kb_uriage = '14' AND tbbc034g.mj_jucyuke4 IN ('02','03'), calflg, 0)) により算出",TAD実績のうち、TBBC034G の受注受付区分 mj_jucyuke4 が '02' または '03' のものを代替として集計
