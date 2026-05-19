@@ -1,0 +1,15 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま設定。,販社単位の集計・JOINキー。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま設定。,会社単位の集計・JOINキー。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま設定。,店舗単位の集計・JOINキー。
+4,ソート順,店舗表示ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999003m（sort_sub） / ai21rep_ve_dx.tbv0201m,mj_sortjyun / kj_tentanms / cd_tenpo,"内側SELECTで店舗短縮名称単位の sort_sub.mj_sortjyun を取得し、外側SELECTで RANK() OVER (PARTITION BY 販社コード, 会社コード ORDER BY IF(NVL(ゾーン名称,'') = '', 0, 1), ゾーン名称, ソート順, 店舗コード) により採番。",帳票ID mj_cyohyoid = '016'、表示対象 kb_tenji = 1 の店舗表示順を使用。DDL上は4列目だが、SQL外側SELECTでは11列目に出力される。
+5,車名ソート順,車名表示ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999008m（sort_car）,mj_sortjyun / cd_ncsyamei / kj_kurumame,"内側SELECTで車名ごとの MIN(sort_car.mj_sortjyun) と MIN(sort_car.cd_ncsyamei) を取得し、外側SELECTで RANK() OVER (PARTITION BY 販社コード, 会社コード ORDER BY 車名ソート順, 新車車名コード) により採番。",表示対象 kb_tenji = 1 の新車車名マスタを使用。DDL上は5列目だが、SQL外側SELECTでは12列目に出力される。
+6,新車車名コード,新車車名コード,STRING,有,なし,なし,なし,dx_ve.tbi999008m（sort_car）,cd_ncsyamei,内側SELECTで MIN(sort_car.cd_ncsyamei) AS 新車車名コード を取得。,外側SELECTで出力されていないため、提示SQLをそのままCTAS実行すると gold.vbi016009 の出力列に含まれない可能性あり。DDLとCTAS結果の差分注意。
+7,店舗短縮名称,店舗短縮名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tentanms,t201m.kj_tentanms をそのまま設定。,店舗の短縮名称。DDL上は7列目だが、SQL外側SELECTでは4列目に出力される。
+8,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0047m / ai21rep_ve_dx.tbv0033m,cd_nczon / cd_zon / kj_zonmei,tbv0047m.cd_nczon で tbv0033m を参照。tbv0033m.cd_zon と tbv0033m.kj_zonmei のNULL/空白状態に応じて、両方空なら '999999'、ゾーンコード空かつゾーン名称ありなら '999998'、ゾーン名称空なら '999999'、それ以外は tbv0033m.cd_zon を設定。,"空白判定は regexp_replace(..., '[ 　]+', '') を使用。tbv0033m.kb_syohin = '1' が対象。"
+9,ゾーン名称,ゾーン名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,tbv0033m.kj_zonmei をそのまま設定。,ゾーンコードに紐づくゾーン名称。
+10,グレード,グレード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0229m,mj_guredo,tbba001g.no_siteruib と tbv0229m.no_siteruib を結合し、tbv0229m.mj_guredo を設定。,受注車両のグレード名称。
+11,品名カナ,品名カナ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf007m,kn_hinmei,受注情報 tbba001g から仕様情報 tbbf008m を経由し、tbbf007m.kn_hinmei を設定。,仕様・品名情報のカナ名称。tbbf007m は車名、仕様区分、仕様コード、品名Noで結合。
+12,新車車名,新車車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,kj_kurumame,受注情報 tbba001g から仕様情報 tbbf008m を経由して tbbf001m を参照し、tbbf001m.kj_kurumame を設定。,dx_ve.tbi999008m に表示対象 kb_tenji = 1 として存在する車名のみ対象。
+13,受注計上日,受注計上日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_jucyuke,CAST(tbba001g.dd_jucyuke AS DATE) を設定。,DDL上はSTRINGだが、CTASではDATE型として推論される可能性あり。売上登録日 dd_uritrkkj がNULL、取消日 dd_torikesi がNULL、受注計上日 dd_jucyuke がNOT NULLの受注が対象。
+14,台数,台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,GROUP BY単位で COUNT(tbba001g.cd_hansya) を集計。,受注台数。DDL上はSTRINGだが、CTASではBIGINT等の数値型として推論される可能性あり。

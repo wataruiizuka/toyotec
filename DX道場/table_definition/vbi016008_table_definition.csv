@@ -1,0 +1,17 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,tbv0201m.cd_hansya をそのまま設定。,販社単位の集計・JOINキー。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,tbv0201m.cd_kaisya をそのまま設定。,会社単位の集計・JOINキー。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,tbv0201m.cd_tenpo をそのまま設定。,店舗単位の集計・JOINキー。
+4,下取有無,下取有無,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba003g（tbba003g_group）,sitasu,下取明細を注文単位で集約した tbba003g_group.sitasu が 0 より大きい場合は '有'、それ以外は '無' を設定。,下取車レコードの有無を表す区分。tbba003g は kb_sincyu = '1' のデータを対象に注文単位で COUNT(1) している。
+5,下取車の車名,下取車の車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,kj_syamei,tbba003g_group.cd_sitadosy と tbv0232m.cd_syamei を結合し、tbv0232m.kj_syamei を設定。,下取車の車名マスタ名称。
+6,新車車名,新車車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,kj_kurumame,受注情報 tbba001g から仕様情報 tbbf008m を経由して tbbf001m を参照し、tbbf001m.kj_kurumame を設定。,新車の車名。dx_ve.tbi999008m に表示対象 kb_tenji = 1 として存在する車名のみ対象。
+7,受注計上日,受注計上日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_jucyuke,CAST(tbba001g.dd_jucyuke AS DATE) を設定。,DDL上は STRING だが、CTASでは DATE 型として推論される可能性あり。STRING固定が必要な場合は CAST(... AS STRING) が必要。
+8,店舗短縮名称,店舗短縮名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tentanms,tbv0201m.kj_tentanms をそのまま設定。,店舗の短縮名称。店舗表示順 sort_sub との紐付けにも使用。
+9,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0047m / ai21rep_ve_dx.tbv0033m,cd_nczon / cd_zon / kj_zonmei,tbv0047m.cd_nczon で tbv0033m を参照。cd_zon が NULL または空白の場合、kj_zonmei も NULL/空白なら '999999'、名称のみある場合は '999998'。cd_zon があり名称が NULL/空白なら '999999'、それ以外は tbv0033m.cd_zon を設定。,"空白判定は regexp_replace(..., '[ 　]+', '') を使用。tbv0033m は kb_syohin = '1' を対象。"
+10,ゾーン名称,ゾーン名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0033m,kj_zonmei,tbv0033m.kj_zonmei をそのまま設定。,ゾーンコードに紐づくゾーン名称。
+11,下取車の自社他社,下取車の自社他社,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,cd_hansya / cd_maker / cd_syamei,"tbv0232m.cd_hansya が NULL の場合は NULL。存在する場合、cd_maker = '01' かつ LEFT(cd_syamei,1) <> 'L' なら 'トヨタ'、それ以外は '他メーカー' を設定。",下取車が自社系メーカーか他メーカーかを表す分類。
+12,下取車の年式,下取車の年式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba003g（tbba003g_group）,su_syndotor,tbba003g_group.su_syndotor の先頭4桁を西暦年として取得。現在年の9年以上前は 'Hxx～' または 'Rxx～' の範囲表記、2019年以降は 'Rxx'、1989年以降は 'Hxx'、それ以外は NULL を設定。,"内側SELECTで同一 alias `下取車の年式` が2回定義されている。式は同一に見えるため片方削除が望ましい。現在年は FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') でJST基準。"
+13,ソート順,店舗表示ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999003m（sort_sub） / ai21rep_ve_dx.tbv0201m,mj_sortjyun / kj_tentanms / cd_tenpo,"店舗短縮名称単位で tbi999003m.mj_sortjyun の最小値を取得し、外側SELECTで RANK() OVER (PARTITION BY 販社コード,会社コード ORDER BY IF(NVL(ゾーン名称,'') = '',0,1), ゾーン名称, ソート順, 店舗コード) を設定。",帳票ID mj_cyohyoid = '016'、表示対象 kb_tenji = 1 の店舗を対象。DDL上は STRING だが、RANK() は数値型として推論される可能性あり。
+14,車名ソート順,車名表示ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999008m（sort_car）,mj_sortjyun / cd_ncsyamei / kj_kurumame,"車名ごとに tbi999008m.mj_sortjyun と cd_ncsyamei の最小値を取得し、外側SELECTで RANK() OVER (PARTITION BY 販社コード,会社コード ORDER BY 車名ソート順, 新車車名コード) を設定。",表示対象 kb_tenji = 1 の新車車名マスタを使用。DDL上は STRING だが、RANK() は数値型として推論される可能性あり。
+15,台数,台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,COUNT(tbba001g.cd_hansya) を集計。受注情報は dd_uritrkkj IS NULL、dd_torikesi IS NULL、dd_jucyuke IS NOT NULL の条件で結合。,売上登録前・取消なし・受注計上日ありの受注台数。DDL上は STRING だが、COUNT は数値型として推論される可能性あり。
+16,下取台数,下取台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba003g（tbba003g_group） / ai21rep_ve_dx.tbv0232m,sitasu / cd_hansya,"SUM(IF(tbv0232m.cd_hansya IS NOT NULL, tbba003g_group.sitasu, 0)) を集計。",下取車名マスタに紐づいた下取レコード数の合計。DDL上は STRING だが、SUM は数値型として推論される可能性あり。
