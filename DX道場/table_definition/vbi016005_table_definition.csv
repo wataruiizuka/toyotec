@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,tbba001g.cd_hansya をそのまま出力。帳票ID016の表示対象店舗に限定するため、dx_ve.tbi999003m と LEFT SEMI JOIN。,販社を識別するコード。受注データを起点に取得。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_kaisya,tbba001g.cd_kaisya をそのまま出力。帳票ID016の表示対象店舗に限定するため、dx_ve.tbi999003m と LEFT SEMI JOIN。,会社を識別するコード。
+3,新車車名,新車車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,kj_kurumame,tbba001g から tbbf008m を経由して tbbf001m に結合し、tbbf001m.kj_kurumame を出力。dx_ve.tbi999008m と LEFT SEMI JOINし、kb_tenji = 1 の表示対象車名に限定。,受注対象の新車車名。
+4,購入形態,購入形態,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba056g / ai21rep_ve_dx.tbbf001m / ai21rep_ve_dx.tbba003g,mj_jucyuk11 / mj_jucyuke4 / kb_syasikib / 下取件数,"tbbf001m.kb_syasikib = '6' の場合は tbba056g.mj_jucyuk11、それ以外は tbba056g.mj_jucyuke4 を使用して購入形態を判定。値が '03','04' は 自社代替、'01' かつ下取台数0は 新規下取無、'01' かつ下取台数>0は 新規下取有、'05','06' は 併有他社替、'02' は 自社増車、それ以外は その他。",受注時の購入形態を業務分類へ変換した派生項目。下取台数は tbba003g を注文単位に集約した件数を使用。
+5,下取車の年式,下取車の年式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba003g,su_syndotor,tbba003g_group.su_syndotor の先頭4桁を西暦年として取得。現在年JST基準で9年以上前の場合は範囲表記に変換し、2019年以降は Rxx、1989年以降は Hxx、それ以外は NULL。,下取車の年式を令和・平成表記に変換した項目。古い年式は 'Hxx～' または 'Rxx～' の範囲表記になる。
+6,下取車の車名,下取車の車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,kj_syamei,tbba003g_group.cd_sitadosy を tbv0232m.cd_syamei に結合し、tbv0232m.kj_syamei を出力。,下取車の車名。下取車名マスタに一致しない場合はNULLになり得る。
+7,カテゴリー,カテゴリー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0231m / ai21rep_ve_dx.tbv0232m,mj_kubunnai / cd_category,tbv0232m.cd_category を tbv0231m.cd_kubun に結合。条件は mj_blockid = '00'、mj_kubunid = '0031'。tbv0231m.mj_kubunnai を出力。,下取車に紐づくカテゴリー名称。
+8,カテゴリー車名,カテゴリー車名,STRING,有,なし,なし,なし,派生項目,カテゴリー / 下取車の車名,"CONCAT(NVL(カテゴリー, ''), 下取車の車名) により、カテゴリーと下取車の車名を連結。",カテゴリーと車名を組み合わせた表示・集計用の派生キー。
+9,自社他社,自社他社区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,cd_maker / cd_syamei,"IF(tbv0232m.cd_maker = '01' AND LEFT(tbv0232m.cd_syamei, 1) <> 'L', 'トヨタ', '他メーカー') により判定。",下取車がトヨタ車か他メーカー車かを判定する派生項目。cd_maker が '01' でも車名コード先頭が 'L' の場合は他メーカー扱い。
+10,車名受注日,車名受注日キー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m / ai21rep_ve_dx.tbba001g,kj_kurumame / dd_jucyuke,"CONCAT(新車車名, from_timestamp(受注計上日, 'yyyyMMdd')) により、新車車名と受注計上日を連結。",新車車名と受注計上日を組み合わせた表示・識別用の派生キー。
+11,下取台数,下取台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba003g / ai21rep_ve_dx.tbv0232m,下取件数 / cd_hansya,tbba003g を販社・会社・注文番号・注文枝番単位に集約し、COUNT(1) を sitasu として算出。tbv0232m.cd_hansya が NOT NULL の場合は sitasu、それ以外は0を下取台数とし、外側で SUM(下取台数) を算出。,下取車の台数合計。tbba003g は kb_sincyu = '1' のデータを対象に集約。
+12,台数,台数,STRING,有,なし,なし,なし,派生項目,レコード件数,外側集計で COUNT(1) を算出。,グループ化単位ごとの件数。売上計上日NULL、取消日NULL、受注計上日NOT NULLの受注データが対象。
