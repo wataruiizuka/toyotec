@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま設定。,販社単位の識別コード。2つのSELECT句とも同一ロジックで取得。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま設定。,会社単位の識別コード。2つのSELECT句とも同一ロジックで取得。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま設定。,店舗単位の識別コード。dx_ve.tbi999003m に帳票ID '016'、表示対象 kb_tenji = 1 として存在する店舗のみ対象。
+4,ゾーンコード,ゾーンコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0047m / ai21rep_ve_dx.tbv0033m,cd_nczon / cd_zon,tbv0047m.cd_nczon と tbv0033m.cd_zon を結合し、tbv0033m.cd_zon を設定。,ゾーンマスタは tbv0033m.kb_syohin = '1' のレコードを対象。前段のvbi016007〜vbi016009と異なり、NULL/空白時の '999999' / '999998' 補完処理は行っていない。
+5,エリア店舗,エリア店舗,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m / ai21rep_ve_dx.tbv0033m,kj_tentanms / kj_zonmei,1つ目のSELECTでは t201m.kj_tentanms を設定し、区分名称に '店舗略称' を設定。2つ目のSELECTでは tbv0033m.kj_zonmei を同じ列位置に設定し、区分名称に 'ゾーン名称' を設定。UNION ALL により縦結合する。,SQLの2つ目のSELECTでは alias が `エリア統括部と店舗` になっているが、UNION ALL の列名は通常1つ目のSELECTに合わせられるため、最終列名はDDLどおり `エリア店舗` と解釈。
+6,区分名称,区分名称,STRING,有,なし,なし,なし,固定値,なし,1つ目のSELECTでは固定値 '店舗略称'、2つ目のSELECTでは固定値 'ゾーン名称' を設定。,エリア店舗列の値が店舗短縮名称なのかゾーン名称なのかを識別する区分。
