@@ -1,0 +1,30 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,cd_hansya,GROUP BY項目。tbg7005m_3.cd_hansyaをそのまま出力,"販社を識別するコード。抽出条件: vbi002001_enとcd_hansya/cd_kaisya/cd_tenpoでINNER JOIN後、ダミー店舗(03601/01/ZZZ)を除外し、nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 4))、cd_kanjyou = '10401  'で抽出"
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,cd_kaisya,GROUP BY項目。tbg7005m_3.cd_kaisyaをそのまま出力,"会社を識別するコード。抽出条件: vbi002001_enとcd_hansya/cd_kaisya/cd_tenpoでINNER JOIN後、ダミー店舗(03601/01/ZZZ)を除外し、nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 4))、cd_kanjyou = '10401  'で抽出"
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,cd_tenpo,GROUP BY項目。tbg7005m_3.cd_tenpoをそのまま出力,"店舗を識別するコード。抽出条件: vbi002001_enとcd_hansya/cd_kaisya/cd_tenpoでINNER JOIN後、ダミー店舗(03601/01/ZZZ)を除外し、nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 4))、cd_kanjyou = '10401  'で抽出"
+4,販社会社店舗コード,販社会社店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,"cd_hansya, cd_kaisya, cd_tenpo",tbg7005m_3.cd_hansya || tbg7005m_3.cd_kaisya || tbg7005m_3.cd_tenpo で連結,販社コード・会社コード・店舗コードを連結した店舗識別キー。
+5,当年上期期首残高,当年上期期首残高,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toyjkksy,SUM(tbg7005m_3.ki_toyjkksy),店舗単位で集計した当年上期期首残高。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+6,当年借方金額０１,当年借方金額０１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar01,SUM(tbg7005m_3.ki_toykar01),店舗単位で集計した当年月別借方金額（01）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+7,当年借方金額０２,当年借方金額０２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar02,SUM(tbg7005m_3.ki_toykar02),店舗単位で集計した当年月別借方金額（02）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+8,当年借方金額０３,当年借方金額０３,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar03,SUM(tbg7005m_3.ki_toykar03),店舗単位で集計した当年月別借方金額（03）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+9,当年借方金額０４,当年借方金額０４,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar04,SUM(tbg7005m_3.ki_toykar04),店舗単位で集計した当年月別借方金額（04）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+10,当年借方金額０５,当年借方金額０５,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar05,SUM(tbg7005m_3.ki_toykar05),店舗単位で集計した当年月別借方金額（05）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+11,当年借方金額０６,当年借方金額０６,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar06,SUM(tbg7005m_3.ki_toykar06),店舗単位で集計した当年月別借方金額（06）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+12,当年借方金額０７,当年借方金額０７,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar07,SUM(tbg7005m_3.ki_toykar07),店舗単位で集計した当年月別借方金額（07）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+13,当年借方金額０８,当年借方金額０８,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar08,SUM(tbg7005m_3.ki_toykar08),店舗単位で集計した当年月別借方金額（08）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+14,当年借方金額０９,当年借方金額０９,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar09,SUM(tbg7005m_3.ki_toykar09),店舗単位で集計した当年月別借方金額（09）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+15,当年借方金額１０,当年借方金額１０,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar10,SUM(tbg7005m_3.ki_toykar10),店舗単位で集計した当年月別借方金額（10）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+16,当年借方金額１１,当年借方金額１１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar11,SUM(tbg7005m_3.ki_toykar11),店舗単位で集計した当年月別借方金額（11）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+17,当年借方金額１２,当年借方金額１２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykar12,SUM(tbg7005m_3.ki_toykar12),店舗単位で集計した当年月別借方金額（12）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+18,当年貸方金額０１,当年貸方金額０１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas01,SUM(tbg7005m_3.ki_toykas01),店舗単位で集計した当年月別貸方金額（01）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+19,当年貸方金額０２,当年貸方金額０２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas02,SUM(tbg7005m_3.ki_toykas02),店舗単位で集計した当年月別貸方金額（02）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+20,当年貸方金額０３,当年貸方金額０３,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas03,SUM(tbg7005m_3.ki_toykas03),店舗単位で集計した当年月別貸方金額（03）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+21,当年貸方金額０４,当年貸方金額０４,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas04,SUM(tbg7005m_3.ki_toykas04),店舗単位で集計した当年月別貸方金額（04）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+22,当年貸方金額０５,当年貸方金額０５,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas05,SUM(tbg7005m_3.ki_toykas05),店舗単位で集計した当年月別貸方金額（05）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+23,当年貸方金額０６,当年貸方金額０６,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas06,SUM(tbg7005m_3.ki_toykas06),店舗単位で集計した当年月別貸方金額（06）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+24,当年貸方金額０７,当年貸方金額０７,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas07,SUM(tbg7005m_3.ki_toykas07),店舗単位で集計した当年月別貸方金額（07）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+25,当年貸方金額０８,当年貸方金額０８,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas08,SUM(tbg7005m_3.ki_toykas08),店舗単位で集計した当年月別貸方金額（08）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+26,当年貸方金額０９,当年貸方金額０９,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas09,SUM(tbg7005m_3.ki_toykas09),店舗単位で集計した当年月別貸方金額（09）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+27,当年貸方金額１０,当年貸方金額１０,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas10,SUM(tbg7005m_3.ki_toykas10),店舗単位で集計した当年月別貸方金額（10）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+28,当年貸方金額１１,当年貸方金額１１,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas11,SUM(tbg7005m_3.ki_toykas11),店舗単位で集計した当年月別貸方金額（11）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。
+29,当年貸方金額１２,当年貸方金額１２,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbg7005m,ki_toykas12,SUM(tbg7005m_3.ki_toykas12),店舗単位で集計した当年月別貸方金額（12）。DDL上はSTRINGだがSQL上は数値項目のSUM集計。

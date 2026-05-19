@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,cd_hansya,tg.cd_hansya をそのまま出力。GROUP BY項目,販社を識別するコード。販売見込み対象車両の集計軸。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,cd_kaisya,tg.cd_kaisya をそのまま出力。GROUP BY項目,会社を識別するコード。tbbc001g、tbv0232mとの結合にも使用。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,cd_jytyuten,tg.cd_jytyuten AS cd_tenpo として出力。GROUP BY項目,受注/販売予定店舗を表す店舗コード。元カラム名は cd_jytyuten。
+4,kn_syame,車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,mj_syamei,"tbv0232mを cd_hansya、cd_kaisya、cd_syamei = cd_ncsyamei相当の連結値 でLEFT JOINし、UPPER(NVL(tbv0232m.mj_syamei, '')) を出力。GROUP BY項目",車名マスタから取得した車名を大文字化して出力。マスタ未該当時は空文字になる。
+5,cd_ncsyamei,新車車名コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc001g,"mj_21syamek, mj_21syasyu, mj_21syamak, no_21syaren, mj_21syanin","tbbc001gを tg.cd_hansya、tg.cd_kaisya、tg.no_syaryou でLEFT JOINし、CONCAT(NVL(mj_21syamek,''), NVL(mj_21syasyu,''), NVL(mj_21syamak,''), NVL(no_21syaren,''), NVL(mj_21syanin,'')) を作成。GROUP BY項目",車名マスタ tbv0232m との結合キーにも使用される新車車名コード。
+6,dd_uriagyot,売上予定日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,dd_uriagyot,"CAST(TO_DATE(tg.dd_uriagyot) AS DATE) として出力。WHERE句で FROM_TIMESTAMP(tg.dd_uriagyot, 'yyyyMM') = FROM_TIMESTAMP(CAST(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST') AS DATE), 'yyyyMM') によりJST基準の当月に限定",DDL上はSTRINGだが、SQL上はDATE型へ変換している。売上予定日が当月のレコードのみ対象。
+7,su_jusya_hanbai_mikomi,受車販売見込み数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbc017g,"no_syaryou, dd_uriagekj, dd_torikesi, dd_moduriag, dd_uriagyot",COUNT(*) を出力。WHERE句で tg.dd_uriagekj IS NULL、tg.dd_torikesi IS NULL、tg.dd_moduriag IS NULL、売上予定年月がJST基準の当月、という条件を適用,売上計上日・取消日・戻り売上日が未設定で、当月の売上予定日を持つ車両を販売見込みとして件数化する指標。GROUP BYには tbbc001g.no_syaryou も含まれる。

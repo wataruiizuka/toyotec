@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,cd_hansya,t.cd_hansya をそのまま出力,車両情報側の販社コード。各参照テーブルとの結合キーにも使用。
+2,kj_kaisyatn,会社名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,kj_kaisyatn,t200m.kj_kaisyatn をそのまま出力。t.cd_hansya、t.cd_kaisya で会社マスタをLEFT JOIN,会社マスタから取得する会社名称。LEFT JOINのため、会社マスタに該当がない場合はNULLになり得る。
+3,cd_hanbaitn,販売店コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,cd_hanbaitn,t200m.cd_hanbaitn をそのまま出力。t.cd_hansya、t.cd_kaisya で会社マスタをLEFT JOIN,会社マスタから取得する販売店コード。
+4,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,cd_kaisya,t.cd_kaisya をそのまま出力,車両情報側の会社コード。各参照テーブルとの結合キーにも使用。
+5,CD_OKYAKU,お客様コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,CD_OKYAKU,t.CD_OKYAKU をそのまま出力,お客様を識別するコード。顧客関連テーブルとの結合キー。
+6,KB_SINCYU,新中古区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,KB_SINCYU,t.KB_SINCYU をそのまま出力,車両の新車・中古車等の区分を表す項目と推定。コード値の詳細定義はSQL内には記載なし。
+7,NO_SYADAI,車台番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,NO_SYADAI,t.NO_SYADAI をそのまま出力,車両を識別する車台番号。
+8,MJ_KATASIKI,型式,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,MJ_KATASIKI,t.MJ_KATASIKI をそのまま出力。WHERE句で LOWER(t.MJ_KATASIKI) LIKE '%xeam10%' OR LOWER(t.MJ_KATASIKI) LIKE '%yeam15%' に該当するレコードのみ抽出,抽出対象車両の型式。SQL上、xeam10 または yeam15 を含む型式に限定。
+9,MJ_SYAMEI,車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbtec05g,MJ_SYAMEI,t.MJ_SYAMEI をそのまま出力,車両の車名。
+10,CD_STAFFTEN,担当店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz006m,CD_STAFFTEN,t006m.CD_STAFFTEN をそのまま出力。t.cd_hansya、t.cd_kaisya、t.CD_OKYAKU で顧客担当情報をLEFT JOINし、WHERE句で t006m.KB_TANTOBUN = '1' の担当区分に限定,顧客担当情報から取得する担当店舗コード。WHERE句で t006m.KB_TANTOBUN = '1' を指定しているため、実質的に該当担当情報があるレコードに限定される。
+11,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,t201m.kj_tenpomei をそのまま出力。t.cd_hansya、t.cd_kaisya、t006m.CD_STAFFTEN = t201m.cd_tenpo で店舗マスタをLEFT JOIN,担当店舗コードに紐づく店舗名称。
+12,KJ_OKYAKUM1,お客様名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbaz000m,KJ_OKYAKUM1,t000m.KJ_OKYAKUM1 をそのまま出力。t.cd_hansya、t.cd_kaisya、t.CD_OKYAKU で顧客マスタをLEFT JOIN,顧客マスタから取得するお客様名。
