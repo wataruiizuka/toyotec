@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf008m,cd_hansya,tbbf008m.cd_hansya をそのまま出力。,販社を識別するコード。SQL上は仕様情報テーブル tbbf008m を起点として出力される。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf008m,cd_kaisya,tbbf008m.cd_kaisya をそのまま出力。,会社を識別するコード。
+3,品名カナ,品名カナ,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf007m,kn_hinmei,tbbf008m と tbbf007m を、販社コード・会社コード・車名・スペック区分・スペックコード・品名番号でLEFT JOINし、tbbf007m.kn_hinmei を出力。,仕様・品名に紐づくカナ名称。LEFT JOINのため一致しない場合はNULLになり得る。
+4,車名受注日,車名受注日キー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m / ai21rep_ve_dx.tbba001g,kj_kurumame / dd_jucyuke,"CONCAT(tbbf001m.kj_kurumame, FROM_TIMESTAMP(tbba001g.dd_jucyuke, 'yyyyMMdd')) で新車車名と受注計上日を連結。",車名と受注計上日を組み合わせた表示・識別用の派生キー。tbba001g がLEFT JOINのため、受注データがない場合は日付部分がNULLになり得る。
+5,新車車名,新車車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,kj_kurumame,tbbf008m と tbbf001m を、販社コード・会社コード・新車車名コードでINNER JOINし、tbbf001m.kj_kurumame を出力。なお tbbf008m.kb_spec = 'G' の条件でグレード系スペックに限定。,新車の車名。tbi999008m の表示対象車名 kb_tenji = 1 にLEFT SEMI JOINされるため、表示対象車名のみが残る。
+6,グレード,グレード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0229m,mj_guredo,tbba001g と tbv0229m を、販社コード・会社コード・仕入類別番号 no_siteruib でLEFT JOINし、tbv0229m.mj_guredo を出力。,車両のグレード名称。LEFT JOINのため一致しない場合はNULLになり得る。
+7,台数,台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g / dx_ve.tbi999003m,cd_hansya / dd_uritrkkj / dd_torikesi / dd_jucyuke / cd_tenpo など,"SUM(IF(tbba001g.cd_hansya IS NOT NULL AND tbi999003m.cd_hansya IS NOT NULL AND tbba001g.dd_uritrkkj IS NULL AND tbba001g.dd_torikesi IS NULL AND tbba001g.dd_jucyuke IS NOT NULL, 1, 0)) で条件一致した受注データをカウント。",売上計上日 dd_uritrkkj がNULL、取消日 dd_torikesi がNULL、受注計上日 dd_jucyuke がNOT NULL、かつ帳票ID016の表示対象店舗 tbi999003m に一致したデータのみ台数として加算する。SQLのCTAS型推論では数値型になる可能性があるが、DDL方針に合わせてSTRINGとして整理。
