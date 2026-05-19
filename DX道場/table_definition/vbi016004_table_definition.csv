@@ -1,0 +1,13 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,tbba001g.cd_hansya をそのまま出力。,販社を識別するコード。帳票ID016の表示対象店舗に限定された受注データを対象とする。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_kaisya,tbba001g.cd_kaisya をそのまま出力。,会社を識別するコード。
+3,新車車名,新車車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,kj_kurumame,tbba001g から tbbf008m を経由して tbbf001m に結合し、tbbf001m.kj_kurumame を出力。tbi999008m.kb_tenji = 1 の表示対象車名に限定。,新車の車名。SQL最終SELECTではDDLの並びと異なり3列目に出力される。
+4,法人個人区分,法人個人区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g,kb_seibetu,CASE WHEN tbba051g.kb_seibetu = '1' THEN '男' WHEN '2' THEN '女' WHEN '3' THEN '法人' ELSE NULL END。,性別区分を法人・個人区分として表示用に変換。tbba051g は kb_kokyaku = '2' の条件でLEFT JOINされる。
+5,法人個人区分ソート順,法人個人区分ソート順,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g,kb_seibetu,CASE WHEN tbba051g.kb_seibetu = '1' THEN 1 WHEN '2' THEN 2 WHEN '3' THEN 3 ELSE 4 END。,法人個人区分の表示順を制御する派生列。CTASの型推論では数値型になる可能性があるが、DDL方針に合わせてSTRINGとして整理。
+6,年齢別,年齢別,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba051g,nu_nenrei,CASE WHEN nu_nenrei >= 60 THEN '60歳以上' WHEN >= 50 THEN '50歳代' WHEN >= 40 THEN '40歳代' WHEN >= 30 THEN '30歳代' ELSE '29歳以下' END。,年齢を年代別に分類した派生列。NULLや30歳未満はELSEにより'29歳以下'となる。
+7,商談動機,商談動機,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbg068m / ai21rep_ve_dx.tbba056g,cd_kotaem1〜cd_kotaem20 / mj_jucyuke1,"tbbg068m の cd_kotaem1〜cd_kotaem20 を searchKey '01'〜'20' にUNION ALLで縦持ち化し、tbba056g.mj_jucyuke1 = searchKey で結合。NVL(tbbg068m.答名, '') を出力。",商談動機を回答マスタから取得。該当なしの場合は空文字。
+8,業直区分,業直区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba056g,kb_gyocyok,"IF(tbba056g.kb_gyocyok = '1', '直', '業')。",業販・直販の区分。'1' の場合は直、それ以外は業として出力される。
+9,支払区分,支払区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0231m / ai21rep_ve_dx.tbba052g,mj_kubunnai / kb_siharai,"tbv0231m.mj_blockid = '02'、tbv0231m.mj_kubunid = '0018'、TRIM(tbv0231m.cd_kubun) = tbba052g.kb_siharai で結合し、REPLACE(TRIM(tbv0231m.mj_kubunnai), '　', '') を出力。",支払区分名称。前後空白を除去し、全角スペースも削除している。
+10,車名受注日,車名受注日キー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m / ai21rep_ve_dx.tbba001g,kj_kurumame / dd_jucyuke,"CONCAT(新車車名, from_timestamp(受注計上日, 'yyyyMMdd'))。",新車車名と受注計上日を連結した表示・識別用の派生キー。DDLには存在しないがSQL最終SELECTで出力される。
+11,台数,台数,STRING,有,なし,なし,なし,派生項目,レコード件数,外側集計で COUNT(1) を算出。,グループ化後の明細件数。DDLには存在しないがSQL最終SELECTで出力される。CTASの型推論ではBIGINT系になる可能性あり。
+12,受注台数,受注台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,su_juchudai,内側で tbba001g.su_juchudai を取得し、外側集計で SUM(受注台数) を算出。,受注台数の合計値。売上計上日NULL、取消日NULL、受注計上日NOT NULLの受注データが対象。CTASの型推論では数値型になる可能性あり。
