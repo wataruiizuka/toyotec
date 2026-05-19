@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,tbba001g.cd_hansya を出力。UNION ALLの固定行では '固定' を設定。,販社を識別するコード。最終SELECTの出力列。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_kaisya,tbba001g.cd_kaisya を出力。UNION ALLの固定行では空文字 '' を設定。,会社を識別するコード。販社コードと組み合わせて集計単位になる。
+3,新車車名,新車車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,kj_kurumame,tbba001g から tbbf008m を経由して tbbf001m に結合し、tbbf001m.kj_kurumame を出力。UNION ALLの固定行では '合計' を設定。,新車の車名。集計GROUP BY対象。
+4,受注計上日,受注計上日,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_jucyuke,CAST(tbba001g.dd_jucyuke AS DATE) で日付化して出力。WHERE句で dd_jucyuke IS NOT NULL を条件指定。UNION ALLの固定行では NULL。,受注が計上された日付。DDL上はSTRINGだが、SQLのCTAS型推論ではDATEになる可能性があるため注意。
+5,月別,月別区分,STRING,有,なし,なし,なし,派生項目,受注計上日,JST現在日付の年月と受注計上日の年月を比較し、前月なら '前月'、当月なら '当月'、それ以外は半角スペース ' ' を設定。UNION ALLの固定行では NULL。,当月・前月判定用の派生列。DDLには存在しないが、SQL最終SELECTでは出力される。
+6,車名受注日,車名受注日キー,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m / ai21rep_ve_dx.tbba001g,kj_kurumame / dd_jucyuke,"CONCAT(`新車車名`, FROM_TIMESTAMP(`受注計上日`, 'yyyyMMdd')) で車名と受注計上日（yyyyMMdd）を連結。UNION ALLの固定行では NULL。",車名と受注日を連結した表示・識別用の派生キー。DDLには存在しないが、SQL最終SELECTでは出力される。
+7,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999008m,mj_sortjyun / cd_ncsyamei,"sort_carサブクエリで車名単位に MIN(mj_sortjyun), MIN(cd_ncsyamei) を取得し、DENSE_RANK() OVER (PARTITION BY 販社コード, 会社コード ORDER BY ソート順, 新車車名コード) で再採番。UNION ALLの固定行では -1。",販社・会社単位で車名表示順を付与する派生列。DDL上はSTRINGだが、SQLのCTAS型推論では数値型になる可能性があるため注意。
+8,台数,台数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,レコード件数,GROUP BY 販社コード・会社コード・受注計上日・新車車名ごとに COUNT(1) を集計。UNION ALLの固定行では 0。,条件に一致する新車受注データの件数。DDL上はSTRINGだが、SQLのCTAS型推論ではBIGINT系になる可能性があるため注意。
