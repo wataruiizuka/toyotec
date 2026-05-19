@@ -1,0 +1,19 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販社コード,販社コード,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,cd_hansya,vbi019001とvbi019002をUNION ALL後、cd_hansyaをGROUP BY。最終SELECTでt.cd_hansyaを販社コードとして出力。,販社単位を識別するコード。
+2,会社コード,会社コード,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,cd_kaisya,vbi019001とvbi019002をUNION ALL後、cd_kaisyaをGROUP BY。最終SELECTでt.cd_kaisyaを会社コードとして出力。,会社単位を識別するコード。tbi999003mとのJOIN条件にも使用。
+3,店舗コード,店舗コード,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,cd_tenpo,vbi019001とvbi019002をUNION ALL後、cd_tenpoをGROUP BY。最終SELECTでt.cd_tenpoを店舗コードとして出力。,店舗単位を識別するコード。tbi999003mとのJOIN条件およびソート順算出にも使用。
+4,店舗名称,店舗名称,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,kj_tenpomei,vbi019001とvbi019002をUNION ALL後、kj_tenpomeiをGROUP BY。最終SELECTでt.kj_tenpomeiを店舗名称として出力。,店舗名。
+5,販売スタッフコード,販売スタッフコード,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,cd_hanstaff,vbi019001とvbi019002をUNION ALL後、cd_hanstaffをGROUP BY。最終SELECTでt.cd_hanstaffを販売スタッフコードとして出力。,販売スタッフを識別するコード。
+6,社員名,社員名,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,kj_syainmei,vbi019001とvbi019002をUNION ALL後、kj_syainmeiをGROUP BY。最終SELECTでt.kj_syainmeiを社員名として出力。,販売スタッフの社員名。
+7,月,月,STRING,有,なし,なし,なし,dx_ve.vbi019001 / dx_ve.vbi019002,month,vbi019001とvbi019002をUNION ALL後、monthをGROUP BY。最終SELECTでt.monthを月として出力。,集計対象月。形式はSQL内では明示されていないため元テーブルのmonthに依存。
+8,受注,受注,STRING,有,なし,なし,なし,dx_ve.vbi019001,su_jucyu,vbi019001側のsu_jucyuを使用し、vbi019002側は0補完。UNION ALL後にSUM(su_jucyu)で集計。,受注件数または受注数量系の集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+9,受注キャンセル反映,受注キャンセル反映,STRING,有,なし,なし,なし,dx_ve.vbi019001,su_jucyucancelhane,vbi019001側のsu_jucyucancelhaneを使用し、vbi019002側は0補完。UNION ALL後にSUM(su_jucyucancelhane)で集計。,受注キャンセル反映後の集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+10,受注除軽,受注除軽,STRING,有,なし,なし,なし,dx_ve.vbi019001,su_jucyujyokei,vbi019001側のsu_jucyujyokeiを使用し、vbi019002側は0補完。UNION ALL後にSUM(su_jucyujyokei)で集計。,軽自動車等を除外した受注系の集計値と推定されるが、除軽の業務定義はSQL内では明示されていない。
+11,受注除軽キャンセル反映,受注除軽キャンセル反映,STRING,有,なし,なし,なし,dx_ve.vbi019001,su_jucyucanceljyokeihane,vbi019001側のsu_jucyucanceljyokeihaneを使用し、vbi019002側は0補完。UNION ALL後にSUM(su_jucyucanceljyokeihane)で集計。,受注除軽にキャンセル反映を加味した集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+12,販売,販売,STRING,有,なし,なし,なし,dx_ve.vbi019002,su_hanbai,vbi019001側は0補完し、vbi019002側のsu_hanbaiを使用。UNION ALL後にSUM(su_hanbai)で集計。,販売件数または販売数量系の集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+13,販売キャンセル反映,販売キャンセル反映,STRING,有,なし,なし,なし,dx_ve.vbi019002,su_hanbaicancelhane,vbi019001側は0補完し、vbi019002側のsu_hanbaicancelhaneを使用。UNION ALL後にSUM(su_hanbaicancelhane)で集計。,販売キャンセル反映後の集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+14,販売除軽,販売除軽,STRING,有,なし,なし,なし,dx_ve.vbi019002,su_hanbaijyokei,vbi019001側は0補完し、vbi019002側のsu_hanbaijyokeiを使用。UNION ALL後にSUM(su_hanbaijyokei)で集計。,軽自動車等を除外した販売系の集計値と推定されるが、除軽の業務定義はSQL内では明示されていない。
+15,販売除軽キャンセル反映,販売除軽キャンセル反映,STRING,有,なし,なし,なし,dx_ve.vbi019002,su_hanbaicanceljyokeihene,vbi019001側は0補完し、vbi019002側のsu_hanbaicanceljyokeiheneを使用。UNION ALL後にSUM(su_hanbaicanceljyokeihene)で集計。,SQL記載の元カラム名はsu_hanbaicanceljyokeihene。名称の末尾がhaneではなくheneとなっているため、実テーブル定義との照合時は注意。
+16,割賦,割賦,STRING,有,なし,なし,なし,dx_ve.vbi019001,su_kap,vbi019001側のsu_kapを使用し、vbi019002側は0補完。UNION ALL後にSUM(su_kap)で集計。,割賦関連の集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+17,メンテナンスパック,メンテナンスパック,STRING,有,なし,なし,なし,dx_ve.vbi019001,su_maintenancepack,vbi019001側のsu_maintenancepackを使用し、vbi019002側は0補完。UNION ALL後にSUM(su_maintenancepack)で集計。,メンテナンスパック関連の集計値。SQL上はSUMだがDDL指定に合わせてSTRING。
+18,ソート順,ソート順,STRING,有,なし,なし,なし,dx_ve.tbi999003m / 集計結果t,"tbi999003m.mj_sortjyun, t.cd_tenpo, t.cd_hansya, t.cd_kaisya","rank() OVER (PARTITION BY t.cd_hansya, t.cd_kaisya ORDER BY tbi999003m.mj_sortjyun, t.cd_tenpo) で算出。tbi999003mはmj_cyohyoid='019'、kb_tenji=1で絞り込み。",販社コード・会社コード単位の表示順。RANK関数のため同順位が発生した場合は順位が飛ぶ可能性がある。DDL指定に合わせてSTRING。

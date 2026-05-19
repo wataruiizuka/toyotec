@@ -1,0 +1,15 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,cd_hansya,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hansya,内側SELECTで t001g.cd_hansya を取得し、外側SELECTで GROUP BY キーとしてそのまま出力。,受注・取消データの販社コード。dx_ve.tbi999003m に帳票ID '017'、表示対象 kb_tenji = 1 として存在する店舗のみ対象。
+2,cd_kaisya,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_kaisya,内側SELECTで t001g.cd_kaisya を取得し、外側SELECTで GROUP BY キーとしてそのまま出力。,受注・取消データの会社コード。
+3,cd_tenpo,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_tenpo,内側SELECTで t001g.cd_tenpo を取得し、外側SELECTで GROUP BY キーとしてそのまま出力。,受注・取消データの店舗コード。
+4,kj_tenpomei,店舗名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,"t001g の販社コード・会社コード・店舗コードで tbv0201m を参照し、regexp_replace(t0201m.kj_tenpomei, '　+$', '') により末尾の全角スペースを除去して設定。",店舗名称。受注分・取消分の両方で同一ロジック。
+5,cd_hanstaff,販売スタッフコード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,cd_hanstaff,内側SELECTで t001g.cd_hanstaff を取得し、外側SELECTで GROUP BY キーとしてそのまま出力。,受注・取消データに紐づく販売スタッフコード。
+6,kj_syainmei,社員名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0014m,kj_syainmei,"t001g.cd_hanstaff と tbv0014m.cd_syain を結合し、regexp_replace(t014m.kj_syainmei, '　+$', '') により末尾の全角スペースを除去して設定。",販売スタッフの社員名。受注分・取消分の両方で同一ロジック。
+7,month,月区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba001g,dd_jucyuke / dd_torikesi,受注分は t001g.dd_jucyuke がJST現在日の月初以上なら '当月'、それ以外は '前月'。取消分は t001g.dd_torikesi がJST現在日の月初以上なら '当月'、それ以外は '前月'。,対象期間は受注分が dd_jucyuke >= 前月月初、取消分が dd_torikesi >= 前月月初。JST基準の動的期間判定。
+8,su_jucyu,受注数,STRING,有,なし,なし,なし,算出値,なし,受注分の内側SELECTで 1、取消分の内側SELECTで 0 を設定し、外側SELECTで SUM(su_jucyu) を集計。,"受注件数。kb_haraidas NOT IN ('00','40')、かつ表示対象店舗のデータが対象。"
+9,su_jucyucancelhane,受注取消跳ね後数,STRING,有,なし,なし,なし,算出値,su_jucyu / su_jucyucancel,外側SELECTで SUM(su_jucyu) - SUM(su_jucyucancel) を算出。受注分は su_jucyucancel=0、取消分は su_jucyucancel=1。,取消件数を控除した正味の受注数。
+10,su_jucyujyokei,受注除軽数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m / 算出値,kn_kei,受注分で tbbf001m.kn_kei <> '1' の場合 1、それ以外は0を設定し、取消分では0を設定。外側SELECTで SUM(su_jucyujyokei) を集計。,軽区分を除外した受注数と解釈。車名マスタ tbbf001m は仕様情報 tbbf008m 経由で参照。
+11,su_jucyucanceljyokeihane,受注取消除軽跳ね後数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m / 算出値,kn_kei,外側SELECTで SUM(su_jucyujyokei) - SUM(su_jucyucanceljyokei) を算出。取消分では tbbf001m.kn_kei <> '1' の場合 su_jucyucanceljyokei=1、それ以外は0。,軽区分を除外した正味の受注数。受注除軽数から取消除軽数を控除。
+12,su_kap,KAP数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba052g,kb_siharai,受注分で t052g.kb_siharai = '2' の場合 1、それ以外は0を設定し、取消分では0を設定。外側SELECTで SUM(su_kap) を集計。,支払区分が '2' の受注件数。取消控除は行われていない。
+13,su_maintenancepack,メンテナンスパック数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba052g,kb_mntpkkei,受注分で t052g.kb_mntpkkei がNULLでなく、全角/半角スペース除去後も空でない場合 1、それ以外は0を設定。取消分では0を設定。外側SELECTで SUM(su_maintenancepack) を集計。,メンテナンスパック契約ありの受注件数。取消控除は行われていない。
+14,su_sitadori,下取数,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbba052g,su_sitadori,受注分で t052g.su_sitadori > 0 の場合 1、それ以外は0を設定。取消分では0を設定。外側SELECTで SUM(su_sitadori) を集計。,下取ありの受注件数。取消控除は行われていない。
