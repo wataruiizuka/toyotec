@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,No.,No.,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001m,"cd_hansya, cd_kaisya, cd_tenpo, no_stall","ROW_NUMBER() OVER(PARTITION BY t001m.cd_hansya, t001m.cd_kaisya ORDER BY t001m.cd_tenpo, t001m.no_stall) を設定",販社コード・会社コード単位で、店舗コード・ストール番号順に採番する表示用の連番。SQL上は数値だが、DDLではSTRING定義。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001m,cd_hansya,t001m.cd_hansya をそのまま設定,販社を識別するコード。t201m、v3002mとの結合条件に使用。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001m,cd_kaisya,t001m.cd_kaisya をそのまま設定,会社を識別するコード。t201m、v3002mとの結合条件に使用。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001m,cd_tenpo,t001m.cd_tenpo をそのまま設定,店舗を識別するコード。t201m、v3002mとの結合条件に使用。
+5,店舗名,店舗名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,"regexp_replace(t201m.kj_tenpomei, '　+$', '') を設定",店舗名称の末尾にある全角スペースを除去した店舗名。LEFT JOINのため、店舗マスタに該当がない場合はNULLになり得る。
+6,ストール番号,ストール番号,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001m,no_stall,t001m.no_stall をそのまま設定,ストールを識別する番号。v3002mとの結合条件にも使用。
+7,ストール名称,ストール名称,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbsa001m,"mj_stallmei, cd_hansya, cd_kaisya, cd_tenpo, no_stall","CONCAT(t001m.mj_stallmei, '##', CAST(ROW_NUMBER() OVER(PARTITION BY t001m.cd_hansya, t001m.cd_kaisya ORDER BY t001m.cd_tenpo, t001m.no_stall) AS string), '##') を設定",ストール名に、販社コード・会社コード単位の連番を ## で囲んで付与した表示用名称。
+8,集計対象判別,集計対象判別,STRING,有,なし,なし,なし,dx_ve.tbi003002m,kb_shuukeitaishou,"if(v3002m.kb_shuukeitaishou = '0', '×', '○') を設定",集計対象外を示す値が '0' の場合は '×'、それ以外は '○' として判別する。

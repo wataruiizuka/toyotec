@@ -1,0 +1,34 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,No.,No.,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,"cd_hansya, cd_kaisya, kj_tenpomei, cd_tenpo","ROW_NUMBER() OVER(PARTITION BY t201m.cd_hansya, t201m.cd_kaisya ORDER BY t201m.kj_tenpomei, t201m.cd_tenpo) を設定",販社コード・会社コード単位で、店舗名称・店舗コード順に採番する表示用の連番。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_hansya,t201m.cd_hansya をそのまま設定,販社を識別するコード。t200m、v3001m、v1001m、bsとの結合条件に使用。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_kaisya,t201m.cd_kaisya をそのまま設定,会社を識別するコード。t200m、v3001m、v1001m、bsとの結合条件に使用。
+4,店舗コード,店舗コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,cd_tenpo,t201m.cd_tenpo をそのまま設定,店舗を識別するコード。v3001m、v1001m、bsとの結合条件に使用。
+5,店舗名,店舗名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0201m,kj_tenpomei,"regexp_replace(t201m.kj_tenpomei, '　+$', '') を設定",店舗名称の末尾にある全角スペースを除去した店舗名。
+6,開店時間,開店時間,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_kaiten,"NVL(v3001m.tm_kaiten, '09:00:00') を設定",店舗別の開店時間。参照値がNULLまたは該当店舗がない場合は '09:00:00' を設定。
+7,閉店時間,閉店時間,STRING,有,なし,なし,なし,dx_ve.tbi003001m,tm_heiten,"NVL(v3001m.tm_heiten, '17:00:00') を設定",店舗別の閉店時間。参照値がNULLまたは該当店舗がない場合は '17:00:00' を設定。
+8,新車受注,新車受注,STRING,有,なし,なし,なし,dx_ve.tbi001001m,nu_sinsyajucyu,v1001m.nu_sinsyajucyu をそのまま設定,店舗別の新車受注に関する数値項目。LEFT JOINのため該当がない場合はNULL。
+9,新車販売,新車販売,STRING,有,なし,なし,なし,dx_ve.tbi001001m,nu_sinsyahanbai,v1001m.nu_sinsyahanbai をそのまま設定,店舗別の新車販売に関する数値項目。LEFT JOINのため該当がない場合はNULL。
+10,中古車受注,中古車受注,STRING,有,なし,なし,なし,dx_ve.tbi001001m,nu_jusyajucyu,v1001m.nu_jusyajucyu をそのまま設定,店舗別の中古車受注に関する数値項目。LEFT JOINのため該当がない場合はNULL。
+11,中古車販売,中古車販売,STRING,有,なし,なし,なし,dx_ve.tbi001001m,nu_jusyahanbai,v1001m.nu_jusyahanbai をそのまま設定,店舗別の中古車販売に関する数値項目。LEFT JOINのため該当がない場合はNULL。
+12,表示可否1,表示可否1,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '000' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否1`, '○') を設定",帳票ID '000' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+13,表示可否2,表示可否2,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '001' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否2`, '○') を設定",帳票ID '001' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+14,表示可否3,表示可否3,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '022' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否3`, '○') を設定",帳票ID '022' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+15,表示可否4,表示可否4,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '002' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否4`, '○') を設定",帳票ID '002' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+16,表示可否5,表示可否5,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '013' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否5`, '○') を設定",帳票ID '013' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+17,表示可否6,表示可否6,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '011' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否6`, '○') を設定",帳票ID '011' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+18,表示可否7,表示可否7,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '003' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否7`, '○') を設定",帳票ID '003' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+19,表示可否8,表示可否8,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '012' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否8`, '○') を設定",帳票ID '012' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+20,表示可否9,表示可否9,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '016' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否9`, '○') を設定",帳票ID '016' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+21,表示可否10,表示可否10,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '017' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否10`, '○') を設定",帳票ID '017' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+22,表示可否11,表示可否11,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, kb_tenji","CTE bsで、mj_cyohyoid = '019' AND kb_tenji = 0 の場合は '×'、該当がない場合はNULLとして店舗単位にmax集約。最終SELECTで NVL(bs.`表示可否11`, '○') を設定",帳票ID '019' に対応する表示可否。非表示設定がある場合は '×'、それ以外は既定で '○'。
+23,表示順1,表示順1,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '000' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順1` をそのまま設定,帳票ID '000' に対応する表示順。該当設定がない場合はNULL。
+24,表示順2,表示順2,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '001' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順2` をそのまま設定,帳票ID '001' に対応する表示順。該当設定がない場合はNULL。
+25,表示順3,表示順3,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '022' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順3` をそのまま設定,帳票ID '022' に対応する表示順。該当設定がない場合はNULL。
+26,表示順4,表示順4,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '002' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順4` をそのまま設定,帳票ID '002' に対応する表示順。該当設定がない場合はNULL。
+27,表示順5,表示順5,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '013' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順5` をそのまま設定,帳票ID '013' に対応する表示順。該当設定がない場合はNULL。
+28,表示順6,表示順6,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '011' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順6` をそのまま設定,帳票ID '011' に対応する表示順。該当設定がない場合はNULL。
+29,表示順7,表示順7,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '003' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順7` をそのまま設定,帳票ID '003' に対応する表示順。該当設定がない場合はNULL。
+30,表示順8,表示順8,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '012' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順8` をそのまま設定,帳票ID '012' に対応する表示順。該当設定がない場合はNULL。
+31,表示順9,表示順9,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '016' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順9` をそのまま設定,帳票ID '016' に対応する表示順。該当設定がない場合はNULL。
+32,表示順10,表示順10,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '017' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順10` をそのまま設定,帳票ID '017' に対応する表示順。該当設定がない場合はNULL。
+33,表示順11,表示順11,STRING,有,なし,なし,なし,dx_ve.tbi999003m（CTE: bs）,"mj_cyohyoid, mj_sortjyun",CTE bsで、mj_cyohyoid = '019' の場合に mj_sortjyun を設定し、店舗単位に max 集約。最終SELECTで bs.`表示順11` をそのまま設定,帳票ID '019' に対応する表示順。該当設定がない場合はNULL。

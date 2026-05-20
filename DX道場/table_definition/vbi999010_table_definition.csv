@@ -1,0 +1,8 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,No.,No.,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0208m,"cd_hansya, cd_kaisya, kb_nyuukin","ROW_NUMBER() OVER (PARTITION BY tbv0208m.cd_hansya, tbv0208m.cd_kaisya ORDER BY tbv0208m.kb_nyuukin ASC) を設定",販社コード・会社コード単位で、入金区分の昇順に採番する表示用の連番。SQL上は数値だが、DDLではSTRING定義。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0208m,cd_hansya,tbv0208m.cd_hansya をそのまま設定,販社を識別するコード。tbi999013mとの結合条件に使用。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0208m,cd_kaisya,tbv0208m.cd_kaisya をそのまま設定,会社を識別するコード。tbi999013mとの結合条件に使用。
+4,入金区分,入金区分,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0208m,kb_nyuukin,tbv0208m.kb_nyuukin をそのまま設定,入金区分を識別するコード。tbi999013mとの結合条件に使用。
+5,入金区分名,入金区分名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0208m,kj_nyuukinm,tbv0208m.kj_nyuukinm をそのまま設定,入金区分の名称。設定マスタが存在しない場合の現金・クレジットカード判定にも使用。
+6,現金,現金,STRING,有,なし,なし,なし,"ai21rep_ve_dx.tbv0208m, dx_ve.tbi999013m","tbv0208m.kj_nyuukinm, tbi999013m.cd_hansya, tbi999013m.kb_genkin","IF(tbi999013m.cd_hansya IS NULL, IF(tbv0208m.kj_nyuukinm RLIKE '現金', '○', '×'), IF(tbi999013m.kb_genkin = '1', '○', '×')) を設定",入金区分設定マスタに該当がない場合は入金区分名に「現金」が含まれるかで判定。該当がある場合は kb_genkin = '1' で '○'、それ以外は '×'。
+7,クレジットカード,クレジットカード,STRING,有,なし,なし,なし,"ai21rep_ve_dx.tbv0208m, dx_ve.tbi999013m","tbv0208m.kj_nyuukinm, tbi999013m.cd_hansya, tbi999013m.kb_crejcard","IF(tbi999013m.cd_hansya IS NULL, IF(tbv0208m.kj_nyuukinm RLIKE 'クレジット', '○', '×'), IF(tbi999013m.kb_crejcard = '1', '○', '×')) を設定",入金区分設定マスタに該当がない場合は入金区分名に「クレジット」が含まれるかで判定。該当がある場合は kb_crejcard = '1' で '○'、それ以外は '×'。

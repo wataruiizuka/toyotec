@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,No.,No.,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,"cd_hansya, cd_kaisya, mj_sortjyun, cd_syamei","ROW_NUMBER() OVER(PARTITION BY t0232m.cd_hansya, t0232m.cd_kaisya ORDER BY CAST(t0232m.mj_sortjyun AS int), t0232m.cd_syamei) を設定",販社コード・会社コード単位で、ソート順の数値変換結果・車名コード順に採番する表示用の連番。SQL上は数値だが、DDLではSTRING定義。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,cd_hansya,t0232m.cd_hansya をそのまま設定,販社を識別するコード。tbi999009mとの結合条件に使用。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,cd_kaisya,t0232m.cd_kaisya をそのまま設定,会社を識別するコード。tbi999009mとの結合条件に使用。
+4,車名コード,車名コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,cd_syamei,t0232m.cd_syamei をそのまま設定,車名を識別するコード。tbi999009m.cd_ocsyameiとの結合条件に使用。
+5,車名（漢字）,車名（漢字）,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,"kj_syamei, cd_hansya, cd_kaisya, mj_sortjyun, cd_syamei","CONCAT(t0232m.kj_syamei, '##', CAST(ROW_NUMBER() OVER(PARTITION BY t0232m.cd_hansya, t0232m.cd_kaisya ORDER BY CAST(t0232m.mj_sortjyun AS int), t0232m.cd_syamei) AS string), '##') を設定",漢字の車名に、販社コード・会社コード単位の表示用連番を ## で囲んで付与した名称。
+6,車名（カナ）,車名（カナ）,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,"mj_syamei, cd_hansya, cd_kaisya, mj_sortjyun, cd_syamei","CONCAT(t0232m.mj_syamei, '##', CAST(ROW_NUMBER() OVER(PARTITION BY t0232m.cd_hansya, t0232m.cd_kaisya ORDER BY CAST(t0232m.mj_sortjyun AS int), t0232m.cd_syamei) AS string), '##') を設定",カナの車名に、販社コード・会社コード単位の表示用連番を ## で囲んで付与した名称。WHERE句により mj_syamei がNULLの行は除外。
+7,表示可否,表示可否,STRING,有,なし,なし,なし,dx_ve.tbi999009m,kb_tenji,"IF(t9009m.kb_tenji = 0, '×', '○') を設定",表示不可を示す kb_tenji = 0 の場合は '×'、それ以外は '○'。LEFT JOINのため、表示可否マスタに該当がない場合も '○' になる想定。
+8,ソート順,ソート順,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0232m,mj_sortjyun,CAST(t0232m.mj_sortjyun AS int) を設定,車名の表示順。SQL上はintへCASTしているが、DDLではSTRING定義。

@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販売店コード,販売店コード,STRING,有,なし,なし,なし,dx_ve.tbi999002m,cd_hanbaitn,tbi999002m.cd_hanbaitn をそのまま設定,販売店を識別するコード。tbv0200m、tbi999006mとの結合条件にも使用。
+2,帳票ID,帳票ID,STRING,有,なし,なし,なし,dx_ve.tbi999002m,mj_cyohyoid,tbi999002m.mj_cyohyoid をそのまま設定,販売店別に紐づく帳票ID。
+3,URL,URL,STRING,有,なし,なし,なし,dx_ve.tbi999002m,mj_url,tbi999002m.mj_url をそのまま設定,帳票IDに対応するURL。
+4,販売店名,販売店名,STRING,有,なし,なし,なし,"ai21rep_ve_dx.tbv0200m, dx_ve.tbi999002m","tbv0200m.kj_kaisyatn, tbi999002m.cd_hanbaitn","tbv0200mはcd_hanbaitn単位でdd_saisinup降順にROW_NUMBERを付与しrn = 1の最新行に絞り込み。CONCAT(COALESCE(tbv0200m.kj_kaisyatn, ''), '(', tbi999002m.cd_hanbaitn, ')') を設定",販売店名に販売店コードを括弧付きで付与した表示用名称。販売店名が取得できない場合は空文字として扱うため、コードのみ括弧付きで表示される。
+5,マスタメンテナンスURL,マスタメンテナンスURL,STRING,有,なし,なし,なし,dx_ve.tbi999006m,mj_url,tbi999006m.kb_sakujo = 0 の行を対象に、tbi999002m.cd_hanbaitn = tbi999006m.cd_hanbaitn でLEFT JOINし、tbi999006m.mj_url を設定,販売店に紐づくマスタメンテナンス用URL。LEFT JOINのため、該当する有効データがない場合はNULL。
+6,削除フラグ,削除フラグ,STRING,有,なし,なし,なし,dx_ve.tbi999002m,kb_sakujo,tbi999002m.kb_sakujo をそのまま設定,帳票URLマスタ側の削除フラグ。SQL上、tbi999002m側は削除フラグで絞り込まず、そのまま出力している。

@@ -1,0 +1,7 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,販売店コード,販売店コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,cd_hanbaitn,t200m.cd_hanbaitn をそのまま設定,販売店を識別するコード。dx_ve.tbi999001m との結合キーにも使用。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,cd_hansya,t200m.cd_hansya をそのまま設定,販社を識別するコード。GROUP BY対象。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,cd_kaisya,t200m.cd_kaisya をそのまま設定,会社を識別するコード。GROUP BY対象。
+4,会社名,会社名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbv0200m,"cd_hanbaitn, kj_kaisya","CONCAT(t200m.cd_hanbaitn, '_', regexp_replace(t200m.kj_kaisya, '　| +$', '')) を設定",販売店コードと会社名をアンダースコアで連結。会社名は全角スペースおよび末尾半角スペースを除去。
+5,メール,メール,STRING,有,なし,なし,なし,dx_ve.tbi999001m,mj_account,"GROUP_CONCAT(v9001m.mj_account, ';') により、対象アカウントをセミコロン区切りで連結",kb_masterkengen = '1' の権限マスタアカウントを販売店単位で集約したメールアドレス一覧。
+6,メールSP,メールSP,STRING,有,なし,なし,なし,dx_ve.tbi999001m,mj_account,"GROUP_CONCAT(IF(v9001m.mj_account LIKE '%toyotecdap.onmicrosoft.com', v9001m.mj_account, CONCAT(REPLACE(v9001m.mj_account, '@', '_'), '#EXT#@toyotecdap.onmicrosoft.com')), ';') を設定",toyotecdap.onmicrosoft.com ドメインのアカウントはそのまま、それ以外は外部ユーザー形式に変換してセミコロン区切りで連結。

@@ -1,0 +1,9 @@
+﻿No,カラム名,カラム論理名,データ型,NULL有/無,主キー,パーティション定義,デフォルト値,元テーブル,元カラム,変換加工ロジック,説明/備考
+1,No.,No.,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,"cd_hansya, cd_kaisya, nu_symenarb, cd_ncsyamei","ROW_NUMBER() OVER(PARTITION BY tf001m.cd_hansya, tf001m.cd_kaisya ORDER BY CAST(tf001m.nu_symenarb AS int), tf001m.cd_ncsyamei) を設定",販社コード・会社コード単位で、車名並び順の数値変換結果・車名コード順に採番する表示用の連番。SQL上は数値だが、DDLではSTRING定義。
+2,販社コード,販社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,cd_hansya,tf001m.cd_hansya をそのまま設定,販社を識別するコード。tbi999008mとの結合条件に使用。
+3,会社コード,会社コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,cd_kaisya,tf001m.cd_kaisya をそのまま設定,会社を識別するコード。tbi999008mとの結合条件に使用。
+4,車名コード,車名コード,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,cd_ncsyamei,tf001m.cd_ncsyamei をそのまま設定,新車の車名を識別するコード。tbi999008m.cd_ncsyameiとの結合条件に使用。
+5,カナ車名,カナ車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,"kn_syame, cd_hansya, cd_kaisya, nu_symenarb, cd_ncsyamei","CONCAT(tf001m.kn_syame, '##', CAST(ROW_NUMBER() OVER(PARTITION BY tf001m.cd_hansya, tf001m.cd_kaisya ORDER BY CAST(tf001m.nu_symenarb AS int), tf001m.cd_ncsyamei) AS string), '##') を設定",カナ車名に、販社コード・会社コード単位の表示用連番を ## で囲んで付与した名称。WHERE句により kn_syame がNULLの行は除外。
+6,漢字車名,漢字車名,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,"kj_kurumame, cd_hansya, cd_kaisya, nu_symenarb, cd_ncsyamei","CONCAT(tf001m.kj_kurumame, '##', CAST(ROW_NUMBER() OVER(PARTITION BY tf001m.cd_hansya, tf001m.cd_kaisya ORDER BY CAST(tf001m.nu_symenarb AS int), tf001m.cd_ncsyamei) AS string), '##') を設定",漢字車名に、販社コード・会社コード単位の表示用連番を ## で囲んで付与した名称。
+7,表示可否,表示可否,STRING,有,なし,なし,なし,"dx_ve.tbi999008m, ai21rep_ve_dx.tbbf001m","t9008m.kb_tenji, tf001m.kb_oem","IF(t9008m.kb_tenji = 0, '×', IF(tf001m.kb_oem IN('0', '3', '6'), '○', '×')) を設定",表示可否マスタで kb_tenji = 0 の場合は '×'。それ以外はOEM区分が '0'・'3'・'6' の場合に '○'、それ以外は '×'。LEFT JOINのため、表示可否マスタに該当がない場合はOEM区分で判定される。
+8,車名並び順,車名並び順,STRING,有,なし,なし,なし,ai21rep_ve_dx.tbbf001m,nu_symenarb,CAST(tf001m.nu_symenarb AS int) を設定,新車車名の表示・並び順。SQL上はintへCASTしているが、DDLではSTRING定義。
