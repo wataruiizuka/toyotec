@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toyotec_jp.uslim.sita.dao.SitaMapper">
+
+	<!--下取予定車両仕分け条件-->
+	<sql id="sitaCond">
+		<!--車両仕分け条件(年式)-->
+		<if test="sitaCondSyodo != null">
+			AND T1.SU_SYODOTOR <![CDATA[ >= ]]> #{sitaCondSyodo}
+		</if>
+		<!--車両仕分け条件(走行距離)-->
+		<if test="sitaCondSoukou != null">
+			AND T1.NU_SOUKOUKM <![CDATA[ <= ]]> #{sitaCondSoukou}
+		</if>
+		<!--車両仕分け条件(メーカー)-->
+		<if test="sitaCondMaker != null and sitaCondMaker.size() > 0">
+			AND T6.CD_MAKER NOT IN 
+			<foreach item="item" collection="sitaCondMaker" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(車名)-->
+		<if test="sitaCondSyamei != null and sitaCondSyamei.size() > 0">
+			AND T6.CD_SYAMEI NOT IN 
+			<foreach item="item" collection="sitaCondSyamei" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(修復歴)-->
+		<if test="sitaCondSyufuku != null and sitaCondSyufuku.size() > 0">
+			AND T1.CD_SYUFUKRE IN 
+			<foreach item="item" collection="sitaCondSyufuku" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(仕分け区分)-->
+		<if test="sitaCondShiwake != null and sitaCondShiwake.size() > 0">
+			AND T1.KB_URIAGYOT IN 
+			<foreach item="item" collection="sitaCondShiwake" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(評価点)-->
+		<if test="sitaCondHyoka != null and sitaCondHyoka.size() > 0">
+			AND NVL(RTRIM(T14.NU_SUHKT), '') IN 
+			<foreach item="item" collection="sitaCondHyoka" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+	</sql>
+
+	<!--在庫車両仕分け条件-->
+	<sql id="zaikoCond">
+		<!--車両仕分け条件(年式)-->
+		<if test="zaikoCondSyodo != null">
+			AND T1.SU_SYODOTOR <![CDATA[ >= ]]> #{zaikoCondSyodo}
+		</if>
+		<!--車両仕分け条件(走行距離)-->
+		<if test="zaikoCondSoukou != null">
+			AND T1.NU_SOUKOUKM <![CDATA[ <= ]]> #{zaikoCondSoukou}
+		</if>
+		<!--車両仕分け条件(メーカー)-->
+		<if test="zaikoCondMaker != null and zaikoCondMaker.size() > 0">
+			AND T6.CD_MAKER NOT IN  
+			<foreach item="item" collection="zaikoCondMaker" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(車名)-->
+		<if test="zaikoCondSyamei != null and zaikoCondSyamei.size() > 0">
+			AND T6.CD_SYAMEI NOT IN  
+			<foreach item="item" collection="zaikoCondSyamei" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(修復歴)-->
+		<if test="zaikoCondSyufuku != null and zaikoCondSyufuku.size() > 0">
+			AND T1.CD_SYUFUKRE IN  
+			<foreach item="item" collection="zaikoCondSyufuku" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(仕分け区分)-->
+		<if test="zaikoCondShiwake != null and zaikoCondShiwake.size() > 0">
+			AND T1.KB_URIAGYOT IN  
+			<foreach item="item" collection="zaikoCondShiwake" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<!--車両仕分け条件(評価点)-->
+		<if test="zaikoCondHyoka != null and zaikoCondHyoka.size() > 0">
+			AND NVL(RTRIM(T14.NU_SUHKT), '') IN  
+			<foreach item="item" collection="zaikoCondHyoka" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+	</sql>
+
+	<!--下取・在庫情報取得条件-->
+	<sql id="sitaZaikoWhereClause">
+		WHERE 
+			T1.RN = 1
+			<!--本部店舗区分-->
+			<if test="kbHonTen == '2'.toString()">
+				<choose>
+				<when test="showSitaCond and showZaikoCond">
+					AND (
+						T1.CD_WEB = '1' 
+						OR (T1.CD_WEB = '' 
+							<include refid="sitaCond"/>)
+						OR (T1.CD_WEB = '0' 
+							<include refid="zaikoCond"/>)
+					)
+				</when>
+				<when test="showSitaCond">
+					AND (
+						T1.CD_WEB IN ('0', '1') 
+						OR (T1.CD_WEB = '' 
+							<include refid="sitaCond"/>)
+					)
+				</when>
+				<when test="showZaikoCond">
+					AND (
+						T1.CD_WEB IN ('', '1') 
+						OR (T1.CD_WEB = '0' 
+							<include refid="zaikoCond"/>)
+					)
+				</when>
+				</choose>
+			</if>
+			<!--車台番号-->
+			<if test="syadaiba != null and syadaiba != ''">
+				AND T1.NO_SYADAIBA LIKE CONCAT('%', #{syadaiba}, '%')
+			</if>
+			<!--車両NO-->
+			<if test="noSyaryou != null and noSyaryou != ''">
+				AND LEFT(REPLACE(T1.NO_SYARYOU,' ',''),LENGTH(#{noSyaryou})) = #{noSyaryou}
+			</if>
+			<!--カテゴリーコード-->
+			<if test="kategori != null and kategori.size() > 0">
+				AND T23.CD_TNJCATE IN 
+				<foreach item="item" collection="kategori" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--型式-->
+			<if test="katasiki != null and katasiki.size() > 0">
+				AND
+				<foreach item="item" collection="katasiki" open="(" separator=" or " close=")">
+				LEFT(REGEXP_REPLACE(T1.MJ_KATASIKI, '[　 ]+$', '') ,LENGTH(#{item})) = #{item}
+				</foreach>
+			</if>
+			<!--年式最小値 年式最大値-->
+			<choose>
+			<when test="syodotorMin != null and syodotorMin > 0 and syodotorMax != null and syodotorMax > 0">
+				AND T1.SU_SYODOTOR BETWEEN #{syodotorMin} AND #{syodotorMax}
+			</when>
+			<when test="syodotorMin != null and syodotorMin > 0">
+				AND T1.SU_SYODOTOR <![CDATA[ >= ]]> #{syodotorMin}
+			</when>
+			<when test="syodotorMax != null and syodotorMax > 0">
+				AND T1.SU_SYODOTOR != 0
+				AND T1.SU_SYODOTOR <![CDATA[ <= ]]> #{syodotorMax}
+			</when>
+			</choose>
+			<!--走行距離最小値 走行距離最大値-->
+			<choose>
+			<when test="soukoukiroMin != null and soukoukiroMin > 0 and soukoukiroMax != null and soukoukiroMax > 0">
+				AND T1.NU_SOUKOUKM BETWEEN #{soukoukiroMin} AND #{soukoukiroMax}
+			</when>
+			<when test="soukoukiroMin != null and soukoukiroMin > 0">
+				AND T1.NU_SOUKOUKM <![CDATA[ >= ]]> #{soukoukiroMin}
+			</when>
+			<when test="soukoukiroMax != null and soukoukiroMax > 0">
+				AND T1.NU_SOUKOUKM <![CDATA[ <= ]]> #{soukoukiroMax}
+			</when>
+			</choose>
+			<!--エンジン-->
+			<if test="unito != null and unito.size() > 0">
+				AND T1.KB_ENGINE IN 
+				<foreach item="item" collection="unito" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--車名コード-->
+			<if test="syamei != null and syamei.size() > 0">
+				AND T1.CD_SYAMEI IN 
+				<foreach item="item" collection="syamei" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--ウェルキャブ-->
+			<if test="welcab != null and welcab != ''">
+				AND T1.MJ_21SYANIN = #{welcab}
+			</if>
+			<!--バントラ区分 バン&トラ-->
+			<if test="banTora != null and banTora.size() > 0">
+				AND T6.KB_BANTORA IN 
+				<foreach item="item" collection="banTora" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--メーカーコード-->
+			<if test="maker != null and maker.size() > 0">
+				AND RTRIM(T6.CD_MAKER) IN 
+				<foreach item="item" collection="maker" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--在庫照会用色コード-->
+			<if test="tosikime != null and tosikime.size() > 0">
+				<choose>
+				<when test="tosikime.contains('16')">
+					AND (
+						T27.UCAR_BODY_COLOR_CD IS NULL
+						OR T27.SEARCH_COLOR_CD IN
+						<foreach item="item" collection="tosikime" open="(" separator="," close=")">#{item}</foreach>
+					)
+				</when>
+				<otherwise>
+					AND T27.SEARCH_COLOR_CD IN
+					<foreach item="item" collection="tosikime" open="(" separator="," close=")">#{item}</foreach>
+				</otherwise>
+				</choose>
+			</if>
+			<!--内装色コード-->
+			<if test="naisou != null and naisou.size() > 0">
+				AND T10.CD_NISCLR IN 
+				<foreach item="item" collection="naisou" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--グレード-->
+			<if test="guredo != null and guredo.size() > 0">
+				<!--指定類別有無-->
+				<choose>
+				<when test="kbSiteruib">
+					AND NVL(NULLIF(RTRIM(T26.MJ_GUREDO), ''), 'その他') IN 
+				</when>
+				<otherwise>
+					AND NVL(NULLIF(RTRIM(T10.MJ_GUREDO), ''), 'その他') IN 
+				</otherwise>
+				</choose>
+				<foreach item="item" collection="guredo" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--駆動方式-->
+			<if test="kudohoho != null and kudohoho.size() > 0">
+				AND T1.KB_KUDOHOHO IN 
+				<foreach item="item" collection="kudohoho" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--下取予定日最小値 下取予定日最大値-->
+			<choose>
+			<when test="ddSitayoteMin != null and ddSitayoteMax != null ">
+				AND T1.DD_SITAYOTE BETWEEN #{ddSitayoteMin} AND #{ddSitayoteMax}
+			</when>
+			<when test="ddSitayoteMin != null ">
+				AND T1.DD_SITAYOTE <![CDATA[ >= ]]> #{ddSitayoteMin}
+			</when>
+			<when test="ddSitayoteMax != null">
+				AND T1.DD_SITAYOTE <![CDATA[ <= ]]> #{ddSitayoteMax}
+			</when>
+			</choose>
+			<!--販売価格最小値 販売価格最大値-->
+			<choose>
+			<when test="hanbaikkMin != null and hanbaikkMin > 0 and hanbaikkMax != null and hanbaikkMax > 0">
+				AND T1.KI_HNBSIJIK BETWEEN #{hanbaikkMin} AND #{hanbaikkMax}
+			</when>
+			<when test="hanbaikkMin != null and hanbaikkMin > 0">
+				AND T1.KI_HNBSIJIK <![CDATA[ >= ]]> #{hanbaikkMin}
+			</when>
+			<when test="hanbaikkMax != null and hanbaikkMax > 0">
+				AND T1.KI_HNBSIJIK <![CDATA[ <= ]]> #{hanbaikkMax}
+			</when>
+			</choose>
+	</sql>
+
+	<!--共有在庫情報取得条件-->
+	<sql id="kyoyuWhereClause">
+		WHERE 
+			T1.CD_TMCHANCD != #{cdHanbaitn}
+			<!--車名コード-->
+			<if test="syamei != null and syamei.size() > 0">
+				AND T1.CD_SYAMEIAI IN 
+				<foreach item="item" collection="syamei" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--車台番号-->
+			<if test="syadaiba != null and syadaiba != ''">
+				AND T1.NO_SYADAIBA LIKE CONCAT('%', #{syadaiba}, '%')
+			</if>
+			<!--車両NO-->
+			<if test="noSyaryou != null and noSyaryou != ''">
+				AND LEFT(REPLACE(T1.NO_SYARYOU,' ',''),LENGTH(#{noSyaryou})) = #{noSyaryou}
+			</if>
+			<!--型式-->
+			<if test="katasiki != null and katasiki.size() > 0">
+				AND 
+				<foreach item="item" collection="katasiki" open="(" separator=" or " close=")">
+				LEFT(REGEXP_REPLACE(T1.MJ_KATASIKI, '[　 ]+$', '') ,LENGTH(#{item})) = #{item}
+				</foreach>
+			</if>
+			<!--年式最小値 年式最大値-->
+			<choose>
+			<when test="syodotorMin != null and syodotorMin >0 and syodotorMax != null and syodotorMax > 0">
+				AND NVL(CAST(T1.SU_SYODOTOR AS INT), 0) BETWEEN #{syodotorMin} AND #{syodotorMax}
+			</when>
+			<when test="syodotorMin != null and syodotorMin != ''">
+				AND NVL(CAST(T1.SU_SYODOTOR AS INT), 0) <![CDATA[ >= ]]> #{syodotorMin}
+			</when>
+			<when test="syodotorMax != null and syodotorMax != ''">
+				AND NVL(CAST(T1.SU_SYODOTOR AS INT), 0) != 0
+				AND NVL(CAST(T1.SU_SYODOTOR AS INT), 0) <![CDATA[ <= ]]> #{syodotorMax}
+			</when>
+			</choose>
+			<!--走行距離最小値 走行距離最大値-->
+			<choose>
+			<when test="soukoukiroMin != null and soukoukiroMin > 0 and soukoukiroMax != null and soukoukiroMax > 0">
+				AND (CASE WHEN T1.KB_METTKRK IS NULL OR RTRIM(T1.KB_METTKRK) = '' THEN CAST(T1.NU_SOUKOUKM AS INT)
+						WHEN T1.KB_METTKRK = '3' THEN CAST(T1.NU_SOUKOKM2 AS INT) + CAST(T1.NU_SOUKOKMSAN AS INT)
+						WHEN T1.KB_METTKRK IN ('1', '2', '4') THEN NULL
+						ELSE 0 END) BETWEEN #{soukoukiroMin} AND #{soukoukiroMax}
+			</when>
+			<when test="soukoukiroMin != null and soukoukiroMin > 0">
+				AND (CASE WHEN T1.KB_METTKRK IS NULL OR RTRIM(T1.KB_METTKRK) ='' THEN CAST(T1.NU_SOUKOUKM AS INT)
+						WHEN T1.KB_METTKRK = '3' THEN CAST(T1.NU_SOUKOKM2 AS INT) + CAST(T1.NU_SOUKOKMSAN AS INT)
+						WHEN T1.KB_METTKRK IN ('1', '2', '4') THEN NULL
+						ELSE 0 END) <![CDATA[ >= ]]> #{soukoukiroMin}
+			</when>
+			<when test="soukoukiroMax != null and soukoukiroMax > 0">
+				AND (CASE WHEN T1.KB_METTKRK IS NULL OR RTRIM(T1.KB_METTKRK) ='' THEN CAST(T1.NU_SOUKOUKM AS INT)
+						WHEN T1.KB_METTKRK = '3' THEN CAST(T1.NU_SOUKOKM2 AS INT) + CAST(T1.NU_SOUKOKMSAN AS INT)
+						WHEN T1.KB_METTKRK IN ('1', '2', '4') THEN NULL
+						ELSE 0 END) <![CDATA[ <= ]]> #{soukoukiroMax}
+			</when>
+			</choose>
+			<!--中古車塗色コード-->
+			<if test="tosikime != null and tosikime.size() > 0">
+				<choose>
+				<when test="tosikime.contains('16')">
+					AND (
+						T1.CD_HYOJICOL = '0'
+						OR T1.CD_HYOJICOL IN 
+						<foreach item="item" collection="tosikime" open="(" separator="," close=")">#{item}</foreach>
+					)
+				</when>
+				<otherwise>
+					AND T1.CD_HYOJICOL IN 
+					<foreach item="item" collection="tosikime" open="(" separator="," close=")">#{item}</foreach>
+				</otherwise>
+				</choose>
+			</if>
+			<!--メーカーコード-->
+			<if test="maker != null and maker.size() > 0">
+				AND CASE WHEN RTRIM(T1.CD_MAKER) <![CDATA[ <> ]]> '12' THEN RTRIM(T1.CD_MAKER)
+					     WHEN TBV0205M.CD_MAKER IS NOT NULL THEN TBV0205M.CD_MAKER
+					     ELSE '01'
+					END IN 
+				<foreach item="item" collection="maker" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--内装色コード-->
+			<if test="naisou != null and naisou.size() > 0">
+				AND T1.CD_NAISO IN 
+				<foreach item="item" collection="naisou" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--カテゴリーコード-->
+			<if test="kategori != null and kategori.size() > 0">
+				AND T1.CD_TNJCATE IN 
+				<foreach item="item" collection="kategori" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--グレード-->
+			<if test="guredo != null and guredo.size() > 0">
+				AND NVL(NULLIF(RTRIM(T1.MJ_GUREDO), ''), 'その他') IN 
+				<foreach item="item" collection="guredo" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--駆動方式-->
+			<if test="kudohoho != null and kudohoho.size() > 0">
+				AND T1.KB_KUDOHOHO IN 
+				<foreach item="item" collection="kudohoho" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--エンジン-->
+			<if test="unito != null and unito.size() > 0">
+				AND RTRIM(T1.KB_ENGINE) IN 
+				<foreach item="item" collection="unito" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--ウェルキャブ-->
+			<if test="welcab != null and welcab != ''">
+				AND RIGHT(T1.CD_SYAMEIAI, 2) = #{welcab}
+			</if>
+			<!--販売価格最小値 販売価格最大値-->
+			<choose>
+			<when test="hanbaikkMin != null and hanbaikkMin > 0 and hanbaikkMax != null and hanbaikkMax > 0">
+				AND ROUND(T1.KI_SYRYOHON / 1000) BETWEEN #{hanbaikkMin} AND #{hanbaikkMax}
+			</when>
+			<when test="hanbaikkMin != null and hanbaikkMin > 0">
+				AND ROUND(T1.KI_SYRYOHON / 1000) <![CDATA[ >= ]]> #{hanbaikkMin}
+			</when>
+			<when test="hanbaikkMax != null and hanbaikkMax > 0">
+				AND ROUND(T1.KI_SYRYOHON / 1000) <![CDATA[ <= ]]> #{hanbaikkMax}
+			</when>
+			</choose>
+			<!--Gazoo販売店コード-->
+			<if test="gazooCdHansya != null and gazooCdHansya.size() > 0">
+				AND T1.CD_TMCHANCD IN 
+				<foreach item="item" collection="gazooCdHansya" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+			<!--Gazoo販社都道府県コード-->
+			<if test="gazooCdTodofken != null and gazooCdTodofken.size() > 0">
+				AND T1.CD_TODOFKEN IN 
+				<foreach item="item" collection="gazooCdTodofken" open="(" separator="," close=")">
+				#{item}
+				</foreach>
+			</if>
+	</sql>
+
+	<!--車両台数情報を取得する-->
+	<resultMap id="syaryouDaisuResultMap" type="com.toyotec_jp.uslim.sita.model.SyaryouDaisuMap">
+		<id property="category" column="CATEGORY"/>
+		<collection property="syaryouDaisuList" ofType="com.toyotec_jp.uslim.sita.model.SyaryouDaisuItem">
+			<result property="sitaMonthWeek" column="SITA_MONTH_WEEK"/>
+			<result property="status" column="STATUS"/>
+			<result property="kbUriagyot" column="KB_URIAGYOT"/>
+			<result property="syamei" column="SYAMEI"/>
+			<result property="daisu" column="DAISU"/>
+		</collection>
+	</resultMap>
+    <select id="getSyaryouDaisu" parameterType="map" resultMap="syaryouDaisuResultMap">
+	    SELECT
+    	    category AS CATEGORY,
+	        sita_month_week AS SITA_MONTH_WEEK,
+    	    status AS STATUS,
+        	kb_uriagyot AS KB_URIAGYOT,
+	        syamei AS SYAMEI,
+    	    daisu AS DAISU
+	    FROM ${uslimDb}.DM_SITA_VEHICLE_DAISU
+    	WHERE cd_hansya = #{cdHansya}
+    		AND cd_kaisya = #{cdKaisya}
+    		AND cd_hanbaitn = #{cdHanbaitn}
+    		AND kb_honten = #{kbHonTen}
+    	ORDER BY category, sita_month_week, daisu_rank
+	</select>
+
+	<!--車両明細情報を取得する-->
+	<select id="getSyaryouMeisai" parameterType="map" resultType="com.toyotec_jp.uslim.sita.model.SyaryouMeisai">
+	    SELECT
+	        cd_teanyote AS CD_TEANYOTE,
+	        no_syadaiba AS NO_SYADAIBA,
+    	    no_syaryou AS NO_SYARYOU,
+        	no_siretyum AS NO_SIRETYUM,
+	        '' AS MJ_SIRENORI,
+    	    '' AS KB_SIRETOSY,
+        	'' AS CD_SIRETOGY,
+	        '' AS NO_SIRETOSE,
+    	    '' AS NO_LEASE,
+        	'' AS NO_KOTESISN,
+	        status AS STATUS,
+    	    mj_ncfr AS MJ_NCFR,
+        	dd_syodotor AS DD_SYODOTOR,
+	        dd_syknmanr AS DD_SYKNMANR,
+    	    mj_katasiki AS MJ_KATASIKI,
+        	ki_hnbsijik AS KI_HNBSIJIK,
+	        nu_soukoukm AS NU_SOUKOUKM,
+    	    mj_syamei AS MJ_SYAMEI,
+        	kb_uriagyot AS KB_URIAGYOT,
+	        dd_sitayote AS DD_SITAYOTE,
+    	    dd_kibonoki AS DD_KIBONOKI,
+        	cd_syufukre AS CD_SYUFUKRE,
+	        cd_web AS CD_WEB,
+    	    kj_syainmei AS KJ_SYAINMEI,
+        	kj_tentanms AS KJ_TENTANMS,
+	        mj_todofkenfl AS MJ_TODOFKENFL,
+    	    kj_zaikoten AS KJ_ZAIKOTEN,
+        	ki_sitadkak AS KI_SITADKAK,
+	        nu_suhkt AS NU_SUHKT,
+    	    ki_nesita AS KI_NESITA,
+        	kj_tosikime AS KJ_TOSIKIME,
+	        mj_nisclr AS MJ_NISCLR,
+    	    mj_nejknbk AS MJ_NEJKNBK,
+        	mj_comment AS MJ_VALUE,
+	        mj_kudohoho AS MJ_KUDOHOHO,
+    	    id_syaryou AS ID_SYARYOU,
+        	cd_zaiksyys AS CD_ZAIKSYYS,
+	        no_sti AS NO_STI,
+    	    id_upasssti AS ID_UPASSSTI,
+        	contain_png AS CONTAIN_PNG,
+	        contain_other AS CONTAIN_OTHER,
+	        nu_zaikonis AS NU_ZAIKONIS,
+    	    kb_tstihsk AS KB_TSTIHSK,
+        	dd_tstisgjs AS DD_TSTISGJS,
+	        dd_stisgjs AS DD_STISGJS,
+    	    kb_sintyaku AS KB_SINTYAKU
+	    FROM ${uslimDb}.DM_SITA_VEHICLE_MEISAI
+    	WHERE cd_hansya = #{cdHansya}
+			AND cd_kaisya = #{cdKaisya}
+			AND cd_hanbaitn = #{cdHanbaitn}
+	</select>
+
+	<!--下取車両の装備品情報検索SQL-->
+	<select id="getSitaSobh" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.Ai21Sobh">
+    SELECT
+        kb_idlnum AS KB_IDLNUM,
+        kb_syotum AS KB_SYOTUM,
+        kb_pedaum AS KB_PEDAUM,
+        kb_sysnum AS KB_SYSNUM,
+        kb_snsnum AS KB_SNSNUM,
+        kb_airbakum AS KB_AIRBAKUM,
+        kb_absum AS KB_ABSUM,
+        cd_hidum AS CD_HIDUM,
+        kb_backmum AS KB_BACKMUM,
+        kb_blndum AS KB_BLNDUM,
+        kb_panoum AS KB_PANOUM,
+        kb_drrcum AS KB_DRRCUM,
+        kb_kanabumu AS KB_KANABUMU,
+        kb_tvumu AS KB_TVUMU,
+        kb_dvdumu AS KB_DVDUMU,
+        cd_cdumu AS CD_CDUMU,
+        kb_sobi10um AS KB_SOBI10UM,
+        kb_sobi11um AS KB_SOBI11UM,
+        kb_consum AS KB_CONSUM,
+        kb_seatszai AS KB_SEATSZAI,
+        kb_arumiumu AS KB_ARUMIUMU,
+        kb_pwseatum AS KB_PWSEATUM,
+        kb_sobi9um AS KB_SOBI9UM,
+        kb_sobi6um AS KB_SOBI6UM,
+        kb_sobi7um AS KB_SOBI7UM,
+        kb_sobi8um AS KB_SOBI8UM,
+        kb_keylesum AS KB_KEYLESUM,
+        kb_autodum AS KB_AUTODUM,
+        kb_dendodum AS KB_DENDODUM,
+        kb_rmconum AS KB_RMCONUM,
+        kb_etcum AS KB_ETCUM,
+        kb_kanreium AS KB_KANREIUM,
+        kb_sobi4um AS KB_SOBI4UM,
+        kb_sobi5um AS KB_SOBI5UM,
+        kb_supum AS KB_SUPUM,
+        kb_djmatum AS KB_DJMATUM,
+        kb_tracontr AS KB_TRACONTR,
+        kb_hirufum AS KB_HIRUFUM,
+        kb_rufum AS KB_RUFUM,
+        kb_kudohoho AS KB_KUDOHOHO,
+        nu_josya1 AS NU_JOSYA1,
+        nu_josya2 AS NU_JOSYA2,
+        kb_haimenum AS KB_HAIMENUM,
+        kb_sanrufuu AS KB_SANRUFUU
+    FROM ${uslimDb}.DM_SITA_SOBH_SITA
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_siretyum = #{noSiretyum}
+      AND no_syaryou = #{noSyaryou}
+    LIMIT 1
+	</select>
+
+	<!--在庫車両の装備品情報検索SQL-->
+	<select id="getZaikoSobh" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.Ai21Sobh">
+    SELECT
+        kb_idlnum AS KB_IDLNUM,
+        kb_syotum AS KB_SYOTUM,
+        kb_pedaum AS KB_PEDAUM,
+        kb_sysnum AS KB_SYSNUM,
+        kb_snsnum AS KB_SNSNUM,
+        kb_airbakum AS KB_AIRBAKUM,
+        kb_absum AS KB_ABSUM,
+        cd_hidum AS CD_HIDUM,
+        kb_backmum AS KB_BACKMUM,
+        kb_blndum AS KB_BLNDUM,
+        kb_panoum AS KB_PANOUM,
+        kb_drrcum AS KB_DRRCUM,
+        kb_kanabumu AS KB_KANABUMU,
+        kb_tvumu AS KB_TVUMU,
+        kb_dvdumu AS KB_DVDUMU,
+        cd_cdumu AS CD_CDUMU,
+        kb_sobi10um AS KB_SOBI10UM,
+        kb_sobi11um AS KB_SOBI11UM,
+        kb_consum AS KB_CONSUM,
+        kb_seatszai AS KB_SEATSZAI,
+        kb_arumiumu AS KB_ARUMIUMU,
+        kb_pwseatum AS KB_PWSEATUM,
+        kb_sobi9um AS KB_SOBI9UM,
+        kb_sobi6um AS KB_SOBI6UM,
+        kb_sobi7um AS KB_SOBI7UM,
+        kb_sobi8um AS KB_SOBI8UM,
+        kb_keylesum AS KB_KEYLESUM,
+        kb_autodum AS KB_AUTODUM,
+        kb_dendodum AS KB_DENDODUM,
+        kb_rmconum AS KB_RMCONUM,
+        kb_etcum AS KB_ETCUM,
+        kb_kanreium AS KB_KANREIUM,
+        kb_sobi4um AS KB_SOBI4UM,
+        kb_sobi5um AS KB_SOBI5UM,
+        kb_supum AS KB_SUPUM,
+        kb_djmatum AS KB_DJMATUM,
+        kb_tracontr AS KB_TRACONTR,
+        kb_hirufum AS KB_HIRUFUM,
+        kb_rufum AS KB_RUFUM,
+        kb_kudohoho AS KB_KUDOHOHO,
+        nu_josya1 AS NU_JOSYA1,
+        nu_josya2 AS NU_JOSYA2,
+        kb_haimenum AS KB_HAIMENUM,
+        kb_sanrufuu AS KB_SANRUFUU
+    FROM ${uslimDb}.DM_SITA_SOBH_ZAIKO
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_syaryou = #{noSyaryou}
+    LIMIT 1
+	</select>
+	
+	<!--AA方式の装備品情報取得SQL-->
+	<select id="getAaSobh" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.PalSobh">
+    SELECT
+        no_sobi AS NO_SOBI,
+        mj_komok AS MJ_KOMOK,
+        mj_sobi AS MJ_SOBI,
+        mj_err AS MJ_ERR
+    FROM ${uslimDb}.DM_SITA_SOBH_AA
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_sti = #{noSti}
+    ORDER BY no_sobi
+	</select>
+
+	<!--日査協方式の装備品情報取得SQL-->
+	<select id="getNskSobh" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.PalSobh">
+    SELECT
+        cd_nskbidtl AS CD_NSKBIDTL,
+        mj_komok AS MJ_KOMOK,
+        mj_sobi AS MJ_SOBI,
+        mj_err AS MJ_ERR,
+        nu_gt AS NU_GT,
+        nu_kt AS NU_KT
+    FROM ${uslimDb}.DM_SITA_SOBH_NSK
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_sti = #{noSti}
+      AND dd_tstisgjs = #{ddTstisgjs}
+    ORDER BY cd_nskbidtl
+	</select>
+
+	<!--AA方式のタイヤ情報取得SQL-->
+	<select id="getAaTaiya" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.Taiya">
+    SELECT
+        cd_bui AS CD_BUI,
+        nu_tiyhaba AS NU_TIYHABA,
+        nu_tiyhpr AS NU_TIYHPR,
+        kb_tiykz AS KB_TIYKZ,
+        nu_tiyrimk AS NU_TIYRIMK,
+        nu_tiymz AS NU_TIYMZ,
+        mj_tiyjtkb AS MJ_TIYJTKB,
+        mj_hsbu AS MJ_HSBU,
+        mj_tiysyu AS MJ_TIYSYU,
+        mj_nskbhsy AS MJ_NSKBHSY,
+        mj_nskssysy AS MJ_NSKSSYSY,
+        mj_nskbhsy1 AS MJ_NSKBHSY1,
+        mj_nskbhsy2 AS MJ_NSKBHSY2
+    FROM ${uslimDb}.DM_SITA_TAIYA_AA
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_sti = #{noSti}
+	</select>
+
+	<!--AA方式のタイヤ付加情報取得SQL-->
+	<select id="getAaTaiyaFuka" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.Sobihin">
+    SELECT
+        mj_tiymeigar AS MJ_TIYMEIGAR,
+        mj_tiysyu AS MJ_TIYSYU,
+        mj_nejknbk AS MJ_NEJKNBK
+    FROM ${uslimDb}.DM_SITA_TAIYA_AA_FUKA
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_sti = #{noSti}
+    LIMIT 1
+	</select>
+
+	<!--日査協方式のタイヤ情報取得SQL-->
+	<select id="getNskTaiya" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.Taiya">
+    SELECT
+        cd_bui AS CD_BUI,
+        nu_tiyhaba AS NU_TIYHABA,
+        nu_tiyhpr AS NU_TIYHPR,
+        kb_tiykz AS KB_TIYKZ,
+        nu_tiyrimk AS NU_TIYRIMK,
+        nu_tiymz AS NU_TIYMZ,
+        mj_tiyjtkb AS MJ_TIYJTKB,
+        mj_hsbu AS MJ_HSBU,
+        mj_tiysyu AS MJ_TIYSYU,
+        mj_nskbhsy AS MJ_NSKBHSY,
+        mj_nskssysy AS MJ_NSKSSYSY,
+        mj_nskbhsy1 AS MJ_NSKBHSY1,
+        mj_nskbhsy2 AS MJ_NSKBHSY2
+    FROM ${uslimDb}.DM_SITA_TAIYA_NSK
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_sti = #{noSti}
+      AND dd_tstisgjs = #{ddTstisgjs}
+	</select>
+
+	<!--日査協方式のタイヤ付加情報取得SQL-->
+	<select id="getNskTaiyaFuka" parameterType="com.toyotec_jp.uslim.sita.model.SobihinReqParam" resultType="com.toyotec_jp.uslim.sita.model.Sobihin">
+    SELECT
+        mj_nejknbk AS MJ_NEJKNBK
+    FROM ${uslimDb}.DM_SITA_TAIYA_NSK_FUKA
+    WHERE cd_hansya = #{cdHansya}
+      AND cd_kaisya = #{cdKaisya}
+      AND no_sti = #{noSti}
+    LIMIT 1
+	</select>
+
+	<!--下取車両UPASS連携用パラメータ情報取得SQL-->
+	<select id="getSitaUpassParamInfo" parameterType="map" resultType="com.toyotec_jp.uslim.sita.model.UpassSoubaParam">
+	    SELECT
+    	    cd_hansya AS CD_HANSYA,
+        	cd_kaisya AS CD_KAISYA,
+	        cd_hanbaitn AS CD_HANBAITN,
+    	    no_syadaiba AS NO_SYADAIBA,
+	        mj_katasiki AS MJ_KATASIKI,
+        	dd_syodotor AS DD_SYODOTOR,
+	        cd_zaiksyys AS CD_ZAIKSYYS,
+    	    nu_soukoukm AS NU_SOUKOUKM,
+        	nu_suhkt AS NU_SUHKT,
+	        no_siteruib AS NO_SITERUIB,
+    	    mj_doasu AS MJ_DOASU,
+        	nu_haikiryo AS NU_HAIKIRYO,
+	        kb_engine AS KB_ENGINE,
+    	    dd_syknmanr AS DD_SYKNMANR,
+        	cd_mission AS CD_MISSION,
+	        kb_handle AS KB_HANDLE,
+    	    kb_kudohoho AS KB_KUDOHOHO,
+        	nu_josya1 AS NU_JOSYA1,
+	        cd_siyoreki AS CD_SIYOREKI,
+    	    kb_arumiumu AS KB_ARUMIUMU,
+        	kb_kanabumu AS KB_KANABUMU,
+	        kb_sanrufuu AS KB_SANRUFUU,
+    	    kb_seatszai AS KB_SEATSZAI,
+        	kb_airconum AS KB_AIRCONUM,
+	        kb_sobi1um AS KB_SOBI1UM,
+    	    kb_ninucar AS KB_NINUCAR
+	    FROM ${uslimDb}.DM_SITA_UPASS_PARAM_SITA
+   		WHERE cd_hansya = #{cdHansya}
+    		AND cd_kaisya = #{cdKaisya}
+			AND no_siretyum = #{noSiretyum}
+			AND no_syaryou = #{noSyaryou}
+    	LIMIT 1
+	</select>
+
+	<!--在庫車両UPASS連携用パラメータ情報取得SQL-->
+	<select id="getZakoUpassParamInfo" parameterType="map" resultType="com.toyotec_jp.uslim.sita.model.UpassSoubaParam">
+	    SELECT
+    	    cd_hansya AS CD_HANSYA,
+        	cd_kaisya AS CD_KAISYA,
+	        cd_hanbaitn AS CD_HANBAITN,
+    	    no_syadaiba AS NO_SYADAIBA,
+        	mj_katasiki AS MJ_KATASIKI,
+	        dd_syodotor AS DD_SYODOTOR,
+    	    cd_zaiksyys AS CD_ZAIKSYYS,
+        	nu_soukoukm AS NU_SOUKOUKM,
+	        nu_suhkt AS NU_SUHKT,
+    	    no_siteruib AS NO_SITERUIB,
+        	mj_doasu AS MJ_DOASU,
+	        nu_haikiryo AS NU_HAIKIRYO,
+	        kb_engine AS KB_ENGINE,
+	        dd_syknmanr AS DD_SYKNMANR,
+    	    cd_mission AS CD_MISSION,
+        	kb_handle AS KB_HANDLE,
+	        kb_kudohoho AS KB_KUDOHOHO,
+    	    nu_josya1 AS NU_JOSYA1,
+        	cd_siyoreki AS CD_SIYOREKI,
+	        kb_arumiumu AS KB_ARUMIUMU,
+    	    kb_kanabumu AS KB_KANABUMU,
+        	kb_sanrufuu AS KB_SANRUFUU,
+	        kb_seatszai AS KB_SEATSZAI,
+    	    kb_airconum AS KB_AIRCONUM,
+        	kb_sobi1um AS KB_SOBI1UM,
+	        kb_ninucar AS KB_NINUCAR
+	    FROM ${uslimDb}.DM_SITA_UPASS_PARAM_ZAIKO
+    	WHERE cd_hansya = #{cdHansya}
+			AND cd_kaisya = #{cdKaisya}
+			AND no_syaryou = #{noSyaryou}
+    	LIMIT 1
+	</select>
+
+	<!--コードマッピング情報検索SQL-->
+	<select id="getCodeMapping" resultType="com.toyotec_jp.uslim.sita.model.UpassCodeMapping">
+	    SELECT
+    	    param AS PARAM,
+	        cd_upass_value AS CD_UPASS_VALUE
+    	FROM ${uslimDb}.DM_CODEMAPPING_PARAM
+    	WHERE cd_area_id = #{cdAreaId}
+			AND cd_ai21_value = #{cdAi21Value}
+			AND param = #{searchParam}
+	</select>
+
+	<!--中古車予約情報検索SQL-->
+	<select id="getYoyakuInfo" parameterType="map" resultType="com.toyotec_jp.uslim.sita.model.YoyakuInfo">
+	    SELECT
+    	    kn_yoykkya1 AS KN_YOYKKYA1,
+        	cd_yoykten1 AS CD_YOYKTEN1,
+	        kj_tenpomei1 AS KJ_TENPOMEI1,
+    	    cd_yoyksta1 AS CD_YOYKSTA1,
+        	kj_syainmei1 AS KJ_SYAINMEI1,
+	        dd_yoykin1 AS DD_YOYKIN1,
+    	    kb_yyktsir1 AS KB_YYKTSIR1,
+        	kn_yoykkya2 AS KN_YOYKKYA2,
+	        cd_yoykten2 AS CD_YOYKTEN2,
+    	    kj_tenpomei2 AS KJ_TENPOMEI2,
+        	cd_yoyksta2 AS CD_YOYKSTA2,
+	        kj_syainmei2 AS KJ_SYAINMEI2,
+    	    dd_yoykin2 AS DD_YOYKIN2,
+        	kb_yyktsir2 AS KB_YYKTSIR2,
+	        kn_yoykkya3 AS KN_YOYKKYA3,
+    	    cd_yoykten3 AS CD_YOYKTEN3,
+        	kj_tenpomei3 AS KJ_TENPOMEI3,
+	        cd_yoyksta3 AS CD_YOYKSTA3,
+    	    kj_syainmei3 AS KJ_SYAINMEI3,
+        	dd_yoykin3 AS DD_YOYKIN3,
+	        kb_yyktsir3 AS KB_YYKTSIR3
+    	FROM ${uslimDb}.DM_SITA_YOYAKU_INFO
+	    WHERE cd_hansya = #{cdHansya}
+    	  	AND cd_kaisya = #{cdKaisya}
+      		AND no_syaryou = #{noSyaryou}
+    	LIMIT 1
+	</select>
+	
+</mapper>
