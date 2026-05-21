@@ -1,0 +1,1 @@
+getSyaryouMeisaiクエリがGoldテーブルに存在しない列（例：MJ_SIRENORI、KB_SIRETOSY、MJ_VALUE等）は必要されているので、Gold向けのクエリにSilverレイヤーのテーブルから取り込まれています。そのかわりにGoldテーブルを更新した方が良いと思いますか？
