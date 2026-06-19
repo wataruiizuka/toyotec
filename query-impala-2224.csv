@@ -1,0 +1,3 @@
+table_name,total_rows,primary_key_null_rows,min_dd_saisinup,max_dd_saisinup,iceberg_md5_empty_rows
+比較元_ai21rep_ve_test_kudu.tbv0201m,2437,0,2014-07-14 23:11:17,2025-12-02 00:00:00,0
+比較先_bronze.tbv0201m,0,NULL,NULL,NULL,NULL
