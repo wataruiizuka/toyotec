@@ -6,3 +6,24 @@ CREATE EXTERNAL TABLE ai21rep_ve_test_kudu.ice_tbv0201m (   cd_hansya STRING NOT
 
 	
 CREATE EXTERNAL TABLE bronze.tbv0201m (   cd_hansya STRING NOT NULL,   cd_kaisya STRING NOT NULL,   cd_tenpo STRING NOT NULL,   kj_tenpomei STRING NULL,   kj_tentanms STRING NULL,   no_post1 STRING NULL,   no_post2 STRING NULL,   kj_tenpojyu STRING NULL,   no_tel STRING NULL,   kb_ncbumumu STRING NULL,   kb_ucbumumu STRING NULL,   kb_svbumon STRING NULL,   kb_hokenumu STRING NULL,   kb_tabumon STRING NULL,   kb_jyotuumu STRING NULL,   kb_stntumu STRING NULL,   kb_tanmatu STRING NULL,   cd_svkanten STRING NULL,   mj_syakantn STRING NULL,   kb_duotenpo STRING NULL,   no_workshop STRING NULL,   kb_palumu STRING NULL,   kb_okyakuki STRING NULL,   cd_sousintn STRING NULL,   cd_kyotorih STRING NULL,   mj_kyopaswd STRING NULL,   kb_ai21kado STRING NULL,   no_fax STRING NULL,   cd_kyohnten STRING NULL,   kb_kastbumn STRING NULL,   kb_tasyskos STRING NULL,   kb_lexseibi STRING NULL,   cd_lexhan STRING NULL,   mj_login1 STRING NULL,   mj_login2 STRING NULL,   mj_login3 STRING NULL,   mj_login4 STRING NULL,   mj_login5 STRING NULL,   mj_keisyo STRING NULL,   dd_saisinup TIMESTAMP NULL,   csv_md5 STRING NULL,   iceberg_md5 STRING NULL,   PRIMARY KEY (cd_hansya, cd_tenpo, cd_kaisya) ) PARTITIONED BY SPEC (   cd_hansya ) STORED AS ICEBERG LOCATION 'abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbv0201m_bronze' TBLPROPERTIES ('OBJCAPABILITIES'='EXTREAD,EXTWRITE', 'engine.hive.enabled'='true', 'external.table.purge'='TRUE', 'format-version'='2', 'table_type'='ICEBERG', 'write.delete.mode'='merge-on-read', 'write.format.default'='parquet', 'write.merge.mode'='merge-on-read', 'write.parquet.compression-codec'='snappy', 'write.update.mode'='merge-on-read')
+
+
+-- ============================================================
+-- xlsx記載テーブルがbronzeデータベースに存在するか確認
+-- ============================================================
+
+SHOW TABLES IN bronze LIKE
+'tbv0201m|
+tbv0047m|
+tbv0033m|
+tbi002003m|
+tbg7005m|
+tbba001g|
+tbba052g|
+tbi002001m|
+tbg8014m|
+tbbf053m|
+tbgm024m|
+tbv0208m|
+tbv0014m|
+tbba051g';
