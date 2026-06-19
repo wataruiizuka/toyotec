@@ -27,3 +27,72 @@ tbgm024m|
 tbv0208m|
 tbv0014m|
 tbba051g';
+
+
+-- ============================================================
+-- tbv0201m 基本状態比較
+--
+-- 比較元：
+--   ai21rep_ve_test_kudu.tbv0201m
+--
+-- 比較先：
+--   bronze.tbv0201m
+-- ============================================================
+
+SELECT
+    '比較元_ai21rep_ve_test_kudu.tbv0201m' AS table_name,
+    COUNT(*) AS total_rows,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NULL
+              OR cd_kaisya IS NULL
+              OR cd_tenpo IS NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS primary_key_null_rows,
+
+    MIN(dd_saisinup) AS min_dd_saisinup,
+    MAX(dd_saisinup) AS max_dd_saisinup,
+
+    SUM(
+        CASE
+            WHEN iceberg_md5 IS NULL
+              OR TRIM(iceberg_md5) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS iceberg_md5_empty_rows
+
+FROM ai21rep_ve_test_kudu.tbv0201m
+
+UNION ALL
+
+SELECT
+    '比較先_bronze.tbv0201m' AS table_name,
+    COUNT(*) AS total_rows,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NULL
+              OR cd_kaisya IS NULL
+              OR cd_tenpo IS NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS primary_key_null_rows,
+
+    MIN(dd_saisinup) AS min_dd_saisinup,
+    MAX(dd_saisinup) AS max_dd_saisinup,
+
+    SUM(
+        CASE
+            WHEN iceberg_md5 IS NULL
+              OR TRIM(iceberg_md5) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS iceberg_md5_empty_rows
+
+FROM bronze.tbv0201m;
