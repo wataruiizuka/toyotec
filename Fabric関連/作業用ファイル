@@ -1,39 +1,39 @@
 name	type	comment
 # col_name 	data_type 	comment
 	NULL	NULL
-販社コード	string	NULL
-会社コード	string	NULL
-店舗コード	string	NULL
-販社会社店舗コード	string	NULL
-受注台数	tinyint	NULL
-登録台数	tinyint	NULL
-当月登録内下取車なし	tinyint	NULL
-当月回収完了分平均リードタイム	double	NULL
-現在登録済未回収件数	tinyint	NULL
-現在登録済未回収金額	bigint	NULL
-前月登録済未回収件数	tinyint	NULL
-前月登録済未回収金額	bigint	NULL
-前月以前登録済未回収件数	tinyint	NULL
-前月以前登録済未回収金額	bigint	NULL
-件数	tinyint	NULL
-金額	double	NULL
-ソート順	bigint	NULL
+cd_hansya	string	NULL
+cd_kaisya	string	NULL
+cd_tenpo	string	NULL
+cd_hansya_kaisya_tenpo	string	NULL
+su_order	tinyint	NULL
+su_registered_vehicle	tinyint	NULL
+su_no_trade_in_vehicle_registered_this_month	tinyint	NULL
+su_average_lead_time_for_collections_completed_this_month	double	NULL
+su_currently_registered_but_uncollected_case	tinyint	NULL
+su_currently_registered_uncollected_amount	bigint	NULL
+su_registered_but_uncollected_items_from_the_previous_month	tinyint	NULL
+su_uncollected_amount_registered_in_the_previous_month	bigint	NULL
+su_registered_but_uncollected_items_from_the_previous_month_or_earlier	tinyint	NULL
+su_uncollected_amount_registered_in_the_previous_month_or_earlier	bigint	NULL
+su_pieces	tinyint	NULL
+su_amount	double	NULL
+sort_order	bigint	NULL
 	NULL	NULL
 # Detailed Table Information	NULL	NULL
 Database: 	gold 	NULL
 OwnerType: 	USER 	NULL
 Owner: 	celes_iizuka_za 	NULL
-CreateTime: 	Thu Apr 02 02:10:06 UTC 2026	NULL
+CreateTime: 	Thu Apr 02 02:09:37 UTC 2026	NULL
 LastAccessTime: 	UNKNOWN 	NULL
 Retention: 	0 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002004	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002004_en	NULL
 Erasure Coding Policy:	NONE 	NULL
 Table Type: 	MANAGED_TABLE 	NULL
 Table Parameters:	NULL	NULL
 	OBJCAPABILITIES 	HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE
 	transactional 	true
 	transactional_properties	insert_only
-	transient_lastDdlTime	1775095806
+	transient_lastDdlTime	1775095777
 	NULL	NULL
 # Storage Information	NULL	NULL
 SerDe Library: 	org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe	NULL
