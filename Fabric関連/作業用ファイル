@@ -3,49 +3,24 @@ name	type	comment
 	NULL	NULL
 販社コード	string	NULL
 会社コード	string	NULL
-店舗コード	string	NULL
-販社会社店舗コード	string	NULL
-当年上期期首残高	bigint	NULL
-当年借方金額０１	bigint	NULL
-当年借方金額０２	bigint	NULL
-当年借方金額０３	bigint	NULL
-当年借方金額０４	bigint	NULL
-当年借方金額０５	bigint	NULL
-当年借方金額０６	bigint	NULL
-当年借方金額０７	bigint	NULL
-当年借方金額０８	bigint	NULL
-当年借方金額０９	bigint	NULL
-当年借方金額１０	bigint	NULL
-当年借方金額１１	bigint	NULL
-当年借方金額１２	bigint	NULL
-当年貸方金額０１	bigint	NULL
-当年貸方金額０２	bigint	NULL
-当年貸方金額０３	bigint	NULL
-当年貸方金額０４	bigint	NULL
-当年貸方金額０５	bigint	NULL
-当年貸方金額０６	bigint	NULL
-当年貸方金額０７	bigint	NULL
-当年貸方金額０８	bigint	NULL
-当年貸方金額０９	bigint	NULL
-当年貸方金額１０	bigint	NULL
-当年貸方金額１１	bigint	NULL
-当年貸方金額１２	bigint	NULL
+value	string	NULL
+アラート文言	string	NULL
 	NULL	NULL
 # Detailed Table Information	NULL	NULL
 Database: 	gold 	NULL
 OwnerType: 	USER 	NULL
 Owner: 	celes_iizuka_za 	NULL
-CreateTime: 	Thu Apr 02 02:14:26 UTC 2026	NULL
+CreateTime: 	Thu Apr 02 02:15:31 UTC 2026	NULL
 LastAccessTime: 	UNKNOWN 	NULL
 Retention: 	0 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi0020014	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002015	NULL
 Erasure Coding Policy:	NONE 	NULL
 Table Type: 	MANAGED_TABLE 	NULL
 Table Parameters:	NULL	NULL
 	OBJCAPABILITIES 	HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE
 	transactional 	true
 	transactional_properties	insert_only
-	transient_lastDdlTime	1775096066
+	transient_lastDdlTime	1775096131
 	NULL	NULL
 # Storage Information	NULL	NULL
 SerDe Library: 	org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe	NULL
