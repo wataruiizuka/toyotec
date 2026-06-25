@@ -4,47 +4,71 @@ name	type	comment
 販社コード	string	NULL
 会社コード	string	NULL
 店舗コード	string	NULL
+注文ｎｏ	string	NULL
+注文枝番	string	NULL
+pk_販社会社注文no枝番	string	NULL
 販社会社店舗コード	string	NULL
-当年借方金額０１	bigint	NULL
-当年借方金額０２	bigint	NULL
-当年借方金額０３	bigint	NULL
-当年借方金額０４	bigint	NULL
-当年借方金額０５	bigint	NULL
-当年借方金額０６	bigint	NULL
-当年借方金額０７	bigint	NULL
-当年借方金額０８	bigint	NULL
-当年借方金額０９	bigint	NULL
-当年借方金額１０	bigint	NULL
-当年借方金額１１	bigint	NULL
-当年借方金額１２	bigint	NULL
-当年貸方金額０１	bigint	NULL
-当年貸方金額０２	bigint	NULL
-当年貸方金額０３	bigint	NULL
-当年貸方金額０４	bigint	NULL
-当年貸方金額０５	bigint	NULL
-当年貸方金額０６	bigint	NULL
-当年貸方金額０７	bigint	NULL
-当年貸方金額０８	bigint	NULL
-当年貸方金額０９	bigint	NULL
-当年貸方金額１０	bigint	NULL
-当年貸方金額１１	bigint	NULL
-当年貸方金額１２	bigint	NULL
+店舗略称	string	NULL
+エリア統括部	string	NULL
+ゾーンコード	string	NULL
+ソート順	bigint	NULL
+登録	string	NULL
+納車	string	NULL
+売掛残高	string	NULL
+社員名	string	NULL
+売上経過日数	int	NULL
+買主名	string	NULL
+名義人	string	NULL
+契約形態	string	NULL
+注文no_枝番	string	NULL
+型式	string	NULL
+受注日	timestamp	NULL
+振当日	timestamp	NULL
+申込金受領日	timestamp	NULL
+登録日	timestamp	NULL
+配送日	timestamp	NULL
+納車日	timestamp	NULL
+回収予定日	timestamp	NULL
+最終入金日現金	timestamp	NULL
+最終入金日割賦	timestamp	NULL
+下取完了日	timestamp	NULL
+完了	timestamp	NULL
+現金入金額	bigint	NULL
+下取車入金額	bigint	NULL
+賦払金入金額	bigint	NULL
+売掛金残高合計	bigint	NULL
+現金発生額	bigint	NULL
+現金残高	bigint	NULL
+賦払金発生額	bigint	NULL
+割賦残高	bigint	NULL
+下取車発生額	bigint	NULL
+下取車残高	bigint	NULL
+申込金	bigint	NULL
+現金入金回数	bigint	NULL
+カード入金回数	bigint	NULL
+振当-納車	int	NULL
+登録-納車	int	NULL
+登録-完了	int	NULL
+払出区分	string	NULL
+法人個人区分	string	NULL
+発生累計	bigint	NULL
+更新日時	timestamp	NULL
 	NULL	NULL
 # Detailed Table Information	NULL	NULL
 Database: 	gold 	NULL
 OwnerType: 	USER 	NULL
 Owner: 	celes_iizuka_za 	NULL
-CreateTime: 	Thu Apr 02 02:13:06 UTC 2026	NULL
+CreateTime: 	Thu Apr 02 02:13:26 UTC 2026	NULL
 LastAccessTime: 	UNKNOWN 	NULL
 Retention: 	0 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002008	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002011	NULL
 Erasure Coding Policy:	NONE 	NULL
 Table Type: 	MANAGED_TABLE 	NULL
 Table Parameters:	NULL	NULL
 	OBJCAPABILITIES 	HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE
 	transactional 	true
 	transactional_properties	insert_only
-	transient_lastDdlTime	1775095986
+	transient_lastDdlTime	1775096006
 	NULL	NULL
 # Storage Information	NULL	NULL
 SerDe Library: 	org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe	NULL
