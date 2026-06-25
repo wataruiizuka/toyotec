@@ -1,2 +1,1 @@
-result
-CREATE TABLE gold.vbi002001 ( 店舗数 TINYINT, 販社会社店舗コード STRING, 販社会社ゾーン店舗コード STRING, 販社コード STRING, 会社コード STRING, 店舗コード STRING, 店舗名称 STRING, 店舗短縮名称 STRING, ゾーンコード STRING, ンゾン STRING, ゾーン名称 STRING, ゾーン名略 STRING, ソート順 BIGINT ) STORED AS PARQUET LOCATION 'abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002001' TBLPROPERTIES ('OBJCAPABILITIES'='HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE', 'transactional'='true', 'transactional_properties'='insert_only')
+Query 6a45cc189ee3c5b6:5f55b5b700000000 failed: AnalysisException: Could not resolve table reference: 'gold.vbi002001.snapshots' 
