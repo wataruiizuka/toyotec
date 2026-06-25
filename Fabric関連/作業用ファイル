@@ -1,0 +1,60 @@
+name	comment
+_impala_builtins	System database for Impala builtin functions
+ai21_jpview_ve	
+ai21next72_exa	
+ai21rep_ve	
+ai21rep_ve_ai	
+ai21rep_ve_ai_kudu	
+ai21rep_ve_bronze_kudu	
+ai21rep_ve_digibo_kudu	
+ai21rep_ve_dx	
+ai21rep_ve_dx_hive	
+ai21rep_ve_dx_kudu	DX道場案件で開発環境の利用
+ai21rep_ve_gold_perf	
+ai21rep_ve_hive	
+ai21rep_ve_kudu	
+ai21rep_ve_per_kudu	
+ai21rep_ve_stg	
+ai21rep_ve_stg_kudu	
+ai21rep_ve_test_kudu	開発テスト
+ai21rep_ve_testmem_kudu	
+ai21rep_ve_tgr_kudu	
+ai21rep_ve_toyopo	
+ai21rep_ve_toyopo_kudu	
+ai21rep_ve_trial_kudu	
+ai21rep_ve_uslim	
+ai21rep_ve_view	
+bronze	
+datalib_ve	
+datalib_ve_kudu	datalib_ve_kudu
+default	Default Hive database
+digibo_ve	
+digibo_ve_kudu	
+dx_ve	DX道場専用
+gazoo_ve	GAZOO専用
+gazoo_ve_kudu	
+gold	Goldレイヤー
+hankan_ve_kudu	
+ice_test	
+master_maintenance_ve	
+neo1rep_ve	
+neo1rep_ve_hive	
+neo1rep_ve_kudu	
+neo1rep_ve_view	
+neo_jpview_ve	
+neodx_ve	
+onelake_test	
+ops_ve	
+ops_ve_kudu	基盤用kudu
+sec_test_ve	セキュリティ対応
+silver	
+staging	
+staging_db_iceberg	
+sys	
+tang	
+toyopo_ve	
+toyopo_ve_kudu	
+upass_ve	
+upass_ve_kudu	
+uslim_ve	USLIM業務用
+zzeng	
