@@ -58,3 +58,5 @@ upass_ve
 upass_ve_kudu	
 uslim_ve	USLIM業務用
 zzeng	
+
+Query e54a13fbb5adc678:ba4cf59f00000000 failed: AnalysisException: Could not resolve table reference: 'information_schema.schemata' 
