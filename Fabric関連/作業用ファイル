@@ -1,17 +1,2 @@
-name
-vbi002001
-vbi0020012
-vbi0020013
-vbi0020014
-vbi002001_en
-vbi002002
-vbi002003
-vbi002004
-vbi002004_en
-vbi002005
-vbi002006
-vbi002007
-vbi002008
-vbi002011
-vbi002015
-vbi002016
+result
+CREATE TABLE gold.vbi002001 ( 店舗数 TINYINT, 販社会社店舗コード STRING, 販社会社ゾーン店舗コード STRING, 販社コード STRING, 会社コード STRING, 店舗コード STRING, 店舗名称 STRING, 店舗短縮名称 STRING, ゾーンコード STRING, ンゾン STRING, ゾーン名称 STRING, ゾーン名略 STRING, ソート順 BIGINT ) STORED AS PARQUET LOCATION 'abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002001' TBLPROPERTIES ('OBJCAPABILITIES'='HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE', 'transactional'='true', 'transactional_properties'='insert_only')
