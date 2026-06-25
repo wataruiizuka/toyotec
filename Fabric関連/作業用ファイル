@@ -1,35 +1,34 @@
 name	type	comment
 # col_name 	data_type 	comment
 	NULL	NULL
-su_store_number	tinyint	NULL
-cd_hansya_kaisya_tenpo	string	NULL
-cd_hansya_kaisya_zon_tenpo	string	NULL
-cd_hansya	string	NULL
-cd_kaisya	string	NULL
-cd_tenpo	string	NULL
-kj_tenpomei	string	NULL
-kj_tentanms	string	NULL
-cd_zon	string	NULL
-cd_nczon	string	NULL
-kj_zonmei	string	NULL
-zone_name_abbreviation	string	NULL
-sort_order	bigint	NULL
+エリア統括部と店舗	string	NULL
+区分名称	string	NULL
+区分コード	string	NULL
+販社コード	string	NULL
+会社コード	string	NULL
+ゾーンコード	string	NULL
+店舗コード	string	NULL
+販社会社店舗コード	string	NULL
+販社会社ゾーン店舗コード	string	NULL
+件数	bigint	NULL
+金額	double	NULL
+ソート順	bigint	NULL
 	NULL	NULL
 # Detailed Table Information	NULL	NULL
 Database: 	gold 	NULL
 OwnerType: 	USER 	NULL
 Owner: 	celes_iizuka_za 	NULL
-CreateTime: 	Thu Apr 02 02:06:17 UTC 2026	NULL
+CreateTime: 	Thu Apr 02 02:07:50 UTC 2026	NULL
 LastAccessTime: 	UNKNOWN 	NULL
 Retention: 	0 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002001_en	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002002	NULL
 Erasure Coding Policy:	NONE 	NULL
 Table Type: 	MANAGED_TABLE 	NULL
 Table Parameters:	NULL	NULL
 	OBJCAPABILITIES 	HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE
 	transactional 	true
 	transactional_properties	insert_only
-	transient_lastDdlTime	1775095577
+	transient_lastDdlTime	1775095670
 	NULL	NULL
 # Storage Information	NULL	NULL
 SerDe Library: 	org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe	NULL
