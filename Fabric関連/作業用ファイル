@@ -1,111 +1,43 @@
-name
-vbi000001
-vbi000001_en
-vbi000002
-vbi000002_en
-vbi000003
-vbi000004
-vbi000004_en
-vbi000005
-vbi000006
-vbi000007
-vbi000008
-vbi000009
-vbi000010
-vbi000011
-vbi000012
-vbi000013
-vbi001001
-vbi001002
-vbi001003
-vbi002001
-vbi0020012
-vbi0020013
-vbi0020014
-vbi002001_en
-vbi002002
-vbi002003
-vbi002004
-vbi002004_en
-vbi002005
-vbi002006
-vbi002007
-vbi002008
-vbi002011
-vbi002015
-vbi002016
-vbi003001
-vbi003001_en
-vbi003002
-vbi003003
-vbi003004
-vbi003005
-vbi003006
-vbi003006_en
-vbi003007
-vbi003008
-vbi006001
-vbi010001
-vbi010002
-vbi010003
-vbi010004
-vbi010005
-vbi010006
-vbi011001
-vbi011002
-vbi011004
-vbi011005
-vbi011006
-vbi011008
-vbi012001
-vbi012001_en
-vbi012002
-vbi012003
-vbi012004
-vbi012005
-vbi012006
-vbi013001
-vbi013001_en
-vbi013002
-vbi013003
-vbi013004
-vbi013004_en
-vbi013005
-vbi013006
-vbi013007
-vbi013008
-vbi013011
-vbi013012
-vbi013013
-vbi013015
-vbi016001
-vbi016002
-vbi016003
-vbi016004
-vbi016005
-vbi016006
-vbi016007
-vbi016008
-vbi016009
-vbi016010
-vbi016011
-vbi017001
-vbi017002
-vbi017003
-vbi019001
-vbi019002
-vbi019003
-vbi021001
-vbi021002
-vbi022001
-vbi022002
-vbi022003
-vbi022004
-vbi999001
-vbi999002
-vbi999003
-vbi999004
-vbi999006
-vbi999008
-vbi999009
-vbi999010
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+店舗数	tinyint	NULL
+販社会社店舗コード	string	NULL
+販社会社ゾーン店舗コード	string	NULL
+販社コード	string	NULL
+会社コード	string	NULL
+店舗コード	string	NULL
+店舗名称	string	NULL
+店舗短縮名称	string	NULL
+ゾーンコード	string	NULL
+ンゾン	string	NULL
+ゾーン名称	string	NULL
+ゾーン名略	string	NULL
+ソート順	bigint	NULL
+	NULL	NULL
+# Detailed Table Information	NULL	NULL
+Database: 	gold 	NULL
+OwnerType: 	USER 	NULL
+Owner: 	celes_iizuka_za 	NULL
+CreateTime: 	Thu Apr 02 02:06:50 UTC 2026	NULL
+LastAccessTime: 	UNKNOWN 	NULL
+Retention: 	0 	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002001	NULL
+Erasure Coding Policy:	NONE 	NULL
+Table Type: 	MANAGED_TABLE 	NULL
+Table Parameters:	NULL	NULL
+	OBJCAPABILITIES 	HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE
+	transactional 	true
+	transactional_properties	insert_only
+	transient_lastDdlTime	1775095610
+	NULL	NULL
+# Storage Information	NULL	NULL
+SerDe Library: 	org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe	NULL
+InputFormat: 	org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat	NULL
+OutputFormat: 	org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat	NULL
+Compressed: 	No 	NULL
+Num Buckets: 	0 	NULL
+Bucket Columns: 	[] 	NULL
+Sort Columns: 	[] 	NULL
+	NULL	NULL
+# Constraints	NULL	NULL
