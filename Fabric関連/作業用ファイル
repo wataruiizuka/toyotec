@@ -1,34 +1,30 @@
 name	type	comment
 # col_name 	data_type 	comment
 	NULL	NULL
-エリア統括部と店舗	string	NULL
-区分名称	string	NULL
-区分コード	string	NULL
+月	tinyint	NULL
 販社コード	string	NULL
 会社コード	string	NULL
-ゾーンコード	string	NULL
-店舗コード	string	NULL
 販社会社店舗コード	string	NULL
-販社会社ゾーン店舗コード	string	NULL
-件数	bigint	NULL
-金額	double	NULL
-ソート順	bigint	NULL
+前年売掛金残高	double	NULL
+前年売上額	double	NULL
+売掛金残高	double	NULL
+売上額	double	NULL
 	NULL	NULL
 # Detailed Table Information	NULL	NULL
 Database: 	gold 	NULL
 OwnerType: 	USER 	NULL
 Owner: 	celes_iizuka_za 	NULL
-CreateTime: 	Thu Apr 02 02:07:50 UTC 2026	NULL
+CreateTime: 	Thu Apr 02 02:09:05 UTC 2026	NULL
 LastAccessTime: 	UNKNOWN 	NULL
 Retention: 	0 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002002	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/managed/hive/gold.db/vbi002003	NULL
 Erasure Coding Policy:	NONE 	NULL
 Table Type: 	MANAGED_TABLE 	NULL
 Table Parameters:	NULL	NULL
 	OBJCAPABILITIES 	HIVEMANAGEDINSERTREAD,HIVEMANAGEDINSERTWRITE
 	transactional 	true
 	transactional_properties	insert_only
-	transient_lastDdlTime	1775095670
+	transient_lastDdlTime	1775095745
 	NULL	NULL
 # Storage Information	NULL	NULL
 SerDe Library: 	org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe	NULL
