@@ -1,0 +1,102 @@
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+cd_hansya	string	NULL
+cd_kaisya	string	NULL
+cd_syain	string	NULL
+kj_syainmei	string	NULL
+kb_syainzok	string	NULL
+cd_syozoten	string	NULL
+cd_syozoka	string	NULL
+cd_syozokak	string	NULL
+cd_syozobum	string	NULL
+mj_syanenji	string	NULL
+mj_syarank	string	NULL
+kb_staffsin	string	NULL
+kb_stafftyu	string	NULL
+kb_okyakuta	string	NULL
+kb_staffduo	string	NULL
+mj_staffsv	string	NULL
+dd_taisyoku	timestamp	NULL
+kb_gyomkeng	string	NULL
+kb_tyokan	string	NULL
+kb_frestaff	string	NULL
+dd_ido	timestamp	NULL
+mj_kysyztnp	string	NULL
+mj_kysyzka	string	NULL
+mj_kysyzkak	string	NULL
+mj_kysyzbum	string	NULL
+kb_tasyskos	string	NULL
+dd_todoke	timestamp	NULL
+dd_haisi	timestamp	NULL
+kb_kyugyokn	string	NULL
+kb_usekbn	string	NULL
+mj_syainmei	string	NULL
+kb_honkbn	string	NULL
+mj_login1	string	NULL
+mj_login2	string	NULL
+mj_login3	string	NULL
+mj_login4	string	NULL
+mj_login5	string	NULL
+mj_login6	string	NULL
+mj_login7	string	NULL
+mj_login8	string	NULL
+mj_login9	string	NULL
+mj_login10	string	NULL
+mj_keisyo	string	NULL
+cd_kirkaisy	string	NULL
+cd_kirtenpo	string	NULL
+dd_saisinup	timestamp	NULL
+csv_md5	string	NULL
+iceberg_md5	string	NULL
+	NULL	NULL
+# Partition Transform Information	NULL	NULL
+# col_name 	transform_type 	NULL
+	NULL	NULL
+cd_hansya	IDENTITY	NULL
+	NULL	NULL
+# Detailed Table Information	NULL	NULL
+Database: 	bronze 	NULL
+OwnerType: 	USER 	NULL
+Owner: 	t01 	NULL
+CreateTime: 	Thu Mar 05 06:23:04 UTC 2026	NULL
+LastAccessTime: 	Thu Dec 18 22:11:32 UTC 1969	NULL
+Retention: 	2147483647 	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbv0014m_bronze	NULL
+Erasure Coding Policy:	NONE 	NULL
+Table Type: 	EXTERNAL_TABLE 	NULL
+Table Parameters:	NULL	NULL
+	EXTERNAL 	TRUE
+	OBJCAPABILITIES 	EXTREAD,EXTWRITE
+	current-schema 	{\"type\":\"struct\",\"schema-id\":0,\"identifier-field-ids\":[1,2,3],\"fields\":[{\"id\":1,\"name\":\"cd_hansya\",\"required\":true,\"type\":\"string\"},{\"id\":2,\"name\":\"cd_kaisya\",\"required\":true,\"type\":\"string\"},{\"id\":3,\"name\":\"cd_syain\",\"required\":true,\"type\":\"string\"},{\"id\":4,\"name\":\"kj_syainmei\",\"required\":false,\"type\":\"string\"},{\"id\":5,\"name\":\"kb_syainzok\",\"required\":false,\"type\":\"string\"},{\"id\":6,\"name\":\"cd_syozoten\",\"required\":false,\"type\":\"string\"},{\"id\":7,\"name\":\"cd_syozoka\",\"required\":false,\"type\":\"string\"},{\"id\":8,\"name\":\"cd_syozokak\",\"required\":false,\"type\":\"string\"},{\"id\":9,\"name\":\"cd_syozobum\",\"required\":false,\"type\":\"string\"},{\"id\":10,\"name\":\"mj_syanenji\",\"required\":false,\"type\":\"string\"},{\"id\":11,\"name\":\"mj_syarank\",\"required\":false,\"type\":\"string\"},{\"id\":12,\"name\":\"kb_staffsin\",\"required\":false,\"type\":\"string\"},{\"id\":13,\"name\":\"kb_stafftyu\",\"required\":false,\"type\":\"string\"},{\"id\":14,\"name\":\"kb_okyakuta\",\"required\":false,\"type\":\"string\"},{\"id\":15,\"name\":\"kb_staffduo\",\"required\":false,\"type\":\"string\"},{\"id\":16,\"name\":\"mj_staffsv\",\"required\":false,\"type\":\"string\"},{\"id\":17,\"name\":\"dd_taisyoku\",\"required\":false,\"type\":\"timestamp\"},{\"id\":18,\"name\":\"kb_gyomkeng\",\"required\":false,\"type\":\"string\"},{\"id\":19,\"name\":\"kb_tyokan\",\"required\":false,\"type\":\"string\"},{\"id\":20,\"name\":\"kb_frestaff\",\"required\":false,\"type\":\"string\"},{\"id\":21,\"name\":\"dd_ido\",\"required\":false,\"type\":\"timestamp\"},{\"id\":22,\"name\":\"mj_kysyztnp\",\"required\":false,\"type\":\"string\"},{\"id\":23,\"name\":\"mj_kysyzka\",\"required\":false,\"type\":\"string\"},{\"id\":24,\"name\":\"mj_kysyzkak\",\"required\":false,\"type\":\"string\"},{\"id\":25,\"name\":\"mj_kysyzbum\",\"required\":false,\"type\":\"string\"},{\"id\":26,\"name\":\"kb_tasyskos\",\"required\":false,\"type\":\"string\"},{\"id\":27,\"name\":\"dd_todoke\",\"required\":false,\"type\":\"timestamp\"},{\"id\":28,\"name\":\"dd_haisi\",\"required\":false,\"type\":\"timestamp\"},{\"id\":29,\"name\":\"kb_kyugyokn\",\"required\":false,\"type\":\"string\"},{\"id\":30,\"name\":\"kb_usekbn\",\"required\":false,\"type\":\"string\"},{\"id\":31,\"name\":\"mj_syainmei\",\"required\":false,\"type\":\"string\"},{\"id\":32,\"name\":\"kb_honkbn\",\"required\":false,\"type\":\"string\"},{\"id\":33,\"name\":\"mj_login1\",\"required\":false,\"type\":\"string\"},{\"id\":34,\"name\":\"mj_login2\",\"required\":false,\"type\":\"string\"},{\"id\":35,\"name\":\"mj_login3\",\"required\":false,\"type\":\"string\"},{\"id\":36,\"name\":\"mj_login4\",\"required\":false,\"type\":\"string\"},{\"id\":37,\"name\":\"mj_login5\",\"required\":false,\"type\":\"string\"},{\"id\":38,\"name\":\"mj_login6\",\"required\":false,\"type\":\"string\"},{\"id\":39,\"name\":\"mj_login7\",\"required\":false,\"type\":\"string\"},{\"id\":40,\"name\":\"mj_login8\",\"required\":false,\"type\":\"string\"},{\"id\":41,\"name\":\"mj_login9\",\"required\":false,\"type\":\"string\"},{\"id\":42,\"name\":\"mj_login10\",\"required\":false,\"type\":\"string\"},{\"id\":43,\"name\":\"mj_keisyo\",\"required\":false,\"type\":\"string\"},{\"id\":44,\"name\":\"cd_kirkaisy\",\"required\":false,\"type\":\"string\"},{\"id\":45,\"name\":\"cd_kirtenpo\",\"required\":false,\"type\":\"string\"},{\"id\":46,\"name\":\"dd_saisinup\",\"required\":false,\"type\":\"timestamp\"},{\"id\":47,\"name\":\"csv_md5\",\"required\":false,\"type\":\"string\"},{\"id\":48,\"name\":\"iceberg_md5\",\"required\":false,\"type\":\"string\"}]}
+	current-snapshot-id 	2746224366232713188
+	current-snapshot-summary	{\"spark.app.id\":\"application_1772103883474_0002\",\"added-data-files\":\"1\",\"added-records\":\"15\",\"added-files-size\":\"14845\",\"changed-partition-count\":\"1\",\"total-records\":\"15\",\"total-files-size\":\"14845\",\"total-data-files\":\"1\",\"total-delete-files\":\"0\",\"total-position-deletes\":\"0\",\"total-equality-deletes\":\"0\"}
+	current-snapshot-timestamp-ms	1772694384014
+	default-partition-spec	{\"spec-id\":0,\"fields\":[{\"name\":\"cd_hansya\",\"transform\":\"identity\",\"source-id\":1,\"field-id\":1000}]}
+	engine.hive.enabled 	true
+	external.table.purge	TRUE
+	format-version 	2
+	metadata_location 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbv0014m_bronze/metadata/00001-e23f30f6-f00b-4715-884c-0a857147de05.metadata.json
+	numFiles 	1
+	numRows 	15
+	previous_metadata_location	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbv0014m_bronze/metadata/00000-c7a1747e-bc9d-4d3a-b550-f78c36ff883d.metadata.json
+	snapshot-count 	1
+	storage_handler 	org.apache.iceberg.mr.hive.HiveIcebergStorageHandler
+	table_type 	ICEBERG
+	totalSize 	14845
+	transient_lastDdlTime	1772691784
+	uuid 	03a40882-288d-482d-81d7-b97ba3812c85
+	write.delete.mode 	merge-on-read
+	write.format.default	parquet
+	write.merge.mode 	merge-on-read
+	write.parquet.compression-codec	snappy
+	write.update.mode 	merge-on-read
+	NULL	NULL
+# Storage Information	NULL	NULL
+SerDe Library: 	org.apache.iceberg.mr.hive.HiveIcebergSerDe	NULL
+InputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergInputFormat	NULL
+OutputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergOutputFormat	NULL
+Compressed: 	No 	NULL
+Sort Columns: 	[] 	NULL
+	NULL	NULL
+# Constraints	NULL	NULL
