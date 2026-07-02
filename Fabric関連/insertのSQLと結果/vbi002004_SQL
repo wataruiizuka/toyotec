@@ -1,0 +1,21 @@
+INSERT OVERWRITE TABLE gold.vbi002004
+SELECT
+    cd_hansya AS 販社コード, --販社コード
+    cd_kaisya AS 会社コード, --会社コード
+    cd_tenpo AS 店舗コード, --店舗コード
+    cd_hansya_kaisya_tenpo AS 販社会社店舗コード, --販社会社店舗コード
+    su_order AS 受注台数, --受注台数
+    su_registered_vehicle AS 登録台数, --登録台数
+    su_no_trade_in_vehicle_registered_this_month AS 当月登録内下取車なし, --当月登録内下取車なし
+    su_average_lead_time_for_collections_completed_this_month AS 当月回収完了分平均リードタイム, --当月回収完了分平均リードタイム
+    su_currently_registered_but_uncollected_case AS 現在登録済未回収件数, --現在登録済未回収件数
+    su_currently_registered_uncollected_amount AS 現在登録済未回収金額, --現在登録済未回収金額
+    su_registered_but_uncollected_items_from_the_previous_month AS 前月登録済未回収件数, --前月登録済未回収件数
+    su_uncollected_amount_registered_in_the_previous_month AS 前月登録済未回収金額, --前月登録済未回収金額
+    su_registered_but_uncollected_items_from_the_previous_month_or_earlier AS 前月以前登録済未回収件数, --前月以前登録済未回収件数
+    su_uncollected_amount_registered_in_the_previous_month_or_earlier AS 前月以前登録済未回収金額, --前月以前登録済未回収金額
+    su_pieces AS 件数, --件数
+    su_amount AS 金額, --金額
+    sort_order AS ソート順 --ソート順
+FROM
+    gold.vbi002004_en vbi002004 --新車売掛金回収状況_en;
