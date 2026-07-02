@@ -162,3 +162,5 @@ LIMIT 0;
 
 
 DESCRIBE FORMATTED gold.vbi002001_en_iceberg_mng_test;
+
+Query 3445478ce86f13e3:5968d34500000000 failed: AnalysisException: Exception caught during generating Iceberg schema: CAUSED BY: CatalogException: Exception caught during generating Iceberg schema: CAUSED BY: ImpalaRuntimeException: Type TINYINT is not supported in Iceberg 
