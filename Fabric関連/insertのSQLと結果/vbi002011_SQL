@@ -1,0 +1,196 @@
+WITH kb_genkin_table AS(
+    SELECT
+        tbi999013m.cd_hansya, --販社コード
+        tbi999013m.cd_kaisya, --会社コード
+        GROUP_CONCAT(tbi999013m.kb_nyuukin, ',') AS kb_nyuukin_list --入金区分list
+    FROM dx_ve.tbi999013m tbi999013m --販売店入金区分設定
+    WHERE tbi999013m.kb_genkin = '1'
+    GROUP BY tbi999013m.cd_hansya
+            ,tbi999013m.cd_kaisya
+),
+kb_crejcard_table AS(
+    SELECT
+        tbi999013m.cd_hansya, --販社コード
+        tbi999013m.cd_kaisya, --会社コード
+        GROUP_CONCAT(tbi999013m.kb_nyuukin, ',') AS kb_nyuukin_list --入金区分list
+    FROM dx_ve.tbi999013m tbi999013m --販売店入金区分設定
+    WHERE tbi999013m.kb_crejcard = '1'
+    GROUP BY tbi999013m.cd_hansya
+            ,tbi999013m.cd_kaisya
+),
+nt8014m AS(
+    SELECT
+        t014m.cd_hansya, --販社コード
+        t014m.cd_kaisya, --会社コード
+        t014m.no_cyumon, --注文ＮＯ
+        COUNT(IF(t014m.kb_nyukkanr = '01',t014m.dd_keijyou,NULL)) AS cnt, --合計
+        MAX(IF(t014m.kb_nyukkanr = '01',t014m.dd_keijyou,NULL)) AS dd_keijyou1, --計上日1
+        MAX(IF(t014m.kb_nyukkanr = '02',t014m.dd_keijyou,NULL)) AS dd_keijyou2, --計上日2
+        MAX(IF(t014m.kb_nyukkanr = '03',t014m.dd_keijyou,NULL)) AS dd_keijyou3 --計上日3
+    FROM ai21rep_ve_dx.tbg8014m t014m --売掛金履歴ＤＢ
+    GROUP BY t014m.cd_hansya, t014m.cd_kaisya, t014m.no_cyumon
+),
+kt8014m AS(
+    SELECT
+        t001g.cd_hansya, --販社コード
+        t001g.cd_kaisya, --会社コード
+        t001g.no_cyumon, --注文ＮＯ
+        TRIM(t001g.no_cyumoned) AS no_cyumoned, --注文ＮＯ枝番
+        SUM(IF(t014m.dd_keijyou < CAST(FROM_TIMESTAMP(t001g.dd_touroku, 'yyyyMMdd') AS INT),t014m.ki_nyukinur,0)) AS ki_nyukinur1, --入金額兼売上額1
+        SUM(IF(FIND_IN_SET(LEFT(t014m.kb_nyuukin, 2),kb_crejcard_table.kb_nyuukin_list) > 0 AND t014m.ki_nyukinur >= 1,1,0)) AS ki_nyukinur2, --カード入金の回数
+        SUM(IF(FIND_IN_SET(LEFT(t014m.kb_nyuukin, 2),kb_crejcard_table.kb_nyuukin_list) > 0 AND t014m.ki_nyukinur <= -1,1,0)) AS ki_nyukinur3, --カード入金の回数
+        SUM(IF(FIND_IN_SET(LEFT(t014m.kb_nyuukin, 2),kb_genkin_table.kb_nyuukin_list) > 0 AND t014m.ki_nyukinur >= 1,1,0)) AS ki_nyukinur4, --現金入金の回数
+        SUM(IF(FIND_IN_SET(LEFT(t014m.kb_nyuukin, 2),kb_genkin_table.kb_nyuukin_list) > 0 AND t014m.ki_nyukinur <= -1,1,0)) AS ki_nyukinur5 --現金入金の回数
+    FROM ai21rep_ve_dx.tbba001g t001g --新車受注基本情報ＤＢ
+    INNER JOIN ai21rep_ve_dx.tbg8014m t014m --売掛金履歴ＤＢ
+        ON t014m.cd_hansya = t001g.cd_hansya
+        AND t014m.cd_kaisya = t001g.cd_kaisya
+        AND TRIM(t014m.no_cyumon) = TRIM(CONCAT(t001g.no_cyumon, t001g.no_cyumoned))
+        AND t014m.kb_urinyuki = '2' --売上入金区分が2である
+    LEFT JOIN kb_genkin_table
+        ON kb_genkin_table.cd_hansya = t001g.cd_hansya
+        AND kb_genkin_table.cd_kaisya = t001g.cd_kaisya
+    LEFT JOIN kb_crejcard_table
+        ON kb_crejcard_table.cd_hansya = t001g.cd_hansya
+        AND kb_crejcard_table.cd_kaisya = t001g.cd_kaisya
+    GROUP BY t001g.cd_hansya, t001g.cd_kaisya, t001g.no_cyumon, TRIM(t001g.no_cyumoned)
+)
+INSERT OVERWRITE TABLE gold.vbi002011
+SELECT
+    t001g.cd_hansya AS 販社コード, --販社コード
+    t001g.cd_kaisya AS 会社コード, --会社コード
+    t001g.cd_tenpo AS 店舗コード, --店舗コード
+    t001g.no_cyumon AS 注文ＮＯ, --注文ＮＯ
+    TRIM(t001g.no_cyumoned) AS 注文枝番, --注文枝番
+    CONCAT(t001g.cd_hansya, t001g.cd_kaisya, t001g.no_cyumon, TRIM(t001g.no_cyumoned)) AS pk_販社会社注文no枝番, --pk_販社会社注文no枝番
+    CONCAT(t001g.cd_hansya, t001g.cd_kaisya, t001g.cd_tenpo) AS 販社会社店舗コード, --販社会社店舗コード
+    v2001.kj_tentanms AS 店舗略称, --店舗略称
+    v2001.zone_name_abbreviation AS エリア統括部, --エリア統括部
+    v2001.cd_zon AS ゾーンコード, --ゾーンコード
+    v2001.sort_order AS ソート順, --ソート順
+    IF(t001g.dd_touroku IS NOT NULL,'登録済','未登録') AS 登録, --登録
+    IF(t001g.dd_nosya IS NOT NULL,'納車済','未納車') AS 納車, --納車
+    IF((NVL(t052g.ki_haseirui,0) - NVL(t052g.ki_genknykg,0) - NVL(t052g.ki_sitanykg,0) - NVL(t052g.ki_fuharnyk,0)) = 0,'残高なし','残高あり') AS 売掛残高, --売掛残高
+    t014m.kj_syainmei AS 社員名, --社員名
+    DATEDIFF(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), t001g.dd_touroku) AS 売上経過日数, --売上経過日数
+    CONCAT(REGEXP_REPLACE(t001g.kj_kainmei1, '　+$', ''), REGEXP_REPLACE(t001g.kj_kainmei2, '　+$', '')) AS 買主名, --買主名
+    CONCAT(REGEXP_REPLACE(t001g.kj_meigime1, '　+$', ''), REGEXP_REPLACE(t001g.kj_meigime2, '　+$', '')) AS 名義人, --名義人
+    CASE t052g.mj_keiykeit
+        WHEN '1' THEN '現金'
+        WHEN '2' THEN '後払い'
+        WHEN '3' THEN '自社割賦'
+        WHEN '4' THEN '信用購入斡旋'
+        WHEN '5' THEN '債権譲渡'
+        WHEN '' THEN 'その他'
+    END AS 契約形態, --契約形態
+    TRIM(CONCAT(t001g.no_cyumon, t001g.no_cyumoned)) AS 注文no_枝番, --注文no_枝番
+    SPLIT_PART(t001g.mj_hantenkt, '-', 1) AS 型式, --型式
+    t001g.dd_jucyu AS 受注日, --受注日
+    t001g.dd_fr AS 振当日, --振当日
+    t052g.dd_maeuknyu AS 申込金受領日, --申込金受領日
+    t001g.dd_touroku AS 登録日, --登録日
+    t001g.dd_haisou AS 配送日, --配送日
+    t001g.dd_nosya AS 納車日, --納車日
+    NVL(t052g.dd_minasksy, t052g.dd_kaisyuyo) AS 回収予定日, --回収予定日
+    TO_TIMESTAMP(CAST(nt8014m1.dd_keijyou1 AS STRING), 'yyyyMMdd') AS 最終入金日現金, --最終入金日現金
+    TO_TIMESTAMP(CAST(nt8014m1.dd_keijyou2 AS STRING), 'yyyyMMdd') AS 最終入金日割賦, --最終入金日割賦
+    TO_TIMESTAMP(CAST(nt8014m1.dd_keijyou3 AS STRING), 'yyyyMMdd') AS 下取完了日, --下取完了日
+    t001g.dd_urikzumi AS 完了, --完了
+    t052g.ki_genknykg AS 現金入金額, --現金入金額
+    t052g.ki_sitanykg AS 下取車入金額, --下取車入金額
+    t052g.ki_fuharnyk AS 賦払金入金額, --賦払金入金額
+    (NVL(t052g.ki_haseirui,0) - NVL(t052g.ki_genknykg,0) - NVL(t052g.ki_sitanykg,0) - NVL(t052g.ki_fuharnyk,0)) AS 売掛金残高合計, --売掛金残高合計
+    t052g.ki_genkhasg AS 現金発生額, --現金発生額
+    (NVL(t052g.ki_genkhasg,0) - NVL(t052g.ki_genknykg,0)) AS 現金残高, --現金残高
+    t052g.ki_fuharhsk AS 賦払金発生額, --賦払金発生額
+    (NVL(t052g.ki_fuharhsk,0) - NVL(t052g.ki_fuharnyk,0)) AS 割賦残高, --割賦残高
+    t052g.ki_sitahasg AS 下取車発生額, --下取車発生額
+    (NVL(t052g.ki_sitahasg,0) - NVL(t052g.ki_sitanykg,0)) AS 下取車残高, --下取車残高
+    IF(
+        t001g.dd_touroku IS NULL OR nt8014m1.dd_keijyou1 IS NULL OR TO_TIMESTAMP(CAST(nt8014m1.dd_keijyou1 AS STRING), 'yyyyMMdd') < t001g.dd_touroku,
+        t052g.ki_nyuruike,
+        NVL(kt8014m.ki_nyukinur1, 0)
+    ) AS 申込金, --申込金
+    NVL(kt8014m.ki_nyukinur4 - kt8014m.ki_nyukinur5, 0) AS 現金入金回数, --現金入金回数
+    NVL(kt8014m.ki_nyukinur2 - kt8014m.ki_nyukinur3, 0) AS カード入金回数, --カード入金回数
+    DATEDIFF(t001g.dd_nosya, t001g.dd_fr) AS `振当-納車`, --振当-納車
+    DATEDIFF(t001g.dd_nosya, t001g.dd_touroku) AS `登録-納車`, --登録-納車
+    DATEDIFF(t001g.dd_urikzumi, t001g.dd_touroku) AS `登録-完了`, --登録-完了
+    CASE LEFT(t001g.kb_haraidas, 1)
+        WHEN '1' THEN '一般売上'
+        WHEN '3' THEN 'リース'
+    END AS 払出区分, --払出区分
+    IF(
+        t051g1.kb_seibetu = '1' AND t051g2.kb_seibetu = '1'
+        OR t051g1.kb_seibetu = '2' AND t051g2.kb_seibetu = '1'
+        OR t051g1.kb_seibetu = '1' AND t051g2.kb_seibetu = '2'
+        OR t051g1.kb_seibetu = '2' AND t051g2.kb_seibetu = '2',
+        '個人',
+        '法人'
+    ) AS 法人個人区分, --法人個人区分
+    t052g.ki_haseirui AS 発生累計, --発生累計
+    t001g.dt_saisinup AS 更新日時 --更新日時
+FROM ai21rep_ve_dx.tbba001g t001g --新車受注基本情報ＤＢ
+INNER JOIN gold.vbi002001_en v2001 --新車売掛金店舗別_en
+    ON v2001.cd_hansya = t001g.cd_hansya
+    AND v2001.cd_kaisya = t001g.cd_kaisya
+    AND v2001.cd_tenpo = t001g.cd_tenpo
+LEFT JOIN ai21rep_ve_dx.tbba052g t052g --新車受注販売条件情報ＤＢ
+    ON t052g.cd_hansya = t001g.cd_hansya
+    AND t052g.cd_kaisya = t001g.cd_kaisya
+    AND t052g.no_cyumon = t001g.no_cyumon
+    AND TRIM(t052g.no_cyumoned) = TRIM(t001g.no_cyumoned)
+LEFT JOIN ai21rep_ve_dx.tbv0014m t014m --Ｍ社員ＤＢ
+    ON t014m.cd_hansya = t001g.cd_hansya
+    AND t014m.cd_kaisya = t001g.cd_kaisya
+    AND t014m.cd_syain = t001g.cd_hanstaff
+LEFT JOIN nt8014m nt8014m1
+    ON nt8014m1.cd_hansya = t001g.cd_hansya
+    AND nt8014m1.cd_kaisya = t001g.cd_kaisya
+    AND TRIM(nt8014m1.no_cyumon) = TRIM(CONCAT(t001g.no_cyumon, t001g.no_cyumoned))
+LEFT JOIN kt8014m
+    ON kt8014m.cd_hansya = t001g.cd_hansya
+    AND kt8014m.cd_kaisya = t001g.cd_kaisya
+    AND TRIM(kt8014m.no_cyumon) = t001g.no_cyumon
+    AND TRIM(kt8014m.no_cyumoned) = TRIM(t001g.no_cyumoned)
+LEFT JOIN ai21rep_ve_dx.tbba051g t051g1 --新車受注顧客情報ＤＢ
+    ON t051g1.cd_hansya = t001g.cd_hansya
+    AND t051g1.cd_kaisya = t001g.cd_kaisya
+    AND t051g1.no_cyumon = t001g.no_cyumon
+    AND TRIM(t051g1.no_cyumoned) = TRIM(t001g.no_cyumoned)
+    AND t051g1.kb_kokyaku = '1'
+LEFT JOIN ai21rep_ve_dx.tbba051g t051g2 --新車受注顧客情報ＤＢ
+    ON t051g2.cd_hansya = t001g.cd_hansya
+    AND t051g2.cd_kaisya = t001g.cd_kaisya
+    AND t051g2.no_cyumon = t001g.no_cyumon
+    AND TRIM(t051g2.no_cyumoned) = TRIM(t001g.no_cyumoned)
+    AND t051g2.kb_kokyaku = '2'
+WHERE ISNOTTRUE(
+    (t052g.ki_haseirui - t052g.ki_genknykg - t052g.ki_sitanykg - t052g.ki_fuharnyk) = 0
+    AND (
+        (
+            t001g.dd_touroku IS NOT NULL
+            AND t001g.dd_nosya < DATE '2023-03-01'
+            AND (t001g.dd_urikzumi IS NULL OR t001g.dd_urikzumi < DATE '2024-03-01')
+        )
+        OR (t001g.dd_nosya IS NULL AND t001g.dd_touroku < DATE '2023-03-01')
+        OR t001g.dd_urikzumi < DATE '2024-03-01'
+        OR (t001g.dd_touroku IS NULL AND t001g.dd_jucyu < DATE '2020-12-01')
+    )
+)
+AND (
+    t001g.dd_torotrkk IS NULL
+    OR (t052g.ki_haseirui - t052g.ki_genknykg - t052g.ki_sitanykg - t052g.ki_fuharnyk) <> 0
+)
+AND (
+    LEFT(t001g.kb_haraidas, 1) = '1'
+    OR (
+        LEFT(t001g.kb_haraidas, 1) = '3'
+        AND NOT(
+            (t052g.ki_haseirui - t052g.ki_genknykg - t052g.ki_sitanykg - t052g.ki_fuharnyk) = 0
+            AND (t052g.ki_genkhasg - t052g.ki_genknykg) = 0
+            AND (t052g.ki_fuharhsk - t052g.ki_fuharnyk) = 0
+            AND (t052g.ki_sitahasg - t052g.ki_sitanykg) = 0
+        )
+    )
+);
