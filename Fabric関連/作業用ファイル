@@ -1,16 +1,17 @@
-gold.vbi002001_en  : 410件
-gold.vbi002001     : 410件
-gold.vbi002003     : 4908件
-gold.vbi002004_en  : 48513件
-gold.vbi002002     : 431件
-gold.vbi002004     : 48513件
-gold.vbi002005     : 48513件
-gold.vbi002006     : 49581件
-gold.vbi002007     : 466876件
-gold.vbi002008     : 0件
-gold.vbi002011     : 48872件
-gold.vbi0020012    : 0件
-gold.vbi0020013    : 216件
-gold.vbi0020014    : 216件
-gold.vbi002015     : 1430件
-gold.vbi002016     : 1430件
+gold 側の metadata 追加後に Fabric で再度 Shortcut を作成したところ、
+以前の「正体不明」は解消され、テーブルとして認識される状態にはなりました。
+ 
+しかし、テーブルビューの読み込みには失敗しております。
+エラー詳細は下記になります。
+エラーコード：
+InvalidTable
+
+メッセージ：
+[DELTA_TABLE_NOT_FOUND] Delta table `chimcobldhq2ah2o5li6uqjf5lr6a9ac91fncp95chh6u`.`vbi0020013` doesn't exist.
+Fabric では Iceberg テーブルショートカット作成時に、
+Iceberg metadata をもとに仮想 Delta Lake メタデータを生成して利用されます。
+そのため、metadata フォルダー自体は存在しているものの、
+Fabric が Delta 互換テーブルとして解釈できていない可能性がございます。
+ 
+bronze側は問題なく表示されるため、gold 側の Iceberg metadata / manifest / data file 整合性 が問題かと思われます。
+大変恐縮ですが、ご確認のほどよろしくお願いいたします
