@@ -124,3 +124,5 @@ GROUP BY
     tbg7005m.cd_kaisya,
     tbg7005m.cd_tenpo
 LIMIT 0;
+
+Query cc41566d540ae326:ea059a4100000000 failed: AnalysisException: Exception caught during generating Iceberg schema: CAUSED BY: CatalogException: Exception caught during generating Iceberg schema: CAUSED BY: ImpalaRuntimeException: Type TINYINT is not supported in Iceberg 
