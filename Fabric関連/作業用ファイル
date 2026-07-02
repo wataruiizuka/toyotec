@@ -1,98 +1,164 @@
-name	type	comment
-# col_name 	data_type 	comment
-	NULL	NULL
-cd_hansya	string	NULL
-cd_kaisya	string	NULL
-no_cyumon	string	NULL
-no_cyumoned	string	NULL
-kb_kokyaku	string	NULL
-cd_kokyaku	string	NULL
-kn_sei	string	NULL
-kn_mei	string	NULL
-no_post	string	NULL
-cd_jyusyo	string	NULL
-cd_jkoaza	string	NULL
-cd_jedaban	string	NULL
-no_tel	string	NULL
-kb_seibetu	string	NULL
-kn_jusyo1	string	NULL
-kn_jusyo2	string	NULL
-kn_jusyo3	string	NULL
-kj_jusyokj1	string	NULL
-kj_jusyokj2	string	NULL
-kj_jusyokj3	string	NULL
-kj_kinmusm	string	NULL
-kn_kinmumei	string	NULL
-cd_kinjusyo	string	NULL
-cd_kinjusy4	string	NULL
-cd_kinjusy5	string	NULL
-kj_kinjusy1	string	NULL
-kj_kinjusy2	string	NULL
-kj_kinjusy3	string	NULL
-no_kinmutel	string	NULL
-dd_seinen	string	NULL
-nu_nenrei	bigint	NULL
-cd_gyousyu	string	NULL
-cd_syokugyo	string	NULL
-cd_pkyaku	string	NULL
-no_keitai	string	NULL
-no_fax	string	NULL
-mj_email	string	NULL
-mj_email2	string	NULL
-mj_email3	string	NULL
-mj_tyuemail	string	NULL
-dt_saisinup	timestamp	NULL
-mj_sasintan	string	NULL
-csv_md5	string	NULL
-iceberg_md5	string	NULL
-	NULL	NULL
-# Partition Transform Information	NULL	NULL
-# col_name 	transform_type 	NULL
-	NULL	NULL
-cd_hansya	IDENTITY	NULL
-	NULL	NULL
-# Detailed Table Information	NULL	NULL
-Database: 	bronze 	NULL
-OwnerType: 	USER 	NULL
-Owner: 	t01 	NULL
-CreateTime: 	Thu Mar 05 06:18:14 UTC 2026	NULL
-LastAccessTime: 	Thu Dec 18 22:06:42 UTC 1969	NULL
-Retention: 	2147483647 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbba051g_bronze	NULL
-Erasure Coding Policy:	NONE 	NULL
-Table Type: 	EXTERNAL_TABLE 	NULL
-Table Parameters:	NULL	NULL
-	EXTERNAL 	TRUE
-	OBJCAPABILITIES 	EXTREAD,EXTWRITE
-	current-schema 	{\"type\":\"struct\",\"schema-id\":0,\"identifier-field-ids\":[1,2,3,4,5],\"fields\":[{\"id\":1,\"name\":\"cd_hansya\",\"required\":true,\"type\":\"string\"},{\"id\":2,\"name\":\"cd_kaisya\",\"required\":true,\"type\":\"string\"},{\"id\":3,\"name\":\"no_cyumon\",\"required\":true,\"type\":\"string\"},{\"id\":4,\"name\":\"no_cyumoned\",\"required\":true,\"type\":\"string\"},{\"id\":5,\"name\":\"kb_kokyaku\",\"required\":true,\"type\":\"string\"},{\"id\":6,\"name\":\"cd_kokyaku\",\"required\":false,\"type\":\"string\"},{\"id\":7,\"name\":\"kn_sei\",\"required\":false,\"type\":\"string\"},{\"id\":8,\"name\":\"kn_mei\",\"required\":false,\"type\":\"string\"},{\"id\":9,\"name\":\"no_post\",\"required\":false,\"type\":\"string\"},{\"id\":10,\"name\":\"cd_jyusyo\",\"required\":false,\"type\":\"string\"},{\"id\":11,\"name\":\"cd_jkoaza\",\"required\":false,\"type\":\"string\"},{\"id\":12,\"name\":\"cd_jedaban\",\"required\":false,\"type\":\"string\"},{\"id\":13,\"name\":\"no_tel\",\"required\":false,\"type\":\"string\"},{\"id\":14,\"name\":\"kb_seibetu\",\"required\":false,\"type\":\"string\"},{\"id\":15,\"name\":\"kn_jusyo1\",\"required\":false,\"type\":\"string\"},{\"id\":16,\"name\":\"kn_jusyo2\",\"required\":false,\"type\":\"string\"},{\"id\":17,\"name\":\"kn_jusyo3\",\"required\":false,\"type\":\"string\"},{\"id\":18,\"name\":\"kj_jusyokj1\",\"required\":false,\"type\":\"string\"},{\"id\":19,\"name\":\"kj_jusyokj2\",\"required\":false,\"type\":\"string\"},{\"id\":20,\"name\":\"kj_jusyokj3\",\"required\":false,\"type\":\"string\"},{\"id\":21,\"name\":\"kj_kinmusm\",\"required\":false,\"type\":\"string\"},{\"id\":22,\"name\":\"kn_kinmumei\",\"required\":false,\"type\":\"string\"},{\"id\":23,\"name\":\"cd_kinjusyo\",\"required\":false,\"type\":\"string\"},{\"id\":24,\"name\":\"cd_kinjusy4\",\"required\":false,\"type\":\"string\"},{\"id\":25,\"name\":\"cd_kinjusy5\",\"required\":false,\"type\":\"string\"},{\"id\":26,\"name\":\"kj_kinjusy1\",\"required\":false,\"type\":\"string\"},{\"id\":27,\"name\":\"kj_kinjusy2\",\"required\":false,\"type\":\"string\"},{\"id\":28,\"name\":\"kj_kinjusy3\",\"required\":false,\"type\":\"string\"},{\"id\":29,\"name\":\"no_kinmutel\",\"required\":false,\"type\":\"string\"},{\"id\":30,\"name\":\"dd_seinen\",\"required\":false,\"type\":\"string\"},{\"id\":31,\"name\":\"nu_nenrei\",\"required\":false,\"type\":\"long\"},{\"id\":32,\"name\":\"cd_gyousyu\",\"required\":false,\"type\":\"string\"},{\"id\":33,\"name\":\"cd_syokugyo\",\"required\":false,\"type\":\"string\"},{\"id\":34,\"name\":\"cd_pkyaku\",\"required\":false,\"type\":\"string\"},{\"id\":35,\"name\":\"no_keitai\",\"required\":false,\"type\":\"string\"},{\"id\":36,\"name\":\"no_fax\",\"required\":false,\"type\":\"string\"},{\"id\":37,\"name\":\"mj_email\",\"required\":false,\"type\":\"string\"},{\"id\":38,\"name\":\"mj_email2\",\"required\":false,\"type\":\"string\"},{\"id\":39,\"name\":\"mj_email3\",\"required\":false,\"type\":\"string\"},{\"id\":40,\"name\":\"mj_tyuemail\",\"required\":false,\"type\":\"string\"},{\"id\":41,\"name\":\"dt_saisinup\",\"required\":false,\"type\":\"timestamp\"},{\"id\":42,\"name\":\"mj_sasintan\",\"required\":false,\"type\":\"string\"},{\"id\":43,\"name\":\"csv_md5\",\"required\":false,\"type\":\"string\"},{\"id\":44,\"name\":\"iceberg_md5\",\"required\":false,\"type\":\"string\"}]}
-	current-snapshot-id 	6885581840411374369
-	current-snapshot-summary	{\"spark.app.id\":\"application_1772103883474_0002\",\"added-data-files\":\"1\",\"added-records\":\"139\",\"added-files-size\":\"24450\",\"changed-partition-count\":\"1\",\"total-records\":\"139\",\"total-files-size\":\"24450\",\"total-data-files\":\"1\",\"total-delete-files\":\"0\",\"total-position-deletes\":\"0\",\"total-equality-deletes\":\"0\"}
-	current-snapshot-timestamp-ms	1772693277858
-	default-partition-spec	{\"spec-id\":0,\"fields\":[{\"name\":\"cd_hansya\",\"transform\":\"identity\",\"source-id\":1,\"field-id\":1000}]}
-	engine.hive.enabled 	true
-	external.table.purge	TRUE
-	format-version 	2
-	metadata_location 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbba051g_bronze/metadata/00001-37db75d3-1752-4c6f-b552-340d8c258464.metadata.json
-	numFiles 	1
-	numRows 	139
-	previous_metadata_location	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/bronze.db/tbba051g_bronze/metadata/00000-e042837c-f0a0-4e83-8978-801af849d11f.metadata.json
-	snapshot-count 	1
-	storage_handler 	org.apache.iceberg.mr.hive.HiveIcebergStorageHandler
-	table_type 	ICEBERG
-	totalSize 	24450
-	transient_lastDdlTime	1772691494
-	uuid 	335e4b40-0b88-4e4c-be08-15802fb0fb6a
-	write.delete.mode 	merge-on-read
-	write.format.default	parquet
-	write.merge.mode 	merge-on-read
-	write.parquet.compression-codec	snappy
-	write.update.mode 	merge-on-read
-	NULL	NULL
-# Storage Information	NULL	NULL
-SerDe Library: 	org.apache.iceberg.mr.hive.HiveIcebergSerDe	NULL
-InputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergInputFormat	NULL
-OutputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergOutputFormat	NULL
-Compressed: 	No 	NULL
-Sort Columns: 	[] 	NULL
-	NULL	NULL
-# Constraints	NULL	NULL
+DROP TABLE IF EXISTS gold.vbi002001_en_iceberg_mng_test;
+
+CREATE TABLE gold.vbi002001_en_iceberg_mng_test
+STORED AS ICEBERG
+TBLPROPERTIES (
+  'format-version'='2',
+  'engine.hive.enabled'='true',
+  'write.format.default'='parquet',
+  'write.parquet.compression-codec'='snappy'
+)
+AS
+--販社コードがTMTの店舗
+SELECT
+    main_table.su_store_number, --店舗数
+    main_table.cd_hansya_kaisya_tenpo, --販社会社店舗コード
+    main_table.cd_hansya_kaisya_zon_tenpo, --販社会社ゾーン店舗コード
+    main_table.cd_hansya, --販社コード
+    main_table.cd_kaisya, --会社コード
+    main_table.cd_tenpo, --店舗コード
+    main_table.kj_tenpomei, --店舗名称
+    main_table.kj_tentanms, --店舗短縮名称
+    IF(
+      main_table.zone_name_abbreviation IS NULL
+      OR regexp_replace(main_table.zone_name_abbreviation, '[ 　]+', '') = '',
+      '999999',
+      IF(
+        main_table.cd_zon IS NULL
+        OR regexp_replace(main_table.cd_zon, '[ 　]+', '') = '',
+        '999998',
+        main_table.cd_zon
+      )
+    ) AS cd_zon, --ゾーンコード
+    main_table.cd_nczon, --ンゾン
+    main_table.kj_zonmei, --ゾーン名称
+    main_table.zone_name_abbreviation, --ゾーン名略
+    main_table.sort_order --ソート順
+FROM (
+    SELECT
+        1 AS su_store_number, --店舗数
+        CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv201m.cd_tenpo) AS cd_hansya_kaisya_tenpo, --販社会社店舗コード
+        IF(
+          tntenpo.cd_zon IS NOT NULL,
+          CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tntenpo.cd_zon, tbv201m.cd_tenpo),
+          CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv003m.cd_zon, tbv201m.cd_tenpo)
+        ) AS cd_hansya_kaisya_zon_tenpo, --販社会社ゾーン店舗コード
+        tbv201m.cd_hansya, --販社コード
+        tbv201m.cd_kaisya, --会社コード
+        tbv201m.cd_tenpo, --店舗コード
+        tbv201m.kj_tenpomei, --店舗名称
+        tbv201m.kj_tentanms, --店舗短縮名称
+        NVL(tntenpo.cd_zon, tbv003m.cd_zon) AS cd_zon, --ゾーンコード
+        NVL(tntenpo.cd_zon, tbv0047m.cd_nczon) AS cd_nczon, --ンゾン
+        NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei) AS kj_zonmei, --ゾーン名称
+        CASE
+            WHEN tbv003m1.kj_zonmei IS NOT NULL
+              AND (
+                LEFT(CAST(tbv003m1.kj_zonmei AS STRING), 3) = 'ト'
+                OR LEFT(CAST(tbv003m1.kj_zonmei AS STRING), 3) = 'レ'
+              )
+              AND RIGHT(CAST(tbv003m1.kj_zonmei AS STRING), 6) = 'エ統'
+            THEN REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(SUBSTR(CAST(tbv003m1.kj_zonmei AS STRING), 1, 9), 'レ', 'L-'), 'ト', 'T-'), '０', '0'), '１', '1'), '２', '2'), '３', '3'), '４', '4'), '５', '5'), '６', '6'), '７', '7'), '８', '8'), '９', '9')
+            WHEN tbv003m1.kj_zonmei IS NOT NULL
+            THEN TRIM(REPLACE(CAST(tbv003m1.kj_zonmei AS STRING), '　', ' '))
+            WHEN (
+                LEFT(CAST(tbv003m.kj_zonmei AS STRING), 3) = 'ト'
+                OR LEFT(CAST(tbv003m.kj_zonmei AS STRING), 3) = 'レ'
+              )
+              AND RIGHT(CAST(tbv003m.kj_zonmei AS STRING), 6) = 'エ統'
+            THEN REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(SUBSTR(CAST(tbv003m.kj_zonmei AS STRING), 1, 9), 'レ', 'L-'), 'ト', 'T-'), '０', '0'), '１', '1'), '２', '2'), '３', '3'), '４', '4'), '５', '5'), '６', '6'), '７', '7'), '８', '8'), '９', '9')
+            ELSE TRIM(REPLACE(CAST(tbv003m.kj_zonmei AS STRING), '　', ' '))
+        END AS zone_name_abbreviation, --ゾーン名略
+        RANK() OVER (
+          PARTITION BY tbv201m.cd_hansya, tbv201m.cd_kaisya
+          ORDER BY NVL(tntenpo.cd_zon, tbv003m.cd_zon), tbi999003m.mj_sortjyun, tbv201m.cd_tenpo
+        ) AS sort_order --ソート順
+    FROM ai21rep_ve_dx.tbv0201m tbv201m --共通店舗DB
+    LEFT JOIN dx_ve.tbi999003m tbi999003m --店舗展示設定
+        ON tbv201m.cd_hansya = tbi999003m.cd_hansya
+        AND tbv201m.cd_kaisya = tbi999003m.cd_kaisya
+        AND tbv201m.cd_tenpo = tbi999003m.cd_tenpo
+        AND tbi999003m.mj_cyohyoid = "002"
+    LEFT JOIN ai21rep_ve_dx.tbv0047m tbv0047m --M車両店舗DB
+        ON tbv0047m.cd_hansya = '03601'
+        AND tbv0047m.cd_kaisya = '01'
+        AND tbv0047m.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m --MゾーンコードDB
+        ON tbv003m.cd_hansya = '03601'
+        AND tbv003m.cd_kaisya = '01'
+        AND tbv003m.cd_zon = tbv0047m.cd_nczon
+        AND tbv003m.kb_syohin = '1'
+    LEFT JOIN dx_ve.tbi002003m tntenpo --手入力店舗所属
+        ON tntenpo.cd_hansya = '03601'
+        AND tntenpo.cd_kaisya = '01'
+        AND tntenpo.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m1 --MゾーンコードDB
+        ON tbv003m1.cd_hansya = '03601'
+        AND tbv003m1.cd_kaisya = '01'
+        AND tntenpo.cd_zon = tbv003m1.cd_zon
+    WHERE
+        tbi999003m.kb_tenji = 1
+        AND tbv201m.kj_tenpomei NOT LIKE '%廃）%'
+        AND tbv201m.cd_hansya = '03601'
+        AND tbv201m.cd_kaisya = '01'
+        AND (
+          tbv003m.cd_zon IN ('01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','30','31','32','33','60','90')
+          OR SUBSTRING(tbv003m.cd_zon, 1, 3) = 'TK_'
+        )
+        AND tbv201m.cd_tenpo NOT IN ('T01','T02','T03','T04','T05','T06','T07','T08','T09','T10','T11','T12','T13','T14','T15','L01','L02','L03','L04')
+
+    UNION ALL
+
+    SELECT
+        1 AS su_store_number, --店舗数
+        CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv201m.cd_tenpo) AS cd_hansya_kaisya_tenpo, --販社会社店舗コード
+        IF(
+          tntenpo.cd_zon IS NOT NULL,
+          CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tntenpo.cd_zon, tbv201m.cd_tenpo),
+          CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv003m.cd_zon, tbv201m.cd_tenpo)
+        ) AS cd_hansya_kaisya_zon_tenpo, --販社会社ゾーン店舗コード
+        tbv201m.cd_hansya, --販社コード
+        tbv201m.cd_kaisya, --会社コード
+        tbv201m.cd_tenpo, --店舗コード
+        tbv201m.kj_tenpomei, --店舗名称
+        tbv201m.kj_tentanms, --店舗短縮名称
+        NVL(tntenpo.cd_zon, tbv003m.cd_zon) AS cd_zon, --ゾーンコード
+        NVL(tntenpo.cd_zon, tbv0047m.cd_nczon) AS cd_nczon, --ンゾン
+        NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei) AS kj_zonmei, --ゾーン名称
+        NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei) AS zone_name_abbreviation, --ゾーン名略
+        RANK() OVER (
+          PARTITION BY tbv201m.cd_hansya, tbv201m.cd_kaisya
+          ORDER BY NVL(tntenpo.cd_zon, tbv003m.cd_zon), tbi999003m.mj_sortjyun, tbv201m.cd_tenpo
+        ) AS sort_order --ソート順
+    FROM ai21rep_ve_dx.tbv0201m tbv201m --共通店舗DB
+    LEFT JOIN dx_ve.tbi999003m tbi999003m --店舗展示設定
+        ON tbv201m.cd_hansya = tbi999003m.cd_hansya
+        AND tbv201m.cd_kaisya = tbi999003m.cd_kaisya
+        AND tbv201m.cd_tenpo = tbi999003m.cd_tenpo
+        AND tbi999003m.mj_cyohyoid = "002"
+    LEFT JOIN ai21rep_ve_dx.tbv0047m tbv0047m --M車両店舗DB
+        ON tbv0047m.cd_hansya = tbv201m.cd_hansya
+        AND tbv0047m.cd_tenpo = tbv201m.cd_kaisya
+        AND tbv0047m.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m --MゾーンコードDB
+        ON tbv003m.cd_hansya = tbv0047m.cd_hansya
+        AND tbv003m.cd_kaisya = tbv0047m.cd_tenpo
+        AND tbv003m.cd_zon = tbv0047m.cd_nczon
+        AND tbv003m.kb_syohin = '1'
+    LEFT JOIN dx_ve.tbi002003m tntenpo --手入力店舗所属
+        ON tntenpo.cd_hansya = tbv201m.cd_hansya
+        AND tntenpo.cd_kaisya = tbv201m.cd_kaisya
+        AND tntenpo.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m1 --MゾーンコードDB
+        ON tntenpo.cd_hansya = tbv003m1.cd_hansya
+        AND tntenpo.cd_kaisya = tbv003m1.cd_kaisya
+        AND tntenpo.cd_tenpo = tbv003m1.cd_zon
+    WHERE
+        tbi999003m.kb_tenji = 1
+        AND tbv201m.cd_hansya <> '03601'
+        AND tbv201m.kj_tenpomei NOT LIKE '%廃）%'
+) main_table
+LIMIT 0;
+
+
+DESCRIBE FORMATTED gold.vbi002001_en_iceberg_mng_test;
