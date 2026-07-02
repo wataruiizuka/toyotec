@@ -1,0 +1,41 @@
+CREATE TABLE gold.vbi002015
+STORED BY ICEBERG
+TBLPROPERTIES ('format-version' = '2')
+AS
+WITH alert_text AS (
+    SELECT '0' AS Value, '' AS aler_text --aler_text
+    UNION ALL
+    SELECT '1', '回収遅延'
+    UNION ALL
+    SELECT '2', '入金超過'
+    UNION ALL
+    SELECT '3', '未納車'
+    UNION ALL
+    SELECT '4', '納車済残高あり'
+    UNION ALL
+    SELECT '5', '複数回入金'
+    UNION ALL
+    SELECT '6', 'リードタイム'
+    UNION ALL
+    SELECT 'a', ''
+    UNION ALL
+    SELECT 'b', ''
+    UNION ALL
+    SELECT 'c', ''
+    UNION ALL
+    SELECT 'd', ''
+    UNION ALL
+    SELECT 'e', ''
+    UNION ALL
+    SELECT 'f', ''
+)
+SELECT
+     tbi002001m.cd_hansya AS 販社コード --販社コード
+    ,tbi002001m.cd_kaisya AS 会社コード --会社コード
+    ,Value
+    ,IF(Value = '6',CONCAT('リードタイム', CAST(COALESCE(tbi002001m.su_leadtime, 20) AS STRING), '日以上チェック'),aler_text) AS アラート文言 --アラート文言
+FROM
+    alert_text
+CROSS JOIN
+    dx_ve.tbi002001m tbi002001m -- --_新車アラート項目設定
+LIMIT 0;
