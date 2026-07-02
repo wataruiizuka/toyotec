@@ -1,0 +1,21 @@
+CREATE TABLE gold.vbi002001
+STORED BY ICEBERG
+TBLPROPERTIES ('format-version' = '2')
+AS
+SELECT
+    su_store_number AS 店舗数, --店舗数
+    cd_hansya_kaisya_tenpo AS 販社会社店舗コード, --販社会社店舗コード
+    cd_hansya_kaisya_zon_tenpo AS 販社会社ゾーン店舗コード, --販社会社ゾーン店舗コード
+    cd_hansya AS 販社コード, --販社コード
+    cd_kaisya AS 会社コード, --会社コード
+    cd_tenpo AS 店舗コード, --店舗コード
+    kj_tenpomei AS 店舗名称, --店舗名称
+    kj_tentanms AS 店舗短縮名称, --店舗短縮名称
+    cd_zon AS ゾーンコード, --ゾーンコード
+    cd_nczon AS ンゾン, --ンゾン
+    kj_zonmei AS ゾーン名称, --ゾーン名称
+    zone_name_abbreviation AS ゾーン名略, --ゾーン名略
+    sort_order AS ソート順 --ソート順
+FROM
+    gold.vbi002001_en vbi002001 --新車売掛金店舗別_en
+LIMIT 0;
