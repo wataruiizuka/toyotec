@@ -1,47 +1,16 @@
-name	type	comment
-# col_name 	data_type 	comment
-	NULL	NULL
-cd_hansya	string	NULL
-cd_kaisya	string	NULL
-cd_tenpo	string	NULL
-kb_syohin	string	NULL
-cd_zon	string	NULL
-kj_zonmei	string	NULL
-	NULL	NULL
-# Detailed Table Information	NULL	NULL
-Database: 	ai21rep_ve_test_kudu	NULL
-OwnerType: 	USER 	NULL
-Owner: 	t01 	NULL
-CreateTime: 	Mon Jun 09 08:25:14 UTC 2025	NULL
-LastAccessTime: 	UNKNOWN 	NULL
-Retention: 	0 	NULL
-Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/ai21rep_ve_test_kudu.db/tbi002003m	NULL
-Erasure Coding Policy:	NONE 	NULL
-Table Type: 	EXTERNAL_TABLE 	NULL
-Table Parameters:	NULL	NULL
-	EXTERNAL 	TRUE
-	STATS_GENERATED 	TASK
-	TRANSLATED_TO_EXTERNAL	TRUE
-	comment 	
-	external.table.purge	TRUE
-	impala.events.catalogServiceId	754f4f45744b4bd0:8cf075de44b0407e
-	impala.events.catalogVersion	2141
-	impala.lastComputeStatsTime	1750051837
-	kudu.cluster_id 	e242e27faf994eb297de913aa5003d48
-	kudu.master_addresses	cdp-dap-kudu-ve-je-master10.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master20.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master30.toyotecd.kj09-szpi.a0.cloudera.site:7051
-	kudu.table_id 	05b4da500a0e4b7eb32fe39317feb2ab
-	kudu.table_name 	ai21rep_ve_test_kudu.tbi002003m
-	numRows 	12
-	storage_handler 	org.apache.hadoop.hive.kudu.KuduStorageHandler
-	transient_lastDdlTime	1749457514
-	NULL	NULL
-# Storage Information	NULL	NULL
-SerDe Library: 	org.apache.hadoop.hive.kudu.KuduSerDe	NULL
-InputFormat: 	org.apache.hadoop.hive.kudu.KuduInputFormat	NULL
-OutputFormat: 	org.apache.hadoop.hive.kudu.KuduOutputFormat	NULL
-Compressed: 	No 	NULL
-Num Buckets: 	0 	NULL
-Bucket Columns: 	[] 	NULL
-Sort Columns: 	[] 	NULL
-	NULL	NULL
-# Constraints	NULL	NULL
+gold.vbi002001
+gold.vbi002001_en
+gold.vbi002002
+gold.vbi002003
+gold.vbi002004
+gold.vbi002004_en
+gold.vbi002005
+gold.vbi002006
+gold.vbi002007
+gold.vbi002008
+gold.vbi002011
+gold.vbi0020012
+gold.vbi0020013
+gold.vbi0020014
+gold.vbi002015
+gold.vbi002016
