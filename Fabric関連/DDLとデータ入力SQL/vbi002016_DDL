@@ -1,0 +1,48 @@
+CREATE TABLE gold.vbi002016
+STORED BY ICEBERG
+TBLPROPERTIES ('format-version' = '2')
+AS
+WITH alert_text AS (
+    SELECT '0' AS Value, '' AS aler_text --aler_text
+    UNION ALL
+    SELECT '1', ''
+    UNION ALL
+    SELECT '2', ''
+    UNION ALL
+    SELECT '3', ''
+    UNION ALL
+    SELECT '4', ''
+    UNION ALL
+    SELECT '5', ''
+    UNION ALL
+    SELECT '6', ''
+    UNION ALL
+    SELECT 'a', '売掛回収チェック'
+    UNION ALL
+    SELECT 'b', '未納車30日経過'
+    UNION ALL
+    SELECT 'c', '登録90日経過'
+    UNION ALL
+    SELECT 'd', '振当90日経過'
+    UNION ALL
+    SELECT 'e', '受注1年経過'
+    UNION ALL
+    SELECT 'f', 'キャンセル未返金'
+)
+
+SELECT
+     tbi002001m.cd_hansya AS 販社コード --販社コード
+    ,tbi002001m.cd_kaisya AS 会社コード --会社コード
+    ,Value
+    ,CASE
+        WHEN Value = 'b' THEN CONCAT('未納車', CAST(COALESCE(tbi002001m.su_minosya, 30) AS STRING), '日経過')
+        WHEN Value = 'c' THEN CONCAT('登録', CAST(COALESCE(tbi002001m.su_touroku, 20) AS STRING), '日経過')
+        WHEN Value = 'd' THEN CONCAT('振当', CAST(COALESCE(tbi002001m.su_fr, 20) AS STRING), '日経過')
+        WHEN Value = 'f' THEN CONCAT('受注', CAST(COALESCE(tbi002001m.su_jucyu, 20) AS STRING), '日経過')
+        ELSE aler_text
+    END AS アラート文言 --アラート文言
+FROM
+    alert_text
+CROSS JOIN
+    dx_ve.tbi002001m tbi002001m --_新車アラート項目設定
+LIMIT 0;
