@@ -1,0 +1,85 @@
+CREATE TABLE gold.vbi002004_en
+STORED BY ICEBERG
+TBLPROPERTIES ('format-version' = '2')
+AS
+SELECT
+    tbba001g.cd_hansya, --販社コード
+    tbba001g.cd_kaisya, --会社コード
+    tbba001g.cd_tenpo, --店舗コード
+    tbba001g.cd_hansya || tbba001g.cd_kaisya || tbba001g.cd_tenpo AS cd_hansya_kaisya_tenpo, --販社会社店舗コード
+    CAST(IF(MONTH(tbba001g.dd_jucyu) = MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')), 1, 0) AS INT) AS su_order, --受注台数
+    CAST(IF(MONTH(tbba001g.dd_touroku) = MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')), 1, 0) AS INT) AS su_registered_vehicle, --登録台数
+    CAST(IF(MONTH(tbba001g.dd_touroku) = MONTH(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST')) AND tbba052g.su_sitadori = 0, 1, 0) AS INT) AS su_no_trade_in_vehicle_registered_this_month, --当月登録内下取車なし
+    COALESCE(tbba001g_1.su_avg_lead_time, 0) AS su_average_lead_time_for_collections_completed_this_month, --当月回収完了分平均リードタイム
+    CAST(IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL, 1, 0) AS INT) AS su_currently_registered_but_uncollected_case, --現在登録済未回収件数
+    IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL, tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk, 0) AS su_currently_registered_uncollected_amount, --現在登録済未回収金額
+    CAST(IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL AND TRUNC(tbba001g.dd_touroku, 'month') = TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'month'), 1, 0) AS INT) AS su_registered_but_uncollected_items_from_the_previous_month, --前月登録済未回収件数
+    IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL AND TRUNC(tbba001g.dd_touroku, 'month') = TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'month'), tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk, 0) AS su_uncollected_amount_registered_in_the_previous_month, --前月登録済未回収金額
+    CAST(IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL AND (TRUNC(tbba001g.dd_touroku, 'year') < TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'year') OR (TRUNC(tbba001g.dd_touroku, 'year') = TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'year') AND TRUNC(tbba001g.dd_touroku, 'month') < TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'month'))), 1, 0) AS INT) AS su_registered_but_uncollected_items_from_the_previous_month_or_earlier, --前月以前登録済未回収件数
+    IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL AND (TRUNC(tbba001g.dd_touroku, 'year') < TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'year') OR (TRUNC(tbba001g.dd_touroku, 'year') = TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'year') AND TRUNC(tbba001g.dd_touroku, 'month') < TRUNC(ADD_MONTHS(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), -1), 'month'))), tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk, 0) AS su_uncollected_amount_registered_in_the_previous_month_or_earlier, --前月以前登録済未回収金額
+    CAST(IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL, 1, NULL) AS INT) AS su_pieces, --件数
+    IF(tbba001g.dd_touroku IS NOT NULL AND tbba001g.dd_urikzumi IS NULL, (tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk) / 1000, NULL) AS su_amount, --金額
+    v2001.sort_order --ソート順
+FROM
+    ai21rep_ve_dx.tbba001g tbba001g --新車受注基本DB
+INNER JOIN gold.vbi002001_en v2001 --新車売掛金店舗別_en
+    ON v2001.cd_hansya = tbba001g.cd_hansya
+    AND v2001.cd_kaisya = tbba001g.cd_kaisya
+    AND v2001.cd_tenpo = tbba001g.cd_tenpo
+LEFT JOIN ai21rep_ve_dx.tbba052g tbba052g --新車受注販売条件情報DB
+    ON tbba001g.cd_hansya = tbba052g.cd_hansya
+    AND tbba001g.cd_kaisya = tbba052g.cd_kaisya
+    AND tbba001g.no_cyumon = tbba052g.no_cyumon
+    AND TRIM(tbba001g.no_cyumoned) = TRIM(tbba052g.no_cyumoned)
+LEFT JOIN (
+    SELECT
+        tbba001g.cd_hansya, --販社コード
+        tbba001g.cd_kaisya, --会社コード
+        tbba001g.cd_tenpo, --店舗コード
+        AVG(DATEDIFF(
+            CAST(tbba001g.dd_urikzumi AS DATE),
+            CAST(tbba001g.dd_fr AS DATE)
+        )) AS su_avg_lead_time --当月回収完了分平均リードタイム取得
+    FROM
+        ai21rep_ve_dx.tbba001g tbba001g --新車受注基本DB
+    LEFT JOIN ai21rep_ve_dx.tbba052g tbba052g --新車受注販売条件情報DB
+        ON tbba001g.cd_hansya = tbba052g.cd_hansya
+        AND tbba001g.cd_kaisya = tbba052g.cd_kaisya
+        AND tbba001g.no_cyumon = tbba052g.no_cyumon
+        AND TRIM(tbba001g.no_cyumoned) = TRIM(tbba052g.no_cyumoned)
+    WHERE
+        tbba001g.dd_touroku IS NOT NULL --登録日がNULLではない
+        AND (tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk) = 0 --未回収額が0
+        AND TRUNC(tbba001g.dd_urikzumi, 'month') = TRUNC(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 'month') --販売日が今月である
+    GROUP BY
+        tbba001g.cd_hansya,
+        tbba001g.cd_kaisya,
+        tbba001g.cd_tenpo
+) tbba001g_1
+    ON tbba001g.cd_hansya = tbba001g_1.cd_hansya
+    AND tbba001g.cd_kaisya = tbba001g_1.cd_kaisya
+    AND tbba001g.cd_tenpo = tbba001g_1.cd_tenpo
+WHERE
+    tbba001g.dd_torikesi IS NULL --取消日がNULLである
+    AND (
+        dd_torotrkk IS NULL --登録取消計上日がNULLである
+        OR (
+            dd_torotrkk IS NOT NULL --登録取消計上日がNULLではない
+            AND (tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk) != 0 --値があると残高がある
+        )
+    )
+    AND LEFT(CAST(tbba001g.kb_haraidas AS STRING), 1) = '1' --払出区分の第一位が1
+    AND ISNOTTRUE(
+        (tbba052g.ki_haseirui - tbba052g.ki_genknykg - tbba052g.ki_sitanykg - tbba052g.ki_fuharnyk) = 0 --値があると残高がある
+        AND (
+            (
+                tbba001g.dd_touroku IS NOT NULL --登録日がNULLではない
+                AND tbba001g.dd_nosya < DATE '2023-03-01' --納車日が2023-03-01以前
+                AND (tbba001g.dd_urikzumi IS NULL OR tbba001g.dd_urikzumi < DATE '2024-03-01') --売掛金完済日がNULLであるまたは売掛金完済日が2024-03-01以前
+            )
+            OR (tbba001g.dd_nosya IS NULL AND tbba001g.dd_touroku < DATE '2023-03-01') --納車日がNULLであるそして登録日が2023-03-01以前
+            OR tbba001g.dd_urikzumi < DATE '2024-03-01' --納車日が2024-03-01以前
+            OR (tbba001g.dd_touroku IS NULL AND tbba001g.dd_jucyu < DATE '2020-12-01') --登録日がNULLであるまたは受注日が2020-12-01以前
+        )
+    ) --ゴミデータ除外
+LIMIT 0;
