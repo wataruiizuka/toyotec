@@ -1,0 +1,57 @@
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+販社コード	string	NULL
+会社コード	string	NULL
+販社会社店舗コード	string	NULL
+登録済件数	int	NULL
+下取車なし総件数	int	NULL
+未回収総件数	int	NULL
+未回収総金額	bigint	NULL
+未回収現金総件数	int	NULL
+未回収現金総金額	bigint	NULL
+未回収割賦総総件数	int	NULL
+未回収割賦総総金額	bigint	NULL
+未回収下取総件数	int	NULL
+未回収下取総金額	bigint	NULL
+登録済未納車件数	int	NULL
+	NULL	NULL
+# Detailed Table Information	NULL	NULL
+Database: 	gold 	NULL
+OwnerType: 	USER 	NULL
+Owner: 	wataru_iizuka_za 	NULL
+CreateTime: 	Thu Jul 02 06:00:21 UTC 2026	NULL
+LastAccessTime: 	Wed Jan 07 11:43:13 UTC 1970	NULL
+Retention: 	2147483647 	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi002005	NULL
+Erasure Coding Policy:	NONE 	NULL
+Table Type: 	EXTERNAL_TABLE 	NULL
+Table Parameters:	NULL	NULL
+	EXTERNAL 	TRUE
+	OBJCAPABILITIES 	EXTREAD,EXTWRITE
+	current-schema 	{\"type\":\"struct\",\"schema-id\":0,\"fields\":[{\"id\":1,\"name\":\"販社コード\",\"required\":false,\"type\":\"string\"},{\"id\":2,\"name\":\"会社コード\",\"required\":false,\"type\":\"string\"},{\"id\":3,\"name\":\"販社会社店舗コード\",\"required\":false,\"type\":\"string\"},{\"id\":4,\"name\":\"登録済件数\",\"required\":false,\"type\":\"int\"},{\"id\":5,\"name\":\"下取車なし総件数\",\"required\":false,\"type\":\"int\"},{\"id\":6,\"name\":\"未回収総件数\",\"required\":false,\"type\":\"int\"},{\"id\":7,\"name\":\"未回収総金額\",\"required\":false,\"type\":\"long\"},{\"id\":8,\"name\":\"未回収現金総件数\",\"required\":false,\"type\":\"int\"},{\"id\":9,\"name\":\"未回収現金総金額\",\"required\":false,\"type\":\"long\"},{\"id\":10,\"name\":\"未回収割賦総総件数\",\"required\":false,\"type\":\"int\"},{\"id\":11,\"name\":\"未回収割賦総総金額\",\"required\":false,\"type\":\"long\"},{\"id\":12,\"name\":\"未回収下取総件数\",\"required\":false,\"type\":\"int\"},{\"id\":13,\"name\":\"未回収下取総金額\",\"required\":false,\"type\":\"long\"},{\"id\":14,\"name\":\"登録済未納車件数\",\"required\":false,\"type\":\"int\"}]}
+	engine.hive.enabled 	true
+	external.table.purge	TRUE
+	format-version 	2
+	metadata_location 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi002005/metadata/00000-0863f01d-2bb5-4e98-b578-36122e0fce95.metadata.json
+	numFiles 	1
+	snapshot-count 	0
+	storage_handler 	org.apache.iceberg.mr.hive.HiveIcebergStorageHandler
+	table_type 	ICEBERG
+	totalSize 	2894
+	transient_lastDdlTime	1782972021
+	uuid 	7fc70b31-5f61-4c06-9ad3-74b1c23418f7
+	write.delete.mode 	merge-on-read
+	write.format.default	parquet
+	write.merge.mode 	merge-on-read
+	write.parquet.compression-codec	snappy
+	write.update.mode 	merge-on-read
+	NULL	NULL
+# Storage Information	NULL	NULL
+SerDe Library: 	org.apache.iceberg.mr.hive.HiveIcebergSerDe	NULL
+InputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergInputFormat	NULL
+OutputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergOutputFormat	NULL
+Compressed: 	No 	NULL
+Sort Columns: 	[] 	NULL
+	NULL	NULL
+# Constraints	NULL	NULL
