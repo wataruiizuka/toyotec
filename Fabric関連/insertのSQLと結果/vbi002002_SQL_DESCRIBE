@@ -1,0 +1,62 @@
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+エリア統括部と店舗	string	NULL
+区分名称	string	NULL
+区分コード	string	NULL
+販社コード	string	NULL
+会社コード	string	NULL
+ゾーンコード	string	NULL
+店舗コード	string	NULL
+販社会社店舗コード	string	NULL
+販社会社ゾーン店舗コード	string	NULL
+件数	bigint	NULL
+金額	double	NULL
+ソート順	bigint	NULL
+	NULL	NULL
+# Detailed Table Information	NULL	NULL
+Database: 	gold 	NULL
+OwnerType: 	USER 	NULL
+Owner: 	wataru_iizuka_za 	NULL
+CreateTime: 	Thu Jul 02 05:49:46 UTC 2026	NULL
+LastAccessTime: 	Wed Jan 07 11:32:38 UTC 1970	NULL
+Retention: 	2147483647 	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi002002	NULL
+Erasure Coding Policy:	NONE 	NULL
+Table Type: 	EXTERNAL_TABLE 	NULL
+Table Parameters:	NULL	NULL
+	EXTERNAL 	TRUE
+	OBJCAPABILITIES 	EXTREAD,EXTWRITE
+	current-schema 	{\"type\":\"struct\",\"schema-id\":0,\"fields\":[{\"id\":1,\"name\":\"エリア統括部と店舗\",\"required\":false,\"type\":\"string\"},{\"id\":2,\"name\":\"区分名称\",\"required\":false,\"type\":\"string\"},{\"id\":3,\"name\":\"区分コード\",\"required\":false,\"type\":\"string\"},{\"id\":4,\"name\":\"販社コード\",\"required\":false,\"type\":\"string\"},{\"id\":5,\"name\":\"会社コード\",\"required\":false,\"type\":\"string\"},{\"id\":6,\"name\":\"ゾーンコード\",\"required\":false,\"type\":\"string\"},{\"id\":7,\"name\":\"店舗コード\",\"required\":false,\"type\":\"string\"},{\"id\":8,\"name\":\"販社会社店舗コード\",\"required\":false,\"type\":\"string\"},{\"id\":9,\"name\":\"販社会社ゾーン店舗コード\",\"required\":false,\"type\":\"string\"},{\"id\":10,\"name\":\"件数\",\"required\":false,\"type\":\"long\"},{\"id\":11,\"name\":\"金額\",\"required\":false,\"type\":\"double\"},{\"id\":12,\"name\":\"ソート順\",\"required\":false,\"type\":\"long\"}]}
+	current-snapshot-id 	803945518082976459
+	current-snapshot-summary	{\"replace-partitions\":\"true\",\"added-data-files\":\"1\",\"added-records\":\"431\",\"added-files-size\":\"21286\",\"changed-partition-count\":\"1\",\"total-records\":\"431\",\"total-files-size\":\"21286\",\"total-data-files\":\"1\",\"total-delete-files\":\"0\",\"total-position-deletes\":\"0\",\"total-equality-deletes\":\"0\"}
+	current-snapshot-timestamp-ms	1782978895174
+	engine.hive.enabled 	true
+	external.table.purge	TRUE
+	format-version 	2
+	impala.events.catalogServiceId	280e297c280447c1:becf12a488a195cf
+	impala.events.catalogVersion	37800
+	metadata_location 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi002002/metadata/00001-addd939f-8ce7-4783-81cc-60e250403655.metadata.json
+	numFiles 	1
+	numRows 	431
+	previous_metadata_location	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi002002/metadata/00000-8cae74d1-5067-4400-8807-32d92e4677fd.metadata.json
+	snapshot-count 	1
+	storage_handler 	org.apache.iceberg.mr.hive.HiveIcebergStorageHandler
+	table_type 	ICEBERG
+	totalSize 	21286
+	transient_lastDdlTime	1782971386
+	uuid 	d735f335-979b-45b8-b385-c2b6dbb2c418
+	write.delete.mode 	merge-on-read
+	write.format.default	parquet
+	write.merge.mode 	merge-on-read
+	write.parquet.compression-codec	snappy
+	write.update.mode 	merge-on-read
+	NULL	NULL
+# Storage Information	NULL	NULL
+SerDe Library: 	org.apache.iceberg.mr.hive.HiveIcebergSerDe	NULL
+InputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergInputFormat	NULL
+OutputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergOutputFormat	NULL
+Compressed: 	No 	NULL
+Sort Columns: 	[] 	NULL
+	NULL	NULL
+# Constraints	NULL	NULL
