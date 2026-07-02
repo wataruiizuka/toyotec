@@ -1,0 +1,173 @@
+ddl---------------------------------
+
+CREATE TABLE gold.vbi002001_en
+STORED BY ICEBERG
+TBLPROPERTIES ('format-version' = '2')
+AS
+--販社コードがTMTの店舗
+SELECT
+    CAST(main_table.su_store_number AS INT) AS su_store_number, --店舗数
+    main_table.cd_hansya_kaisya_tenpo, --販社会社店舗コード
+    main_table.cd_hansya_kaisya_zon_tenpo, --販社会社ゾーン店舗コード
+    main_table.cd_hansya, --販社コード
+    main_table.cd_kaisya, --会社コード
+    main_table.cd_tenpo, --店舗コード
+    main_table.kj_tenpomei, --店舗名称
+    main_table.kj_tentanms, --店舗短縮名称
+    IF(
+        main_table.zone_name_abbreviation IS NULL
+        OR regexp_replace(main_table.zone_name_abbreviation, '[ 　]+', '') = '',
+        '999999',
+        IF(
+            main_table.cd_zon IS NULL
+            OR regexp_replace(main_table.cd_zon, '[ 　]+', '') = '',
+            '999998',
+            main_table.cd_zon
+        )
+    ) AS cd_zon, --ゾーンコード
+    main_table.cd_nczon, --ンゾン
+    main_table.kj_zonmei, --ゾーン名称
+    main_table.zone_name_abbreviation, --ゾーン名略
+    main_table.sort_order --ソート順
+FROM (
+    SELECT
+        1 AS su_store_number, --店舗数
+        CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv201m.cd_tenpo) AS cd_hansya_kaisya_tenpo, --販社会社店舗コード
+        IF(
+            tntenpo.cd_zon IS NOT NULL,
+            CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tntenpo.cd_zon, tbv201m.cd_tenpo),
+            CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv003m.cd_zon, tbv201m.cd_tenpo)
+        ) AS cd_hansya_kaisya_zon_tenpo, --販社会社ゾーン店舗コード
+        tbv201m.cd_hansya, --販社コード
+        tbv201m.cd_kaisya, --会社コード
+        tbv201m.cd_tenpo, --店舗コード
+        tbv201m.kj_tenpomei, --店舗名称
+        tbv201m.kj_tentanms, --店舗短縮名称
+        NVL(tntenpo.cd_zon, tbv003m.cd_zon) AS cd_zon, --ゾーンコード
+        NVL(tntenpo.cd_zon, tbv0047m.cd_nczon) AS cd_nczon, --ンゾン
+        NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei) AS kj_zonmei, --ゾーン名称
+        CASE
+            WHEN tbv003m1.kj_zonmei IS NOT NULL
+                AND (
+                    LEFT(CAST(tbv003m1.kj_zonmei AS STRING), 3) = 'ト'
+                    OR LEFT(CAST(tbv003m1.kj_zonmei AS STRING), 3) = 'レ'
+                )
+                AND RIGHT(CAST(tbv003m1.kj_zonmei AS STRING), 6) = 'エ統'
+            THEN REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+                    SUBSTR(CAST(tbv003m1.kj_zonmei AS STRING), 1, 9),
+                    'レ', 'L-'
+                ), 'ト', 'T-'), '０', '0'), '１', '1'), '２', '2'), '３', '3'), '４', '4'), '５', '5'), '６', '6'), '７', '7'), '８', '8'), '９', '9')
+            WHEN tbv003m1.kj_zonmei IS NOT NULL
+            THEN TRIM(REPLACE(CAST(tbv003m1.kj_zonmei AS STRING), '　', ' '))
+            WHEN (
+                    LEFT(CAST(tbv003m.kj_zonmei AS STRING), 3) = 'ト'
+                    OR LEFT(CAST(tbv003m.kj_zonmei AS STRING), 3) = 'レ'
+                )
+                AND RIGHT(CAST(tbv003m.kj_zonmei AS STRING), 6) = 'エ統'
+            THEN REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+                    SUBSTR(CAST(tbv003m.kj_zonmei AS STRING), 1, 9),
+                    'レ', 'L-'
+                ), 'ト', 'T-'), '０', '0'), '１', '1'), '２', '2'), '３', '3'), '４', '4'), '５', '5'), '６', '6'), '７', '7'), '８', '8'), '９', '9')
+            ELSE TRIM(REPLACE(CAST(tbv003m.kj_zonmei AS STRING), '　', ' '))
+        END AS zone_name_abbreviation, --ゾーン名略
+        RANK() OVER (
+            PARTITION BY tbv201m.cd_hansya, tbv201m.cd_kaisya
+            ORDER BY NVL(tntenpo.cd_zon, tbv003m.cd_zon), tbi999003m.mj_sortjyun, tbv201m.cd_tenpo
+        ) AS sort_order --ソート順
+    FROM
+        ai21rep_ve_dx.tbv0201m tbv201m --共通店舗DB
+    LEFT JOIN dx_ve.tbi999003m tbi999003m --店舗展示設定
+        ON tbv201m.cd_hansya = tbi999003m.cd_hansya
+        AND tbv201m.cd_kaisya = tbi999003m.cd_kaisya
+        AND tbv201m.cd_tenpo = tbi999003m.cd_tenpo
+        AND tbi999003m.mj_cyohyoid = "002" --帳票ＩＤが002
+    LEFT JOIN ai21rep_ve_dx.tbv0047m tbv0047m --M車両店舗DB
+        ON tbv0047m.cd_hansya = '03601' --販社コードがTMT
+        AND tbv0047m.cd_kaisya = '01' --会社コードが01
+        AND tbv0047m.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m --MゾーンコードDB
+        ON tbv003m.cd_hansya = '03601' --販社コードがTMT
+        AND tbv003m.cd_kaisya = '01' --会社コードが01
+        AND tbv003m.cd_zon = tbv0047m.cd_nczon
+        AND tbv003m.kb_syohin = '1' --新車商品区分が１
+    LEFT JOIN dx_ve.tbi002003m tntenpo --手入力店舗所属
+        ON tntenpo.cd_hansya = '03601' --販社コードがTMT
+        AND tntenpo.cd_kaisya = '01' --会社コードが01
+        AND tntenpo.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m1 --MゾーンコードDB
+        ON tbv003m1.cd_hansya = '03601' --販社コードがTMT
+        AND tbv003m1.cd_kaisya = '01' --会社コードが01
+        AND tntenpo.cd_zon = tbv003m1.cd_zon
+    WHERE
+        tbi999003m.kb_tenji = 1 --店舗展示設定
+        AND tbv201m.kj_tenpomei NOT LIKE '%廃）%' --店舗.店舗名称が"廃）"を含まない
+        AND tbv201m.cd_hansya = '03601' --販社コードがTMT
+        AND tbv201m.cd_kaisya = '01' --会社コードが01
+        AND (
+            tbv003m.cd_zon IN (
+                '01','02','03','04','05','06','07','08','09','10','11','12','13','14','15',
+                '30','31','32','33','60','90'
+            ) --トヨタ０１～トヨタ１５、Ｌ１統括部～Ｌ４統括部を削除
+            OR SUBSTRING(tbv003m.cd_zon, 1, 3) = 'TK_' --TK_01、TK_02は手入力店舗の所属.xlsxの特約店、タクシー部
+        )
+        AND tbv201m.cd_tenpo NOT IN (
+            'T01','T02','T03','T04','T05','T06','T07','T08','T09','T10','T11','T12','T13','T14','T15',
+            'L01','L02','L03','L04'
+        ) --店舗コード制限
+
+    UNION ALL
+
+    --販社コードがTMT以外の店舗
+    SELECT
+        1 AS su_store_number, --店舗数
+        CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv201m.cd_tenpo) AS cd_hansya_kaisya_tenpo, --販社会社店舗コード
+        IF(
+            tntenpo.cd_zon IS NOT NULL,
+            CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tntenpo.cd_zon, tbv201m.cd_tenpo),
+            CONCAT(tbv201m.cd_hansya, tbv201m.cd_kaisya, tbv003m.cd_zon, tbv201m.cd_tenpo)
+        ) AS cd_hansya_kaisya_zon_tenpo, --販社会社ゾーン店舗コード
+        tbv201m.cd_hansya, --販社コード
+        tbv201m.cd_kaisya, --会社コード
+        tbv201m.cd_tenpo, --店舗コード
+        tbv201m.kj_tenpomei, --店舗名称
+        tbv201m.kj_tentanms, --店舗短縮名称
+        NVL(tntenpo.cd_zon, tbv003m.cd_zon) AS cd_zon, --ゾーンコード
+        NVL(tntenpo.cd_zon, tbv0047m.cd_nczon) AS cd_nczon, --ンゾン
+        NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei) AS kj_zonmei, --ゾーン名称
+        NVL(tbv003m1.kj_zonmei, tbv003m.kj_zonmei) AS zone_name_abbreviation, --ゾーン名略
+        RANK() OVER (
+            PARTITION BY tbv201m.cd_hansya, tbv201m.cd_kaisya
+            ORDER BY NVL(tntenpo.cd_zon, tbv003m.cd_zon), tbi999003m.mj_sortjyun, tbv201m.cd_tenpo
+        ) AS sort_order --ソート順
+    FROM
+        ai21rep_ve_dx.tbv0201m tbv201m --共通店舗DB
+    LEFT JOIN dx_ve.tbi999003m tbi999003m --店舗展示設定
+        ON tbv201m.cd_hansya = tbi999003m.cd_hansya
+        AND tbv201m.cd_kaisya = tbi999003m.cd_kaisya
+        AND tbv201m.cd_tenpo = tbi999003m.cd_tenpo
+        AND tbi999003m.mj_cyohyoid = "002" --帳票ＩＤが002
+    LEFT JOIN ai21rep_ve_dx.tbv0047m tbv0047m --M車両店舗DB
+        ON tbv0047m.cd_hansya = tbv201m.cd_hansya
+        AND tbv0047m.cd_tenpo = tbv201m.cd_kaisya
+        AND tbv0047m.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m --MゾーンコードDB
+        ON tbv003m.cd_hansya = tbv0047m.cd_hansya
+        AND tbv003m.cd_kaisya = tbv0047m.cd_tenpo
+        AND tbv003m.cd_zon = tbv0047m.cd_nczon
+        AND tbv003m.kb_syohin = '1' --新車商品区分が１
+    LEFT JOIN dx_ve.tbi002003m tntenpo --手入力店舗所属
+        ON tntenpo.cd_hansya = tbv201m.cd_hansya
+        AND tntenpo.cd_kaisya = tbv201m.cd_kaisya
+        AND tntenpo.cd_tenpo = tbv201m.cd_tenpo
+    LEFT JOIN ai21rep_ve_dx.tbv0033m tbv003m1 --MゾーンコードDB
+        ON tntenpo.cd_hansya = tbv003m1.cd_hansya
+        AND tntenpo.cd_kaisya = tbv003m1.cd_kaisya
+        AND tntenpo.cd_tenpo = tbv003m1.cd_zon
+    WHERE
+        tbi999003m.kb_tenji = 1 --店舗展示設定
+        AND tbv201m.cd_hansya <> '03601' --販社コードがTMT以外
+        AND tbv201m.kj_tenpomei NOT LIKE '%廃）%' --店舗.店舗名称が"廃）"を含まない
+) main_table
+LIMIT 0;
+
+                                                                    
