@@ -1,6 +1,10 @@
-ls -l /home/cloudbreak/spark/spark/ddl/dx_doujyou/enoreport_full_fixed.ddl
-ls -l /home/cloudbreak/spark/spark/sql/dx_doujyou/enoreport_full_fixed.sql
-
-grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/ddl/dx_doujyou/enoreport_full_fixed.ddl
-
-grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/sql/dx_doujyou/enoreport_full_fixed.sql
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls -l /home/cloudbreak/spark/spark/ddl/dx_doujyou/enoreport_full_fixed.ddl
+-rw-r-----. 1 cloudbreak cloudbreak 84659 Jul  3 07:25 /home/cloudbreak/spark/spark/ddl/dx_doujyou/enoreport_full_fixed.ddl
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls -l /home/cloudbreak/spark/spark/sql/dx_doujyou/enoreport_full_fixed.sql
+-rw-r-----. 1 cloudbreak cloudbreak 64966 Jul  3 07:25 /home/cloudbreak/spark/spark/sql/dx_doujyou/enoreport_full_fixed.sql
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/ddl/dx_doujyou/enoreport_full_fixed.ddl
+1:CREATE TABLE IF NOT EXISTS gold.enoreport_full_fixed (
+859:COMMENT 'enoreport_full_fixed'
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/sql/dx_doujyou/enoreport_full_fixed.sql
+1:-- Source file: 018_NEO/enoreport_full_fixed.sql
+1043:INSERT OVERWRITE TABLE gold.enoreport_full_fixed
