@@ -1,18 +1,8 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src python3.9 -m spark_job_runner deploy-ddl --config config/jobs.yaml --job dx_doujyou.vbi0020013
-2026-07-03T08:45:16 ERROR    spark_job_runner.executor [dx_doujyou.vbi0020013] DDL phase failed: INTERNAL: ModuleNotFoundError: No module named 'pyspark'
-2026-07-03T08:45:16 WARNING  spark_job_runner.executor [dx_doujyou.vbi0020013] DDL phase failed. Stopping DDL execution for remaining jobs.
-================================================================================
-Run Summary  run_id=run-20260703T084516-781e7243  mode=deploy-ddl
-Status       : FAILED  exit_code=3
-Total jobs   : 1
-  SUCCESS    : 0
-  FAILED     : 1
-  SKIPPED    : 0
-  CANCELLED  : 0
-  TIMED_OUT  : 0
-Elapsed      : 0.00 sec
---------------------------------------------------------------------------------
-  [FAILED   ] dx_doujyou.vbi0020013                           1ms  error=INTERNAL: ModuleNotFoundError: No module named 'pyspark'
-================================================================================
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ echo $?
-3
+cd /home/cloudbreak/spark/spark/job_runner
+
+which spark-submit
+spark-submit --version
+
+echo $SPARK_HOME
+
+python3.9 -c "import pyspark; print(pyspark.__file__)"
