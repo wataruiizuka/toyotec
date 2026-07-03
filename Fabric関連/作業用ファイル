@@ -1,7 +1,11 @@
-観点	bronze側	gold側	判定
-Fabric表示	成功	失敗	差分あり
-実ファイル拡張子	.parquet	.parq / data.0	差分あり
-作成系統	Spark系に見える	Hue/Impala系に見える	差分あり
-Iceberg metadata	あり	あり	両方OK
-write.format.default	parquet	parquet	表示上は両方OK
-Fabric変換ログ	成功側	Fileformat is not supported for delta sync	gold側NG
+DROP TABLE IF EXISTS gold.vbi0020013_fabric_parquet_test;
+
+CREATE TABLE gold.vbi0020013_fabric_parquet_test
+USING iceberg
+TBLPROPERTIES (
+  'format-version' = '2',
+  'write.format.default' = 'parquet'
+)
+AS
+SELECT *
+FROM gold.vbi0020013;
