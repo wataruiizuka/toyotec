@@ -1,3 +1,6 @@
-grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/ddl/dx_doujyou/vbi0020013.ddl
-
-grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/sql/dx_doujyou/vbi0020013.sql
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/ddl/dx_doujyou/vbi0020013.ddl
+1:CREATE TABLE IF NOT EXISTS gold.vbi0020013 (
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/sql/dx_doujyou/vbi0020013.sql
+3:-- Internal Gold dependencies: gold.vbi002001_en
+6:INSERT OVERWRITE TABLE gold.vbi0020013
+38:INNER JOIN gold.vbi002001_en v2001 --新車売掛金店舗別_en
