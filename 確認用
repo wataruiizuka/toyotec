@@ -1,9 +1,2 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ cd /home/cloudbreak/spark/spark/job_runner
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ cp config/jobs.yaml config/jobs.yaml.bak_before_upload_$(date +%Y%m%d_%H%M%S)
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls -l config/jobs.yaml.bak_before_upload_*
--rw-r-----. 1 cloudbreak cloudbreak 2043 Jul  3 08:28 config/jobs.yaml.bak_before_upload_20260703_082835
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ sftp -o StrictHostKeyChecking=no -i C:\Users\00496_990801\.ssh\cloudbreak_20250825_key -P 50029 cloudbreak@127.0.0.1
-Warning: Identity file C:Users00496_990801.sshcloudbreak_20250825_key not accessible: No such file or directory.
-sss_ssh_knownhostsproxy: connect to host 127.0.0.1 port 50029: Connection refused
-kex_exchange_identification: Connection closed by remote host
-Connection closed
+put C:\Users\00496_990801\Documents\work\spark\spark\job_runner\config\jobs.yaml /home/cloudbreak/spark/spark/job_runner/config/jobs.yaml
+bye
