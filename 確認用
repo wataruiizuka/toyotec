@@ -1,8 +1,8 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ pwd
-/home/cloudbreak/spark/spark/job_runner
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls
-config  docs  pyproject.toml  README.md  src  tests
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls src
-spark_job_runner
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls config
-'jobs copy.yaml'   jobs.yaml
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3 --version
+Python 3.6.8
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.9 --version
+Python 3.9.25
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.10 --version
+-bash: python3.10: command not found
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.11 --version
+Python 3.11.13
