@@ -2,5 +2,7 @@
 pip 25.3 from /usr/local/lib/python3.9/site-packages/pip (python 3.9)
 [cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.9 -m pip show PyYAML
 WARNING: Package(s) not found: PyYAML
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.9 -c "import yml; print(yaml.__version__)
-> 
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.9 -c "import yaml; print(yaml.__version__)"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'yaml'
