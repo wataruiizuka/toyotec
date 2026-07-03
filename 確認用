@@ -1,11 +1,100 @@
-cd /home/cloudbreak/spark/spark/job_runner
-
-export SPARK3_HOME=/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3
-export SPARK_HOME=$SPARK3_HOME
-export PYSPARK_PYTHON=python3.9
-export PYSPARK_DRIVER_PYTHON=python3.9
-
-PYTHONPATH=src:$SPARK3_HOME/python/lib/pyspark.zip:$SPARK3_HOME/python/lib/py4j-0.10.9.7-src.zip \
-python3.9 -m spark_job_runner deploy-ddl --config config/jobs.yaml --job dx_doujyou.vbi0020013
-
-echo $?
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ cd /home/cloudbreak/spark/spark/job_runner
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ export SPARK3_HOME=/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ export SPARK_HOME=$SPARK3_HOME
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ export PYSPARK_PYTHON=python3.9
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ export PYSPARK_DRIVER_PYTHON=python3.9
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src:$SPARK3_HOME/python/lib/pyspark.zip:$SPARK3_HOME/python/lib/py4j-0.10.9.7-src.zip \python3.9 -m spark_job_runner deploy-ddl --config config/jobs.yaml --job dx_doujyou.vbi0020013
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/07/03 08:57:45 WARN  ipc.Client: [Thread-3]: Exception encountered while connecting to the server : org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+26/07/03 08:57:45 ERROR spark.SparkContext: [Thread-3]: Error initializing SparkContext.
+java.io.IOException: DestHost:destPort cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8032 , LocalHost:localPort cdp-dap-spark-ve-je-master0/172.17.224.4:0. Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+        at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+        at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+        at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+        at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[?:?]
+        at java.lang.reflect.Constructor.newInstance(Constructor.java:481) ~[?:?]
+        at org.apache.hadoop.net.NetUtils.wrapWithMessage(NetUtils.java:892) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:867) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.getRpcResponse(Client.java:1620) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.call(Client.java:1562) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.call(Client.java:1459) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:233) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:118) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at jdk.proxy2.$Proxy30.getNewApplication(Unknown Source) ~[?:?]
+        at org.apache.hadoop.yarn.api.impl.pb.client.ApplicationClientProtocolPBClientImpl.getNewApplication(ApplicationClientProtocolPBClientImpl.java:286) ~[hadoop-yarn-common-3.1.1.7.3.1.700-158.jar:?]
+        at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+        at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+        at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+        at java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+        at org.apache.hadoop.io.retry.RetryInvocationHandler.invokeMethod(RetryInvocationHandler.java:431) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.io.retry.RetryInvocationHandler$Call.invokeMethod(RetryInvocationHandler.java:166) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.io.retry.RetryInvocationHandler$Call.invoke(RetryInvocationHandler.java:158) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.io.retry.RetryInvocationHandler$Call.invokeOnce(RetryInvocationHandler.java:96) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.io.retry.RetryInvocationHandler.invoke(RetryInvocationHandler.java:362) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at jdk.proxy2.$Proxy31.getNewApplication(Unknown Source) ~[?:?]
+        at org.apache.hadoop.yarn.client.api.impl.YarnClientImpl.getNewApplication(YarnClientImpl.java:282) ~[hadoop-yarn-client-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.yarn.client.api.impl.YarnClientImpl.createApplication(YarnClientImpl.java:290) ~[hadoop-yarn-client-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.spark.deploy.yarn.Client.submitApplication(Client.scala:195) ~[spark-yarn_2.12-3.5.4.7.3.1.700-158.jar:3.5.4.7.3.1.700-158]
+        at org.apache.spark.scheduler.cluster.YarnClientSchedulerBackend.start(YarnClientSchedulerBackend.scala:62) ~[spark-yarn_2.12-3.5.4.7.3.1.700-158.jar:3.5.4.7.3.1.700-158]
+        at org.apache.spark.scheduler.TaskSchedulerImpl.start(TaskSchedulerImpl.scala:235) ~[spark-core_2.12-3.5.4.7.3.1.700-158.jar:3.5.4.7.3.1.700-158]
+        at org.apache.spark.SparkContext.<init>(SparkContext.scala:606) ~[spark-core_2.12-3.5.4.7.3.1.700-158.jar:3.5.4.7.3.1.700-158]
+        at org.apache.spark.api.java.JavaSparkContext.<init>(JavaSparkContext.scala:58) ~[spark-core_2.12-3.5.4.7.3.1.700-158.jar:3.5.4.7.3.1.700-158]
+        at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:?]
+        at jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[?:?]
+        at jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:?]
+        at java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[?:?]
+        at java.lang.reflect.Constructor.newInstance(Constructor.java:481) ~[?:?]
+        at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:247) ~[py4j-0.10.9.7.jar:?]
+        at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374) ~[py4j-0.10.9.7.jar:?]
+        at py4j.Gateway.invoke(Gateway.java:238) ~[py4j-0.10.9.7.jar:?]
+        at py4j.commands.ConstructorCommand.invokeConstructor(ConstructorCommand.java:80) ~[py4j-0.10.9.7.jar:?]
+        at py4j.commands.ConstructorCommand.execute(ConstructorCommand.java:69) ~[py4j-0.10.9.7.jar:?]
+        at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182) ~[py4j-0.10.9.7.jar:?]
+        at py4j.ClientServerConnection.run(ClientServerConnection.java:106) ~[py4j-0.10.9.7.jar:?]
+        at java.lang.Thread.run(Thread.java:840) ~[?:?]
+Caused by: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+        at org.apache.hadoop.ipc.Client$Connection$1.run(Client.java:808) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at java.security.AccessController.doPrivileged(AccessController.java:712) ~[?:?]
+        at javax.security.auth.Subject.doAs(Subject.java:439) ~[?:?]
+        at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1910) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.handleSaslConnectionFailure(Client.java:771) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:866) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.access$3800(Client.java:430) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.getConnection(Client.java:1681) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.call(Client.java:1506) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        ... 35 more
+Caused by: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]
+        at org.apache.hadoop.security.SaslRpcClient.selectSaslClient(SaslRpcClient.java:173) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.security.SaslRpcClient.saslConnect(SaslRpcClient.java:390) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.setupSaslConnection(Client.java:639) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.access$2300(Client.java:430) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection$2.run(Client.java:853) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection$2.run(Client.java:849) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at java.security.AccessController.doPrivileged(AccessController.java:712) ~[?:?]
+        at javax.security.auth.Subject.doAs(Subject.java:439) ~[?:?]
+        at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1910) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:849) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client$Connection.access$3800(Client.java:430) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.getConnection(Client.java:1681) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        at org.apache.hadoop.ipc.Client.call(Client.java:1506) ~[hadoop-common-3.1.1.7.3.1.700-158.jar:?]
+        ... 35 more
+26/07/03 08:57:45 WARN  cluster.YarnSchedulerBackend$YarnSchedulerEndpoint: [Thread-3]: Attempted to send shutdown message before the AM has registered!
+26/07/03 08:57:45 WARN  cluster.YarnSchedulerBackend$YarnSchedulerEndpoint: [dispatcher-event-loop-5]: Attempted to request executors before the AM has registered!
+26/07/03 08:57:45 WARN  metrics.MetricsSystem: [Thread-3]: Stopping a MetricsSystem that is not running
+2026-07-03T08:57:45 ERROR    spark_job_runner.executor [dx_doujyou.vbi0020013] DDL phase failed: INTERNAL: Py4JJavaError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext. : java.io.IOException: DestHost:destPort cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8032 , LocalHost:localPort cdp-dap-spark-ve-je-master0/172.17.224.4:0. Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]       at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)    a
+2026-07-03T08:57:45 WARNING  spark_job_runner.executor [dx_doujyou.vbi0020013] DDL phase failed. Stopping DDL execution for remaining jobs.
+================================================================================
+Run Summary  run_id=run-20260703T085741-4da1880a  mode=deploy-ddl
+Status       : FAILED  exit_code=3
+Total jobs   : 1
+  SUCCESS    : 0
+  FAILED     : 1
+  SKIPPED    : 0
+  CANCELLED  : 0
+  TIMED_OUT  : 0
+Elapsed      : 3.62 sec
+--------------------------------------------------------------------------------
+  [FAILED   ] dx_doujyou.vbi0020013                        3619ms  error=INTERNAL: Py4JJavaError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext. : java.io.IOException: DestHost:destPort cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8032 , LocalHost:localPort cdp-dap-spark-ve-je-master0/172.17.224.4:0. Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS]       at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)    a
+================================================================================
+2026-07-03T08:57:45 INFO     py4j.clientserver Closing down clientserver connection
