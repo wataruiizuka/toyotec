@@ -2,8 +2,8 @@ version: 1
 environment:
   environment_id: blue-crystal-dev
   mode: development
-  allowed_ddl_root: /Users/celesiizuka/Documents/blue_crystal/spark/ddl
-  allowed_sql_root: /Users/celesiizuka/Documents/blue_crystal/spark/sql
+  allowed_ddl_root: /home/cloudbreak/spark/spark/ddl
+  allowed_sql_root: /home/cloudbreak/spark/spark/sql
   allowed_source_namespaces:
     - ai21rep_ve_dx
     - ai21rep_ve_stg_kudu
@@ -42,7 +42,7 @@ runtime:
 
 jobs:
   # ──────────────────────────────────────────────
-  # enoreport
+  # vbi0020013
   # ──────────────────────────────────────────────
   dx_doujyou.vbi0020013:
     ddl_file: dx_doujyou/vbi0020013.ddl
@@ -64,7 +64,7 @@ jobs:
       runtime_requirements:
         - timezone_asia_tokyo
       output_tables:
-      - gold.vbi0020013
+        - gold.vbi0020013
     rollback:
       strategy: none
       restore_test_id: null
