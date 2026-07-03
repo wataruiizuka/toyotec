@@ -1,8 +1,15 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3 --version
-Python 3.6.8
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.9 --version
-Python 3.9.25
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.10 --version
--bash: python3.10: command not found
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.11 --version
-Python 3.11.13
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src python3.9 -m spark_job_runner validate --config config/jobs.yaml
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib64/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/cloudbreak/spark/spark/job_runner/src/spark_job_runner/__main__.py", line 5, in <module>
+    sys.exit(main())
+  File "/home/cloudbreak/spark/spark/job_runner/src/spark_job_runner/cli.py", line 569, in main
+    return _run_validate(args)
+  File "/home/cloudbreak/spark/spark/job_runner/src/spark_job_runner/cli.py", line 150, in _run_validate
+    from spark_job_runner.config import load_config
+  File "/home/cloudbreak/spark/spark/job_runner/src/spark_job_runner/config.py", line 18, in <module>
+    import yaml
+ModuleNotFoundError: No module named 'yaml'
