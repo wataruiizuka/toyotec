@@ -1,7 +1,6 @@
-cp config/jobs.yaml config/jobs.yaml.bak_$(date +%Y%m%d_%H%M%S)
-
-sed -i 's|allowed_ddl_root: /Users/celesiizuka/Documents/blue_crystal/spark/ddl|allowed_ddl_root: /home/cloudbreak/spark/spark/ddl|' config/jobs.yaml
-
-sed -i 's|allowed_sql_root: /Users/celesiizuka/Documents/blue_crystal/spark/sql|allowed_sql_root: /home/cloudbreak/spark/spark/sql|' config/jobs.yaml
-
-grep -n "allowed_.*_root" config/jobs.yaml
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ cp config/jobs.yaml config/jobs.yaml.bak_$(date +%Y%m%d_%H%M%S)
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ sed -i 's|allowed_ddl_root: /Users/celesiizuka/Documents/blue_crystal/spark/ddl|allowed_ddl_root: /home/cloudbreak/spark/spark/ddl|' config/jobs.yaml
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ sed -i 's|allowed_sql_root: /Users/celesiizuka/Documents/blue_crystal/spark/sql|allowed_sql_root: /home/cloudbreak/spark/spark/sql|' config/jobs.yaml
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ grep -n "allowed_.*_root" config/jobs.yaml
+5:  allowed_ddl_root: /home/cloudbreak/spark/spark/ddl
+6:  allowed_sql_root: /home/cloudbreak/spark/spark/sql
