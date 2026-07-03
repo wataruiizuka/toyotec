@@ -1,10 +1,4 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ python3.9 -m pip install --user PyYAML
-Collecting PyYAML
-  Downloading pyyaml-6.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
-Downloading pyyaml-6.0.3-cp39-cp39-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (750 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 750.8/750.8 kB 25.1 MB/s  0:00:00
-Installing collected packages: PyYAML
-Successfully installed PyYAML-6.0.3
-
-[notice] A new release of pip is available: 25.3 -> 26.0.1
-[notice] To update, run: python3.9 -m pip install --upgrade pip
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src python3.9 -m spark_job_runner validate --config config/jobs.yaml
+Validation FAILED: 2 error(s)
+  [dx_doujyou.enoreport_full_fixed] DDL file not found: /Users/celesiizuka/Documents/blue_crystal/spark/ddl/dx_doujyou/vbi0020013.ddl
+  [dx_doujyou.enoreport_full_fixed] SQL file not found: /Users/celesiizuka/Documents/blue_crystal/spark/sql/dx_doujyou/vbi0020013.sql
