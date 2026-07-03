@@ -1,2 +1,5 @@
-put C:\Users\00496_990801\Documents\work\spark\spark\job_runner\config\jobs.yaml /home/cloudbreak/spark/spark/job_runner/config/jobs.yaml
-bye
+cd /home/cloudbreak/spark/spark/job_runner
+
+grep -n "allowed_.*_root" config/jobs.yaml
+
+grep -n -A 20 -B 5 "dx_doujyou.vbi0020013" config/jobs.yaml
