@@ -1,74 +1,8 @@
-version: 1
-environment:
-  environment_id: blue-crystal-dev
-  mode: development
-  allowed_ddl_root: /home/cloudbreak/spark/spark/ddl
-  allowed_sql_root: /home/cloudbreak/spark/spark/sql
-  allowed_source_namespaces:
-    - ai21rep_ve_dx
-    - ai21rep_ve_stg_kudu
-    - datalib_ve
-    - dx_ve
-    - neo1rep_ve
-  source_inventory_sha256: pending
-  expected_spark:
-    distribution: pending
-    version: "3.3+"
-  production_write_allowed: false
+cd /home/cloudbreak/spark/spark/job_runner
+cp config/jobs.yaml config/jobs.yaml.bak_before_upload_$(date +%Y%m%d_%H%M%S)
+ls -l config/jobs.yaml.bak_before_upload_*
 
-runtime:
-  timezone: Asia/Tokyo
-  parallelism: 1
-  allow_empty: false
-  sql_parser: spark_sql_v1
-  statement_preview: false
-  cancel_grace_seconds: 60
-  audit:
-    provider: posix
-    uri: /tmp/spark-job-runs
-    retention_days: 90
-    encryption_required: false
-    acl_profile: spark-job-audit
-  lock:
-    provider: posix
-    uri: /tmp/spark-job-locks
-    lease_seconds: 300
-    renew_seconds: 60
-  retry_default:
-    max_attempts: 3
-    backoff_seconds: [30, 60, 120]
-    retryable_categories: [SPARK_TRANSIENT, SPARK_EXECUTION]
-  failure_log_dir: /var/log/spark-job-runner/failures
+sftp -o StrictHostKeyChecking=no -i C:\Users\00496_990801\.ssh\cloudbreak_20250825_key -P 50029 cloudbreak@127.0.0.1
 
-jobs:
-  # ──────────────────────────────────────────────
-  # vbi0020013
-  # ──────────────────────────────────────────────
-  dx_doujyou.vbi0020013:
-    ddl_file: dx_doujyou/vbi0020013.ddl
-    sql_file: dx_doujyou/vbi0020013.sql
-    enabled: true
-    depends_on: []
-    output_tables:
-      - gold.vbi0020013
-    schema_fingerprint: pending
-    idempotency: unknown
-    retry:
-      max_attempts: 1
-      backoff_seconds: []
-      retryable_categories: []
-    timeout_seconds: null
-    post_checks: []
-    metadata_expectation:
-      internal_gold_dependencies: []
-      runtime_requirements:
-        - timezone_asia_tokyo
-      output_tables:
-        - gold.vbi0020013
-    rollback:
-      strategy: none
-      restore_test_id: null
-      rpo_minutes: null
-      rto_minutes: null
-
-approved_exceptions: []
+put C:\Users\00496_990801\Documents\work\spark\spark\job_runner\config\jobs.yaml /home/cloudbreak/spark/spark/job_runner/config/jobs.yaml
+bye
