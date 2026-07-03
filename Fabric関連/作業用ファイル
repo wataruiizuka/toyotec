@@ -1,2 +1,36 @@
-Path	Size	Partition	EC Policy
-abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013/data/5b487a7112f2d710-2ac3304d00000002_1753187554_data.0.parq	24.52KB		NONE
+DROP TABLE IF EXISTS gold.vbi0020013_fabric_ascii_test;
+
+CREATE TABLE gold.vbi0020013_fabric_ascii_test
+STORED BY ICEBERG
+TBLPROPERTIES ('format-version' = '2')
+AS
+SELECT
+    `販社コード` AS cd_hansya,
+    `会社コード` AS cd_kaisya,
+    `店舗コード` AS cd_tenpo,
+    `販社会社店舗コード` AS cd_hansya_kaisya_tenpo,
+    `当年借方金額０１` AS debit_amount_01,
+    `当年借方金額０２` AS debit_amount_02,
+    `当年借方金額０３` AS debit_amount_03,
+    `当年借方金額０４` AS debit_amount_04,
+    `当年借方金額０５` AS debit_amount_05,
+    `当年借方金額０６` AS debit_amount_06,
+    `当年借方金額０７` AS debit_amount_07,
+    `当年借方金額０８` AS debit_amount_08,
+    `当年借方金額０９` AS debit_amount_09,
+    `当年借方金額１０` AS debit_amount_10,
+    `当年借方金額１１` AS debit_amount_11,
+    `当年借方金額１２` AS debit_amount_12,
+    `当年貸方金額０１` AS credit_amount_01,
+    `当年貸方金額０２` AS credit_amount_02,
+    `当年貸方金額０３` AS credit_amount_03,
+    `当年貸方金額０４` AS credit_amount_04,
+    `当年貸方金額０５` AS credit_amount_05,
+    `当年貸方金額０６` AS credit_amount_06,
+    `当年貸方金額０７` AS credit_amount_07,
+    `当年貸方金額０８` AS credit_amount_08,
+    `当年貸方金額０９` AS credit_amount_09,
+    `当年貸方金額１０` AS credit_amount_10,
+    `当年貸方金額１１` AS credit_amount_11,
+    `当年貸方金額１２` AS credit_amount_12
+FROM gold.vbi0020013;
