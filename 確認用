@@ -1,10 +1,6 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls -l /usr/bin/spark-submit
-lrwxrwxrwx. 1 root root 30 Feb 21 13:20 /usr/bin/spark-submit -> /etc/alternatives/spark-submit
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ readlink -f /usr/bin/spark-submit
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/bin/spark-submit
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ find /opt /usr/lib /usr/local -name "pyspark.zip" 2>/dev/null
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/oozie/oozie-sharelib-yarn/lib/spark3/pyspark.zip
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3/python/lib/pyspark.zip
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ find /opt /usr/lib /usr/local -name "py4j*.zip" 2>/dev/null
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/oozie/oozie-sharelib-yarn/lib/spark3/py4j-0.10.9.7-src.zip
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3/python/lib/py4j-0.10.9.7-src.zip
+cd /home/cloudbreak/spark/spark/job_runner
+
+export SPARK3_HOME=/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3
+
+PYTHONPATH=src:$SPARK3_HOME/python/lib/pyspark.zip:$SPARK3_HOME/python/lib/py4j-0.10.9.7-src.zip \
+python3.9 -c "import pyspark; print(pyspark.__file__); print(pyspark.__version__)"
