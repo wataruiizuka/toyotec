@@ -1,11 +1,25 @@
-python3 - <<'PY'
-import importlib.util
-
-spec = importlib.util.find_spec("spark_job_runner")
-
-if spec is None:
-    print("NOT_FOUND")
-else:
-    print("FOUND")
-    print(spec.origin)
-PY
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ pwd
+/home/cloudbreak
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ ls -la
+total 168
+drwx------. 10 cloudbreak cloudbreak  4096 Jul  3 07:13 .
+drwxr-xr-x.  6 root       root          62 Feb 21 13:17 ..
+drwx------.  3 cloudbreak cloudbreak    17 Mar 23 13:19 .ansible
+-rw-------.  1 cloudbreak cloudbreak 70298 Jul  3 07:13 .bash_history
+-rw-r--r--.  1 cloudbreak cloudbreak    18 Jul  7  2025 .bash_logout
+-rw-r--r--.  1 cloudbreak cloudbreak   141 Jul  7  2025 .bash_profile
+-rw-r--r--.  1 cloudbreak cloudbreak   469 Feb 21 13:20 .bashrc
+drwxr-x---.  2 cloudbreak cloudbreak  4096 Apr  2 05:56 etl
+drwx------.  6 cloudbreak cloudbreak   186 Mar 22 22:37 iceberg-bronze-silver
+drwxr-x---.  3 cloudbreak cloudbreak    89 Feb 23 00:18 iceberg-ddl
+-rw-r-----.  1 cloudbreak cloudbreak  2603 Mar 27 07:19 iceberg_maintain.py
+drwx------.  4 cloudbreak cloudbreak    61 Mar 12 21:18 iceberg-silver-gold
+drwxr-x---.  3 cloudbreak cloudbreak    43 Mar 24 09:07 ishii
+-rw-------.  1 cloudbreak cloudbreak   190 Mar 30 00:20 .lesshst
+drwxr-x---.  2 cloudbreak cloudbreak  4096 Mar 24 09:30 logs
+-rw-------.  1 cloudbreak cloudbreak  6770 Mar 27 07:17 .scala_history
+drwx------.  2 cloudbreak cloudbreak    29 Feb 21 13:09 .ssh
+-rw-------.  1 cloudbreak cloudbreak 56648 Apr  2 05:56 .viminfo
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ ls -la config/jobs.yaml src/spark_job_runner
+ls: cannot access 'config/jobs.yaml': No such file or directory
+ls: cannot access 'src/spark_job_runner': No such file or directory
