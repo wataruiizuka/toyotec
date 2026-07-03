@@ -1,12 +1,27 @@
-gold.vbi0020013のdata配下
-ファイル名：5b487a7112f2d710-2ac3304d00000002_1753187554_data.0
-拡張子：.parq
-サイズ：25KB
-階層構造：vbi0020013/data/5b487a7112f2d710-2ac3304d00000002_1753187554_data.0
- 
- 
-bronze.tbba001g_bronzeのdata配下
-ファイル名：00000-17269-8d10a103-e127-481f-8512-2d0f49698caf-00001
-拡張子：.parquet
-サイズ：6364KB
-階層構造：tbba001g_bronze/data/cd_hansya=s701j/00000-17269-8d10a103-e127-481f-8512
+DROP TABLE IF EXISTS gold.vbi0020013_fabric_parquet_test;
+
+CREATE TABLE gold.vbi0020013_fabric_parquet_test
+USING iceberg
+TBLPROPERTIES (
+  'format-version' = '2',
+  'write.format.default' = 'parquet'
+)
+AS
+SELECT *
+FROM gold.vbi0020013;
+
+
+target_table = "gold.vbi0020013_fabric_parquet_test"
+source_table = "gold.vbi0020013"
+
+spark.sql(f"DROP TABLE IF EXISTS {target_table}")
+
+df = spark.table(source_table)
+
+(
+    df.writeTo(target_table)
+      .using("iceberg")
+      .tableProperty("format-version", "2")
+      .tableProperty("write.format.default", "parquet")
+      .create()
+)
