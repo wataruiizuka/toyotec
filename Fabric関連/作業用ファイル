@@ -1,53 +1,78 @@
-DROP TABLE IF EXISTS gold.vbi0020013_fabric_parquet_test;
-
-CREATE TABLE gold.vbi0020013_fabric_parquet_test
-STORED BY ICEBERG
-TBLPROPERTIES (
-  'format-version' = '2',
-  'write.format.default' = 'parquet'
-)
-AS
-SELECT
-    tbg7005m_3.cd_hansya AS 販社コード, --販社コード
-    tbg7005m_3.cd_kaisya AS 会社コード, --会社コード
-    tbg7005m_3.cd_tenpo AS 店舗コード, --店舗コード
-    tbg7005m_3.cd_hansya || tbg7005m_3.cd_kaisya || tbg7005m_3.cd_tenpo AS 販社会社店舗コード, --販社会社店舗コード
-    SUM(tbg7005m_3.ki_toykar01) AS 当年借方金額０１, --当年借方金額０１
-    SUM(tbg7005m_3.ki_toykar02) AS 当年借方金額０２, --当年借方金額０２
-    SUM(tbg7005m_3.ki_toykar03) AS 当年借方金額０３, --当年借方金額０３
-    SUM(tbg7005m_3.ki_toykar04) AS 当年借方金額０４, --当年借方金額０４
-    SUM(tbg7005m_3.ki_toykar05) AS 当年借方金額０５, --当年借方金額０５
-    SUM(tbg7005m_3.ki_toykar06) AS 当年借方金額０６, --当年借方金額０６
-    SUM(tbg7005m_3.ki_toykar07) AS 当年借方金額０７, --当年借方金額０７
-    SUM(tbg7005m_3.ki_toykar08) AS 当年借方金額０８, --当年借方金額０８
-    SUM(tbg7005m_3.ki_toykar09) AS 当年借方金額０９, --当年借方金額０９
-    SUM(tbg7005m_3.ki_toykar10) AS 当年借方金額１０, --当年借方金額１０
-    SUM(tbg7005m_3.ki_toykar11) AS 当年借方金額１１, --当年借方金額１１
-    SUM(tbg7005m_3.ki_toykar12) AS 当年借方金額１２, --当年借方金額１２
-    SUM(tbg7005m_3.ki_toykas01) AS 当年貸方金額０１, --当年貸方金額０１
-    SUM(tbg7005m_3.ki_toykas02) AS 当年貸方金額０２, --当年貸方金額０２
-    SUM(tbg7005m_3.ki_toykas03) AS 当年貸方金額０３, --当年貸方金額０３
-    SUM(tbg7005m_3.ki_toykas04) AS 当年貸方金額０４, --当年貸方金額０４
-    SUM(tbg7005m_3.ki_toykas05) AS 当年貸方金額０５, --当年貸方金額０５
-    SUM(tbg7005m_3.ki_toykas06) AS 当年貸方金額０６, --当年貸方金額０６
-    SUM(tbg7005m_3.ki_toykas07) AS 当年貸方金額０７, --当年貸方金額０７
-    SUM(tbg7005m_3.ki_toykas08) AS 当年貸方金額０８, --当年貸方金額０８
-    SUM(tbg7005m_3.ki_toykas09) AS 当年貸方金額０９, --当年貸方金額０９
-    SUM(tbg7005m_3.ki_toykas10) AS 当年貸方金額１０, --当年貸方金額１０
-    SUM(tbg7005m_3.ki_toykas11) AS 当年貸方金額１１, --当年貸方金額１１
-    SUM(tbg7005m_3.ki_toykas12) AS 当年貸方金額１２  --当年貸方金額１２
-FROM 
-    ai21rep_ve_dx.tbg7005m tbg7005m_3 --総勘定ＤＢ
-INNER JOIN gold.vbi002001_en v2001 --新車売掛金店舗別_en
-    ON v2001.cd_hansya = tbg7005m_3.cd_hansya
-    AND v2001.cd_kaisya = tbg7005m_3.cd_kaisya
-    AND v2001.cd_tenpo = tbg7005m_3.cd_tenpo
-WHERE 
-    (tbg7005m_3.cd_hansya <> '03601' OR tbg7005m_3.cd_kaisya <> '01' OR tbg7005m_3.cd_tenpo <> 'ZZZ') --店舗コード制限
-    AND tbg7005m_3.nu_yyyy = YEAR(MONTHS_SUB(FROM_UTC_TIMESTAMP(UTC_TIMESTAMP(), 'JST'), 4))-1 --日付選択で4ヶ月前に対応する年を選択する
-    AND tbg7005m_3.cd_kanjyou >= '5010101'
-    AND tbg7005m_3.cd_kanjyou <= '5019999' --勘定科目コード制限
-GROUP BY
-    tbg7005m_3.cd_hansya,
-    tbg7005m_3.cd_kaisya,
-    tbg7005m_3.cd_tenpo;
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+販社コード	string	NULL
+会社コード	string	NULL
+店舗コード	string	NULL
+販社会社店舗コード	string	NULL
+当年借方金額０１	bigint	NULL
+当年借方金額０２	bigint	NULL
+当年借方金額０３	bigint	NULL
+当年借方金額０４	bigint	NULL
+当年借方金額０５	bigint	NULL
+当年借方金額０６	bigint	NULL
+当年借方金額０７	bigint	NULL
+当年借方金額０８	bigint	NULL
+当年借方金額０９	bigint	NULL
+当年借方金額１０	bigint	NULL
+当年借方金額１１	bigint	NULL
+当年借方金額１２	bigint	NULL
+当年貸方金額０１	bigint	NULL
+当年貸方金額０２	bigint	NULL
+当年貸方金額０３	bigint	NULL
+当年貸方金額０４	bigint	NULL
+当年貸方金額０５	bigint	NULL
+当年貸方金額０６	bigint	NULL
+当年貸方金額０７	bigint	NULL
+当年貸方金額０８	bigint	NULL
+当年貸方金額０９	bigint	NULL
+当年貸方金額１０	bigint	NULL
+当年貸方金額１１	bigint	NULL
+当年貸方金額１２	bigint	NULL
+	NULL	NULL
+# Detailed Table Information	NULL	NULL
+Database: 	gold 	NULL
+OwnerType: 	USER 	NULL
+Owner: 	wataru_iizuka_za 	NULL
+CreateTime: 	Fri Jul 03 01:50:36 UTC 2026	NULL
+LastAccessTime: 	Thu Jan 08 07:33:28 UTC 1970	NULL
+Retention: 	2147483647 	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_parquet_test	NULL
+Erasure Coding Policy:	NONE 	NULL
+Table Type: 	EXTERNAL_TABLE 	NULL
+Table Parameters:	NULL	NULL
+	EXTERNAL 	TRUE
+	OBJCAPABILITIES 	EXTREAD,EXTWRITE
+	current-schema 	{\"type\":\"struct\",\"schema-id\":0,\"fields\":[{\"id\":1,\"name\":\"販社コード\",\"required\":false,\"type\":\"string\"},{\"id\":2,\"name\":\"会社コード\",\"required\":false,\"type\":\"string\"},{\"id\":3,\"name\":\"店舗コード\",\"required\":false,\"type\":\"string\"},{\"id\":4,\"name\":\"販社会社店舗コード\",\"required\":false,\"type\":\"string\"},{\"id\":5,\"name\":\"当年借方金額０１\",\"required\":false,\"type\":\"long\"},{\"id\":6,\"name\":\"当年借方金額０２\",\"required\":false,\"type\":\"long\"},{\"id\":7,\"name\":\"当年借方金額０３\",\"required\":false,\"type\":\"long\"},{\"id\":8,\"name\":\"当年借方金額０４\",\"required\":false,\"type\":\"long\"},{\"id\":9,\"name\":\"当年借方金額０５\",\"required\":false,\"type\":\"long\"},{\"id\":10,\"name\":\"当年借方金額０６\",\"required\":false,\"type\":\"long\"},{\"id\":11,\"name\":\"当年借方金額０７\",\"required\":false,\"type\":\"long\"},{\"id\":12,\"name\":\"当年借方金額０８\",\"required\":false,\"type\":\"long\"},{\"id\":13,\"name\":\"当年借方金額０９\",\"required\":false,\"type\":\"long\"},{\"id\":14,\"name\":\"当年借方金額１０\",\"required\":false,\"type\":\"long\"},{\"id\":15,\"name\":\"当年借方金額１１\",\"required\":false,\"type\":\"long\"},{\"id\":16,\"name\":\"当年借方金額１２\",\"required\":false,\"type\":\"long\"},{\"id\":17,\"name\":\"当年貸方金額０１\",\"required\":false,\"type\":\"long\"},{\"id\":18,\"name\":\"当年貸方金額０２\",\"required\":false,\"type\":\"long\"},{\"id\":19,\"name\":\"当年貸方金額０３\",\"required\":false,\"type\":\"long\"},{\"id\":20,\"name\":\"当年貸方金額０４\",\"required\":false,\"type\":\"long\"},{\"id\":21,\"name\":\"当年貸方金額０５\",\"required\":false,\"type\":\"long\"},{\"id\":22,\"name\":\"当年貸方金額０６\",\"required\":false,\"type\":\"long\"},{\"id\":23,\"name\":\"当年貸方金額０７\",\"required\":false,\"type\":\"long\"},{\"id\":24,\"name\":\"当年貸方金額０８\",\"required\":false,\"type\":\"long\"},{\"id\":25,\"name\":\"当年貸方金額０９\",\"required\":false,\"type\":\"long\"},{\"id\":26,\"name\":\"当年貸方金額１０\",\"required\":false,\"type\":\"long\"},{\"id\":27,\"name\":\"当年貸方金額１１\",\"required\":false,\"type\":\"long\"},{\"id\":28,\"name\":\"当年貸方金額１２\",\"required\":false,\"type\":\"long\"}]}
+	current-snapshot-id 	3157016791551259402
+	current-snapshot-summary	{\"added-data-files\":\"1\",\"added-records\":\"216\",\"added-files-size\":\"25112\",\"changed-partition-count\":\"1\",\"total-records\":\"216\",\"total-files-size\":\"25112\",\"total-data-files\":\"1\",\"total-delete-files\":\"0\",\"total-position-deletes\":\"0\",\"total-equality-deletes\":\"0\"}
+	current-snapshot-timestamp-ms	1783043437076
+	engine.hive.enabled 	true
+	external.table.purge	TRUE
+	format-version 	2
+	impala.events.catalogServiceId	280e297c280447c1:becf12a488a195cf
+	impala.events.catalogVersion	42670
+	metadata_location 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_parquet_test/metadata/00001-628f2b02-b61e-45c1-8306-acd587954075.metadata.json
+	numFiles 	1
+	numRows 	216
+	previous_metadata_location	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_parquet_test/metadata/00000-9050bace-8fb3-4c5a-b5c4-21be91aee93b.metadata.json
+	snapshot-count 	1
+	storage_handler 	org.apache.iceberg.mr.hive.HiveIcebergStorageHandler
+	table_type 	ICEBERG
+	totalSize 	25112
+	transient_lastDdlTime	1783043436
+	uuid 	c2f6ccbf-e0c4-432a-b99e-97fab2655de5
+	write.delete.mode 	merge-on-read
+	write.format.default	parquet
+	write.merge.mode 	merge-on-read
+	write.parquet.compression-codec	snappy
+	write.update.mode 	merge-on-read
+	NULL	NULL
+# Storage Information	NULL	NULL
+SerDe Library: 	org.apache.iceberg.mr.hive.HiveIcebergSerDe	NULL
+InputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergInputFormat	NULL
+OutputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergOutputFormat	NULL
+Compressed: 	No 	NULL
+Sort Columns: 	[] 	NULL
+	NULL	NULL
+# Constraints	NULL	NULL
