@@ -1,2 +1,11 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ ls
-etl  iceberg-bronze-silver  iceberg-ddl  iceberg_maintain.py  iceberg-silver-gold  ishii  logs
+python3 - <<'PY'
+import importlib.util
+
+spec = importlib.util.find_spec("spark_job_runner")
+
+if spec is None:
+    print("NOT_FOUND")
+else:
+    print("FOUND")
+    print(spec.origin)
+PY
