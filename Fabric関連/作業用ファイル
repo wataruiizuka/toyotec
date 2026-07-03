@@ -1,6 +1,7 @@
-区分	値
-テーブル名	gold.vbi0020013_fabric_parquet_test
-ストレージアカウント	sttoyotecdapveje
-コンテナ	data
-テーブル格納パス	/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_parquet_test
-テーブルLOCATION	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_parquet_test
+観点	bronze側	gold側	判定
+Fabric表示	成功	失敗	差分あり
+実ファイル拡張子	.parquet	.parq / data.0	差分あり
+作成系統	Spark系に見える	Hue/Impala系に見える	差分あり
+Iceberg metadata	あり	あり	両方OK
+write.format.default	parquet	parquet	表示上は両方OK
+Fabric変換ログ	成功側	Fileformat is not supported for delta sync	gold側NG
