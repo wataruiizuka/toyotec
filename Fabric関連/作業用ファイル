@@ -1,11 +1,12 @@
-Conversion failed at 2026-07-02 08:52:34 UTC time. Latest Metadata file: 00001-ac2f9094-b543-43c9-9e8b-a28c08fbbab4.metadata.json.
-=== OneLake Table Format Conversion Details ===
-Status:             Failed
-Timestamp (UTC):    2026-07-02 08:52:34
-Latest Metadata:    00001-ac2f9094-b543-43c9-9e8b-a28c08fbbab4.metadata.json
+gold.vbi0020013のdata配下
+ファイル名：5b487a7112f2d710-2ac3304d00000002_1753187554_data.0
+拡張子：.parq
+サイズ：25KB
+階層構造：vbi0020013/data/5b487a7112f2d710-2ac3304d00000002_1753187554_data.0
  
-Invocation Id:      4083de1d-1efe-47a0-9a84-8d78d8ccf8df
-Root Activity Id:   24441103-82b8-42e3-84ca-741e775ec8fd
-Error Code:         UNSUPPORTED_FEATURE
-Error Category:     USER
-Error Details:      Fileformat is not supported for delta sync
+ 
+bronze.tbba001g_bronzeのdata配下
+ファイル名：00000-17269-8d10a103-e127-481f-8512-2d0f49698caf-00001
+拡張子：.parquet
+サイズ：6364KB
+階層構造：tbba001g_bronze/data/cd_hansya=s701j/00000-17269-8d10a103-e127-481f-8512
