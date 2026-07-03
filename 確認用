@@ -1,4 +1,3 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src python3.9 -m spark_job_runner validate --config config/jobs.yaml
-Validation FAILED: 2 error(s)
-  [dx_doujyou.enoreport_full_fixed] DDL target ('gold.vbi0020013') not in config output_tables: ['gold.enoreport_full_fixed']
-  [dx_doujyou.enoreport_full_fixed] SQL target ('gold.vbi0020013') not in config output_tables: ['gold.enoreport_full_fixed']
+grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/ddl/dx_doujyou/vbi0020013.ddl
+
+grep -n -i -E "create table|insert into|overwrite|gold\.|enoreport|vbi0020013" /home/cloudbreak/spark/spark/sql/dx_doujyou/vbi0020013.sql
