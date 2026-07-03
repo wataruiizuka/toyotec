@@ -1,5 +1,5 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ cd /home/cloudbreak/spark/spark/job_runner
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src python3.9 -m spark_job_runner validate --config config/jobs.yaml
-Validation PASSED: no errors found.
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ echo $?
-0
+cd /home/cloudbreak/spark/spark/job_runner
+
+PYTHONPATH=src python3.9 -m spark_job_runner deploy-ddl --config config/jobs.yaml --job dx_doujyou.vbi0020013
+
+echo $?
