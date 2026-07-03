@@ -1,2 +1,4 @@
-ls -l /home/cloudbreak/spark/spark/ddl/dx_doujyou/vbi0020013.ddl
-ls -l /home/cloudbreak/spark/spark/sql/dx_doujyou/vbi0020013.sql
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls -l /home/cloudbreak/spark/spark/ddl/dx_doujyou/vbi0020013.ddl
+-rw-r-----. 1 cloudbreak cloudbreak 2233 Jul  3 07:25 /home/cloudbreak/spark/spark/ddl/dx_doujyou/vbi0020013.ddl
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ ls -l /home/cloudbreak/spark/spark/sql/dx_doujyou/vbi0020013.sql
+-rw-r-----. 1 cloudbreak cloudbreak 3513 Jul  3 07:25 /home/cloudbreak/spark/spark/sql/dx_doujyou/vbi0020013.sql
