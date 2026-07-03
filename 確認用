@@ -1,6 +1,6 @@
-cd /home/cloudbreak/spark/spark/job_runner
-
-export SPARK3_HOME=/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3
-
-PYTHONPATH=src:$SPARK3_HOME/python/lib/pyspark.zip:$SPARK3_HOME/python/lib/py4j-0.10.9.7-src.zip \
-python3.9 -c "import pyspark; print(pyspark.__file__); print(pyspark.__version__)"
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ cd /home/cloudbreak/spark/spark/job_runner
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ export SPARK3_HOME=/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ PYTHONPATH=src:$SPARK3_HOME/python/lib/pyspark.zip:$SPARK3_HOME/python/lib/py4j-0.10.9.7-src.zip \
+> python3.9 -c "import pyspark; print(pyspark.__file__); print(pyspark.__version__)"
+/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/spark3/python/lib/pyspark.zip/pyspark/__init__.py
+3.5.4
