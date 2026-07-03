@@ -1,8 +1,11 @@
-検証テーブル	ストレージアカウント	コンテナ	パス
-gold.vbi0020013_fabric_ascii_test	sttoyotecdapveje	data	/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_ascii_test
-gold.vbi0020013_fabric_jp_ctas_test	sttoyotecdapveje	data	/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_jp_ctas_test
-
-
-検証テーブル	Shortcut対象のフルパス
-gold.vbi0020013_fabric_ascii_test	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_ascii_test
-gold.vbi0020013_fabric_jp_ctas_test	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/gold.db/vbi0020013_fabric_jp_ctas_test
+Conversion failed at 2026-07-02 08:52:34 UTC time. Latest Metadata file: 00001-ac2f9094-b543-43c9-9e8b-a28c08fbbab4.metadata.json.
+=== OneLake Table Format Conversion Details ===
+Status:             Failed
+Timestamp (UTC):    2026-07-02 08:52:34
+Latest Metadata:    00001-ac2f9094-b543-43c9-9e8b-a28c08fbbab4.metadata.json
+ 
+Invocation Id:      4083de1d-1efe-47a0-9a84-8d78d8ccf8df
+Root Activity Id:   24441103-82b8-42e3-84ca-741e775ec8fd
+Error Code:         UNSUPPORTED_FEATURE
+Error Category:     USER
+Error Details:      Fileformat is not supported for delta sync
