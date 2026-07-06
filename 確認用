@@ -1,16 +1,53 @@
-サーバ側ターミナルで以下を実行してください。
-
-grep -n -A 3 -B 1 -E "hadoop.security.authentication|dfs.namenode.kerberos.principal|yarn.resourcemanager.principal|mapreduce.jobhistory.principal" \
-/etc/hadoop/conf/core-site.xml \
-/etc/hadoop/conf/hdfs-site.xml \
-/etc/hadoop/conf/yarn-site.xml \
-/etc/hadoop/conf/mapred-site.xml 2>/dev/null
-
-続けて、Hive系も確認します。
-
-grep -n -A 3 -B 1 -E "hive.metastore.kerberos.principal|hive.server2.authentication.kerberos.principal|hive.metastore.sasl.enabled|hive.server2.authentication" \
-/etc/hive/conf/hive-site.xml 2>/dev/null
-
-さらに、keytabファイルが他の場所にないか少し広めに確認します。
-
-find /etc /var /opt /home -name "*.keytab" 2>/dev/null | head -100
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -n -A 3 -B 1 -E "hadoop.security.authentication|dfs.namenode.kerberos.principal|yarn.resourcemanager.principal|mapreduce.jobhistory.principal" \
+> /etc/hadoop/conf/core-site.xml \
+> /etc/hadoop/conf/hdfs-site.xml \
+> /etc/hadoop/conf/yarn-site.xml \
+> /etc/hadoop/conf/mapred-site.xml 2>/dev/null
+/etc/hadoop/conf/core-site.xml-5-  <property>
+/etc/hadoop/conf/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hadoop/conf/core-site.xml-7-    <value>kerberos</value>
+/etc/hadoop/conf/core-site.xml-8-  </property>
+/etc/hadoop/conf/core-site.xml-9-  <property>
+--
+/etc/hadoop/conf/hdfs-site.xml-89-  <property>
+/etc/hadoop/conf/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hadoop/conf/hdfs-site.xml-91-    <value>hdfs/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
+/etc/hadoop/conf/hdfs-site.xml-92-  </property>
+/etc/hadoop/conf/hdfs-site.xml-93-  <property>
+--
+/etc/hadoop/conf/yarn-site.xml-177-  <property>
+/etc/hadoop/conf/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
+/etc/hadoop/conf/yarn-site.xml-179-    <value>yarn/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
+/etc/hadoop/conf/yarn-site.xml-180-  </property>
+/etc/hadoop/conf/yarn-site.xml-181-  <property>
+--
+/etc/hadoop/conf/mapred-site.xml-97-  <property>
+/etc/hadoop/conf/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
+/etc/hadoop/conf/mapred-site.xml-99-    <value>mapred/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
+/etc/hadoop/conf/mapred-site.xml-100-  </property>
+/etc/hadoop/conf/mapred-site.xml-101-  <property>
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -n -A 3 -B 1 -E "hive.metastore.kerberos.principal|hive.server2.authentication.kerberos.principal|hive.metastore.sasl.enabled|hive.server2.authentication" \
+> /etc/hive/conf/hive-site.xml 2>/dev/null
+193-  <property>
+194:    <name>hive.metastore.sasl.enabled</name>
+195-    <value>true</value>
+196-  </property>
+197-  <property>
+198:    <name>hive.server2.authentication</name>
+199-    <value>KERBEROS</value>
+200-  </property>
+201-  <property>
+202:    <name>hive.metastore.kerberos.principal</name>
+203-    <value>hive/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
+204-  </property>
+205-  <property>
+206:    <name>hive.server2.authentication.kerberos.principal</name>
+207-    <value>hive/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
+208-  </property>
+209-  <property>
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ find /etc /var /opt /home -name "*.keytab" 2>/dev/null | head -100
+/etc/krb5.keytab
+/etc/cloudera-scm-server/cmf.keytab
+/etc/cloudera-scm-server/scm.keytab
+/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/kafka_connect_ext/flow-definitions/defaults/default.keytab
+/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/etc/kafka_connect_ext/flow-definitions/defaults/default.keytab
