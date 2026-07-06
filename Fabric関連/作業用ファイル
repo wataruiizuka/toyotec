@@ -1,1 +1,1 @@
-impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443
+詳細 : "ODBC: ERROR [HY000] [Cloudera][DSI] An error occurred while attempting to retrieve the error message for key 'DSWrongServerError' and component ID 110: Could not open error message files - Check that "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\en-US\DSMessages.xml" or "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\DSMessages_en-US.xml" exists and are accessible."
