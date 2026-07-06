@@ -1,25 +1,2 @@
-SELECT
-  COUNT(*) AS total_count,
-
-  COUNT(cd_hansya) AS cd_hansya_count,
-  COUNT(cd_kaisya) AS cd_kaisya_count,
-  COUNT(cd_tenpo) AS cd_tenpo_count,
-
-  COUNT(dd_jucyu) AS dd_jucyu_count,
-  MIN(dd_jucyu) AS min_dd_jucyu,
-  MAX(dd_jucyu) AS max_dd_jucyu,
-
-  COUNT(DISTINCT cd_hansya) AS distinct_cd_hansya,
-  COUNT(DISTINCT cd_kaisya) AS distinct_cd_kaisya,
-  COUNT(DISTINCT cd_tenpo) AS distinct_cd_tenpo,
-
-  COUNT(DISTINCT CONCAT(
-    cd_hansya,
-    '|',
-    cd_kaisya,
-    '|',
-    no_cyumon,
-    '|',
-    no_cyumoned
-  )) AS distinct_order_detail_count
-FROM bronze.tbba001g;
+total_count	cd_hansya_count	cd_kaisya_count	cd_tenpo_count	dd_jucyu_count	min_dd_jucyu	max_dd_jucyu	distinct_cd_hansya	distinct_cd_kaisya	distinct_cd_tenpo	distinct_order_detail_count
+35046	35046	35046	35046	35046	2000-10-29 00:00:00	2026-02-01 00:00:00	1	2	53	35046
