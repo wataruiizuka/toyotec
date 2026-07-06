@@ -1,1 +1,83 @@
-grep -R -n -i -E "hadoop.security.authentication|kerberos|principal|keytab" /etc/hadoop /etc/spark /etc/hive 2>/dev/null | head -100
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -R -n -i -E "kinit|keytab|principal|kerberos" legacy job_runner 2>/dev/null | head -100
+job_runner/run_reports/run-20260703T085741-4da1880a.json:19:      "sanitized_error": "INTERNAL: Py4JJavaError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext. : java.io.IOException: DestHost:destPort cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8032 , LocalHost:localPort cdp-dap-spark-ve-je-master0/172.17.224.4:0. Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS] \tat java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) \ta",
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -R -n -i -E "hadoop.security.authentication|kerberos|principal|keytab" /etc/hadoop /etc/spark /etc/hive 2>/dev/null | head -100
+/etc/hadoop/conf/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hadoop/conf/core-site.xml:7:    <value>kerberos</value>
+/etc/hadoop/conf/core-site.xml:198:    <name>fs.azure.identity.transformer.service.principal.id</name>
+/etc/hadoop/conf/core-site.xml:202:    <name>fs.azure.identity.transformer.service.principal.substitution.list</name>
+/etc/hadoop/conf/core-site.xml:239:    <value>https://cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8443/cdp-dap-spark-ve-je/kt-kerberos</value>
+/etc/hadoop/conf/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hadoop/conf/hdfs-site.xml:94:    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+/etc/hadoop/conf/hdfs-site.xml:98:    <name>dfs.datanode.kerberos.principal</name>
+/etc/hadoop/conf/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
+/etc/hadoop/conf/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
+/etc/hadoop/conf.cloudera.yarn/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hadoop/conf.cloudera.yarn/core-site.xml:7:    <value>kerberos</value>
+/etc/hadoop/conf.cloudera.yarn/core-site.xml:198:    <name>fs.azure.identity.transformer.service.principal.id</name>
+/etc/hadoop/conf.cloudera.yarn/core-site.xml:202:    <name>fs.azure.identity.transformer.service.principal.substitution.list</name>
+/etc/hadoop/conf.cloudera.yarn/core-site.xml:239:    <value>https://cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8443/cdp-dap-spark-ve-je/kt-kerberos</value>
+/etc/hadoop/conf.cloudera.yarn/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hadoop/conf.cloudera.yarn/hdfs-site.xml:94:    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+/etc/hadoop/conf.cloudera.yarn/hdfs-site.xml:98:    <name>dfs.datanode.kerberos.principal</name>
+/etc/hadoop/conf.cloudera.yarn/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
+/etc/hadoop/conf.cloudera.yarn/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
+/etc/hadoop/conf.cloudera.hdfs/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hadoop/conf.cloudera.hdfs/core-site.xml:7:    <value>kerberos</value>
+/etc/hadoop/conf.cloudera.hdfs/core-site.xml:222:    <name>fs.azure.identity.transformer.service.principal.id</name>
+/etc/hadoop/conf.cloudera.hdfs/core-site.xml:226:    <name>fs.azure.identity.transformer.service.principal.substitution.list</name>
+/etc/hadoop/conf.cloudera.hdfs/core-site.xml:263:    <value>https://cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8443/cdp-dap-spark-ve-je/kt-kerberos</value>
+/etc/hadoop/conf.cloudera.hdfs/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hadoop/conf.cloudera.hdfs/hdfs-site.xml:94:    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+/etc/hadoop/conf.cloudera.hdfs/hdfs-site.xml:98:    <name>dfs.datanode.kerberos.principal</name>
+/etc/hive/conf/atlas-application.properties:18:atlas.authentication.method.kerberos=True
+/etc/hive/conf/atlas-application.properties:23:atlas.jaas.KafkaClient.option.useKeyTab=True
+/etc/hive/conf/atlas-application.properties:24:atlas.kafka.sasl.kerberos.service.name=kafka
+/etc/hive/conf/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hive/conf/core-site.xml:7:    <value>kerberos</value>
+/etc/hive/conf/core-site.xml:198:    <name>fs.azure.identity.transformer.service.principal.id</name>
+/etc/hive/conf/core-site.xml:202:    <name>fs.azure.identity.transformer.service.principal.substitution.list</name>
+/etc/hive/conf/core-site.xml:239:    <value>https://cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8443/cdp-dap-spark-ve-je/kt-kerberos</value>
+/etc/hive/conf/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hive/conf/hdfs-site.xml:94:    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+/etc/hive/conf/hdfs-site.xml:98:    <name>dfs.datanode.kerberos.principal</name>
+/etc/hive/conf/hive-site.xml:199:    <value>KERBEROS</value>
+/etc/hive/conf/hive-site.xml:202:    <name>hive.metastore.kerberos.principal</name>
+/etc/hive/conf/hive-site.xml:206:    <name>hive.server2.authentication.kerberos.principal</name>
+/etc/hive/conf/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
+/etc/hive/conf/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/atlas-application.properties:18:atlas.authentication.method.kerberos=True
+/etc/hive/conf.cloudera.hive_on_tez/atlas-application.properties:23:atlas.jaas.KafkaClient.option.useKeyTab=True
+/etc/hive/conf.cloudera.hive_on_tez/atlas-application.properties:24:atlas.kafka.sasl.kerberos.service.name=kafka
+/etc/hive/conf.cloudera.hive_on_tez/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hive/conf.cloudera.hive_on_tez/core-site.xml:7:    <value>kerberos</value>
+/etc/hive/conf.cloudera.hive_on_tez/core-site.xml:198:    <name>fs.azure.identity.transformer.service.principal.id</name>
+/etc/hive/conf.cloudera.hive_on_tez/core-site.xml:202:    <name>fs.azure.identity.transformer.service.principal.substitution.list</name>
+/etc/hive/conf.cloudera.hive_on_tez/core-site.xml:239:    <value>https://cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8443/cdp-dap-spark-ve-je/kt-kerberos</value>
+/etc/hive/conf.cloudera.hive_on_tez/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/hdfs-site.xml:94:    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/hdfs-site.xml:98:    <name>dfs.datanode.kerberos.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/hive-site.xml:199:    <value>KERBEROS</value>
+/etc/hive/conf.cloudera.hive_on_tez/hive-site.xml:202:    <name>hive.metastore.kerberos.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/hive-site.xml:206:    <name>hive.server2.authentication.kerberos.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
+/etc/hive/conf.cloudera.hive_on_tez/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
+/etc/hive/conf.cloudera.data_context_connector-0fad/atlas-application.properties:18:atlas.authentication.method.kerberos=True
+/etc/hive/conf.cloudera.data_context_connector-0fad/atlas-application.properties:23:atlas.jaas.KafkaClient.option.useKeyTab=True
+/etc/hive/conf.cloudera.data_context_connector-0fad/atlas-application.properties:24:atlas.kafka.sasl.kerberos.service.name=kafka
+/etc/hive/conf.cloudera.data_context_connector-0fad/hive-site.xml:187:    <value>kerberos</value>
+/etc/hive/conf.cloudera.data_context_connector-0fad/hive-site.xml:190:    <name>hive.metastore.kerberos.principal</name>
+/etc/hive/conf.cloudera.hms/atlas-application.properties:18:atlas.authentication.method.kerberos=True
+/etc/hive/conf.cloudera.hms/atlas-application.properties:23:atlas.jaas.KafkaClient.option.useKeyTab=True
+/etc/hive/conf.cloudera.hms/atlas-application.properties:24:atlas.kafka.sasl.kerberos.service.name=kafka
+/etc/hive/conf.cloudera.hms/core-site.xml:6:    <name>hadoop.security.authentication</name>
+/etc/hive/conf.cloudera.hms/core-site.xml:7:    <value>kerberos</value>
+/etc/hive/conf.cloudera.hms/core-site.xml:198:    <name>fs.azure.identity.transformer.service.principal.id</name>
+/etc/hive/conf.cloudera.hms/core-site.xml:202:    <name>fs.azure.identity.transformer.service.principal.substitution.list</name>
+/etc/hive/conf.cloudera.hms/core-site.xml:239:    <value>https://cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8443/cdp-dap-spark-ve-je/kt-kerberos</value>
+/etc/hive/conf.cloudera.hms/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
+/etc/hive/conf.cloudera.hms/hdfs-site.xml:94:    <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+/etc/hive/conf.cloudera.hms/hdfs-site.xml:98:    <name>dfs.datanode.kerberos.principal</name>
+/etc/hive/conf.cloudera.hms/hive-site.xml:195:    <value>kerberos</value>
+/etc/hive/conf.cloudera.hms/hive-site.xml:198:    <name>hive.metastore.kerberos.principal</name>
+/etc/hive/conf.cloudera.hms/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
+/etc/hive/conf.cloudera.hms/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
