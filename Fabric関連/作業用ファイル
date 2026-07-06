@@ -1,11 +1,1 @@
-SELECT
-  cd_kaisya,
-  cd_tenpo,
-  COUNT(*) AS juchu_meisai_count
-FROM bronze.tbba001g
-GROUP BY
-  cd_kaisya,
-  cd_tenpo
-ORDER BY
-  juchu_meisai_count DESC
-LIMIT 20;
+impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443
