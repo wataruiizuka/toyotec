@@ -16,4 +16,9 @@ AS
 SELECT
   *
 FROM ai21rep_ve_stg_kudu.tbba001g
-WHERE 1 = 0;
+ORDER BY
+  cd_hansya,
+  cd_kaisya,
+  no_cyumon,
+  no_cyumoned
+LIMIT 35046;
