@@ -1,1 +1,3 @@
-Get-OdbcDriver | Where-Object {$_.Name -like "*Impala*"} | Select-Object Name, Platform
+Name                            Platform
+----                            --------
+Cloudera ODBC Driver for Impala 64-bit
