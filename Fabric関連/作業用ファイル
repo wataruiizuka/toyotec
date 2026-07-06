@@ -1,2 +1,11 @@
-total_count	cd_hansya_count	cd_kaisya_count	cd_tenpo_count	dd_jucyu_count	min_dd_jucyu	max_dd_jucyu	distinct_cd_hansya	distinct_cd_kaisya	distinct_cd_tenpo	distinct_order_detail_count
-35046	35046	35046	35046	35046	2000-10-29 00:00:00	2026-02-01 00:00:00	1	2	53	35046
+SELECT
+  cd_kaisya,
+  cd_tenpo,
+  COUNT(*) AS juchu_meisai_count
+FROM bronze.tbba001g
+GROUP BY
+  cd_kaisya,
+  cd_tenpo
+ORDER BY
+  juchu_meisai_count DESC
+LIMIT 20;
