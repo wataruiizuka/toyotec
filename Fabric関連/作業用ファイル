@@ -1,3 +1,1 @@
-PS C:\Users\00496_990801> netstat -ano | findstr :4443
-  TCP         127.0.0.1:4443         0.0.0.0:0              LISTENING       7536
-  TCP         [::1]:4443             [::]:0                 LISTENING       7536
+詳細 : "ODBC: ERROR [HY000] [Cloudera][DSI] An error occurred while attempting to retrieve the error message for key 'TEHTTPClientDetailedException' with message parameters ['authorize: cannot authorize peer'] and component ID 200: Could not open error message files - Check that "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\en-US\ThriftExtensionMessages.xml" or "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\ThriftExtensionMessages_en-US.xml" exists and are accessible."
