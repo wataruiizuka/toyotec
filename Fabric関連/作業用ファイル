@@ -1,1 +1,3 @@
-az network bastion ssh --name "bas-toyotecdap-ve-je" --subscription "ve-toyotecdap" --resource-group "rg-toyotecdap-ve-je" --target-resource-id "/subscriptions/a05c1618-a5fd-4ffe-bf52-8e19ae91b685/resourceGroups/rg-toyotecdap-ve-je/providers/Microsoft.Compute/virtualMachines/vm-toyotecdap-maint-ve-je" --auth-type ssh-key --username "devuser" --ssh-key "\Users\00496_990801\.ssh\vm-toyotecdap-maint-ve-je-key-devuser.pem" -- -N -L 4443:impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:443
+PS C:\Users\00496_990801> netstat -ano | findstr :4443
+  TCP         127.0.0.1:4443         0.0.0.0:0              LISTENING       7536
+  TCP         [::1]:4443             [::]:0                 LISTENING       7536
