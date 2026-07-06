@@ -1,12 +1,2 @@
-SELECT
-  COUNT(*) AS row_count,
-  COUNT(DISTINCT CONCAT(
-    COALESCE(cd_hansya, ''),
-    '|',
-    COALESCE(cd_kaisya, ''),
-    '|',
-    COALESCE(no_cyumon, ''),
-    '|',
-    COALESCE(no_cyumoned, '')
-  )) AS distinct_key_count
-FROM bronze.tbba001g;
+row_count	distinct_key_count
+35046	35046
