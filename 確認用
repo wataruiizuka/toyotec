@@ -1,4 +1,8 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ grep -n "default_realm" /etc/krb5.conf
-10:  default_realm = TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ ls -l /etc/security/keytabs 2>/dev/null
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ find /home/cloudbreak -maxdepth 4 -name "*.keytab" 2>/dev/null
+サーバ側ターミナルで以下を実行してください。
+
+which kinit
+kinit --version
+
+続けて、cloudbreak ユーザーでKerberos認証を試します。
+
+kinit cloudbreak
