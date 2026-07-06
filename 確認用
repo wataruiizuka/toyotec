@@ -1,53 +1,39 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -n -A 3 -B 1 -E "hadoop.security.authentication|dfs.namenode.kerberos.principal|yarn.resourcemanager.principal|mapreduce.jobhistory.principal" \
-> /etc/hadoop/conf/core-site.xml \
-> /etc/hadoop/conf/hdfs-site.xml \
-> /etc/hadoop/conf/yarn-site.xml \
-> /etc/hadoop/conf/mapred-site.xml 2>/dev/null
-/etc/hadoop/conf/core-site.xml-5-  <property>
-/etc/hadoop/conf/core-site.xml:6:    <name>hadoop.security.authentication</name>
-/etc/hadoop/conf/core-site.xml-7-    <value>kerberos</value>
-/etc/hadoop/conf/core-site.xml-8-  </property>
-/etc/hadoop/conf/core-site.xml-9-  <property>
---
-/etc/hadoop/conf/hdfs-site.xml-89-  <property>
-/etc/hadoop/conf/hdfs-site.xml:90:    <name>dfs.namenode.kerberos.principal</name>
-/etc/hadoop/conf/hdfs-site.xml-91-    <value>hdfs/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
-/etc/hadoop/conf/hdfs-site.xml-92-  </property>
-/etc/hadoop/conf/hdfs-site.xml-93-  <property>
---
-/etc/hadoop/conf/yarn-site.xml-177-  <property>
-/etc/hadoop/conf/yarn-site.xml:178:    <name>yarn.resourcemanager.principal</name>
-/etc/hadoop/conf/yarn-site.xml-179-    <value>yarn/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
-/etc/hadoop/conf/yarn-site.xml-180-  </property>
-/etc/hadoop/conf/yarn-site.xml-181-  <property>
---
-/etc/hadoop/conf/mapred-site.xml-97-  <property>
-/etc/hadoop/conf/mapred-site.xml:98:    <name>mapreduce.jobhistory.principal</name>
-/etc/hadoop/conf/mapred-site.xml-99-    <value>mapred/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
-/etc/hadoop/conf/mapred-site.xml-100-  </property>
-/etc/hadoop/conf/mapred-site.xml-101-  <property>
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -n -A 3 -B 1 -E "hive.metastore.kerberos.principal|hive.server2.authentication.kerberos.principal|hive.metastore.sasl.enabled|hive.server2.authentication" \
-> /etc/hive/conf/hive-site.xml 2>/dev/null
-193-  <property>
-194:    <name>hive.metastore.sasl.enabled</name>
-195-    <value>true</value>
-196-  </property>
-197-  <property>
-198:    <name>hive.server2.authentication</name>
-199-    <value>KERBEROS</value>
-200-  </property>
-201-  <property>
-202:    <name>hive.metastore.kerberos.principal</name>
-203-    <value>hive/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
-204-  </property>
-205-  <property>
-206:    <name>hive.server2.authentication.kerberos.principal</name>
-207-    <value>hive/_HOST@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE</value>
-208-  </property>
-209-  <property>
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ find /etc /var /opt /home -name "*.keytab" 2>/dev/null | head -100
-/etc/krb5.keytab
-/etc/cloudera-scm-server/cmf.keytab
-/etc/cloudera-scm-server/scm.keytab
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/lib/kafka_connect_ext/flow-definitions/defaults/default.keytab
-/opt/cloudera/parcels/CDH-7.3.1-1.cdh7.3.1.p700.74774806/etc/kafka_connect_ext/flow-definitions/defaults/default.keytab
+お疲れ様です。
+
+READMEに沿って、`spark-job-runner` で `gold.vbi0020013` のDDL実行を進めています。
+
+現時点の対応状況は以下です。
+
+・サーバ上の配置先は `/home/cloudbreak/spark/spark/job_runner` で確認済みです。
+・`config/jobs.yaml` は `vbi0020013` 実行用に修正済みです。
+・DDL/SQLの参照先もサーバ上の実パスに修正済みです。
+・`validate` は成功しています。
+　`Validation PASSED: no errors found.`
+・PyYAML不足、PySpark参照不可の問題は解消済みです。
+・PySparkはCloudera Spark同梱のものを `PYTHONPATH` に追加して読み込める状態にしました。
+・その後、`deploy-ddl` を実行したところ、SparkContext作成時にYARN/HDFS側のKerberos認証で停止しました。
+
+現在のエラーは以下です。
+
+`Client cannot authenticate via:[TOKEN, KERBEROS]`
+
+確認したところ、Hadoop設定は Kerberos 認証必須になっていました。
+
+`hadoop.security.authentication = kerberos`
+
+また、現在のログインユーザーは `cloudbreak` ですが、`kinit cloudbreak` は以下の理由で失敗しています。
+
+`Client 'cloudbreak@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE' not found in Kerberos database`
+
+そのため、現時点では `cloudbreak` ユーザーではKerberos認証できず、Spark/YARNに接続できない状態です。
+
+確認したい内容は以下です。
+
+1. この環境でSparkジョブを実行する際に使用すべきKerberos principal は何でしょうか。
+2. 実行用のkeytabはありますでしょうか。ある場合、利用可能なパスと利用ユーザーを教えてください。
+3. `cloudbreak` ユーザーはSparkジョブ実行用ではなく、接続・作業用ユーザーという理解で合っていますでしょうか。
+4. `spark-job-runner` 実行前に必要な `kinit` 手順、または既存の実行ラッパーがあれば教えてください。
+5. 今回の `gold.vbi0020013` 作成は、`cloudbreak` から実行する想定で問題ないか、それとも別ユーザーで実行すべきか確認したいです。
+
+こちらの理解では、現時点のブロッカーはDDL/SQLや `jobs.yaml` の問題ではなく、Spark/YARN実行前のKerberos認証情報不足です。
+実行用principalまたはkeytabをご確認いただけますでしょうか。
