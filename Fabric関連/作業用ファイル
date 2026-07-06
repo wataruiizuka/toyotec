@@ -1,9 +1,101 @@
-https://sttoyotecdapveje.dfs.core.windows.net
-
-コンテナ
-
-data
-
-サブパス
-
-warehouse/tablespace/external/hive/ai21rep_ve_stg.db/tbv0021m
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+cd_hansya	string	NULL
+cd_kaisya	string	NULL
+no_cyumon	string	NULL
+no_cyumoned	string	NULL
+no_palkanri	string	NULL
+no_kanri	string	NULL
+no_yoyaku	string	NULL
+su_juchudai	bigint	NULL
+cd_zon	string	NULL
+cd_tenpo	string	NULL
+cd_ka	string	NULL
+cd_kakari	string	NULL
+kb_yoyaku	string	NULL
+cd_hanstaff	string	NULL
+mj_hantenkt	string	NULL
+mj_sinkysed	bigint	NULL
+no_syadaiba	string	NULL
+no_siteruib	string	NULL
+mj_gaihansy	string	NULL
+mj_iropadng	string	NULL
+cd_utihari	string	NULL
+cd_taiya	string	NULL
+mj_taiyacom	string	NULL
+mj_makeop1	string	NULL
+mj_makeop2	string	NULL
+mj_makeop3	string	NULL
+mj_makeop4	string	NULL
+mj_makeop5	string	NULL
+mj_makeop6	string	NULL
+mj_makeop7	string	NULL
+mj_makeop8	string	NULL
+mj_makeop9	string	NULL
+mj_makeop10	string	NULL
+mj_makeop11	string	NULL
+mj_makeop12	string	NULL
+mj_makeop13	string	NULL
+mj_makeop14	string	NULL
+mj_makeop15	string	NULL
+mj_makeop16	string	NULL
+kb_haraidas	string	NULL
+kb_yoto	string	NULL
+kb_toroku	string	NULL
+kb_genmen	string	NULL
+kb_jcsinpo	string	NULL
+kb_torokkah	string	NULL
+kb_jibaeigy	string	NULL
+no_tysenkib	string	NULL
+no_ipankibo	string	NULL
+mj_jikosiki	string	NULL
+mj_nosybas	string	NULL
+mj_syateira	string	NULL
+dd_syrythir	timestamp	NULL
+cd_kainusig	string	NULL
+kb_gyosynys	string	NULL
+kj_kainmei1	string	NULL
+kj_kainmei2	string	NULL
+kj_meigime1	string	NULL
+kj_meigime2	string	NULL
+mj_kainmgka	string	NULL
+mj_siyohonk	string	NULL
+mj_siyohnkk	string	NULL
+kj_siyohonk	string	NULL
+kb_syokenry	string	NULL
+kb_tasnowko	string	NULL
+kb_ritojiba	string	NULL
+mj_cymonm1	string	NULL
+mj_cymonm2	string	NULL
+mj_cymonnin	string	NULL
+cd_teritbsy	string	NULL
+kb_tyonou	string	NULL
+mj_tntbusen	string	NULL
+kj_tuikomem	string	NULL
+mj_freeto	string	NULL
+mj_reigai	string	NULL
+mj_jucyhkok	string	NULL
+kb_yudamhab	string	NULL
+dd_frjknkab	timestamp	NULL
+dd_paltymsk	timestamp	NULL
+dd_jucyuhas	timestamp	NULL
+dd_jucyuke	timestamp	NULL
+dd_jucyu	timestamp	NULL
+dd_jokenhen	timestamp	NULL
+mj_simuksak	string	NULL
+no_order	string	NULL
+mj_katahima	string	NULL
+no_frame	string	NULL
+dd_siire	string	NULL
+dd_frkanou	bigint	NULL
+dd_frkej	timestamp	NULL
+dd_krhuri	timestamp	NULL
+dd_fr	timestamp	NULL
+dd_frtoriks	timestamp	NULL
+mj_frtorikr	string	NULL
+dd_kibonoki	timestamp	NULL
+dd_torokibo	bigint	NULL
+dd_touroku	timestamp	NULL
+dd_honbsyok	timestamp	NULL
+dd_tenpsyok	timestamp	NULL
