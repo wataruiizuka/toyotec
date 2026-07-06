@@ -1,11 +1,9 @@
-DROP TABLE IF EXISTS gold.vbi0020013_fabric_parquet_test;
+https://sttoyotecdapveje.dfs.core.windows.net
 
-CREATE TABLE gold.vbi0020013_fabric_parquet_test
-USING iceberg
-TBLPROPERTIES (
-  'format-version' = '2',
-  'write.format.default' = 'parquet'
-)
-AS
-SELECT *
-FROM gold.vbi0020013;
+コンテナ
+
+data
+
+サブパス
+
+warehouse/tablespace/external/hive/ai21rep_ve_stg.db/tbv0021m
