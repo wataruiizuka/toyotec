@@ -1,2 +1,8 @@
-row_count	distinct_key_count
-3314486	3314486
+SELECT
+  COUNT(*) AS matched_count
+FROM bronze.tbba001g b
+INNER JOIN ai21rep_ve_stg_kudu.tbba001g k
+  ON  b.cd_hansya   = k.cd_hansya
+  AND b.cd_kaisya   = k.cd_kaisya
+  AND b.no_cyumon   = k.no_cyumon
+  AND b.no_cyumoned = k.no_cyumoned;
