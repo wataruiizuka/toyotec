@@ -1,10 +1,5 @@
-ssh -o StrictHostKeyChecking=no -i C:\Users\00496_990779\.ssh\cloudbreak_20250825_key -p 50029 cloudbreak@127.0.0.1
+grep -n "default_realm" /etc/krb5.conf
 
-toyotec-azure-ssh 
+ls -l /etc/security/keytabs 2>/dev/null
 
-sftp -o StrictHostKeyChecking=no -i C:\Users\00496_990779\.ssh\cloudbreak_20250825_key -P 50029 cloudbreak@127.0.0.1
-
-put -r C:\Users\00496_990779\Documents\work\iceberg-bronze-silver
-
-put -r C:\Users\00496_990801\Documents\work\spark
-
+find /home/cloudbreak -maxdepth 4 -name "*.keytab" 2>/dev/null
