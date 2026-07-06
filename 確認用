@@ -1,5 +1,25 @@
-grep -n "default_realm" /etc/krb5.conf
-
-ls -l /etc/security/keytabs 2>/dev/null
-
-find /home/cloudbreak -maxdepth 4 -name "*.keytab" 2>/dev/null
+PS C:\Users\00496_990801\Documents\work\spark> grep -n "default_realm" /etc/krb5.conf
+grep : 用語 'grep' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません。名前が正しく記述されて
+いることを確認し、パスが含まれている場合はそのパスが正しいことを確認してから、再試行してください。
+発生場所 行:1 文字:1
++ grep -n "default_realm" /etc/krb5.conf
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (grep:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\00496_990801\Documents\work\spark> ls -l /etc/security/keytabs 2>/dev/null
+>> 
+out-file : パス 'C:\dev\null' の一部が見つかりませんでした。
+発生場所 行:1 文字:1
++ ls -l /etc/security/keytabs 2>/dev/null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], DirectoryNotFoundException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
+ 
+PS C:\Users\00496_990801\Documents\work\spark> find /home/cloudbreak -maxdepth 4 -name "*.keytab" 2>/dev/null
+out-file : パス 'C:\dev\null' の一部が見つかりませんでした。
+発生場所 行:1 文字:1
++ find /home/cloudbreak -maxdepth 4 -name "*.keytab" 2>/dev/null
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OpenError: (:) [Out-File], DirectoryNotFoundException
+    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand
