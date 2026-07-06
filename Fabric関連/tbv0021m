@@ -1,0 +1,91 @@
+name	type	comment
+# col_name 	data_type 	comment
+	NULL	NULL
+cd_hansya	string	NULL
+cd_kaisya	string	NULL
+kb_keiyaku	string	NULL
+no_edaban	bigint	NULL
+nu_sotezert	decimal(4,2)	NULL
+no_renban	string	NULL
+cd_riyoseib	string	NULL
+kj_riyoseim	string	NULL
+ki_goukei	bigint	NULL
+ki_syohizei	bigint	NULL
+nu_flwjiki	bigint	NULL
+kb_sagyou1	string	NULL
+mj_furikbu1	string	NULL
+ki_gijyutu1	bigint	NULL
+ki_buhinda1	bigint	NULL
+ki_yusidai1	bigint	NULL
+kb_sagyou2	string	NULL
+mj_furikbu2	string	NULL
+ki_gijyutu2	bigint	NULL
+ki_buhinda2	bigint	NULL
+ki_yusidai2	bigint	NULL
+kb_sagyou3	string	NULL
+mj_furikbu3	string	NULL
+ki_gijyutu3	bigint	NULL
+ki_buhinda3	bigint	NULL
+ki_yusidai3	bigint	NULL
+kb_folkijun	string	NULL
+kb_houkoku	string	NULL
+kb_cmp	string	NULL
+nu_tnknclky	bigint	NULL
+nu_tnknclkn	bigint	NULL
+kb_tensybet	string	NULL
+dd_saisinup	timestamp	NULL
+csv_md5	string	NULL
+iceberg_md5	string	NULL
+	NULL	NULL
+# Partition Transform Information	NULL	NULL
+# col_name 	transform_type 	NULL
+	NULL	NULL
+cd_hansya	IDENTITY	NULL
+	NULL	NULL
+# Detailed Table Information	NULL	NULL
+Database: 	ai21rep_ve_stg 	NULL
+OwnerType: 	USER 	NULL
+Owner: 	t01 	NULL
+CreateTime: 	Wed Mar 04 04:39:57 UTC 2026	NULL
+LastAccessTime: 	Wed Dec 17 20:28:25 UTC 1969	NULL
+Retention: 	2147483647 	NULL
+Location: 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/ai21rep_ve_stg.db/tbv0021m	NULL
+Erasure Coding Policy:	NONE 	NULL
+Table Type: 	EXTERNAL_TABLE 	NULL
+Table Parameters:	NULL	NULL
+	EXTERNAL 	TRUE
+	OBJCAPABILITIES 	EXTREAD,EXTWRITE
+	current-schema 	{\"type\":\"struct\",\"schema-id\":0,\"identifier-field-ids\":[1,2,3,4,5,6],\"fields\":[{\"id\":1,\"name\":\"cd_hansya\",\"required\":true,\"type\":\"string\"},{\"id\":2,\"name\":\"cd_kaisya\",\"required\":true,\"type\":\"string\"},{\"id\":3,\"name\":\"kb_keiyaku\",\"required\":true,\"type\":\"string\"},{\"id\":4,\"name\":\"no_edaban\",\"required\":true,\"type\":\"long\"},{\"id\":5,\"name\":\"nu_sotezert\",\"required\":true,\"type\":\"decimal(4, 2)\"},{\"id\":6,\"name\":\"no_renban\",\"required\":true,\"type\":\"string\"},{\"id\":7,\"name\":\"cd_riyoseib\",\"required\":false,\"type\":\"string\"},{\"id\":8,\"name\":\"kj_riyoseim\",\"required\":false,\"type\":\"string\"},{\"id\":9,\"name\":\"ki_goukei\",\"required\":false,\"type\":\"long\"},{\"id\":10,\"name\":\"ki_syohizei\",\"required\":false,\"type\":\"long\"},{\"id\":11,\"name\":\"nu_flwjiki\",\"required\":false,\"type\":\"long\"},{\"id\":12,\"name\":\"kb_sagyou1\",\"required\":false,\"type\":\"string\"},{\"id\":13,\"name\":\"mj_furikbu1\",\"required\":false,\"type\":\"string\"},{\"id\":14,\"name\":\"ki_gijyutu1\",\"required\":false,\"type\":\"long\"},{\"id\":15,\"name\":\"ki_buhinda1\",\"required\":false,\"type\":\"long\"},{\"id\":16,\"name\":\"ki_yusidai1\",\"required\":false,\"type\":\"long\"},{\"id\":17,\"name\":\"kb_sagyou2\",\"required\":false,\"type\":\"string\"},{\"id\":18,\"name\":\"mj_furikbu2\",\"required\":false,\"type\":\"string\"},{\"id\":19,\"name\":\"ki_gijyutu2\",\"required\":false,\"type\":\"long\"},{\"id\":20,\"name\":\"ki_buhinda2\",\"required\":false,\"type\":\"long\"},{\"id\":21,\"name\":\"ki_yusidai2\",\"required\":false,\"type\":\"long\"},{\"id\":22,\"name\":\"kb_sagyou3\",\"required\":false,\"type\":\"string\"},{\"id\":23,\"name\":\"mj_furikbu3\",\"required\":false,\"type\":\"string\"},{\"id\":24,\"name\":\"ki_gijyutu3\",\"required\":false,\"type\":\"long\"},{\"id\":25,\"name\":\"ki_buhinda3\",\"required\":false,\"type\":\"long\"},{\"id\":26,\"name\":\"ki_yusidai3\",\"required\":false,\"type\":\"long\"},{\"id\":27,\"name\":\"kb_folkijun\",\"required\":false,\"type\":\"string\"},{\"id\":28,\"name\":\"kb_houkoku\",\"required\":false,\"type\":\"string\"},{\"id\":29,\"name\":\"kb_cmp\",\"required\":false,\"type\":\"string\"},{\"id\":30,\"name\":\"nu_tnknclky\",\"required\":false,\"type\":\"long\"},{\"id\":31,\"name\":\"nu_tnknclkn\",\"required\":false,\"type\":\"long\"},{\"id\":32,\"name\":\"kb_tensybet\",\"required\":false,\"type\":\"string\"},{\"id\":33,\"name\":\"dd_saisinup\",\"required\":false,\"type\":\"timestamp\"},{\"id\":34,\"name\":\"csv_md5\",\"required\":false,\"type\":\"string\"},{\"id\":35,\"name\":\"iceberg_md5\",\"required\":false,\"type\":\"string\"}]}
+	current-snapshot-id 	4715166348307159455
+	current-snapshot-summary	{\"added-data-files\":\"220\",\"added-records\":\"696250\",\"added-files-size\":\"53934395\",\"changed-partition-count\":\"220\",\"total-records\":\"696250\",\"total-files-size\":\"53934395\",\"total-data-files\":\"220\",\"total-delete-files\":\"0\",\"total-position-deletes\":\"0\",\"total-equality-deletes\":\"0\"}
+	current-snapshot-timestamp-ms	1772605478034
+	default-partition-spec	{\"spec-id\":0,\"fields\":[{\"name\":\"cd_hansya\",\"transform\":\"identity\",\"source-id\":1,\"field-id\":1000}]}
+	engine.hive.enabled 	true
+	external.table.purge	TRUE
+	format-version 	2
+	impala.events.catalogServiceId	4e3d7da8f8914388:920a1d9fe9e3d875
+	impala.events.catalogVersion	138987
+	metadata_location 	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/ai21rep_ve_stg.db/tbv0021m/metadata/00001-621bc500-38b5-499f-9019-3b0ca8ea2f24.metadata.json
+	numFiles 	220
+	numRows 	696250
+	previous_metadata_location	abfs://data@sttoyotecdapveje.dfs.core.windows.net/warehouse/tablespace/external/hive/ai21rep_ve_stg.db/tbv0021m/metadata/00000-8393298c-eeab-4920-aedf-4c7e0c01d212.metadata.json
+	snapshot-count 	1
+	storage_handler 	org.apache.iceberg.mr.hive.HiveIcebergStorageHandler
+	table_type 	ICEBERG
+	totalSize 	53934395
+	transient_lastDdlTime	1772599197
+	uuid 	d05a43f5-acbd-4f72-bf75-d18d17dcc8ab
+	write.delete.mode 	merge-on-read
+	write.format.default	parquet
+	write.merge.mode 	merge-on-read
+	write.parquet.compression-codec	snappy
+	write.update.mode 	merge-on-read
+	NULL	NULL
+# Storage Information	NULL	NULL
+SerDe Library: 	org.apache.iceberg.mr.hive.HiveIcebergSerDe	NULL
+InputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergInputFormat	NULL
+OutputFormat: 	org.apache.iceberg.mr.hive.HiveIcebergOutputFormat	NULL
+Compressed: 	No 	NULL
+Sort Columns: 	[] 	NULL
+	NULL	NULL
+# Constraints	NULL	NULL
