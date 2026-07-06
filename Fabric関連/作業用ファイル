@@ -1,8 +1,8 @@
 SELECT
-  COUNT(*) AS matched_count
+  COUNT(*) AS matched_count_trim
 FROM bronze.tbba001g b
 INNER JOIN ai21rep_ve_stg_kudu.tbba001g k
-  ON  b.cd_hansya   = k.cd_hansya
-  AND b.cd_kaisya   = k.cd_kaisya
-  AND b.no_cyumon   = k.no_cyumon
-  AND b.no_cyumoned = k.no_cyumoned;
+  ON  TRIM(b.cd_hansya)   = TRIM(k.cd_hansya)
+  AND TRIM(b.cd_kaisya)   = TRIM(k.cd_kaisya)
+  AND TRIM(b.no_cyumon)   = TRIM(k.no_cyumon)
+  AND TRIM(b.no_cyumoned) = TRIM(k.no_cyumoned);
