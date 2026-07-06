@@ -1,8 +1,40 @@
-サーバ側ターミナルで以下を実行してください。
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ which kinit
+/usr/bin/kinit
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ kinit --version
+kinit: unrecognized option '--version'
+Usage: kinit [-V] [-l lifetime] [-s start_time]
+        [-r renewable_life] [-f | -F | --forwardable | --noforwardable]
+        [-p | -P | --proxiable | --noproxiable]
+        -n [-a | -A | --addresses | --noaddresses]
+        [--request-pac | --no-request-pac]
+        [-C | --canonicalize]
+        [-E | --enterprise]
+        [-v] [-R] [-k [-i|-t keytab_file]] [-c cachename]
+        [-S service_name] [-T ticket_armor_cache]
+        [-X <attribute>[=<value>]] [principal]
 
-which kinit
-kinit --version
-
-続けて、cloudbreak ユーザーでKerberos認証を試します。
-
-kinit cloudbreak
+    options:
+        -V verbose
+        -l lifetime
+        -s start time
+        -r renewable lifetime
+        -f forwardable
+        -F not forwardable
+        -p proxiable
+        -P not proxiable
+        -n anonymous
+        -a include addresses
+        -A do not include addresses
+        -v validate
+        -R renew
+        -C canonicalize
+        -E client is enterprise principal name
+        -k use keytab
+        -i use default client keytab (with -k)
+        -t filename of keytab to use
+        -c Kerberos 5 cache name
+        -S service
+        -T armor credential cache
+        -X <attribute>[=<value>]
+[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ kinit cloudbreak
+kinit: Client 'cloudbreak@TOYOTECD.KJ09-SZPI.A0.CLOUDERA.SITE' not found in Kerberos database while getting initial credentials
