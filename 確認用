@@ -1,5 +1,10 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ klist
-klist: No credentials cache found (filename: /tmp/krb5cc_10002)
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ whoami
-cloudbreak
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark/job_runner]$ echo $KRB5CCNAME
+ssh -o StrictHostKeyChecking=no -i C:\Users\00496_990779\.ssh\cloudbreak_20250825_key -p 50029 cloudbreak@127.0.0.1
+
+toyotec-azure-ssh 
+
+sftp -o StrictHostKeyChecking=no -i C:\Users\00496_990779\.ssh\cloudbreak_20250825_key -P 50029 cloudbreak@127.0.0.1
+
+put -r C:\Users\00496_990779\Documents\work\iceberg-bronze-silver
+
+put -r C:\Users\00496_990801\Documents\work\spark
+
