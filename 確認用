@@ -1,3 +1,1 @@
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~]$ cd /home/cloudbreak/spark/spark
-[cloudbreak@cdp-dap-spark-ve-je-master0 ~/spark/spark]$ grep -R -n -i -E "kinit|keytab|principal|kerberos" legacy job_runner 2>/dev/null | head -100
-job_runner/run_reports/run-20260703T085741-4da1880a.json:19:      "sanitized_error": "INTERNAL: Py4JJavaError: An error occurred while calling None.org.apache.spark.api.java.JavaSparkContext. : java.io.IOException: DestHost:destPort cdp-dap-spark-ve-je-master0.toyotecd.kj09-szpi.a0.cloudera.site:8032 , LocalHost:localPort cdp-dap-spark-ve-je-master0/172.17.224.4:0. Failed on local exception: java.io.IOException: org.apache.hadoop.security.AccessControlException: Client cannot authenticate via:[TOKEN, KERBEROS] \tat java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) \ta",
+grep -R -n -i -E "hadoop.security.authentication|kerberos|principal|keytab" /etc/hadoop /etc/spark /etc/hive 2>/dev/null | head -100
