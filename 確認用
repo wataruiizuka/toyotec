@@ -1,1 +1,30 @@
-curl.exe --noproxy "*" -vk --resolve impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443:127.0.0.1 https://impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443/cliservice
+C:\Users\00496_990801>curl.exe --noproxy "*" -vk --resolve impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443:127.0.0.1 https://impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443/cliservice
+* Added impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443:127.0.0.1 to DNS cache
+* Hostname impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site was found in DNS cache
+* Host impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443 was resolved.
+* IPv6: (none)
+* IPv4: 127.0.0.1
+*   Trying 127.0.0.1:4443...
+* schannel: disabled automatic use of client certificate
+* ALPN: curl offers http/1.1
+* ALPN: server accepted http/1.1
+* Established connection to impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site (127.0.0.1 port 4443) from 127.0.0.1 port 49933
+* using HTTP/1.x
+> GET /cliservice HTTP/1.1
+> Host: impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443
+> User-Agent: curl/8.20.0
+> Accept: */*
+>
+* Request completely sent off
+* schannel: remote party requests renegotiation
+* schannel: renegotiating SSL/TLS connection
+* schannel: SSL/TLS connection renegotiated
+< HTTP/1.1 503 Service Unavailable
+< content-length: 95
+< content-type: text/plain
+< date: Tue, 07 Jul 2026 11:27:39 GMT
+< server: istio-envoy
+< set-cookie: impala.session.id=coordinator-1; Path=/cliservice; HttpOnly
+< x-envoy-upstream-service-time: 99
+<
+upstream connect error or disconnect/reset before headers. reset reason: connection termination* Connection #0 to host impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443 left intact
