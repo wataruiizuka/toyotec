@@ -1,3 +1,11 @@
-echo ErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages>>"C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
+C:\Windows\System32>echo ErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages>>"C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
 
-type "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
+C:\Windows\System32>type "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
+[Driver]
+SSL=1
+TransportMode=http
+HTTPPath=cliservice
+AuthMech=3
+HTTPAuthCookies=impala.auth,JSESSIONID,KNOXSESSIONID,impala.session.idErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages
+ErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages
+ErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages
