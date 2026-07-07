@@ -1,8 +1,5 @@
-C:\Users\00496_990801>dir /s /b "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\*DSMessages*"
-C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages\en-US\DSMessages.xml
+dir "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala"
 
-C:\Users\00496_990801>dir /s /b "C:\Program Files\Cloudera ODBC Driver for Impala\*DSMessages*"
-C:\Program Files\Cloudera ODBC Driver for Impala\ErrorMessages\en-US\DSMessages.xml
+dir "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib"
 
-C:\Users\00496_990801>dir /s /b "C:\Program Files (x86)\Cloudera ODBC Driver for Impala\*DSMessages*"
-指定されたファイルが見つかりません。
+dir "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages\en-US"
