@@ -1,5 +1,4 @@
-# Power BI パフォーマンスアナライザー結果報告  
-## Kudu / Iceberg / Fabric 経路別 表示性能比較
+# Kudu / Iceberg / Fabric 経路別 表示性能比較
 
 ---
 
