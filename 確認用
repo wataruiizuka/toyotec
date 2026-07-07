@@ -1,18 +1,3 @@
-C:\Windows\System32>(
-More? echo [Driver]
-More? echo SSL=1
-More? echo TransportMode=http
-More? echo HTTPPath=cliservice
-More? echo AuthMech=3
-More? echo HTTPAuthCookies=impala.auth,JSESSIONID,KNOXSESSIONID,impala.session.id
-More? echo ErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages
-More? ) > "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
-
-C:\Windows\System32>type "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
-[Driver]
-SSL=1
-TransportMode=http
-HTTPPath=cliservice
-AuthMech=3
-HTTPAuthCookies=impala.auth,JSESSIONID,KNOXSESSIONID,impala.session.id
-ErrorMessagesPath=C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\ErrorMessages
+C:\Users\00496_990801>netstat -ano | findstr :4443
+  TCP         127.0.0.1:4443         0.0.0.0:0              LISTENING       37836
+  TCP         [::1]:4443             [::]:0                 LISTENING       37836
