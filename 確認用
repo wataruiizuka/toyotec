@@ -1,10 +1,5 @@
-C:\Users\00496_990801>dir "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\en-US\DSMessages.xml"
-指定されたファイルが見つかりません。
+dir /s /b "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\*DSMessages*"
 
-C:\Users\00496_990801>dir "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\DSMessages_en-US.xml"
- ドライブ C のボリューム ラベルは Windows  です
- ボリューム シリアル番号は 566B-1C22 です
+dir /s /b "C:\Program Files\Cloudera ODBC Driver for Impala\*DSMessages*"
 
- C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib のディレクトリ
-
-ファイルが見つかりません
+dir /s /b "C:\Program Files (x86)\Cloudera ODBC Driver for Impala\*DSMessages*"
