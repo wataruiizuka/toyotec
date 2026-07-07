@@ -1,1 +1,4 @@
-type C:\Windows\System32\drivers\etc\hosts | findstr impala-proxy
+C:\Users\00496_990801>type C:\Windows\System32\drivers\etc\hosts | findstr impala-proxy
+127.0.0.1 impala-proxy-toyotecdap-vwh-pr-default.dw-toyotecdap-env.kj09-szpi.cloudera.site
+127.0.0.1 impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site
+127.0.0.1 impala-proxy-toyotecdap-vwh-dev-default.dw-toyotecdap-env-dev.kj09-szpi.cloudera.site
