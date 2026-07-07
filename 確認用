@@ -1,3 +1,1 @@
-C:\Users\00496_990801>netstat -ano | findstr :4443
-  TCP         127.0.0.1:4443         0.0.0.0:0              LISTENING       37836
-  TCP         [::1]:4443             [::]:0                 LISTENING       37836
+impala-proxy-toyotecdap-vwh-ve-default.dw-toyotecdap-env-ve.kj09-szpi.cloudera.site:4443
