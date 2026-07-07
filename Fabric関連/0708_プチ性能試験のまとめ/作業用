@@ -1,0 +1,7 @@
+レコード件数 = COUNTROWS('tbba001g_bronze')
+ 
+販社数 = DISTINCTCOUNT('tbba001g_bronze'[cd_hansya])
+ 
+会社数 = DISTINCTCOUNT('tbba001g_bronze'[cd_kaisya])
+ 
+担当者数 = DISTINCTCOUNT('tbba001g_bronze'[cd_hanstaff])
