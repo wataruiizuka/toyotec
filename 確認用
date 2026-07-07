@@ -1,3 +1,3 @@
-C:\Users\00496_990801>netstat -ano | findstr :4443
-  TCP         127.0.0.1:4443         0.0.0.0:0              LISTENING       37836
-  TCP         [::1]:4443             [::]:0                 LISTENING       37836
+C:\Users\00496_990801>curl.exe -vk thhps://127.0.0.1:4443/
+* Protocol "thhps" not supported
+curl: (1) Protocol "thhps" not supported
