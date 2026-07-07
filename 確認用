@@ -1,7 +1,3 @@
-C:\Users\00496_990801>type "C:\Program Files\Microsoft Power BI Desktop\bin\ODBC Drivers\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
-[Driver]
-SSL=1
-TransportMode=http
-HTTPPath=cliservice
-AuthMech=3
-HTTPAuthCookies=impala.auth,JSESSIONID,KNOXSESSIONID,impala.session.id
+dir "C:\Program Files\Cloudera ODBC Driver for Impala\lib"
+
+type "C:\Program Files\Cloudera ODBC Driver for Impala\lib\cloudera.impalaodbc.ini"
