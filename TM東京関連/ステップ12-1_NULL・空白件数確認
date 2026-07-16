@@ -168,3 +168,10 @@ SELECT
 
 FROM ai21rep_pr_kudu.tbba085g
 ;
+
+
+
+
+table_name	total_row_count	blank_cd_hansya_count	blank_cd_kaisya_count	blank_no_cyumon_count	blank_no_cyumoned_count	any_blank_key_count	all_key_columns_present_count	executed_at_jst
+TBBA001G	3363363	0	0	0	3205010	3205010	158353	2026-07-16 21:05:38.577698000
+TBBA085G	2209290	0	0	0	2115214	2115214	94076	2026-07-16 21:05:38.577698000
