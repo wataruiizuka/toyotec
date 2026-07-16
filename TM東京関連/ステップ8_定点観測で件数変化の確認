@@ -159,3 +159,8 @@ CROSS JOIN observation_time o
 GROUP BY
     o.observed_at_utc,
     o.observed_at_jst;
+
+table_name	observed_at_utc	observed_at_jst	row_count	max_update_datetime	future_update_datetime_count	min_future_update_datetime	max_future_update_datetime
+TBAZ017M	2026-07-16 07:15:02.819850000	2026-07-16 16:15:02.819850000	23708533	2100-03-28 14:15:00	3	2100-03-28 14:15:00	2100-03-28 14:15:00
+TBBA001G	2026-07-16 07:15:02.819850000	2026-07-16 16:15:02.819850000	3361806	2026-07-16 16:14:52	0	NULL	NULL
+TBBA085G	2026-07-16 07:15:02.819850000	2026-07-16 16:15:02.819850000	2209291	2026-07-16 15:53:17	0	NULL	NULL
