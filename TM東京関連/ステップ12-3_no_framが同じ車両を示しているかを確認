@@ -1,0 +1,154 @@
+-- ============================================================
+-- ステップ12-3
+-- TBBA001GとTBBA085Gの両方に存在する受注キーについて、
+-- no_frameが同じ車両を示しているか確認する
+--
+-- 受注キー：
+--   cd_hansya
+--   cd_kaisya
+--   no_cyumon
+--   no_cyumoned
+--
+-- no_frameは前後空白がある可能性があるため、
+-- TRIM後の値で比較します。
+--
+-- TBBA085Gでは、同一受注キーに複数行存在する場合があるため、
+-- 1行でもTBBA001Gのno_frameと一致すれば「一致」と判定します。
+--
+--no_frameと一致すれば「一致」と判定します。
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+WITH
+tbba001g_orders AS (
+    SELECT
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned,
+        TRIM(no_frame) AS tbba001g_no_frame
+    FROM ai21rep_pr_kudu.tbba001g
+),
+
+common_order_evaluation AS (
+    SELECT
+        a.cd_hansya,
+        a.cd_kaisya,
+        a.no_cyumon,
+        a.no_cyumoned,
+        a.tbba001g_no_frame,
+
+        COUNT(*) AS tbba085g_row_count,
+
+        COUNT(DISTINCT TRIM(b.no_frame))
+            AS tbba085g_distinct_no_frame_count,
+
+        MAX(
+            CASE
+                WHEN a.tbba001g_no_frame IS NOT NULL
+                 AND a.tbba001g_no_frame <> ''
+                 AND a.tbba001g_no_frame = TRIM(b.no_frame)
+                THEN 1
+                ELSE 0
+            END
+        ) AS has_same_no_frame
+
+    FROM tbba001g_orders a
+
+    INNER JOIN ai21rep_pr_kudu.tbba085g b
+        ON  a.cd_hansya    = b.cd_hansya
+        AND a.cd_kaisya    = b.cd_kaisya
+        AND a.no_cyumon    = b.no_cyumon
+        AND a.no_cyumoned  = b.no_cyumoned
+
+    GROUP BY
+        a.cd_hansya,
+        a.cd_kaisya,
+        a.no_cyumon,
+        a.no_cyumoned,
+        a.tbba001g_no_frame
+)
+
+SELECT
+    COUNT(*) AS common_order_key_count,
+
+    SUM(
+        CASE
+            WHEN tbba001g_no_frame IS NULL
+              OR tbba001g_no_frame = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS tbba001g_blank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN tbba001g_no_frame IS NOT NULL
+             AND tbba001g_no_frame <> ''
+             AND has_same_no_frame = 1
+            THEN 1
+            ELSE 0
+        END
+    ) AS same_no_frame_order_key_count,
+
+    SUM(
+        CASE
+            WHEN tbba001g_no_frame IS NOT NULL
+             AND tbba001g_no_frame <> ''
+             AND has_same_no_frame = 0
+            THEN 1
+            ELSE 0
+        END
+    ) AS different_no_frame_order_key_count,
+
+    SUM(
+        CASE
+            WHEN tbba085g_row_count > 1
+            THEN 1
+            ELSE 0
+        END
+    ) AS common_keys_with_multiple_tbba085g_rows,
+
+    SUM(
+        CASE
+            WHEN tbba085g_distinct_no_frame_count > 1
+            THEN 1
+            ELSE 0
+        END
+    ) AS common_keys_with_multiple_tbba085g_no_frames,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN tbba001g_no_frame IS NOT NULL
+                 AND tbba001g_no_frame <> ''
+                 AND has_same_no_frame = 1
+                THEN 1
+                ELSE 0
+            END
+        )
+        * 100.0
+        /
+        NULLIF(
+            SUM(
+                CASE
+                    WHEN tbba001g_no_frame IS NOT NULL
+                     AND tbba001g_no_frame <> ''
+                    THEN 1
+                    ELSE 0
+                END
+            ),
+            0
+        ),
+        4
+    ) AS comparable_order_key_match_rate_pct,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM common_order_evaluation
+;
