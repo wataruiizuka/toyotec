@@ -168,3 +168,8 @@ SELECT
 
 FROM target_rows
 ;
+
+target_row_count	sales_before_cancel_count	sales_same_day_as_cancel_count	sales_after_cancel_count	registration_before_cancel_count	registration_same_day_as_cancel_count	registration_after_cancel_count	delivery_before_cancel_count	delivery_same_day_as_cancel_count	delivery_after_cancel_count	all_three_dates_present_count	no_frame_present_count	no_frame_blank_count	min_cancel_date	max_cancel_date	min_last_update_datetime	max_last_update_datetime	executed_at_jst
+17	12	1	0	12	1	0	1	3	0	0	4	13	2022-04-29 00:00:00	2026-07-12 00:00:00	2022-04-29 14:09:28	2026-07-12 09:22:30	2026-07-16 21:31:45.763807000
+
+
