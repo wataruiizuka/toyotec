@@ -1,1 +1,12 @@
 
+SELECT
+    COUNT(*) AS row_count
+FROM ai21rep_pr_kudu.tbaz017m;
+
+SELECT
+    COUNT(*) AS row_count
+FROM ai21rep_pr_kudu.tbba001g;
+
+SELECT
+    COUNT(*) AS row_count
+FROM ai21rep_pr_kudu.tbba085g;
