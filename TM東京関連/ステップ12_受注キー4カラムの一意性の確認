@@ -122,3 +122,9 @@ SELECT
 
 FROM tbba085g_keys
 ;
+
+
+
+table_name	total_row_count	distinct_order_key_count	duplicate_order_key_count	rows_in_duplicate_order_keys	max_rows_per_order_key	blank_key_row_count	executed_at_jst
+TBBA001G	3363363	3363363	0	0	1	3205010	2026-07-16 21:01:10.395804000
+TBBA085G	2209290	2208849	441	882	2	2115214	2026-07-16 21:01:10.395804000
