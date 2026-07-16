@@ -44,3 +44,12 @@ table_name	observed_at	row_count	max_business_datetime	max_update_datetime	futur
 TBAZ017M	2026-07-16 07:03:47.661198000	23708478	2026-07-16 16:02:50	2026-07-16 00:33:27	58371
 TBBA001G	2026-07-16 07:03:47.661198000	3361672	2026-07-16 00:00:00	2026-07-16 16:03:35	0
 TBBA085G	2026-07-16 07:03:47.661198000	2209291	2026-07-15 21:45:25	2026-07-16 15:53:17	0
+
+
+SELECT
+    NOW() AS now_system_time,
+    UTC_TIMESTAMP() AS now_utc,
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS now_jst;
