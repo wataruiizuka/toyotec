@@ -1,0 +1,169 @@
+SELECT
+    LENGTH(TRIM(no_frame)) AS no_frame_length,
+    COUNT(*) AS row_count,
+    COUNT(DISTINCT TRIM(no_frame)) AS distinct_no_frame_count
+FROM ai21rep_pr_kudu.tbaz017m
+WHERE no_frame IS NOT NULL
+  AND TRIM(no_frame) <> ''
+GROUP BY
+    LENGTH(TRIM(no_frame))
+ORDER BY
+    no_frame_length;
+
+
+
+
+SELECT
+    LENGTH(TRIM(no_frame)) AS no_frame_length,
+    COUNT(*) AS row_count,
+    COUNT(DISTINCT TRIM(no_frame)) AS distinct_no_frame_count
+FROM ai21rep_pr_kudu.tbba001g
+WHERE no_frame IS NOT NULL
+  AND TRIM(no_frame) <> ''
+GROUP BY
+    LENGTH(TRIM(no_frame))
+ORDER BY
+    no_frame_length;
+
+
+
+
+SELECT
+    LENGTH(TRIM(no_frame)) AS no_frame_length,
+    COUNT(*) AS row_count,
+    COUNT(DISTINCT TRIM(no_frame)) AS distinct_no_frame_count
+FROM ai21rep_pr_kudu.tbba085g
+WHERE no_frame IS NOT NULL
+  AND TRIM(no_frame) <> ''
+GROUP BY
+    LENGTH(TRIM(no_frame))
+ORDER BY
+    no_frame_length;
+
+
+
+
+SELECT
+    CASE
+        WHEN no_frame IS NULL
+          OR TRIM(no_frame) = ''
+            THEN 'BLANK'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[0-9]+$')
+            THEN 'DIGITS_ONLY'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9]+$')
+            THEN 'ALPHANUMERIC'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9-]+$')
+            THEN 'ALPHANUMERIC_HYPHEN'
+
+        ELSE 'OTHER_FORMAT'
+    END AS no_frame_format,
+    COUNT(*) AS row_count
+FROM ai21rep_pr_kudu.tbaz017m
+GROUP BY
+    CASE
+        WHEN no_frame IS NULL
+          OR TRIM(no_frame) = ''
+            THEN 'BLANK'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[0-9]+$')
+            THEN 'DIGITS_ONLY'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9]+$')
+            THEN 'ALPHANUMERIC'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9-]+$')
+            THEN 'ALPHANUMERIC_HYPHEN'
+
+        ELSE 'OTHER_FORMAT'
+    END
+ORDER BY
+    no_frame_format;
+
+
+
+
+SELECT
+    CASE
+        WHEN no_frame IS NULL
+          OR TRIM(no_frame) = ''
+            THEN 'BLANK'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[0-9]+$')
+            THEN 'DIGITS_ONLY'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9]+$')
+            THEN 'ALPHANUMERIC'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9-]+$')
+            THEN 'ALPHANUMERIC_HYPHEN'
+
+        ELSE 'OTHER_FORMAT'
+    END AS no_frame_format,
+    COUNT(*) AS row_count
+FROM ai21rep_pr_kudu.tbba001g
+GROUP BY
+    CASE
+        WHEN no_frame IS NULL
+          OR TRIM(no_frame) = ''
+            THEN 'BLANK'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[0-9]+$')
+            THEN 'DIGITS_ONLY'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9]+$')
+            THEN 'ALPHANUMERIC'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9-]+$')
+            THEN 'ALPHANUMERIC_HYPHEN'
+
+        ELSE 'OTHER_FORMAT'
+    END
+ORDER BY
+    no_frame_format;
+
+
+
+
+
+
+SELECT
+    CASE
+        WHEN no_frame IS NULL
+          OR TRIM(no_frame) = ''
+            THEN 'BLANK'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[0-9]+$')
+            THEN 'DIGITS_ONLY'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9]+$')
+            THEN 'ALPHANUMERIC'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9-]+$')
+            THEN 'ALPHANUMERIC_HYPHEN'
+
+        ELSE 'OTHER_FORMAT'
+    END AS no_frame_format,
+    COUNT(*) AS row_count
+FROM ai21rep_pr_kudu.tbba085g
+GROUP BY
+    CASE
+        WHEN no_frame IS NULL
+          OR TRIM(no_frame) = ''
+            THEN 'BLANK'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[0-9]+$')
+            THEN 'DIGITS_ONLY'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9]+$')
+            THEN 'ALPHANUMERIC'
+
+        WHEN REGEXP_LIKE(TRIM(no_frame), '^[A-Za-z0-9-]+$')
+            THEN 'ALPHANUMERIC_HYPHEN'
+
+        ELSE 'OTHER_FORMAT'
+    END
+ORDER BY
+    no_frame_format;
