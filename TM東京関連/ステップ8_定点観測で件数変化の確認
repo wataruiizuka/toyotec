@@ -53,3 +53,6 @@ SELECT
         UTC_TIMESTAMP(),
         'Asia/Tokyo'
     ) AS now_jst;
+
+now_system_time	now_utc	now_jst
+2026-07-16 07:09:13.518246000	2026-07-16 07:09:13.518246000	2026-07-16 16:09:13.518246000
