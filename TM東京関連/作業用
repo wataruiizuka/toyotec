@@ -1,10 +1,11 @@
-No.	物理テーブル名	論理名	関口さん側の優先度	想定される役割
-1	TBAZ017M	車両基本DB	A：最優先	車両の基本情報と車両識別
-2	TBAZ032M	入庫歴DB	A：最優先	サービス入庫、精算、売上履歴
-3	TBAZ034M	整備歴DB	A：最優先	車両に実施した整備内容の履歴
-4	TBBA001G	新車受注基本DB	A：最優先	新車の受注、登録、売上、納車、取消
-5	TBBA052G	新車受注販売条件情報DB	B：利益根拠	新車価格、値引き、原価、費用
-6	TBBA085G	抹消済新車受注基本情報DB	A：既存履歴確認	現行テーブルから消えた新車受注情報の確認
-7	TBBC020G	中古車受注販売条件情報DB	B：利益根拠	U-Carの価格、値引き、原価、費用
-8	TBFL001G	集計累積DB／集計累計DB	B：利益根拠	サービス売上・原価の集計
-9	TBG8006M	中古車小売売上トランDB	B：正式値比較	U-Carの売上と訂正前後の情報
+SELECT
+    COUNT(*) AS row_count,
+    COUNT(dt_johosaku) AS dt_johosaku_count,
+    COUNT(*) - COUNT(dt_johosaku) AS dt_johosaku_null_count,
+    MIN(dt_johosaku) AS min_dt_johosaku,
+    MAX(dt_johosaku) AS max_dt_johosaku,
+    COUNT(dt_kosin) AS dt_kosin_count,
+    COUNT(*) - COUNT(dt_kosin) AS dt_kosin_null_count,
+    MIN(dt_kosin) AS min_dt_kosin,
+    MAX(dt_kosin) AS max_dt_kosin
+FROM ai21rep_pr_kudu.tbaz017m;
