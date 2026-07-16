@@ -84,3 +84,18 @@ SHOW TABLE STATS
 COUNT(*)
 row_count
 23708013
+
+SELECT
+    COUNT(*) AS row_count,
+    COUNT(dt_johosaku) AS dt_johosaku_count,
+    COUNT(*) - COUNT(dt_johosaku) AS dt_johosaku_null_count,
+    MIN(dt_johosaku) AS min_dt_johosaku,
+    MAX(dt_johosaku) AS max_dt_johosaku,
+    COUNT(dt_kosin) AS dt_kosin_count,
+    COUNT(*) - COUNT(dt_kosin) AS dt_kosin_null_count,
+    MIN(dt_kosin) AS min_dt_kosin,
+    MAX(dt_kosin) AS max_dt_kosin
+FROM ai21rep_pr_kudu.tbaz017m;
+
+row_count	dt_johosaku_count	dt_johosaku_null_count	min_dt_johosaku	max_dt_johosaku	dt_kosin_count	dt_kosin_null_count	min_dt_kosin	max_dt_kosin
+23708025	23708025	0	1983-10-31 00:00:00	2026-07-16 14:22:17	23708025	0	1995-01-07 01:39:23	2100-03-28 14:15:00
