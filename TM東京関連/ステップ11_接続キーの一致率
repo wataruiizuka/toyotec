@@ -1,0 +1,233 @@
+WITH
+tbaz017m_keys AS (
+    SELECT DISTINCT
+        TRIM(no_frame) AS no_frame_key
+    FROM ai21rep_pr_kudu.tbaz017m
+    WHERE no_frame IS NOT NULL
+      AND TRIM(no_frame) <> ''
+),
+
+tbba001g_keys AS (
+    SELECT DISTINCT
+        TRIM(no_frame) AS no_frame_key
+    FROM ai21rep_pr_kudu.tbba001g
+    WHERE no_frame IS NOT NULL
+      AND TRIM(no_frame) <> ''
+),
+
+left_count AS (
+    SELECT COUNT(*) AS left_key_count
+    FROM tbaz017m_keys
+),
+
+right_count AS (
+    SELECT COUNT(*) AS right_key_count
+    FROM tbba001g_keys
+),
+
+matched_count AS (
+    SELECT COUNT(*) AS matched_key_count
+    FROM tbaz017m_keys a
+    INNER JOIN tbba001g_keys b
+        ON a.no_frame_key = b.no_frame_key
+)
+
+SELECT
+    'TBAZ017M' AS left_table,
+    'TBBA001G' AS right_table,
+
+    l.left_key_count,
+    r.right_key_count,
+    m.matched_key_count,
+
+    l.left_key_count - m.matched_key_count
+        AS left_only_key_count,
+
+    r.right_key_count - m.matched_key_count
+        AS right_only_key_count,
+
+    ROUND(
+        CASE
+            WHEN l.left_key_count = 0 THEN 0
+            ELSE
+                CAST(m.matched_key_count AS DOUBLE)
+                / CAST(l.left_key_count AS DOUBLE)
+                * 100
+        END,
+        4
+    ) AS left_match_rate_pct,
+
+    ROUND(
+        CASE
+            WHEN r.right_key_count = 0 THEN 0
+            ELSE
+                CAST(m.matched_key_count AS DOUBLE)
+                / CAST(r.right_key_count AS DOUBLE)
+                * 100
+        END,
+        4
+    ) AS right_match_rate_pct
+
+FROM left_count l
+CROSS JOIN right_count r
+CROSS JOIN matched_count m;
+
+
+
+
+
+
+WITH
+tbaz017m_keys AS (
+    SELECT DISTINCT
+        TRIM(no_frame) AS no_frame_key
+    FROM ai21rep_pr_kudu.tbaz017m
+    WHERE no_frame IS NOT NULL
+      AND TRIM(no_frame) <> ''
+),
+
+tbba085g_keys AS (
+    SELECT DISTINCT
+        TRIM(no_frame) AS no_frame_key
+    FROM ai21rep_pr_kudu.tbba085g
+    WHERE no_frame IS NOT NULL
+      AND TRIM(no_frame) <> ''
+),
+
+left_count AS (
+    SELECT COUNT(*) AS left_key_count
+    FROM tbaz017m_keys
+),
+
+right_count AS (
+    SELECT COUNT(*) AS right_key_count
+    FROM tbba085g_keys
+),
+
+matched_count AS (
+    SELECT COUNT(*) AS matched_key_count
+    FROM tbaz017m_keys a
+    INNER JOIN tbba085g_keys b
+        ON a.no_frame_key = b.no_frame_key
+)
+
+SELECT
+    'TBAZ017M' AS left_table,
+    'TBBA085G' AS right_table,
+
+    l.left_key_count,
+    r.right_key_count,
+    m.matched_key_count,
+
+    l.left_key_count - m.matched_key_count
+        AS left_only_key_count,
+
+    r.right_key_count - m.matched_key_count
+        AS right_only_key_count,
+
+    ROUND(
+        CASE
+            WHEN l.left_key_count = 0 THEN 0
+            ELSE
+                CAST(m.matched_key_count AS DOUBLE)
+                / CAST(l.left_key_count AS DOUBLE)
+                * 100
+        END,
+        4
+    ) AS left_match_rate_pct,
+
+    ROUND(
+        CASE
+            WHEN r.right_key_count = 0 THEN 0
+            ELSE
+                CAST(m.matched_key_count AS DOUBLE)
+                / CAST(r.right_key_count AS DOUBLE)
+                * 100
+        END,
+        4
+    ) AS right_match_rate_pct
+
+FROM left_count l
+CROSS JOIN right_count r
+CROSS JOIN matched_count m;
+
+
+
+
+WITH
+tbba001g_keys AS (
+    SELECT DISTINCT
+        TRIM(no_frame) AS no_frame_key
+    FROM ai21rep_pr_kudu.tbba001g
+    WHERE no_frame IS NOT NULL
+      AND TRIM(no_frame) <> ''
+),
+
+tbba085g_keys AS (
+    SELECT DISTINCT
+        TRIM(no_frame) AS no_frame_key
+    FROM ai21rep_pr_kudu.tbba085g
+    WHERE no_frame IS NOT NULL
+      AND TRIM(no_frame) <> ''
+),
+
+left_count AS (
+    SELECT COUNT(*) AS left_key_count
+    FROM tbba001g_keys
+),
+
+right_count AS (
+    SELECT COUNT(*) AS right_key_count
+    FROM tbba085g_keys
+),
+
+matched_count AS (
+    SELECT COUNT(*) AS matched_key_count
+    FROM tbba001g_keys a
+    INNER JOIN tbba085g_keys b
+        ON a.no_frame_key = b.no_frame_key
+)
+
+SELECT
+    'TBBA001G' AS left_table,
+    'TBBA085G' AS right_table,
+
+    l.left_key_count,
+    r.right_key_count,
+    m.matched_key_count,
+
+    l.left_key_count - m.matched_key_count
+        AS left_only_key_count,
+
+    r.right_key_count - m.matched_key_count
+        AS right_only_key_count,
+
+    ROUND(
+        CASE
+            WHEN l.left_key_count = 0 THEN 0
+            ELSE
+                CAST(m.matched_key_count AS DOUBLE)
+                / CAST(l.left_key_count AS DOUBLE)
+                * 100
+        END,
+        4
+    ) AS left_match_rate_pct,
+
+    ROUND(
+        CASE
+            WHEN r.right_key_count = 0 THEN 0
+            ELSE
+                CAST(m.matched_key_count AS DOUBLE)
+                / CAST(r.right_key_count AS DOUBLE)
+                * 100
+        END,
+        4
+    ) AS right_match_rate_pct
+
+FROM left_count l
+CROSS JOIN right_count r
+CROSS JOIN matched_count m;
+
+
+
+
