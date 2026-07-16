@@ -142,3 +142,10 @@ SELECT
 
 FROM summary
 ;
+
+
+tbba001g_order_key_count	tbba085g_order_key_count	common_order_key_count	tbba001g_only_order_key_count	tbba085g_only_order_key_count	tbba001g_base_match_rate_pct	tbba085g_base_match_rate_pct	executed_at_jst
+3363363	2208849	18251	3345112	2190598	0.5426	0.8263	2026-07-16 21:16:53.158769000
+
+
+
