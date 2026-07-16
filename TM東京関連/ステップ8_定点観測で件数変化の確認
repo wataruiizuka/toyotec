@@ -1,0 +1,40 @@
+SELECT
+    'TBAZ017M' AS table_name,
+    NOW() AS observed_at,
+    COUNT(*) AS row_count,
+    MAX(dt_johosaku) AS max_business_datetime,
+    MAX(
+        CASE
+            WHEN dt_kosin <= NOW() THEN dt_kosin
+            ELSE NULL
+        END
+    ) AS max_update_datetime,
+    SUM(
+        CASE
+            WHEN dt_kosin > NOW() THEN 1
+            ELSE 0
+        END
+    ) AS future_update_datetime_count
+FROM ai21rep_pr_kudu.tbaz017m
+
+UNION ALL
+
+SELECT
+    'TBBA001G' AS table_name,
+    NOW() AS observed_at,
+    COUNT(*) AS row_count,
+    MAX(dd_jucyu) AS max_business_datetime,
+    MAX(dt_saisinup) AS max_update_datetime,
+    CAST(0 AS BIGINT) AS future_update_datetime_count
+FROM ai21rep_pr_kudu.tbba001g
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+    NOW() AS observed_at,
+    COUNT(*) AS row_count,
+    MAX(dt_massyo) AS max_business_datetime,
+    MAX(dt_saisinup) AS max_update_datetime,
+    CAST(0 AS BIGINT) AS future_update_datetime_count
+FROM ai21rep_pr_kudu.tbba085g;
