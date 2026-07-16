@@ -80,3 +80,7 @@ CREATE EXTERNAL TABLE ai21rep_pr_kudu.tbaz017m ( cd_hansya STRING NOT NULL ENCOD
 SHOW TABLE STATS
 #Rows	#Partitions	Size	Format	Location
 23665565	12	3.37GB	KUDU	cdp-dap-kudu-pr-je-master10.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-pr-je-master20.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-pr-je-master30.toyotecd.kj09-szpi.a0.cloudera.site:7051
+
+COUNT(*)
+row_count
+23708013
