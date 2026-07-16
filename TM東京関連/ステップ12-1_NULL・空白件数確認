@@ -1,0 +1,170 @@
+-- ============================================================
+-- ステップ12-1補足
+-- 受注キー4カラムについて、カラム別のNULL・空白件数を確認する
+--
+-- 対象：
+--   TBBA001G
+--   TBBA085G
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+SELECT
+    'TBBA001G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NULL
+              OR TRIM(CAST(cd_hansya AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_cd_hansya_count,
+
+    SUM(
+        CASE
+            WHEN cd_kaisya IS NULL
+              OR TRIM(CAST(cd_kaisya AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_cd_kaisya_count,
+
+    SUM(
+        CASE
+            WHEN no_cyumon IS NULL
+              OR TRIM(CAST(no_cyumon AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_cyumon_count,
+
+    SUM(
+        CASE
+            WHEN no_cyumoned IS NULL
+              OR TRIM(CAST(no_cyumoned AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_cyumoned_count,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NULL
+              OR TRIM(CAST(cd_hansya AS STRING)) = ''
+              OR cd_kaisya IS NULL
+              OR TRIM(CAST(cd_kaisya AS STRING)) = ''
+              OR no_cyumon IS NULL
+              OR TRIM(CAST(no_cyumon AS STRING)) = ''
+              OR no_cyumoned IS NULL
+              OR TRIM(CAST(no_cyumoned AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS any_blank_key_count,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NOT NULL
+             AND TRIM(CAST(cd_hansya AS STRING)) <> ''
+             AND cd_kaisya IS NOT NULL
+             AND TRIM(CAST(cd_kaisya AS STRING)) <> ''
+             AND no_cyumon IS NOT NULL
+             AND TRIM(CAST(no_cyumon AS STRING)) <> ''
+             AND no_cyumoned IS NOT NULL
+             AND TRIM(CAST(no_cyumoned AS STRING)) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS all_key_columns_present_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba001g
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NULL
+              OR TRIM(CAST(cd_hansya AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_cd_hansya_count,
+
+    SUM(
+        CASE
+            WHEN cd_kaisya IS NULL
+              OR TRIM(CAST(cd_kaisya AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_cd_kaisya_count,
+
+    SUM(
+        CASE
+            WHEN no_cyumon IS NULL
+              OR TRIM(CAST(no_cyumon AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_cyumon_count,
+
+    SUM(
+        CASE
+            WHEN no_cyumoned IS NULL
+              OR TRIM(CAST(no_cyumoned AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_cyumoned_count,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NULL
+              OR TRIM(CAST(cd_hansya AS STRING)) = ''
+              OR cd_kaisya IS NULL
+              OR TRIM(CAST(cd_kaisya AS STRING)) = ''
+              OR no_cyumon IS NULL
+              OR TRIM(CAST(no_cyumon AS STRING)) = ''
+              OR no_cyumoned IS NULL
+              OR TRIM(CAST(no_cyumoned AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS any_blank_key_count,
+
+    SUM(
+        CASE
+            WHEN cd_hansya IS NOT NULL
+             AND TRIM(CAST(cd_hansya AS STRING)) <> ''
+             AND cd_kaisya IS NOT NULL
+             AND TRIM(CAST(cd_kaisya AS STRING)) <> ''
+             AND no_cyumon IS NOT NULL
+             AND TRIM(CAST(no_cyumon AS STRING)) <> ''
+             AND no_cyumoned IS NOT NULL
+             AND TRIM(CAST(no_cyumoned AS STRING)) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS all_key_columns_present_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba085g
+;
