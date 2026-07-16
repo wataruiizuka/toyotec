@@ -2,11 +2,20 @@
 SELECT
     COUNT(*) AS row_count
 FROM ai21rep_pr_kudu.tbaz017m;
+row_count
+23708345
+
 
 SELECT
     COUNT(*) AS row_count
 FROM ai21rep_pr_kudu.tbba001g;
 
+row_count
+3361453
+
 SELECT
     COUNT(*) AS row_count
 FROM ai21rep_pr_kudu.tbba085g;
+
+row_count
+2209291
