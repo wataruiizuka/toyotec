@@ -38,3 +38,9 @@ SELECT
     MAX(dt_saisinup) AS max_update_datetime,
     CAST(0 AS BIGINT) AS future_update_datetime_count
 FROM ai21rep_pr_kudu.tbba085g;
+
+
+table_name	observed_at	row_count	max_business_datetime	max_update_datetime	future_update_datetime_count
+TBAZ017M	2026-07-16 07:03:47.661198000	23708478	2026-07-16 16:02:50	2026-07-16 00:33:27	58371
+TBBA001G	2026-07-16 07:03:47.661198000	3361672	2026-07-16 00:00:00	2026-07-16 16:03:35	0
+TBBA085G	2026-07-16 07:03:47.661198000	2209291	2026-07-15 21:45:25	2026-07-16 15:53:17	0
