@@ -10,7 +10,26 @@ GROUP BY
 ORDER BY
     no_frame_length;
 
-
+no_frame_length	row_count	distinct_no_frame_count
+1	1050	30
+2	229	110
+3	432	277
+4	677	502
+5	6765	5005
+6	959511	500281
+7	22717317	3950820
+8	9346	8813
+9	2103	1412
+10	36	36
+11	46	43
+12	20	19
+13	19	18
+14	5	5
+15	3	2
+16	2	2
+17	2	2
+18	1	1
+21	1	1
 
 
 SELECT
@@ -25,7 +44,11 @@ GROUP BY
 ORDER BY
     no_frame_length;
 
-
+no_frame_length	row_count	distinct_no_frame_count
+1	31	10
+2	9	8
+6	13091	12610
+7	2855685	1310178
 
 
 SELECT
@@ -40,7 +63,10 @@ GROUP BY
 ORDER BY
     no_frame_length;
 
-
+no_frame_length	row_count	distinct_no_frame_count
+1	1	1
+6	11376	11306
+7	2197914	1090972
 
 
 SELECT
@@ -82,7 +108,12 @@ GROUP BY
 ORDER BY
     no_frame_format;
 
-
+no_frame_format	row_count
+ALPHANUMERIC	62559
+ALPHANUMERIC_HYPHEN	208
+BLANK	11059
+DIGITS_ONLY	23634494
+OTHER_FORMAT	306
 
 
 SELECT
@@ -125,7 +156,12 @@ ORDER BY
     no_frame_format;
 
 
-
+no_frame_format	row_count
+ALPHANUMERIC	7121
+ALPHANUMERIC_HYPHEN	2
+BLANK	493151
+DIGITS_ONLY	2861687
+OTHER_FORMAT	11
 
 
 
@@ -167,3 +203,8 @@ GROUP BY
     END
 ORDER BY
     no_frame_format;
+
+
+no_frame_format	row_count
+ALPHANUMERIC	4639
+DIGITS_ONLY	2204652
