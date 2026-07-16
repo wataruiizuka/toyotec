@@ -1,11 +1,46 @@
 SELECT
     COUNT(*) AS row_count,
-    COUNT(dt_johosaku) AS dt_johosaku_count,
-    COUNT(*) - COUNT(dt_johosaku) AS dt_johosaku_null_count,
-    MIN(dt_johosaku) AS min_dt_johosaku,
-    MAX(dt_johosaku) AS max_dt_johosaku,
-    COUNT(dt_kosin) AS dt_kosin_count,
-    COUNT(*) - COUNT(dt_kosin) AS dt_kosin_null_count,
-    MIN(dt_kosin) AS min_dt_kosin,
-    MAX(dt_kosin) AS max_dt_kosin
+
+    SUM(
+        CASE
+            WHEN dt_kosin > NOW() THEN 1
+            ELSE 0
+        END
+    ) AS future_dt_kosin_count,
+
+    MIN(
+        CASE
+            WHEN dt_kosin > NOW() THEN dt_kosin
+            ELSE NULL
+        END
+    ) AS min_future_dt_kosin,
+
+    MAX(
+        CASE
+            WHEN dt_kosin > NOW() THEN dt_kosin
+            ELSE NULL
+        END
+    ) AS max_future_dt_kosin,
+
+    SUM(
+        CASE
+            WHEN dt_kosin < dt_johosaku THEN 1
+            ELSE 0
+        END
+    ) AS kosin_before_johosaku_count,
+
+    SUM(
+        CASE
+            WHEN dt_kosin = dt_johosaku THEN 1
+            ELSE 0
+        END
+    ) AS kosin_equal_johosaku_count,
+
+    SUM(
+        CASE
+            WHEN dt_kosin > dt_johosaku THEN 1
+            ELSE 0
+        END
+    ) AS kosin_after_johosaku_count
+
 FROM ai21rep_pr_kudu.tbaz017m;
