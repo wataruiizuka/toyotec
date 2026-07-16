@@ -1,0 +1,211 @@
+-- ============================================================
+-- ステップ13-3
+-- TBBA001G・TBBA085Gについて、
+-- 条件変更日候補 dd_jokenhen の設定状況を確認する
+--
+-- 注意：
+-- dd_jokenhenの正式な業務定義は未確認です。
+-- 今回は現在値データ上の日付分布だけを確認します。
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+SELECT
+    'TBBA001G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_date_present_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN dd_jokenhen IS NOT NULL THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        4
+    ) AS condition_change_date_present_rate_pct,
+
+    MIN(dd_jokenhen) AS min_dd_jokenhen,
+
+    MAX(dd_jokenhen) AS max_dd_jokenhen,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_torikesi IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_with_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_uriage IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_with_sales_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_jucyu IS NOT NULL
+             AND dd_jokenhen < dd_jucyu
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_before_order_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_jucyu IS NOT NULL
+             AND dd_jokenhen = dd_jucyu
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_same_day_as_order_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_jucyu IS NOT NULL
+             AND dd_jokenhen > dd_jucyu
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_after_order_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dt_saisinup IS NOT NULL
+             AND CAST(dd_jokenhen AS TIMESTAMP) > dt_saisinup
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_after_last_update_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_date_absent_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba001g
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_date_present_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN dd_jokenhen IS NOT NULL THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        4
+    ) AS condition_change_date_present_rate_pct,
+
+    MIN(dd_jokenhen) AS min_dd_jokenhen,
+
+    MAX(dd_jokenhen) AS max_dd_jokenhen,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_torikesi IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_with_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_uriage IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_with_sales_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_jucyu IS NOT NULL
+             AND dd_jokenhen < dd_jucyu
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_before_order_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_jucyu IS NOT NULL
+             AND dd_jokenhen = dd_jucyu
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_same_day_as_order_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dd_jucyu IS NOT NULL
+             AND dd_jokenhen > dd_jucyu
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_after_order_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NOT NULL
+             AND dt_saisinup IS NOT NULL
+             AND CAST(dd_jokenhen AS TIMESTAMP) > dt_saisinup
+            THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_after_last_update_count,
+
+    SUM(
+        CASE
+            WHEN dd_jokenhen IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS condition_change_date_absent_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba085g
+;
