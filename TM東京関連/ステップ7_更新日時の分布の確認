@@ -1,0 +1,80 @@
+SELECT
+    COUNT(*) AS row_count,
+
+    SUM(
+        CASE
+            WHEN dt_kosin > NOW() THEN 1
+            ELSE 0
+        END
+    ) AS future_dt_kosin_count,
+
+    MIN(
+        CASE
+            WHEN dt_kosin <= NOW() THEN dt_kosin
+            ELSE NULL
+        END
+    ) AS min_valid_dt_kosin,
+
+    MAX(
+        CASE
+            WHEN dt_kosin <= NOW() THEN dt_kosin
+            ELSE NULL
+        END
+    ) AS max_valid_dt_kosin
+
+FROM ai21rep_pr_kudu.tbaz017m;
+
+
+
+SELECT
+    YEAR(dt_kosin) AS update_year,
+    MONTH(dt_kosin) AS update_month,
+    DAY(dt_kosin) AS update_day,
+    COUNT(*) AS updated_row_count
+FROM ai21rep_pr_kudu.tbaz017m
+WHERE dt_kosin >= CAST('2026-06-16 00:00:00' AS TIMESTAMP)
+  AND dt_kosin <  CAST('2026-07-17 00:00:00' AS TIMESTAMP)
+GROUP BY
+    YEAR(dt_kosin),
+    MONTH(dt_kosin),
+    DAY(dt_kosin)
+ORDER BY
+    update_year,
+    update_month,
+    update_day;
+
+
+SELECT
+    YEAR(dt_saisinup) AS update_year,
+    MONTH(dt_saisinup) AS update_month,
+    DAY(dt_saisinup) AS update_day,
+    COUNT(*) AS updated_row_count
+FROM ai21rep_pr_kudu.tbba001g
+WHERE dt_saisinup >= CAST('2026-06-16 00:00:00' AS TIMESTAMP)
+  AND dt_saisinup <  CAST('2026-07-17 00:00:00' AS TIMESTAMP)
+GROUP BY
+    YEAR(dt_saisinup),
+    MONTH(dt_saisinup),
+    DAY(dt_saisinup)
+ORDER BY
+    update_year,
+    update_month,
+    update_day;
+
+
+SELECT
+    YEAR(dt_saisinup) AS update_year,
+    MONTH(dt_saisinup) AS update_month,
+    DAY(dt_saisinup) AS update_day,
+    COUNT(*) AS updated_row_count
+FROM ai21rep_pr_kudu.tbba085g
+WHERE dt_saisinup >= CAST('2026-06-16 00:00:00' AS TIMESTAMP)
+  AND dt_saisinup <  CAST('2026-07-17 00:00:00' AS TIMESTAMP)
+GROUP BY
+    YEAR(dt_saisinup),
+    MONTH(dt_saisinup),
+    DAY(dt_saisinup)
+ORDER BY
+    update_year,
+    update_month,
+    update_day;
