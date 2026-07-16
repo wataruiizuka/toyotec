@@ -1,0 +1,58 @@
+SELECT
+    COUNT(*) AS row_count,
+
+    MIN(dt_johosaku) AS min_dt_johosaku,
+    MAX(dt_johosaku) AS max_dt_johosaku,
+    COUNT(*) - COUNT(dt_johosaku) AS null_dt_johosaku_count,
+
+    MIN(dt_kosin) AS min_dt_kosin,
+    MAX(dt_kosin) AS max_dt_kosin,
+    COUNT(*) - COUNT(dt_kosin) AS null_dt_kosin_count
+
+FROM ai21rep_pr_kudu.tbaz017m;
+
+
+
+SELECT
+    COUNT(*) AS row_count,
+
+    MIN(dd_jucyu) AS min_dd_jucyu,
+    MAX(dd_jucyu) AS max_dd_jucyu,
+    COUNT(*) - COUNT(dd_jucyu) AS null_dd_jucyu_count,
+
+    MIN(dt_saisinup) AS min_dt_saisinup,
+    MAX(dt_saisinup) AS max_dt_saisinup,
+    COUNT(*) - COUNT(dt_saisinup) AS null_dt_saisinup_count,
+
+    MIN(dd_uriage) AS min_dd_uriage,
+    MAX(dd_uriage) AS max_dd_uriage,
+    COUNT(*) - COUNT(dd_uriage) AS null_dd_uriage_count,
+
+    MIN(dd_torikesi) AS min_dd_torikesi,
+    MAX(dd_torikesi) AS max_dd_torikesi,
+    COUNT(*) - COUNT(dd_torikesi) AS null_dd_torikesi_count
+
+FROM ai21rep_pr_kudu.tbba001g;
+
+
+
+SELECT
+    COUNT(*) AS row_count,
+
+    MIN(dd_jucyu) AS min_dd_jucyu,
+    MAX(dd_jucyu) AS max_dd_jucyu,
+    COUNT(*) - COUNT(dd_jucyu) AS null_dd_jucyu_count,
+
+    MIN(dt_saisinup) AS min_dt_saisinup,
+    MAX(dt_saisinup) AS max_dt_saisinup,
+    COUNT(*) - COUNT(dt_saisinup) AS null_dt_saisinup_count,
+
+    MIN(dd_uriage) AS min_dd_uriage,
+    MAX(dd_uriage) AS max_dd_uriage,
+    COUNT(*) - COUNT(dd_uriage) AS null_dd_uriage_count,
+
+    MIN(dt_massyo) AS min_dt_massyo,
+    MAX(dt_massyo) AS max_dt_massyo,
+    COUNT(*) - COUNT(dt_massyo) AS null_dt_massyo_count
+
+FROM ai21rep_pr_kudu.tbba085g;
