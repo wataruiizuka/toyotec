@@ -1,0 +1,170 @@
+-- ============================================================
+-- ステップ13-2
+-- TBBA001Gについて、取消日が設定されており、
+-- 売上日・登録日・納車日のいずれかも設定されている
+-- レコードの日付順序を確認する
+--
+-- 注意：
+-- 日付の前後関係を確認するSQLです。
+-- 取消・訂正の正式な業務意味までは確定しません。
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+WITH target_rows AS (
+    SELECT
+        dd_torikesi,
+        dd_uriage,
+        dd_touroku,
+        dd_nosya,
+        no_frame,
+        dt_saisinup
+    FROM ai21rep_pr_kudu.tbba001g
+    WHERE dd_torikesi IS NOT NULL
+      AND (
+             dd_uriage IS NOT NULL
+          OR dd_touroku IS NOT NULL
+          OR dd_nosya IS NOT NULL
+      )
+)
+
+SELECT
+    COUNT(*) AS target_row_count,
+
+    -- --------------------------------------------------------
+    -- 売上日と取消日の前後関係
+    -- --------------------------------------------------------
+    SUM(
+        CASE
+            WHEN dd_uriage IS NOT NULL
+             AND dd_uriage < dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS sales_before_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_uriage IS NOT NULL
+             AND dd_uriage = dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS sales_same_day_as_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_uriage IS NOT NULL
+             AND dd_uriage > dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS sales_after_cancel_count,
+
+    -- --------------------------------------------------------
+    -- 登録日と取消日の前後関係
+    -- --------------------------------------------------------
+    SUM(
+        CASE
+            WHEN dd_touroku IS NOT NULL
+             AND dd_touroku < dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS registration_before_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_touroku IS NOT NULL
+             AND dd_touroku = dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS registration_same_day_as_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_touroku IS NOT NULL
+             AND dd_touroku > dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS registration_after_cancel_count,
+
+    -- --------------------------------------------------------
+    -- 納車日と取消日の前後関係
+    -- --------------------------------------------------------
+    SUM(
+        CASE
+            WHEN dd_nosya IS NOT NULL
+             AND dd_nosya < dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS delivery_before_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_nosya IS NOT NULL
+             AND dd_nosya = dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS delivery_same_day_as_cancel_count,
+
+    SUM(
+        CASE
+            WHEN dd_nosya IS NOT NULL
+             AND dd_nosya > dd_torikesi
+            THEN 1
+            ELSE 0
+        END
+    ) AS delivery_after_cancel_count,
+
+    -- --------------------------------------------------------
+    -- 日付の設定パターン
+    -- --------------------------------------------------------
+    SUM(
+        CASE
+            WHEN dd_uriage IS NOT NULL
+             AND dd_touroku IS NOT NULL
+             AND dd_nosya IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS all_three_dates_present_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS no_frame_present_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NULL
+              OR TRIM(no_frame) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS no_frame_blank_count,
+
+    MIN(dd_torikesi) AS min_cancel_date,
+
+    MAX(dd_torikesi) AS max_cancel_date,
+
+    MIN(dt_saisinup) AS min_last_update_datetime,
+
+    MAX(dt_saisinup) AS max_last_update_datetime,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM target_rows
+;
