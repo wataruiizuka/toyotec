@@ -1,0 +1,124 @@
+-- ============================================================
+-- ステップ12-1
+-- TBBA001G・TBBA085Gの受注キー4カラムについて、
+-- 一意性と重複状況を確認する
+--
+-- 参照のみのSQLです。
+-- テーブルの追加・更新・削除は行いません。
+-- ============================================================
+
+WITH
+tbba001g_keys AS (
+    SELECT
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned,
+        COUNT(*) AS row_count
+    FROM ai21rep_pr_kudu.tbba001g
+    GROUP BY
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned
+),
+
+tbba085g_keys AS (
+    SELECT
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned,
+        COUNT(*) AS row_count
+    FROM ai21rep_pr_kudu.tbba085g
+    GROUP BY
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned
+)
+
+SELECT
+    'TBBA001G' AS table_name,
+
+    SUM(row_count) AS total_row_count,
+
+    COUNT(*) AS distinct_order_key_count,
+
+    SUM(
+        CASE
+            WHEN row_count > 1 THEN 1
+            ELSE 0
+        END
+    ) AS duplicate_order_key_count,
+
+    SUM(
+        CASE
+            WHEN row_count > 1 THEN row_count
+            ELSE 0
+        END
+    ) AS rows_in_duplicate_order_keys,
+
+    MAX(row_count) AS max_rows_per_order_key,
+
+    SUM(
+        CASE
+            WHEN TRIM(CAST(cd_hansya AS STRING)) = ''
+              OR TRIM(CAST(cd_kaisya AS STRING)) = ''
+              OR TRIM(CAST(no_cyumon AS STRING)) = ''
+              OR TRIM(CAST(no_cyumoned AS STRING)) = ''
+            THEN row_count
+            ELSE 0
+        END
+    ) AS blank_key_row_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM tbba001g_keys
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+
+    SUM(row_count) AS total_row_count,
+
+    COUNT(*) AS distinct_order_key_count,
+
+    SUM(
+        CASE
+            WHEN row_count > 1 THEN 1
+            ELSE 0
+        END
+    ) AS duplicate_order_key_count,
+
+    SUM(
+        CASE
+            WHEN row_count > 1 THEN row_count
+            ELSE 0
+        END
+    ) AS rows_in_duplicate_order_keys,
+
+    MAX(row_count) AS max_rows_per_order_key,
+
+    SUM(
+        CASE
+            WHEN TRIM(CAST(cd_hansya AS STRING)) = ''
+              OR TRIM(CAST(cd_kaisya AS STRING)) = ''
+              OR TRIM(CAST(no_cyumon AS STRING)) = ''
+              OR TRIM(CAST(no_cyumoned AS STRING)) = ''
+            THEN row_count
+            ELSE 0
+        END
+    ) AS blank_key_row_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM tbba085g_keys
+;
