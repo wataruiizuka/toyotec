@@ -175,3 +175,141 @@ FROM ai21rep_pr_kudu.tbba085g
 table_name	total_row_count	blank_cd_hansya_count	blank_cd_kaisya_count	blank_no_cyumon_count	blank_no_cyumoned_count	any_blank_key_count	all_key_columns_present_count	executed_at_jst
 TBBA001G	3363363	0	0	0	3205010	3205010	158353	2026-07-16 21:05:38.577698000
 TBBA085G	2209290	0	0	0	2115214	2115214	94076	2026-07-16 21:05:38.577698000
+
+
+
+-- ============================================================
+-- ステップ12-1補足②
+-- TBBA085Gで受注キー4カラムが重複している441キーについて、
+-- dd_uriage・no_frame・dt_massyo・dt_saisinupの違いを集計する
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+WITH duplicate_order_keys AS (
+    SELECT
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned
+    FROM ai21rep_pr_kudu.tbba085g
+    GROUP BY
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned
+    HAVING COUNT(*) > 1
+),
+
+duplicate_key_details AS (
+    SELECT
+        t.cd_hansya,
+        t.cd_kaisya,
+        t.no_cyumon,
+        t.no_cyumoned,
+
+        COUNT(*) AS row_count,
+
+        COUNT(DISTINCT t.dd_uriage)
+            AS distinct_dd_uriage_count,
+
+        MIN(t.dd_uriage)
+            AS min_dd_uriage,
+
+        MAX(t.dd_uriage)
+            AS max_dd_uriage,
+
+        COUNT(DISTINCT TRIM(t.no_frame))
+            AS distinct_no_frame_count,
+
+        MIN(TRIM(t.no_frame))
+            AS min_no_frame,
+
+        MAX(TRIM(t.no_frame))
+            AS max_no_frame,
+
+        MIN(t.dt_massyo)
+            AS min_dt_massyo,
+
+        MAX(t.dt_massyo)
+            AS max_dt_massyo,
+
+        MIN(t.dt_saisinup)
+            AS min_dt_saisinup,
+
+        MAX(t.dt_saisinup)
+            AS max_dt_saisinup
+
+    FROM ai21rep_pr_kudu.tbba085g t
+
+    INNER JOIN duplicate_order_keys d
+        ON  t.cd_hansya   = d.cd_hansya
+        AND t.cd_kaisya   = d.cd_kaisya
+        AND t.no_cyumon   = d.no_cyumon
+        AND t.no_cyumoned = d.no_cyumoned
+
+    GROUP BY
+        t.cd_hansya,
+        t.cd_kaisya,
+        t.no_cyumon,
+        t.no_cyumoned
+)
+
+SELECT
+    COUNT(*) AS duplicate_order_key_count,
+
+    SUM(row_count) AS duplicate_row_count,
+
+    SUM(
+        CASE
+            WHEN distinct_dd_uriage_count > 1 THEN 1
+            ELSE 0
+        END
+    ) AS keys_with_different_dd_uriage,
+
+    SUM(
+        CASE
+            WHEN distinct_dd_uriage_count = 1 THEN 1
+            ELSE 0
+        END
+    ) AS keys_with_same_dd_uriage,
+
+    SUM(
+        CASE
+            WHEN distinct_no_frame_count > 1 THEN 1
+            ELSE 0
+        END
+    ) AS keys_with_different_no_frame,
+
+    SUM(
+        CASE
+            WHEN distinct_no_frame_count = 1 THEN 1
+            ELSE 0
+        END
+    ) AS keys_with_same_no_frame,
+
+    SUM(
+        CASE
+            WHEN min_dt_massyo <> max_dt_massyo THEN 1
+            ELSE 0
+        END
+    ) AS keys_with_different_dt_massyo,
+
+    SUM(
+        CASE
+            WHEN min_dt_saisinup <> max_dt_saisinup THEN 1
+            ELSE 0
+        END
+    ) AS keys_with_different_dt_saisinup,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM duplicate_key_details
+;
+
+
+
