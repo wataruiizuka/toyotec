@@ -1,0 +1,144 @@
+-- ============================================================
+-- ステップ12-2
+-- TBBA001GとTBBA085Gについて、
+-- 受注キー4カラム単位の存在関係と一致率を確認する
+--
+-- 受注キー：
+--   cd_hansya
+--   cd_kaisya
+--   no_cyumon
+--   no_cyumoned
+--
+-- TBBA085Gには同一受注キーが2行存在するケースがあるため、
+-- 最初に受注キー単位へ重複排除してから比較します。
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+WITH
+tbba001g_keys AS (
+    SELECT DISTINCT
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned
+    FROM ai21rep_pr_kudu.tbba001g
+),
+
+tbba085g_keys AS (
+    SELECT DISTINCT
+        cd_hansya,
+        cd_kaisya,
+        no_cyumon,
+        no_cyumoned
+    FROM ai21rep_pr_kudu.tbba085g
+),
+
+order_key_relation AS (
+    SELECT
+        CASE
+            WHEN a.cd_hansya IS NOT NULL THEN 1
+            ELSE 0
+        END AS exists_in_tbba001g,
+
+        CASE
+            WHEN b.cd_hansya IS NOT NULL THEN 1
+            ELSE 0
+        END AS exists_in_tbba085g
+
+    FROM tbba001g_keys a
+
+    FULL OUTER JOIN tbba085g_keys b
+        ON  a.cd_hansya   = b.cd_hansya
+        AND a.cd_kaisya   = b.cd_kaisya
+        AND a.no_cyumon   = b.no_cyumon
+        AND a.no_cyumoned = b.no_cyumoned
+),
+
+summary AS (
+    SELECT
+        SUM(
+            CASE
+                WHEN exists_in_tbba001g = 1 THEN 1
+                ELSE 0
+            END
+        ) AS tbba001g_order_key_count,
+
+        SUM(
+            CASE
+                WHEN exists_in_tbba085g = 1 THEN 1
+                ELSE 0
+            END
+        ) AS tbba085g_order_key_count,
+
+        SUM(
+            CASE
+                WHEN exists_in_tbba001g = 1
+                 AND exists_in_tbba085g = 1
+                THEN 1
+                ELSE 0
+            END
+        ) AS common_order_key_count,
+
+        SUM(
+            CASE
+                WHEN exists_in_tbba001g = 1
+                 AND exists_in_tbba085g = 0
+                THEN 1
+                ELSE 0
+            END
+        ) AS tbba001g_only_order_key_count,
+
+        SUM(
+            CASE
+                WHEN exists_in_tbba001g = 0
+                 AND exists_in_tbba085g = 1
+                THEN 1
+                ELSE 0
+            END
+        ) AS tbba085g_only_order_key_count
+
+    FROM order_key_relation
+)
+
+SELECT
+    tbba001g_order_key_count,
+
+    tbba085g_order_key_count,
+
+    common_order_key_count,
+
+    tbba001g_only_order_key_count,
+
+    tbba085g_only_order_key_count,
+
+    CASE
+        WHEN tbba001g_order_key_count > 0
+        THEN ROUND(
+            common_order_key_count
+            * 100.0
+            / tbba001g_order_key_count,
+            4
+        )
+        ELSE NULL
+    END AS tbba001g_base_match_rate_pct,
+
+    CASE
+        WHEN tbba085g_order_key_count > 0
+        THEN ROUND(
+            common_order_key_count
+            * 100.0
+            / tbba085g_order_key_count,
+            4
+        )
+        ELSE NULL
+    END AS tbba085g_base_match_rate_pct,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM summary
+;
