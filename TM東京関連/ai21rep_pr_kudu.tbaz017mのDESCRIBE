@@ -1,0 +1,72 @@
+name	type	comment	primary_key	key_unique	nullable	default_value	encoding	compression	block_size
+cd_hansya	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_kaisya	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_okyaku	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_norikusi	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_nosyasyu	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_nogyotai	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_noseiri	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_kei	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_syasyu	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_maker	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_haigasu	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_katasiki	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_duoseiki	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_enginkat	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_kataruib	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_21syamei	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_syamei	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_color	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_trim	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_sincyu	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_gyocyok	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_jyoutora	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_yoto	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_oem	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_juryo	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dd_seisantu	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dd_syodotor	timestamp		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dd_syknmanr	timestamp		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dd_sykntuki	bigint		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_syknkika	bigint		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_framekat	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_frame	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_duosyada	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_tokuso	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_teiten	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_nenryo	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_mission	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_syakey	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_mntkeiya	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_edaban	bigint		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+nu_sotezert	decimal(4,2)		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dd_mntkijun	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_leasekt	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_mntlskei	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_jisyasak	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_jisyamot	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_hosyokm	bigint		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_kanrikai	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dd_masencyo	timestamp		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_syamassy	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_syamasyo	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kb_syamlist	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_kyuokyak	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dt_johosaku	timestamp		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_johosaku	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_kosinsya	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+dt_kosin	timestamp		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_syasyu	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo1	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo2	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo3	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo4	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo5	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo6	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo7	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo8	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo9	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+cd_siyo10	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+no_syosyknk	bigint		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+csv_md5	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+kudu_md5	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
