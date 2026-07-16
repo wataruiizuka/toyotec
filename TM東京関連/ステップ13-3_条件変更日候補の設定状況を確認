@@ -209,3 +209,10 @@ SELECT
 
 FROM ai21rep_pr_kudu.tbba085g
 ;
+
+
+table_name	total_row_count	condition_change_date_present_count	condition_change_date_present_rate_pct	min_dd_jokenhen	max_dd_jokenhen	condition_change_with_cancel_count	condition_change_with_sales_count	condition_change_before_order_count	condition_change_same_day_as_order_count	condition_change_after_order_count	condition_change_after_last_update_count	condition_change_date_absent_count	executed_at_jst
+TBBA001G	3363307	3109363	92.4496	1995-02-06 00:00:00	2026-07-16 00:00:00	14064	2739398	34	122703	2986626	0	253944	2026-07-16 21:35:21.328970000
+TBBA085G	2209290	2209077	99.9904	2000-12-21 00:00:00	2026-07-05 00:00:00	0	2209077	4	740	2208333	0	213	2026-07-16 21:35:21.328970000
+
+
