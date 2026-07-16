@@ -189,3 +189,10 @@ SELECT
 
 FROM ai21rep_pr_kudu.tbba085g
 ;
+
+
+table_name	total_row_count	cancel_date_present_count	cancel_date_present_rate_pct	min_dd_torikesi	max_dd_torikesi	cancelled_with_sales_date_count	cancelled_without_sales_date_count	cancelled_with_registration_date_count	cancelled_with_delivery_date_count	cancelled_with_blank_no_frame_count	cancel_date_absent_count	executed_at_jst
+TBBA001G	3363364	26698	0.7938	2002-06-13 00:00:00	2026-07-16 00:00:00	13	26685	13	4	23710	3336666	2026-07-16 21:28:00.128908000
+TBBA085G	2209290	0	0.0000	NULL	NULL	0	0	0	0	0	2209290	2026-07-16 21:28:00.128908000
+
+
