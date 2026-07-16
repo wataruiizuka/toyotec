@@ -137,3 +137,31 @@ FROM ai21rep_pr_kudu.tbaz017m;
 
 row_count	current_jst	future_dt_kosin_jst_count	min_future_dt_kosin_jst	max_future_dt_kosin_jst
 23708140	2026-07-16 14:45:30.247245000	3	2100-03-28 14:15:00	2100-03-28 14:15:00
+
+SELECT
+    cd_hansya,
+    cd_kaisya,
+    cd_okyaku,
+    cd_norikusi,
+    kb_nosyasyu,
+    cd_nogyotai,
+    no_noseiri,
+    no_frame,
+    no_duosyada,
+    no_syakey,
+    dt_johosaku,
+    dt_kosin,
+    csv_md5,
+    kudu_md5
+FROM ai21rep_pr_kudu.tbaz017m
+WHERE dt_kosin = CAST('2100-03-28 14:15:00' AS TIMESTAMP)
+ORDER BY
+    cd_hansya,
+    cd_kaisya,
+    cd_okyaku,
+    cd_norikusi,
+    kb_nosyasyu,
+    cd_nogyotai,
+    no_noseiri;
+
+
