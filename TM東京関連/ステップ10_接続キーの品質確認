@@ -1,0 +1,201 @@
+SELECT
+    COUNT(*) AS row_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS null_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS nonblank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND no_frame <> TRIM(no_frame)
+            THEN 1
+            ELSE 0
+        END
+    ) AS outer_space_count,
+
+    COUNT(
+        DISTINCT CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN TRIM(no_frame)
+            ELSE NULL
+        END
+    ) AS distinct_trimmed_no_frame_count,
+
+    MIN(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN LENGTH(TRIM(no_frame))
+            ELSE NULL
+        END
+    ) AS min_no_frame_length,
+
+    MAX(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN LENGTH(TRIM(no_frame))
+            ELSE NULL
+        END
+    ) AS max_no_frame_length
+
+FROM ai21rep_pr_kudu.tbaz017m;
+
+
+
+SELECT
+    COUNT(*) AS row_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS null_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS nonblank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND no_frame <> TRIM(no_frame)
+            THEN 1
+            ELSE 0
+        END
+    ) AS outer_space_count,
+
+    COUNT(
+        DISTINCT CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN TRIM(no_frame)
+            ELSE NULL
+        END
+    ) AS distinct_trimmed_no_frame_count,
+
+    MIN(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN LENGTH(TRIM(no_frame))
+            ELSE NULL
+        END
+    ) AS min_no_frame_length,
+
+    MAX(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN LENGTH(TRIM(no_frame))
+            ELSE NULL
+        END
+    ) AS max_no_frame_length
+
+FROM ai21rep_pr_kudu.tbba001g;
+
+
+
+SELECT
+    COUNT(*) AS row_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS null_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS blank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS nonblank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND no_frame <> TRIM(no_frame)
+            THEN 1
+            ELSE 0
+        END
+    ) AS outer_space_count,
+
+    COUNT(
+        DISTINCT CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN TRIM(no_frame)
+            ELSE NULL
+        END
+    ) AS distinct_trimmed_no_frame_count,
+
+    MIN(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN LENGTH(TRIM(no_frame))
+            ELSE NULL
+        END
+    ) AS min_no_frame_length,
+
+    MAX(
+        CASE
+            WHEN no_frame IS NOT NULL
+             AND TRIM(no_frame) <> ''
+            THEN LENGTH(TRIM(no_frame))
+            ELSE NULL
+        END
+    ) AS max_no_frame_length
+
+FROM ai21rep_pr_kudu.tbba085g;
