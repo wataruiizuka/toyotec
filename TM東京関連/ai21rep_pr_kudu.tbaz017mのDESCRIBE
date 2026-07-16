@@ -104,49 +104,34 @@ row_count	dt_johosaku_count	dt_johosaku_null_count	min_dt_johosaku	max_dt_johosa
 SELECT
     COUNT(*) AS row_count,
 
+    FROM_UTC_TIMESTAMP(
+        NOW(),
+        'Asia/Tokyo'
+    ) AS current_jst,
+
     SUM(
         CASE
-            WHEN dt_kosin > NOW() THEN 1
+            WHEN dt_kosin > FROM_UTC_TIMESTAMP(NOW(), 'Asia/Tokyo')
+            THEN 1
             ELSE 0
         END
-    ) AS future_dt_kosin_count,
+    ) AS future_dt_kosin_jst_count,
 
     MIN(
         CASE
-            WHEN dt_kosin > NOW() THEN dt_kosin
+            WHEN dt_kosin > FROM_UTC_TIMESTAMP(NOW(), 'Asia/Tokyo')
+            THEN dt_kosin
             ELSE NULL
         END
-    ) AS min_future_dt_kosin,
+    ) AS min_future_dt_kosin_jst,
 
     MAX(
         CASE
-            WHEN dt_kosin > NOW() THEN dt_kosin
+            WHEN dt_kosin > FROM_UTC_TIMESTAMP(NOW(), 'Asia/Tokyo')
+            THEN dt_kosin
             ELSE NULL
         END
-    ) AS max_future_dt_kosin,
-
-    SUM(
-        CASE
-            WHEN dt_kosin < dt_johosaku THEN 1
-            ELSE 0
-        END
-    ) AS kosin_before_johosaku_count,
-
-    SUM(
-        CASE
-            WHEN dt_kosin = dt_johosaku THEN 1
-            ELSE 0
-        END
-    ) AS kosin_equal_johosaku_count,
-
-    SUM(
-        CASE
-            WHEN dt_kosin > dt_johosaku THEN 1
-            ELSE 0
-        END
-    ) AS kosin_after_johosaku_count
+    ) AS max_future_dt_kosin_jst
 
 FROM ai21rep_pr_kudu.tbaz017m;
 
-row_count	future_dt_kosin_count	min_future_dt_kosin	max_future_dt_kosin	kosin_before_johosaku_count	kosin_equal_johosaku_count	kosin_after_johosaku_count
-23708079	52339	2026-07-16 07:07:44	2100-03-28 14:15:00	74621	1486312	22147146
