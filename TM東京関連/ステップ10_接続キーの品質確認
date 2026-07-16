@@ -64,7 +64,8 @@ SELECT
 
 FROM ai21rep_pr_kudu.tbaz017m;
 
-
+row_count	null_no_frame_count	blank_no_frame_count	nonblank_no_frame_count	outer_space_count	distinct_trimmed_no_frame_count	min_no_frame_length	max_no_frame_length
+23708578	0	11059	23697519	23706506	4467375	1	21
 
 SELECT
     COUNT(*) AS row_count,
@@ -132,7 +133,8 @@ SELECT
 
 FROM ai21rep_pr_kudu.tbba001g;
 
-
+row_count	null_no_frame_count	blank_no_frame_count	nonblank_no_frame_count	outer_space_count	distinct_trimmed_no_frame_count	min_no_frame_length	max_no_frame_length
+3361888	0	493108	2868780	506239	1322794	1	7
 
 SELECT
     COUNT(*) AS row_count,
@@ -199,3 +201,6 @@ SELECT
     ) AS max_no_frame_length
 
 FROM ai21rep_pr_kudu.tbba085g;
+
+row_count	null_no_frame_count	blank_no_frame_count	nonblank_no_frame_count	outer_space_count	distinct_trimmed_no_frame_count	min_no_frame_length	max_no_frame_length
+2209291	0	0	2209291	11377	1102279	1	7
