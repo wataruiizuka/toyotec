@@ -1,0 +1,191 @@
+-- ============================================================
+-- ステップ13-1
+-- TBBA001G・TBBA085Gの取消日候補 dd_torikesiについて、
+-- 設定件数と関連する業務状態を確認する
+--
+-- 注意：
+-- dd_torikesiは業務上の取消日候補です。
+-- データベース上のDELETE操作を示すとは限りません。
+--
+-- 参照専用SQLです。
+-- データの追加・更新・削除は行いません。
+-- ============================================================
+
+SELECT
+    'TBBA001G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL THEN 1
+            ELSE 0
+        END
+    ) AS cancel_date_present_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN dd_torikesi IS NOT NULL THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        4
+    ) AS cancel_date_present_rate_pct,
+
+    MIN(dd_torikesi) AS min_dd_torikesi,
+
+    MAX(dd_torikesi) AS max_dd_torikesi,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_uriage IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_sales_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_uriage IS NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_without_sales_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_touroku IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_registration_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_nosya IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_delivery_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND (
+                    no_frame IS NULL
+                 OR TRIM(no_frame) = ''
+             )
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_blank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS cancel_date_absent_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba001g
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL THEN 1
+            ELSE 0
+        END
+    ) AS cancel_date_present_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN dd_torikesi IS NOT NULL THEN 1
+                ELSE 0
+            END
+        ) * 100.0 / COUNT(*),
+        4
+    ) AS cancel_date_present_rate_pct,
+
+    MIN(dd_torikesi) AS min_dd_torikesi,
+
+    MAX(dd_torikesi) AS max_dd_torikesi,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_uriage IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_sales_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_uriage IS NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_without_sales_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_touroku IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_registration_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND dd_nosya IS NOT NULL
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_delivery_date_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NOT NULL
+             AND (
+                    no_frame IS NULL
+                 OR TRIM(no_frame) = ''
+             )
+            THEN 1
+            ELSE 0
+        END
+    ) AS cancelled_with_blank_no_frame_count,
+
+    SUM(
+        CASE
+            WHEN dd_torikesi IS NULL THEN 1
+            ELSE 0
+        END
+    ) AS cancel_date_absent_count,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba085g
+;
