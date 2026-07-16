@@ -312,4 +312,13 @@ FROM duplicate_key_details
 ;
 
 
+duplicate_order_key_count	duplicate_row_count	keys_with_different_dd_uriage	keys_with_same_dd_uriage	keys_with_different_no_frame	keys_with_same_no_frame	keys_with_different_dt_massyo	keys_with_different_dt_saisinup	executed_at_jst
+441	882	441	0	441	0	441	437	2026-07-16 21:10:20.980639000
+
+
+
+
+
+
+
 
