@@ -135,3 +135,5 @@ SELECT
 
 FROM ai21rep_pr_kudu.tbaz017m;
 
+row_count	current_jst	future_dt_kosin_jst_count	min_future_dt_kosin_jst	max_future_dt_kosin_jst
+23708140	2026-07-16 14:45:30.247245000	3	2100-03-28 14:15:00	2100-03-28 14:15:00
