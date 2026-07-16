@@ -1,0 +1,45 @@
+SELECT
+    YEAR(dt_johosaku) AS target_year,
+    MONTH(dt_johosaku) AS target_month,
+    COUNT(*) AS monthly_row_count
+FROM ai21rep_pr_kudu.tbaz017m
+WHERE dt_johosaku >= CAST('2024-07-01 00:00:00' AS TIMESTAMP)
+  AND dt_johosaku IS NOT NULL
+GROUP BY
+    YEAR(dt_johosaku),
+    MONTH(dt_johosaku)
+ORDER BY
+    target_year,
+    target_month;
+
+
+
+SELECT
+    YEAR(dd_jucyu) AS target_year,
+    MONTH(dd_jucyu) AS target_month,
+    COUNT(*) AS monthly_row_count
+FROM ai21rep_pr_kudu.tbba001g
+WHERE dd_jucyu >= CAST('2024-07-01 00:00:00' AS TIMESTAMP)
+  AND dd_jucyu IS NOT NULL
+GROUP BY
+    YEAR(dd_jucyu),
+    MONTH(dd_jucyu)
+ORDER BY
+    target_year,
+    target_month;
+
+
+
+SELECT
+    YEAR(dt_massyo) AS target_year,
+    MONTH(dt_massyo) AS target_month,
+    COUNT(*) AS monthly_row_count
+FROM ai21rep_pr_kudu.tbba085g
+WHERE dt_massyo >= CAST('2024-07-01 00:00:00' AS TIMESTAMP)
+  AND dt_massyo IS NOT NULL
+GROUP BY
+    YEAR(dt_massyo),
+    MONTH(dt_massyo)
+ORDER BY
+    target_year,
+    target_month;
