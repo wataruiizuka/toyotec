@@ -152,3 +152,10 @@ SELECT
 
 FROM common_order_evaluation
 ;
+
+
+common_order_key_count	tbba001g_blank_no_frame_count	same_no_frame_order_key_count	different_no_frame_order_key_count	common_keys_with_multiple_tbba085g_rows	common_keys_with_multiple_tbba085g_no_frames	comparable_order_key_match_rate_pct	executed_at_jst
+18251	7170	1	11080	0	0	0.0090	2026-07-16 21:21:03.323058000
+
+
+
