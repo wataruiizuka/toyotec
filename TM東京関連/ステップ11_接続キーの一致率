@@ -73,7 +73,8 @@ CROSS JOIN right_count r
 CROSS JOIN matched_count m;
 
 
-
+left_table	right_table	left_key_count	right_key_count	matched_key_count	left_only_key_count	right_only_key_count	left_match_rate_pct	right_match_rate_pct
+TBAZ017M	TBBA001G	4467385	1322835	1286873	3180512	35962	28.806	97.2814
 
 
 
@@ -151,7 +152,8 @@ FROM left_count l
 CROSS JOIN right_count r
 CROSS JOIN matched_count m;
 
-
+left_table	right_table	left_key_count	right_key_count	matched_key_count	left_only_key_count	right_only_key_count	left_match_rate_pct	right_match_rate_pct
+TBAZ017M	TBBA085G	4467387	1102279	1081919	3385468	20360	24.2182	98.1529
 
 
 WITH
@@ -229,5 +231,6 @@ CROSS JOIN right_count r
 CROSS JOIN matched_count m;
 
 
-
+left_table	right_table	left_key_count	right_key_count	matched_key_count	left_only_key_count	right_only_key_count	left_match_rate_pct	right_match_rate_pct
+TBBA001G	TBBA085G	1322837	1102279	618573	704264	483706	46.7611	56.1176
 
