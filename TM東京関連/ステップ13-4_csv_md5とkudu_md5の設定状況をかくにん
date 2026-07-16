@@ -1,0 +1,311 @@
+-- ============================================================
+-- ステップ13-4
+-- csv_md5とkudu_md5の設定状況・一致状況を確認する
+--
+-- 対象：
+--   TBAZ017M
+--   TBBA001G
+--   TBBA085G
+--
+-- 注意：
+-- ・ハッシュ値が異なることは確認できますが、
+--   UPDATE・訂正・データ不整合とは断定できません。
+-- ・生成対象カラム、連結順、NULL処理などは未確認です。
+-- ・参照専用SQLです。
+-- ============================================================
+
+SELECT
+    'TBAZ017M' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NULL
+              OR TRIM(CAST(csv_md5 AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS csv_md5_blank_count,
+
+    SUM(
+        CASE
+            WHEN kudu_md5 IS NULL
+              OR TRIM(CAST(kudu_md5 AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS kudu_md5_blank_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS both_md5_present_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+             AND TRIM(CAST(csv_md5 AS STRING))
+                 = TRIM(CAST(kudu_md5 AS STRING))
+            THEN 1
+            ELSE 0
+        END
+    ) AS same_md5_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+             AND TRIM(CAST(csv_md5 AS STRING))
+                 <> TRIM(CAST(kudu_md5 AS STRING))
+            THEN 1
+            ELSE 0
+        END
+    ) AS different_md5_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN csv_md5 IS NOT NULL
+                 AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+                 AND kudu_md5 IS NOT NULL
+                 AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+                 AND TRIM(CAST(csv_md5 AS STRING))
+                     = TRIM(CAST(kudu_md5 AS STRING))
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0
+        /
+        NULLIF(
+            SUM(
+                CASE
+                    WHEN csv_md5 IS NOT NULL
+                     AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+                     AND kudu_md5 IS NOT NULL
+                     AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+                    THEN 1
+                    ELSE 0
+                END
+            ),
+            0
+        ),
+        4
+    ) AS same_md5_rate_pct,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbaz017m
+
+UNION ALL
+
+SELECT
+    'TBBA001G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NULL
+              OR TRIM(CAST(csv_md5 AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS csv_md5_blank_count,
+
+    SUM(
+        CASE
+            WHEN kudu_md5 IS NULL
+              OR TRIM(CAST(kudu_md5 AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS kudu_md5_blank_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS both_md5_present_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+             AND TRIM(CAST(csv_md5 AS STRING))
+                 = TRIM(CAST(kudu_md5 AS STRING))
+            THEN 1
+            ELSE 0
+        END
+    ) AS same_md5_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+             AND TRIM(CAST(csv_md5 AS STRING))
+                 <> TRIM(CAST(kudu_md5 AS STRING))
+            THEN 1
+            ELSE 0
+        END
+    ) AS different_md5_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN csv_md5 IS NOT NULL
+                 AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+                 AND kudu_md5 IS NOT NULL
+                 AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+                 AND TRIM(CAST(csv_md5 AS STRING))
+                     = TRIM(CAST(kudu_md5 AS STRING))
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0
+        /
+        NULLIF(
+            SUM(
+                CASE
+                    WHEN csv_md5 IS NOT NULL
+                     AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+                     AND kudu_md5 IS NOT NULL
+                     AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+                    THEN 1
+                    ELSE 0
+                END
+            ),
+            0
+        ),
+        4
+    ) AS same_md5_rate_pct,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba001g
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+
+    COUNT(*) AS total_row_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NULL
+              OR TRIM(CAST(csv_md5 AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS csv_md5_blank_count,
+
+    SUM(
+        CASE
+            WHEN kudu_md5 IS NULL
+              OR TRIM(CAST(kudu_md5 AS STRING)) = ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS kudu_md5_blank_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+            THEN 1
+            ELSE 0
+        END
+    ) AS both_md5_present_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+             AND TRIM(CAST(csv_md5 AS STRING))
+                 = TRIM(CAST(kudu_md5 AS STRING))
+            THEN 1
+            ELSE 0
+        END
+    ) AS same_md5_count,
+
+    SUM(
+        CASE
+            WHEN csv_md5 IS NOT NULL
+             AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+             AND kudu_md5 IS NOT NULL
+             AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+             AND TRIM(CAST(csv_md5 AS STRING))
+                 <> TRIM(CAST(kudu_md5 AS STRING))
+            THEN 1
+            ELSE 0
+        END
+    ) AS different_md5_count,
+
+    ROUND(
+        SUM(
+            CASE
+                WHEN csv_md5 IS NOT NULL
+                 AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+                 AND kudu_md5 IS NOT NULL
+                 AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+                 AND TRIM(CAST(csv_md5 AS STRING))
+                     = TRIM(CAST(kudu_md5 AS STRING))
+                THEN 1
+                ELSE 0
+            END
+        ) * 100.0
+        /
+        NULLIF(
+            SUM(
+                CASE
+                    WHEN csv_md5 IS NOT NULL
+                     AND TRIM(CAST(csv_md5 AS STRING)) <> ''
+                     AND kudu_md5 IS NOT NULL
+                     AND TRIM(CAST(kudu_md5 AS STRING)) <> ''
+                    THEN 1
+                    ELSE 0
+                END
+            ),
+            0
+        ),
+        4
+    ) AS same_md5_rate_pct,
+
+    FROM_UTC_TIMESTAMP(
+        UTC_TIMESTAMP(),
+        'Asia/Tokyo'
+    ) AS executed_at_jst
+
+FROM ai21rep_pr_kudu.tbba085g
+;
