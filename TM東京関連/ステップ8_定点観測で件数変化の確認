@@ -56,3 +56,106 @@ SELECT
 
 now_system_time	now_utc	now_jst
 2026-07-16 07:09:13.518246000	2026-07-16 07:09:13.518246000	2026-07-16 16:09:13.518246000
+
+WITH observation_time AS (
+    SELECT
+        UTC_TIMESTAMP() AS observed_at_utc,
+        FROM_UTC_TIMESTAMP(
+            UTC_TIMESTAMP(),
+            'Asia/Tokyo'
+        ) AS observed_at_jst
+)
+
+SELECT
+    'TBAZ017M' AS table_name,
+    o.observed_at_utc,
+    o.observed_at_jst,
+    COUNT(*) AS row_count,
+    MAX(t.dt_kosin) AS max_update_datetime,
+    SUM(
+        CASE
+            WHEN t.dt_kosin > o.observed_at_jst THEN 1
+            ELSE 0
+        END
+    ) AS future_update_datetime_count,
+    MIN(
+        CASE
+            WHEN t.dt_kosin > o.observed_at_jst THEN t.dt_kosin
+            ELSE NULL
+        END
+    ) AS min_future_update_datetime,
+    MAX(
+        CASE
+            WHEN t.dt_kosin > o.observed_at_jst THEN t.dt_kosin
+            ELSE NULL
+        END
+    ) AS max_future_update_datetime
+FROM ai21rep_pr_kudu.tbaz017m t
+CROSS JOIN observation_time o
+GROUP BY
+    o.observed_at_utc,
+    o.observed_at_jst
+
+UNION ALL
+
+SELECT
+    'TBBA001G' AS table_name,
+    o.observed_at_utc,
+    o.observed_at_jst,
+    COUNT(*) AS row_count,
+    MAX(t.dt_saisinup) AS max_update_datetime,
+    SUM(
+        CASE
+            WHEN t.dt_saisinup > o.observed_at_jst THEN 1
+            ELSE 0
+        END
+    ) AS future_update_datetime_count,
+    MIN(
+        CASE
+            WHEN t.dt_saisinup > o.observed_at_jst THEN t.dt_saisinup
+            ELSE NULL
+        END
+    ) AS min_future_update_datetime,
+    MAX(
+        CASE
+            WHEN t.dt_saisinup > o.observed_at_jst THEN t.dt_saisinup
+            ELSE NULL
+        END
+    ) AS max_future_update_datetime
+FROM ai21rep_pr_kudu.tbba001g t
+CROSS JOIN observation_time o
+GROUP BY
+    o.observed_at_utc,
+    o.observed_at_jst
+
+UNION ALL
+
+SELECT
+    'TBBA085G' AS table_name,
+    o.observed_at_utc,
+    o.observed_at_jst,
+    COUNT(*) AS row_count,
+    MAX(t.dt_saisinup) AS max_update_datetime,
+    SUM(
+        CASE
+            WHEN t.dt_saisinup > o.observed_at_jst THEN 1
+            ELSE 0
+        END
+    ) AS future_update_datetime_count,
+    MIN(
+        CASE
+            WHEN t.dt_saisinup > o.observed_at_jst THEN t.dt_saisinup
+            ELSE NULL
+        END
+    ) AS min_future_update_datetime,
+    MAX(
+        CASE
+            WHEN t.dt_saisinup > o.observed_at_jst THEN t.dt_saisinup
+            ELSE NULL
+        END
+    ) AS max_future_update_datetime
+FROM ai21rep_pr_kudu.tbba085g t
+CROSS JOIN observation_time o
+GROUP BY
+    o.observed_at_utc,
+    o.observed_at_jst;
