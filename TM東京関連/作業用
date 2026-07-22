@@ -1,8 +1,35 @@
-データは下記の順番通り処理されることは検証済み？
-⇒データは上記順番で流れているから。
-　ai21とOGGの検証は我々できないですが、OGG→Kafka→Kuduは先日検証済み。
+【出力項目について】
+⇒結局Kafkaのメッセージキューにbeforeとafter両方とも個人情報など生データの形で
+　永続化のテーブルに格納しているので、直接にテーブルを見ていただければと思います。
+　永続化のDBがレコード件数多く重いため、下記３つのテーブル(7/1～7/17の約２週間分)を洗い出しました。
+　直接確認していただけませんか。
+　・iceberg_ogg_db.ogg_find_tbba001g_260717
+　・iceberg_ogg_db.ogg_find_tbba085g_260717
+　・iceberg_ogg_db.ogg_find_tbaz017m_260717
  
-重複データが届いても、Upsertにより問題なく処理されている。
-⇒Insert差分がUpsert処理。
-　ただし、PKの無いテーブルは対象外。（別課題で対応）
-　Update差分はUpdateのまま、Delete差分もDeleteのまま処理。
+Plain Text
+テーブル項目の補足説明
+//   current_ts      TIMESTAMP   -- 処理タイムスタンプ
+//   cd_hansya       STRING      -- 販社コード
+//   op_type         STRING      -- 操作種別（INSERT／UPDATE／DELETE）
+//   table_name      STRING      -- OGG連携テーブル識別ID（例、PR05501.AI21.TBBA001G）
+//   op_ts           TIMESTAMP   -- 元のDBの操作タイムスタンプ
+//   before_pk       STRING      -- 変更前の主キー
+//   after_pk        STRING      -- 変更後の主キー
+//   mess_body       STRING      -- Kafkaメッセージ本文のJSON（before/afterを含む）
+//   kafka_timestamp BIGINT      -- Kafkaタイムスタンプ（ミリ秒）
+//   kafka_partition BIGINT      -- Kafka Partition
+//   kafka_offset    BIGINT      -- Kafka Offset
+ 
+【同一主キーの時系列確認について】
+⇒上記３つのテーブルにて確認したところ、
+　TBBA001GへのDELETEとTBBA085GへのINSERTがほぼ同じ時刻に発生されております。
+　１秒以内で113313件、１分以内数秒で18件👇
+ 
+Plain Text
++---------+-------+-------+-------+-------+
+|range    |records|avg_sec|min_sec|max_sec|
++---------+-------+-------+-------+-------+
+|within 1s|113313 |0.1    |0.0    |1.0    |
+|within 1m|18     |2.0    |2.0    |2.0    |
++---------+-------+-------+-------+-------+
