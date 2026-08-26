@@ -1,19 +1,16 @@
-PoCはClouderaを利用しない構成
-Azure Function + ADLS/Blob storage
- 
-CDC直接ではなくPlatform Eventです
- 
-PoCで確認できること（引用）
-・Azure↔Salesforce間の疎通
-・CDCペイロードの構造
-・受信側の実装ボリューム、エラー時挙動
-・連携方式の技術的リスク（NW/認証/スループット）
- 
- 
- 
-Clouderaチームとは誰を想定しているか（Zhenさん？）
- 
-TC-06 通常負荷試験のテスト対象は？（Azure Function？）
- 
-Azure Functionやる意義が薄いなどあればコメント欲しい。
-その場合、どういった構成でやるべきかもセットで
+PM-01～PM-05
+REQ-01～REQ-08
+SFD-01～SFD-09
+ARC-01～ARC-08
+SEC-01～SEC-06
+DEV-01
+DEV-02～DEV-03
+SEC-04、DEV-04～DEV-05
+DEV-06～DEV-07
+FT-01～FT-07
+PT-01～PT-03
+PT-04～PT-08
+REP-01～REP-04
+REP-05～REP-06
+FUT-01
+FUT-02～FUT-04
