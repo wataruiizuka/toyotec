@@ -1,5 +1,15 @@
-考え方として仮納期（1.5か月先）から逆算して考えたく、
-絶対に必要なものと暫定対応であれば省略できるもの、並行できるものなど工夫を入れたいです。
- 
-現時点ではbronze→silver→goldはこちらの作業スコープではなく、
-あくまでSalesforce→Kudu（参照用TB）へのデータ連携のみで見直せないでしょうか。
+レビューありがとうございます。追加資料も確認し、認識を整理しました。
+
+PoCについてはご指摘の通りClouderaを対象外とし、Salesforce → Platform Event → Azure Function → ADLS/Blob Storageまでを検証範囲としてWBSを修正します。
+
+また、PoCの外部連携についてはCDC Change Eventを直接Subscribeする構成ではなく、Platform Eventを利用する前提に修正します。
+1点確認ですが、「CDCペイロードの構造確認」と「Platform Event利用」の関係について、CDCのpayloadをPlatform Eventへそのまま載せる想定なのか、必要項目をマッピングしてPlatform Eventを生成する想定なのかは、WBS上も明確にしておきたいと考えています。
+
+Cloudera担当については特定の方を想定していたものではなく、受入側担当として仮置きしていました。Zhenさんを想定していたわけではありません。今回のPoCではClouderaを使用しないため、PoC内のCloudera関連タスク・担当は削除します。
+
+TC-06の通常負荷試験は、主としてAzure Functionを対象としつつ、Platform Event → Azure Function → ADLS/Blob保存までの一連の経路で、受信件数、正常処理数、保存件数、エラー、処理時間、遅延、スループット等を確認する想定です。試験件数については、現状「5万件/日を超える予想」という情報までなので、TMTの想定負荷を確認した上で設定します。
+
+Azure Functionについては、今回のPoCで確認したいSalesforce↔Azure間の疎通、payload、受信側実装量、エラー時挙動、NW/認証/スループットといった技術成立性を見る目的では実施する意義があると考えています。
+一方、追加共有資料では恒久構成候補として「Salesforce CDC → Pub/Sub API → Java Source Connector → Kafka →既存CDC基盤」が推奨されているため、Azure Functionで確認した実装量や性能がそのまま恒久構成へ適用できるわけではない点は留意が必要と考えています。
+
+そのため今回はAzure Functionを用いたPoCを「イベント連携方式の技術成立性確認」と位置付け、恒久構成候補のCDC→Kafka Connectorについては、必要に応じて後続検証項目として切り分ける形がよいと考えています。
