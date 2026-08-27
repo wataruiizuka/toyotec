@@ -1,16 +1,21 @@
-PM-01～PM-05
-REQ-01～REQ-08
-SFD-01～SFD-09
-ARC-01～ARC-08
-SEC-01～SEC-06
-DEV-01
-DEV-02～DEV-03
-SEC-04、DEV-04～DEV-05
-DEV-06～DEV-07
-FT-01～FT-07
-PT-01～PT-03
-PT-04～PT-08
-REP-01～REP-04
-REP-05～REP-06
-FUT-01
-FUT-02～FUT-04
+お疲れ様です。
+定常運用(未来)については、確認いたしました。
+概ね問題ないと思いますが、数点確認したい事項があります。
+ 
+①powerbiの部分について、「Gateway1」という表現がありますが、それはゲートウェイ「pbi-gw-01-pr-je」を指していますか？
+Power BI の Gateway クラスターは現在5台の Gateway で構成されていて、これら5台すべてを監視対象とする必要があります。
+
+②datavizの部分について、
+「DataVizで使用するデータの更新」というのは、中間テーブルの更新処理のことを指していますでしょうか？
+その処理はバッチ（App Service）で実行しています。
+また、DataVizを利用する場合は、App Serviceも使用するため、App Serviceの監視も必要になります。（バッチ処理・入力機能の処理で使用しています。）
+
+➂AA列～AO列の範囲外ですが、DatavizのZ列に、以下のDBも使っています。
+検証環境：
+neodx_ve_kudu
+号口環境：
+neodx_pr_kudu
+また、記載されている「ai21stg_pr_dx_kudu」ではなく、「ai21rep_stg_pr_dx_kudu」が正しいです。
+ 
+ご確認お願い致します。
+よろしくお願いいたします。
