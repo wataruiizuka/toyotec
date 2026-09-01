@@ -1,27 +1,10 @@
-PS C:\WINDOWS\system32> winget show --id Azul.Zulu.11.JDK --exact
-見つかりました Azul Zulu JDK 11 [Azul.Zulu.11.JDK]
-バージョン: 11.90.205
-公開元: Azul Systems, Inc.
-発行元 URL: https://www.azul.com/
-発行元のサポート URL: https://www.azul.com/support/
-作成者: Azul Systems, Inc.
-モニカー: zulu-jdk-11
-説明: Azul Zulu 11 is a build of OpenJDK 11
-ホーム ページ: https://www.azul.com/downloads/?version=java-11-lts&os=windows&package=jdk#zulu
-ライセンス: GPL-2.0 with Classpath Exception
-ライセンス URL: https://www.azul.com/products/core/openjdk-terms-of-use/
-プライバシー URL: https://www.azul.com/privacy-policy/
-著作権: Copyright (c) 2013-2026, Azul Systems, Inc.
-著作権 URL: https://www.azul.com/legal/
-タグ:
-  java
-  jdk
-  jre
-  jvm
-  openjdk
-  zulu
-インストーラー:
-  インストーラーの種類: wix
-  インストーラーの URL: https://cdn.azul.com/zulu/bin/zulu11.90.205-ca-jdk11.0.32.1-win_x64.msi
-  インストーラーの SHA256: f6e4437e2c31fb8a35930c957cf2da8894d16ef3978f88d7b19b069195dcd39b
-  オフライン配信をサポート: true
+PS C:\WINDOWS\system32> java -version
+openjdk version "11.0.32.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Zulu11.90+205-CA (build 11.0.32.1+1-LTS)
+OpenJDK 64-Bit Server VM Zulu11.90+205-CA (build 11.0.32.1+1-LTS, mixed mode)
+PS C:\WINDOWS\system32> where.exe java
+C:\Program Files\Zulu\zulu-11\bin\java.exe
+PS C:\WINDOWS\system32> $env:JAVA_HOME
+C:\Program Files\Zulu\zulu-11\
+PS C:\WINDOWS\system32> javac -version
+javac 11.0.32.1
