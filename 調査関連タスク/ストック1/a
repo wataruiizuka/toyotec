@@ -1,23 +1,19 @@
-PS C:\WINDOWS\system32> $securePassword = Read-Host "Cloudera Workload Password" -AsSecureString
-Cloudera Workload Password: **********
-PS C:\WINDOWS\system32> $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
-PS C:\WINDOWS\system32> $plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
-PS C:\WINDOWS\system32>
-PS C:\WINDOWS\system32> try {
->>     & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi get-root-id `
->>     -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
->>     -bau "wataru_iizuka_za" `
->>     -bap $plainPassword `
->>     -ts "$env:JAVA_HOME\lib\security\cacerts" `
->>     -tst JKS `
->>     -tsp changeit `
->>     -ot json
->> }
->> finally {
->>     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
->>     Remove-Variable plainPassword,securePassword,bstr -ErrorAction SilentlyContinue
->> }
-Detected java 11 or later runtime version: 11
-Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+$securePassword = Read-Host "Cloudera Workload Password" -AsSecureString
+$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
+$plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
 
-ERROR: Error executing command 'get-root-id' : Error retrieving process group flow:
+try {
+    & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi get-root-id `
+    -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
+    -bau "wataru_iizuka_za" `
+    -bap $plainPassword `
+    -ts "$env:JAVA_HOME\lib\security\cacerts" `
+    -tst JKS `
+    -tsp changeit `
+    -ot json `
+    -verbose
+}
+finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+    Remove-Variable plainPassword,securePassword,bstr -ErrorAction SilentlyContinue
+}
