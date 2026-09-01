@@ -1,10 +1,13 @@
-PS C:\Users\00496_990801> where.exe python
-C:\Users\00496_990801\AppData\Local\Programs\Python\Python313\python.exe
-C:\Users\00496_990801\AppData\Local\Microsoft\WindowsApps\python.exe
-PS C:\Users\00496_990801> python --version
-Python 3.13.15
-PS C:\Users\00496_990801> python -m pip --version
-pip 26.2.1 from C:\Users\00496_990801\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip (python 3.13)
-PS C:\Users\00496_990801> python -c"import sys; print(sys.executable); print(sys.version)"
-C:\Users\00496_990801\AppData\Local\Programs\Python\Python313\python.exe
-3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]
+PS C:\Users\00496_990801> cdp --version
+cdp : 用語 'cdp' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません。名前が正しく記述されていることを確認し、パスが含
+まれている場合はそのパスが正しいことを確認してから、再試行してください。
+発生場所 行:1 文字:1
++ cdp --version
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (cdp:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\00496_990801> where.exe cdp
+情報: 与えられたパターンのファイルが見つかりませんでした。
+PS C:\Users\00496_990801> python -m pip show cdpcli
+WARNING: Package(s) not found: cdpcli
