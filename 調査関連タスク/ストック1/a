@@ -1,1 +1,5 @@
-Get-ChildItem "$HOME\Downloads\nifi-toolkit-1.28.1*" | Select-Object Name,Length,LastWriteTime
+PS C:\WINDOWS\system32> Get-ChildItem "$HOME\Downloads\nifi-toolkit-1.28.1*" | Select-Object Name,Length,LastWriteTime
+
+Name                           Length LastWriteTime
+----                           ------ -------------
+nifi-toolkit-1.28.1-bin.zip 150777348 2026/09/01 14:47:26
