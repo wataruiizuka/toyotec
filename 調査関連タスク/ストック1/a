@@ -1,43 +1,229 @@
-PS C:\WINDOWS\system32> cdp datahub list -clusters
-usage: cdp datahub
-                   {cancel-datahub-diagnostics,collect-cm-diagnostics,collect-datahub-diagnostics,create-aws-cluster,create-aws-gov-cloud-cluster,create-auto-scale-rules,create-azure-cluster,create-cluster-definition,create-cluster-template,create-custom-configurations,create-gcp-cluster,create-recipe,delete-auto-scale-rules,delete-cluster,delete-cluster-definitions,delete-cluster-templates,delete-custom-configurations,delete-instances,delete-recipes,describe-auto-scale-rules,describe-cluster,describe-cluster-definition,describe-cluster-template,describe-custom-configurations,describe-recipe,describe-scaling-activity,finalize-zookeeper-to-kraft-migration,get-cluster-host-status,get-cluster-service-status,get-cm-roles,get-datahub-log-descriptors,get-operation,get-vm-types,list-auto-scale-history,list-cluster-definitions,list-cluster-lifecycle-events,list-cluster-templates,list-clusters,list-custom-configurations,list-datahub-diagnostics,list-datahub-secret-types,list-recipes,list-scaling-activities,migrate-skus,migrate-zookeeper-to-kraft,prepare-cluster-upgrade,renew-certificate,renew-public-certificate,repair-cluster,replace-recipes,restart-cluster-instances,retry-cluster,rollback-zookeeper-to-kraft-migration,rotate-auto-tls-certificates,rotate-db-certificate,rotate-private-certificates,rotate-salt-password,rotate-secrets,scale-cluster,set-catalog,set-default-java-version,start-cluster,start-cluster-vertical-scaling,start-database-upgrade,start-instances,stop-cluster,stop-instances,sync-cluster,sync-component-versions-from-cm,update-auto-scale-rules,update-orchestrator-state,update-public-dns-entries,update-to-aws-imds-v1,update-to-aws-imds-v2,upgrade-cluster,help}
-cdp datahub: error: argument operation: Invalid choice, valid choices are:
-
-cancel-datahub-diagnostics               | collect-cm-diagnostics
-collect-datahub-diagnostics              | create-aws-cluster
-create-aws-gov-cloud-cluster             | create-auto-scale-rules
-create-azure-cluster                     | create-cluster-definition
-create-cluster-template                  | create-custom-configurations
-create-gcp-cluster                       | create-recipe
-delete-auto-scale-rules                  | delete-cluster
-delete-cluster-definitions               | delete-cluster-templates
-delete-custom-configurations             | delete-instances
-delete-recipes                           | describe-auto-scale-rules
-describe-cluster                         | describe-cluster-definition
-describe-cluster-template                | describe-custom-configurations
-describe-recipe                          | describe-scaling-activity
-finalize-zookeeper-to-kraft-migration    | get-cluster-host-status
-get-cluster-service-status               | get-cm-roles
-get-datahub-log-descriptors              | get-operation
-get-vm-types                             | list-auto-scale-history
-list-cluster-definitions                 | list-cluster-lifecycle-events
-list-cluster-templates                   | list-clusters
-list-custom-configurations               | list-datahub-diagnostics
-list-datahub-secret-types                | list-recipes
-list-scaling-activities                  | migrate-skus
-migrate-zookeeper-to-kraft               | prepare-cluster-upgrade
-renew-certificate                        | renew-public-certificate
-repair-cluster                           | replace-recipes
-restart-cluster-instances                | retry-cluster
-rollback-zookeeper-to-kraft-migration    | rotate-auto-tls-certificates
-rotate-db-certificate                    | rotate-private-certificates
-rotate-salt-password                     | rotate-secrets
-scale-cluster                            | set-catalog
-set-default-java-version                 | start-cluster
-start-cluster-vertical-scaling           | start-database-upgrade
-start-instances                          | stop-cluster
-stop-instances                           | sync-cluster
-sync-component-versions-from-cm          | update-auto-scale-rules
-update-orchestrator-state                | update-public-dns-entries
-update-to-aws-imds-v1                    | update-to-aws-imds-v2
-upgrade-cluster                          | help
+PS C:\WINDOWS\system32> cdp datahub list-clusters
+{
+    "clusters": [
+        {
+            "clusterName": "cdp-dap-kudu-ve-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:6b477817-15ae-4c54-a8f3-b45fcbba4f33",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Real-time Data Mart: Apache Impala, Hue, Apache Kudu, Apache Spark3",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
+            "environmentName": "toyotecdap-env-ve",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 11,
+            "creationDate": "2025-01-27T06:04:34.365000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:8afa7f06-7ec9-47f9-8025-5e544ab0b7e7",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-kudu-pr-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:f47a6b07-f683-49c8-bf4b-9f2b34bc7f26",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Real-time Data Mart: Apache Impala, Hue, Apache Kudu, Apache Spark3",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1a372e98-4838-4e76-ba65-c93142cd31e2",
+            "environmentName": "toyotecdap-env",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 11,
+            "creationDate": "2024-11-12T01:52:55.605000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:ab68e75c-0503-4f94-80cc-0684403fdc23",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:8afa7f06-7ec9-47f9-8025-5e544ab0b7e7",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-toyotecdap-nifi-ve-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:a808c05d-7beb-497e-9ac9-6c9522814d28",
+            "status": "NODE_FAILURE",
+            "workloadType": "7.2.18 - Flow Management Light Duty with Apache NiFi, Apache NiFi Registry, Schema Registry",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
+            "environmentName": "toyotecdap-env-ve",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 4,
+            "creationDate": "2025-01-27T05:55:01.388000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:8d2848ed-4ee4-461a-ae06-8b588c6a1dcf",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-flink-ve-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:86ea30a6-aae4-44d3-ac2f-d293c5e15c1d",
+            "status": "NODE_FAILURE",
+            "workloadType": "7.3.1 - Streaming Analytics Light Duty with Apache Flink",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
+            "environmentName": "toyotecdap-env-ve",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 6,
+            "creationDate": "2026-08-07T10:54:39.879000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:9e183424-734f-4334-a2ae-6107da335193",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-toyotecdap-nifi1-dev-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:1ffab8a0-bd84-411d-986d-e806d32f6ba6",
+            "status": "AVAILABLE",
+            "workloadType": "7.3.1 - Flow Management Light Duty with Apache NiFi, Apache NiFi Registry, Schema Registry",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1ef3b864-eb4e-4b81-ba30-7ad99a89c5b5",
+            "environmentName": "toyotecdap-env-dev",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 4,
+            "creationDate": "2025-10-29T05:12:28.925000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:72778fdb-9b75-4a3c-9886-3162cab795e7",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:c54fa572-bf49-4f15-ba06-7db6df7f9727",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-toyotecdap-kafka-dev-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:f6e39ab1-78d7-494c-9b17-f7333a665965",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Streams Messaging Light Duty: Apache Kafka, Schema Registry, Streams Messaging Manager, Streams Replication Manager, Cruise Control",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1ef3b864-eb4e-4b81-ba30-7ad99a89c5b5",
+            "environmentName": "toyotecdap-env-dev",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 4,
+            "creationDate": "2025-03-06T08:38:01.678000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:72778fdb-9b75-4a3c-9886-3162cab795e7",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:74479b92-9e7a-4b31-b645-3fd55cd1b2f0",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dapkudu-dev-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:939b82fe-0c44-4f10-9a4f-10242e3033b4",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Real-time Data Mart: Apache Impala, Hue, Apache Kudu, Apache Spark3",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1ef3b864-eb4e-4b81-ba30-7ad99a89c5b5",
+            "environmentName": "toyotecdap-env-dev",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 7,
+            "creationDate": "2025-03-28T08:45:00.762000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:72778fdb-9b75-4a3c-9886-3162cab795e7",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:8afa7f06-7ec9-47f9-8025-5e544ab0b7e7",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-spark-pr-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:0569c18d-3797-4617-bc3d-06b3b6c58466",
+            "status": "STOPPED",
+            "workloadType": "7.3.1 - Data Engineering: Apache Spark3, Apache Hive, Apache Oozie",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1a372e98-4838-4e76-ba65-c93142cd31e2",
+            "environmentName": "toyotecdap-env",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 5,
+            "creationDate": "2026-03-23T11:48:14.308000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:ab68e75c-0503-4f94-80cc-0684403fdc23",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:87d22816-74c4-4dc7-b86b-876bf83172eb",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-clo-dev-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:b4fd523f-75a1-4974-bb9f-daab4b0c24f3",
+            "status": "AVAILABLE",
+            "workloadType": "7.3.1 - Lakehouse Optimizer",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1ef3b864-eb4e-4b81-ba30-7ad99a89c5b5",
+            "environmentName": "toyotecdap-env-dev",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 4,
+            "creationDate": "2026-02-04T06:34:19.983000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:72778fdb-9b75-4a3c-9886-3162cab795e7",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:1789a66f-a470-4b29-abc5-5969eb5e7853",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-toyotecdap-nifi-pr-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:5cc5273d-1bf7-4a33-afb5-e426ce0a8e32",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Flow Management Heavy Duty with Apache NiFi, Apache NiFi Registry, Schema Registry",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1a372e98-4838-4e76-ba65-c93142cd31e2",
+            "environmentName": "toyotecdap-env",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 10,
+            "creationDate": "2024-11-08T03:44:48.907000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:ab68e75c-0503-4f94-80cc-0684403fdc23",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:9117b131-a627-4626-8219-c03c10c91f9f",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-flink-dev-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:e4dc43d1-ddb0-4837-b504-73f48e736e91",
+            "status": "NODE_FAILURE",
+            "workloadType": "7.3.1 - Streaming Analytics Light Duty with Apache Flink",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1ef3b864-eb4e-4b81-ba30-7ad99a89c5b5",
+            "environmentName": "toyotecdap-env-dev",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 6,
+            "creationDate": "2026-04-10T02:53:36.776000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:72778fdb-9b75-4a3c-9886-3162cab795e7",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:9e183424-734f-4334-a2ae-6107da335193",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-toyotecdap-kafka-001-pr-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:df330145-8562-4e3f-b80a-7b1201915394",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Streams Messaging Heavy Duty: Apache Kafka, Schema Registry, Streams Messaging Manager, Streams Replication Manager, Cruise Control",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1a372e98-4838-4e76-ba65-c93142cd31e2",
+            "environmentName": "toyotecdap-env",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 8,
+            "creationDate": "2025-01-16T01:55:39.678000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:ab68e75c-0503-4f94-80cc-0684403fdc23",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:72ab8ea3-3ca7-470f-804e-7ab5440510ae",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-toyotecdap-kafka-ve-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:9cc5d8dc-09bb-46be-9f9b-4f90f508d0ef",
+            "status": "AVAILABLE",
+            "workloadType": "7.2.18 - Streams Messaging Light Duty: Apache Kafka, Schema Registry, Streams Messaging Manager, Streams Replication Manager, Cruise Control",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
+            "environmentName": "toyotecdap-env-ve",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 4,
+            "creationDate": "2025-01-27T06:45:17.190000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:74479b92-9e7a-4b31-b645-3fd55cd1b2f0",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-clo-pr-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:471432ce-3a95-4576-8c25-21f2f879a381",
+            "status": "STOPPED",
+            "workloadType": "7.3.1 - Lakehouse Optimizer",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:1a372e98-4838-4e76-ba65-c93142cd31e2",
+            "environmentName": "toyotecdap-env",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 4,
+            "creationDate": "2026-03-23T11:32:15.162000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:ab68e75c-0503-4f94-80cc-0684403fdc23",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:1789a66f-a470-4b29-abc5-5969eb5e7853",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-spark-ve-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:08c0306b-5f76-402c-a19d-c2c0d5ba5849",
+            "status": "STOPPED",
+            "workloadType": "7.3.1 - Data Engineering: Apache Spark3, Apache Hive, Apache Oozie",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
+            "environmentName": "toyotecdap-env-ve",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 5,
+            "creationDate": "2026-02-21T13:08:36.352000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:87d22816-74c4-4dc7-b86b-876bf83172eb",
+            "certificateExpirationState": "VALID"
+        },
+        {
+            "clusterName": "cdp-dap-clo-ve-je",
+            "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:56632587-7215-4deb-976b-79b6b8daf5ed",
+            "status": "AVAILABLE",
+            "workloadType": "7.3.1 - Lakehouse Optimizer",
+            "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
+            "environmentName": "toyotecdap-env-ve",
+            "cloudPlatform": "AZURE",
+            "nodeCount": 3,
+            "creationDate": "2025-12-11T04:53:25.648000+00:00",
+            "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
+            "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:1789a66f-a470-4b29-abc5-5969eb5e7853",
+            "certificateExpirationState": "VALID"
+        }
+    ]
+}
