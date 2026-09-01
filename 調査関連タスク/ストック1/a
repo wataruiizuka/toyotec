@@ -1,12 +1,27 @@
-PS C:\WINDOWS\system32> winget search "JDK 11"
-名前                          ID                                 バージョン  ソース
-------------------------------------------------------------------------------------
-Azul Zulu JDK 11              Azul.Zulu.11.JDK                   11.90.205   winget
-Azul ZuluFX JDK 11            Azul.ZuluFX.11.JDK                 11.90.205   winget
-Liberica JDK 11               BellSoft.LibericaJDK.11            11.0.32.101 winget
-Liberica JDK 11 Full          BellSoft.LibericaJDK.11.Full       11.0.32.101 winget
-Liberica JDK 11 Lite          BellSoft.LibericaJDK.11.Lite       11.0.32.11  winget
-Liberica NIK 22 (JDK 11)      BellSoft.LibericaNIK.22.JDK11      22.3.5      winget
-Liberica NIK Core 22 (JDK 11) BellSoft.LibericaNIK.22.JDK11.Core 22.3.5      winget
-Liberica NIK 22 Full (JDK 11) BellSoft.LibericaNIK.22.JDK11.Full 22.3.5      winget
-OpenJDK 11                    ojdkbuild.openjdk.11.jdk           11.0.15.1   winget
+PS C:\WINDOWS\system32> winget show --id Azul.Zulu.11.JDK --exact
+見つかりました Azul Zulu JDK 11 [Azul.Zulu.11.JDK]
+バージョン: 11.90.205
+公開元: Azul Systems, Inc.
+発行元 URL: https://www.azul.com/
+発行元のサポート URL: https://www.azul.com/support/
+作成者: Azul Systems, Inc.
+モニカー: zulu-jdk-11
+説明: Azul Zulu 11 is a build of OpenJDK 11
+ホーム ページ: https://www.azul.com/downloads/?version=java-11-lts&os=windows&package=jdk#zulu
+ライセンス: GPL-2.0 with Classpath Exception
+ライセンス URL: https://www.azul.com/products/core/openjdk-terms-of-use/
+プライバシー URL: https://www.azul.com/privacy-policy/
+著作権: Copyright (c) 2013-2026, Azul Systems, Inc.
+著作権 URL: https://www.azul.com/legal/
+タグ:
+  java
+  jdk
+  jre
+  jvm
+  openjdk
+  zulu
+インストーラー:
+  インストーラーの種類: wix
+  インストーラーの URL: https://cdn.azul.com/zulu/bin/zulu11.90.205-ca-jdk11.0.32.1-win_x64.msi
+  インストーラーの SHA256: f6e4437e2c31fb8a35930c957cf2da8894d16ef3978f88d7b19b069195dcd39b
+  オフライン配信をサポート: true
