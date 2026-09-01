@@ -1,3 +1,3 @@
-PS C:\WINDOWS\system32> curl.exe --proxy "socks5h://127.0.0.1:1080" -u "wataru_iizuka_za" -sS -o NUL -w "%{http_code}" "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/flow/current-user"
-Enter host password for user 'wataru_iizuka_za':
-200
+$env:JAVA_TOOL_OPTIONS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080"
+
+& "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" -ot json
