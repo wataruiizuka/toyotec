@@ -1,11 +1,18 @@
-PS C:\WINDOWS\system32> cdp configure list
-                Name                          Value              Source Type    Source
-                ----                          -----              -----------    ------
-             profile                      <not set>                     None    None
-   cdp_access_key_id           ****************5366  shared-credentials-file
-     cdp_private_key           ****************EZc=  shared-credentials-file
-          cdp_region                      <not set>                     None    None
-    cdp_endpoint_url                      <not set>                     None    None
-        endpoint_url                      <not set>                     None    None
-         form_factor                      <not set>                     None    None
-           ca_bundle                      <not set>                     None    None
+{
+    "user": {
+        "userId": "7fd5b6fe-c47e-43fa-8147-e6ae80806705",
+        "crn": "crn:altus:iam:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:user:7fd5b6fe-c47e-43fa-8147-e6ae80806705",
+        "email": "wataru_iizuka_za@toyotec-jp.com",
+        "firstName": "",
+        "lastName": "",
+        "creationDate": "2026-04-17T03:51:30.692000+00:00",
+        "accountAdmin": false,
+        "identityProviderCrn": "crn:altus:iam:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:samlProvider:toyotecdap-entraid/a5128ef3-9115-426a-97f0-451e401d3394",
+        "lastInteractiveLogin": "2026-09-01T04:48:37.593000+00:00",
+        "workloadUsername": "wataru_iizuka_za",
+        "status": "ACTIVE",
+        "workloadPasswordDetails": {
+            "isPasswordSet": true
+        }
+    }
+}
