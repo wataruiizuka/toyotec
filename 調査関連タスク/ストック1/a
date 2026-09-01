@@ -1,40 +1,18 @@
-PS C:\WINDOWS\system32> & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi pg-list -h
-Detected java 11 or later runtime version: 11
-Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+$securePassword = Read-Host "Cloudera Workload Password" -AsSecureString
+$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
+$plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
 
-Returns the process groups contained in the specified process group. If no
-process group is specified, then the root group will be used.
-
-PRODUCES BACK-REFERENCES
-
-usage: pg-list
- -bap,--basicAuthPassword <arg>   The password for basic auth
- -bau,--basicAuthUsername <arg>   The username for basic auth
- -btk,--bearerToken <arg>         The bearer token to be passed in the
-                                  Authorization header of a request
- -cto,--connectionTimeout <arg>   Timeout parameter for creating a connection to
-                                  NiFi/Registry, specified in milliseconds
- -h,--help                        Help
- -kp,--keyPasswd <arg>            The key password of the keystore being used
- -ks,--keystore <arg>             A keystore to use for TLS/SSL connections
- -ksp,--keystorePasswd <arg>      The password of the keystore being used
- -kst,--keystoreType <arg>        The type of key store being used such as
-                                  PKCS12
- -ot,--outputType <arg>           The type of output to produce (json or simple)
- -p,--properties <arg>            A properties file to load arguments from,
-                                  command line values will override anything in
-                                  the properties file, must contain full path to
-                                  file
- -pe,--proxiedEntity <arg>        The identity of an entity to proxy
- -pgid,--processGroupId <arg>     The id of a process group
- -rto,--readTimeout <arg>         Timeout parameter for reading from
-                                  NiFi/Registry, specified in milliseconds
- -ts,--truststore <arg>           A truststore to use for TLS/SSL connections
- -tsp,--truststorePasswd <arg>    The password of the truststore being used
- -tst,--truststoreType <arg>      The type of trust store being used such as
-                                  PKCS12
- -u,--baseUrl <arg>               The URL to execute the command against
- -verbose,--verbose               Indicates that verbose output should be
-                                  provided
-
-Unable to parse command line
+try {
+    & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi pg-list `
+    -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
+    -bau "wataru_iizuka_za" `
+    -bap $plainPassword `
+    -ts "$env:JAVA_HOME\lib\security\cacerts" `
+    -tst JKS `
+    -tsp changeit `
+    -ot json
+}
+finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+    Remove-Variable plainPassword,securePassword,bstr -ErrorAction SilentlyContinue
+}
