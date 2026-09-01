@@ -1,12 +1,12 @@
-PS C:\WINDOWS\system32> Get-Alias curl
-
-CommandType     Name                                               Version    Source
------------     ----                                               -------    ------
-Alias           curl -> Invoke-WebRequest
-
-
-PS C:\WINDOWS\system32> curl.exe --version
-curl 8.21.0 (Windows) libcurl/8.21.0 Schannel zlib/1.3.2 WinIDN WinLDAP
-Release-Date: 2026-06-24
-Protocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns ldap ldaps mqtt mqtts pop3 pop3s smtp smtps telnet tftp ws wss
-Features: alt-svc AsynchDNS HSTS HTTPS-proxy IDN IPv6 Kerberos Largefile libz SPNEGO SSL SSPI threadsafe Unicode UnixSockets
+PS C:\WINDOWS\system32> winget search "JDK 11"
+名前                          ID                                 バージョン  ソース
+------------------------------------------------------------------------------------
+Azul Zulu JDK 11              Azul.Zulu.11.JDK                   11.90.205   winget
+Azul ZuluFX JDK 11            Azul.ZuluFX.11.JDK                 11.90.205   winget
+Liberica JDK 11               BellSoft.LibericaJDK.11            11.0.32.101 winget
+Liberica JDK 11 Full          BellSoft.LibericaJDK.11.Full       11.0.32.101 winget
+Liberica JDK 11 Lite          BellSoft.LibericaJDK.11.Lite       11.0.32.11  winget
+Liberica NIK 22 (JDK 11)      BellSoft.LibericaNIK.22.JDK11      22.3.5      winget
+Liberica NIK Core 22 (JDK 11) BellSoft.LibericaNIK.22.JDK11.Core 22.3.5      winget
+Liberica NIK 22 Full (JDK 11) BellSoft.LibericaNIK.22.JDK11.Full 22.3.5      winget
+OpenJDK 11                    ojdkbuild.openjdk.11.jdk           11.0.15.1   winget
