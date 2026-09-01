@@ -1,32 +1,4 @@
-PS C:\WINDOWS\system32> Resolve-DnsName "cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site"
-
-Name                                           Type   TTL   Section    IPAddress
-----                                           ----   ---   -------    ---------
-cdp-toyotecdap-nifi-ve-je-management0.toyotecd A      60    Answer     172.17.2.28
-.kj09-szpi.a0.cloudera.site
+Test-NetConnection "urlf.dci.ad.jp" -Port 8080
 
 
-PS C:\WINDOWS\system32> Test-NetConnection "cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site" -Port 443
-警告: TCP connect to (172.17.2.28 : 443) failed
-警告: Ping to 172.17.2.28 failed with status: TimedOut
-
-
-ComputerName           : cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site
-RemoteAddress          : 172.17.2.28
-RemotePort             : 443
-InterfaceAlias         : Wi-Fi
-SourceAddress          : 192.168.0.250
-PingSucceeded          : False
-PingReplyDetails (RTT) : 0 ms
-TcpTestSucceeded       : False
-
-
-
-PS C:\WINDOWS\system32> netsh winhttp show proxy
-
-現在の WinHTTP プロキシ設定:
-
-    プロキシ サーバー:  http://urlf.dci.ad.jp:8080
-    バイパス一覧     :  10.*;192.*;*.local;*.tipsite.*;*.mx.toyota.co.jp;<local>
-
-PS C:\WINDOWS\system32> Get-ChildItem Env: | Where-Object { $_.Name -match 'proxy' }
+curl.exe -x "http://urlf.dci.ad.jp:8080" -sS -o NUL -w "%{http_code}" "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/flow/current-user"
