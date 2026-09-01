@@ -4,3 +4,5 @@ PS C:\WINDOWS\system32> cdp configure list
              profile                      <not set>                     None    None
 
 Unable to locate CDP credentials: No credentials found anywhere in chain. The shared credentials file should be stored at C:\Users\00496_990801/.cdp/credentials.
+PS C:\WINDOWS\system32> Test-Path "$HOME\.cdp\credentials"
+False
