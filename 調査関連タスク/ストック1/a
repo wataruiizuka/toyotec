@@ -1,12 +1,7 @@
-PS C:\WINDOWS\system32> & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user `
->> -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
->> -ts "$env:JAVA_HOME\lib\security\cacerts" `
->> -tst JKS `
->> -tsp changeit `
->> -ot json
-Detected java 11 or later runtime version: 11
-Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
-
-ERROR: Error executing command 'current-user' : Error retrieving current:
-
-PS C:\WINDOWS\system32> $env:JAVA_TOOL_OPTIONS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080"
+& "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user `
+-u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
+-ts "$env:JAVA_HOME\lib\security\cacerts" `
+-tst JKS `
+-tsp changeit `
+-ot json `
+-verbose
