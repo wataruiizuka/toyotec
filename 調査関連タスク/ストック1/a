@@ -1,14 +1,11 @@
-PS C:\WINDOWS\system32> New-Item -ItemType Directory -Force "$HOME\.cdp"
-
-
-    ディレクトリ: C:\Users\00496_990801
-
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
-d-----        2026/09/01     13:43                .cdp
-
-
-PS C:\WINDOWS\system32> Copy-Item "$HOME\Downloads\credentials" "$HOME\.cdp\credentials"
-PS C:\WINDOWS\system32> Test-Path "$HOME\.cdp\credentials"
-True
+PS C:\WINDOWS\system32> cdp configure list
+                Name                          Value              Source Type    Source
+                ----                          -----              -----------    ------
+             profile                      <not set>                     None    None
+   cdp_access_key_id           ****************5366  shared-credentials-file
+     cdp_private_key           ****************EZc=  shared-credentials-file
+          cdp_region                      <not set>                     None    None
+    cdp_endpoint_url                      <not set>                     None    None
+        endpoint_url                      <not set>                     None    None
+         form_factor                      <not set>                     None    None
+           ca_bundle                      <not set>                     None    None
