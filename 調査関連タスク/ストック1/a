@@ -1,4 +1,16 @@
-PS C:\WINDOWS\system32> $actual = (Get-FileHash "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip" -Algorithm SHA512).Hash.ToLower()
-PS C:\WINDOWS\system32> $expected = (Get-Content "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip.sha512").Trim().ToLower()
-PS C:\WINDOWS\system32> $actual -eq $expected
-True
+New-Item -ItemType Directory -Force "$HOME\Tools\NiFi" | Out-Null
+
+
+Expand-Archive `
+  -Path "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip" `
+  -DestinationPath "$HOME\Tools\NiFi" `
+  -Force
+
+
+Get-ChildItem "$HOME\Tools\NiFi" |
+  Select-Object Name,Mode,LastWriteTime
+
+
+Get-ChildItem "$HOME\Tools\NiFi" -Recurse -File |
+  Where-Object { $_.Name -match '^cli\.(bat|cmd|sh)$' } |
+  Select-Object FullName
