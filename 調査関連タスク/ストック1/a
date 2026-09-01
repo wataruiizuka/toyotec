@@ -1,1 +1,36 @@
-& "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user -h
+PS C:\WINDOWS\system32> & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user -h
+Detected java 11 or later runtime version: 11
+
+Returns information about the user accessing NiFi. This provides a way to test
+if the CLI is accessing NiFi as the expected user.
+
+usage: current-user
+ -bap,--basicAuthPassword <arg>   The password for basic auth
+ -bau,--basicAuthUsername <arg>   The username for basic auth
+ -btk,--bearerToken <arg>         The bearer token to be passed in the
+                                  Authorization header of a request
+ -cto,--connectionTimeout <arg>   Timeout parameter for creating a connection to
+                                  NiFi/Registry, specified in milliseconds
+ -h,--help                        Help
+ -kp,--keyPasswd <arg>            The key password of the keystore being used
+ -ks,--keystore <arg>             A keystore to use for TLS/SSL connections
+ -ksp,--keystorePasswd <arg>      The password of the keystore being used
+ -kst,--keystoreType <arg>        The type of key store being used such as
+                                  PKCS12
+ -ot,--outputType <arg>           The type of output to produce (json or simple)
+ -p,--properties <arg>            A properties file to load arguments from,
+                                  command line values will override anything in
+                                  the properties file, must contain full path to
+                                  file
+ -pe,--proxiedEntity <arg>        The identity of an entity to proxy
+ -rto,--readTimeout <arg>         Timeout parameter for reading from
+                                  NiFi/Registry, specified in milliseconds
+ -ts,--truststore <arg>           A truststore to use for TLS/SSL connections
+ -tsp,--truststorePasswd <arg>    The password of the truststore being used
+ -tst,--truststoreType <arg>      The type of trust store being used such as
+                                  PKCS12
+ -u,--baseUrl <arg>               The URL to execute the command against
+ -verbose,--verbose               Indicates that verbose output should be
+                                  provided
+
+Unable to parse command line
