@@ -2,3 +2,6 @@ Test-NetConnection "urlf.dci.ad.jp" -Port 8080
 
 
 curl.exe -x "http://urlf.dci.ad.jp:8080" -sS -o NUL -w "%{http_code}" "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/flow/current-user"
+
+
+route print 172.17.2.28
