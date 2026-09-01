@@ -1,16 +1,29 @@
-Get-NetAdapter |
-Where-Object {$_.Status -eq "Up"} |
-Select-Object Name,InterfaceDescription,Status,LinkSpeed
+PS C:\WINDOWS\system32> Get-NetAdapter |
+>> Where-Object {$_.Status -eq "Up"} |
+>> Select-Object Name,InterfaceDescription,Status,LinkSpeed
+
+Name  InterfaceDescription                           Status LinkSpeed
+----  --------------------                           ------ ---------
+Wi-Fi Realtek RTL8852BE WiFi 6 802.11ax PCIe Adapter Up     573.5 Mbps
 
 
-Get-NetIPConfiguration |
-Where-Object {$_.IPv4Address -ne $null} |
-Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer
+PS C:\WINDOWS\system32> Get-NetIPConfiguration |
+>> Where-Object {$_.IPv4Address -ne $null} |
+>> Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer
+
+InterfaceAlias IPv4Address     IPv4DefaultGateway                                            DNSServer
+-------------- -----------     ------------------                                            ---------
+Wi-Fi          {192.168.0.250} {MSFT_NetRoute (InstanceID = ":8:8:8:9:55A55;C?8;@B8:8;55;")} {MSFT_DNSClientServerAd...
+イーサネット   {169.254.37.55}                                                               {MSFT_DNSClientServerAd...
 
 
-Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" |
-Select-Object ProxyEnable,ProxyServer,AutoConfigURL
+PS C:\WINDOWS\system32> Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" |
+>> Select-Object ProxyEnable,ProxyServer,AutoConfigURL
+
+ProxyEnable ProxyServer                AutoConfigURL
+----------- -----------                -------------
+          0 http://urlf.dci.ad.jp:8080
 
 
-Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue
-Get-VpnConnection -ErrorAction SilentlyContinue
+PS C:\WINDOWS\system32> Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue
+PS C:\WINDOWS\system32> Get-VpnConnection -ErrorAction SilentlyContinue
