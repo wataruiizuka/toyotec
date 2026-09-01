@@ -1,4 +1,18 @@
-$javaTruststore = "$env:JAVA_HOME\lib\security\cacerts"
-Test-Path $javaTruststore
+PS C:\WINDOWS\system32> $javaTruststore = "$env:JAVA_HOME\lib\security\cacerts"
+PS C:\WINDOWS\system32> Test-Path $javaTruststore
+True
+PS C:\WINDOWS\system32> keytool -list -keystore "$env:JAVA_HOME\lib\security\cacerts" -storepass changeit 2>&1 | Select-Object -First 8
+keytool : Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+発生場所 行:1 文字:1
++ keytool -list -keystore "$env:JAVA_HOME\lib\security\cacerts" -storep ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Picked up JAVA_...sProxyPort=1080:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
 
-keytool -list -keystore "$env:JAVA_HOME\lib\security\cacerts" -storepass changeit 2>&1 | Select-Object -First 8
+警告: cacertsキーストアにアクセスするには-cacertsオプションを使用してください
+キーストアのタイプ: JKS
+キーストア・プロバイダ: SUN
+
+キーストアには111エントリが含まれます
+
+actalisauthenticationrootca [jdk],2011/09/22, trustedCertEntry,
