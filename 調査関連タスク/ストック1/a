@@ -1,12 +1,13 @@
-PS C:\WINDOWS\system32> $PSVersionTable
-
-Name                           Value
-----                           -----
-PSVersion                      5.1.26100.9278
-PSEdition                      Desktop
-PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
-BuildVersion                   10.0.26100.9278
-CLRVersion                     4.0.30319.42000
-WSManStackVersion              3.0
-PSRemotingProtocolVersion      2.3
-SerializationVersion           1.1.0.1
+PS C:\Users\00496_990801> python --version
+Python 
+PS C:\Users\00496_990801> py --version
+py : 用語 'py' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません。名前が正しく記述されていることを確認し、パスが含ま
+れている場合はそのパスが正しいことを確認してから、再試行してください。
+発生場所 行:1 文字:1
++ py --version
++ ~~
+    + CategoryInfo          : ObjectNotFound: (py:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\00496_990801> python -m pip --version
+Python 
