@@ -1,41 +1,16 @@
-PS C:\WINDOWS\system32> Test-NetConnection "urlf.dci.ad.jp" -Port 8080
-警告: TCP connect to (219.99.155.68 : 8080) failed
-警告: Ping to 219.99.155.68 failed with status: TimedOut
+Get-NetAdapter |
+Where-Object {$_.Status -eq "Up"} |
+Select-Object Name,InterfaceDescription,Status,LinkSpeed
 
 
-ComputerName           : urlf.dci.ad.jp
-RemoteAddress          : 219.99.155.68
-RemotePort             : 8080
-InterfaceAlias         : Wi-Fi
-SourceAddress          : 192.168.0.250
-PingSucceeded          : False
-PingReplyDetails (RTT) : 0 ms
-TcpTestSucceeded       : False
+Get-NetIPConfiguration |
+Where-Object {$_.IPv4Address -ne $null} |
+Select-Object InterfaceAlias,IPv4Address,IPv4DefaultGateway,DNSServer
 
 
+Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" |
+Select-Object ProxyEnable,ProxyServer,AutoConfigURL
 
-PS C:\WINDOWS\system32> curl.exe -x "http://urlf.dci.ad.jp:8080" -sS -o NUL -w "%{http_code}" "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/flow/current-user"
-curl: (28) Failed to connect to cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site:443 over proxy urlf.dci.ad.jp after 21076 ms: Could not connect to server
-000
-PS C:\WINDOWS\system32> route print 172.17.2.28
-===========================================================================
-インターフェイス一覧
- 11...12 68 38 fb 53 5c ......Microsoft Wi-Fi Direct Virtual Adapter
-  7...10 68 38 fb 53 5c ......Realtek RTL8852BE WiFi 6 802.11ax PCIe Adapter
-  4...e0 73 e7 e0 f6 63 ......Realtek PCIe GbE Family Controller
-  1...........................Software Loopback Interface 1
-===========================================================================
 
-IPv4 ルート テーブル
-===========================================================================
-アクティブ ルート:
-  なし
-固定ルート:
-  なし
-
-IPv6 ルート テーブル
-===========================================================================
-アクティブ ルート:
-  なし
-固定ルート:
-  なし
+Get-VpnConnection -AllUserConnection -ErrorAction SilentlyContinue
+Get-VpnConnection -ErrorAction SilentlyContinue
