@@ -4,3 +4,5 @@
 -tst JKS `
 -tsp changeit `
 -ot json
+
+$env:JAVA_TOOL_OPTIONS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080"
