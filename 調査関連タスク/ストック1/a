@@ -1,8 +1,9 @@
-PS C:\WINDOWS\system32> cdp configure list
-                Name                          Value              Source Type    Source
-                ----                          -----              -----------    ------
-             profile                      <not set>                     None    None
+PS C:\WINDOWS\system32> Get-ChildItem "$HOME\Downloads" -File | Sort-Object LastWriteTime -Descending | Select-Object -First 5 Name,Length,LastWriteTime
 
-Unable to locate CDP credentials: No credentials found anywhere in chain. The shared credentials file should be stored at C:\Users\00496_990801/.cdp/credentials.
-PS C:\WINDOWS\system32> Test-Path "$HOME\.cdp\credentials"
-False
+Name                                                        Length LastWriteTime
+----                                                        ------ -------------
+credentials                                                    125 2026/09/01 13:54:12
+python-3.13.15-amd64.exe                                  29452944 2026/09/01 13:22:04
+勤怠工数_wataru_iizuka_za_飯塚亘_2026-08 (1).pdf           4355800 2026/09/01 10:15:43
+勤怠工数_wataru_iizuka_za_飯塚亘_2026-08.pdf               4355800 2026/09/01 10:15:17
+監視・エスカレーション_ヒアリング質問票_DX道場用 (2).xlsm    56081 2026/08/27 17:01:40
