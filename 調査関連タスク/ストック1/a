@@ -1,230 +1,31 @@
-PS C:\WINDOWS\system32> cdp datahub describe-cluster --cluster-name cdp-toyotecdap-nifi-ve-je
-{
-    "cluster": {
-        "clusterName": "cdp-toyotecdap-nifi-ve-je",
-        "crn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:cluster:a808c05d-7beb-497e-9ac9-6c9522814d28",
-        "creationDate": "2025-01-27T05:55:01.388000+00:00",
-        "status": "NODE_FAILURE",
-        "clusterStatus": "NODE_FAILURE",
-        "nodeCount": 4,
-        "instanceGroups": [
-            {
-                "name": "management",
-                "instances": [
-                    {
-                        "id": "cdp-toyotecdap-nifi-ve-je213391m8-08e47b6f",
-                        "state": "HEALTHY",
-                        "instanceType": "GATEWAY_PRIMARY",
-                        "privateIp": "172.17.2.28",
-                        "publicIp": "N/A",
-                        "fqdn": "cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site",
-                        "status": "SERVICES_HEALTHY",
-                        "statusReason": "",
-                        "sshPort": 22,
-                        "clouderaManagerServer": true,
-                        "instanceGroup": "management",
-                        "attachedVolumes": [
-                            {
-                                "count": 1,
-                                "volumeType": "Standard_LRS",
-                                "size": 100
-                            }
-                        ],
-                        "availabilityZone": "japaneast",
-                        "instanceVmType": "Standard_D8s_v3",
-                        "rackId": "/japaneast",
-                        "subnetId": "subnet1"
-                    }
-                ],
-                "subnetIds": [
-                    "subnet1"
-                ],
-                "availabilityZones": [],
-                "recipes": []
-            },
-            {
-                "name": "nifi_scaling",
-                "instances": [],
-                "availabilityZones": [],
-                "recipes": []
-            },
-            {
-                "name": "nifi",
-                "instances": [
-                    {
-                        "id": "cdp-toyotecdap-nifi-ve-je213391n9-e05357af",
-                        "state": "HEALTHY",
-                        "instanceType": "CORE",
-                        "privateIp": "172.17.2.11",
-                        "publicIp": "N/A",
-                        "fqdn": "cdp-toyotecdap-nifi-ve-je-nifi0.toyotecd.kj09-szpi.a0.cloudera.site",
-                        "status": "SERVICES_HEALTHY",
-                        "statusReason": "",
-                        "sshPort": 22,
-                        "clouderaManagerServer": false,
-                        "instanceGroup": "nifi",
-                        "attachedVolumes": [
-                            {
-                                "count": 4,
-                                "volumeType": "Standard_LRS",
-                                "size": 500
-                            }
-                        ],
-                        "availabilityZone": "japaneast",
-                        "instanceVmType": "Standard_D8s_v3",
-                        "rackId": "/japaneast",
-                        "subnetId": "subnet1"
-                    },
-                    {
-                        "id": "cdp-toyotecdap-nifi-ve-je213391n11-806988be",
-                        "state": "UNHEALTHY",
-                        "instanceType": "CORE",
-                        "privateIp": "172.17.2.12",
-                        "publicIp": "N/A",
-                        "fqdn": "cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site",
-                        "status": "SERVICES_UNHEALTHY",
-                        "statusReason": "The following services are in bad health: nifi-NIFI-BASE. Please check the logs at the following location: abfs://logs@sttoyotecdapveje.dfs.core.windows.net/cluster-logs/datahub/cdp-toyotecdap-nifi-ve-je_a808c05d-7beb-497e-9ac9-6c9522814d28",
-                        "sshPort": 22,
-                        "clouderaManagerServer": false,
-                        "instanceGroup": "nifi",
-                        "attachedVolumes": [
-                            {
-                                "count": 4,
-                                "volumeType": "Standard_LRS",
-                                "size": 500
-                            }
-                        ],
-                        "availabilityZone": "japaneast",
-                        "instanceVmType": "Standard_D8s_v3",
-                        "rackId": "/japaneast",
-                        "subnetId": "subnet1"
-                    },
-                    {
-                        "id": "cdp-toyotecdap-nifi-ve-je213391n10-1c382535",
-                        "state": "HEALTHY",
-                        "instanceType": "CORE",
-                        "privateIp": "172.17.2.10",
-                        "publicIp": "N/A",
-                        "fqdn": "cdp-toyotecdap-nifi-ve-je-nifi2.toyotecd.kj09-szpi.a0.cloudera.site",
-                        "status": "SERVICES_HEALTHY",
-                        "statusReason": "",
-                        "sshPort": 22,
-                        "clouderaManagerServer": false,
-                        "instanceGroup": "nifi",
-                        "attachedVolumes": [
-                            {
-                                "count": 4,
-                                "volumeType": "Standard_LRS",
-                                "size": 500
-                            }
-                        ],
-                        "availabilityZone": "japaneast",
-                        "instanceVmType": "Standard_D8s_v3",
-                        "rackId": "/japaneast",
-                        "subnetId": "subnet1"
-                    }
-                ],
-                "subnetIds": [
-                    "subnet1"
-                ],
-                "availabilityZones": [],
-                "recipes": []
-            }
-        ],
-        "workloadType": "7.2.18 - Flow Management Light Duty with Apache NiFi, Apache NiFi Registry, Schema Registry",
-        "cloudPlatform": "AZURE",
-        "imageDetails": {
-            "name": "cloudera:cdp-7_3_1:runtime-7_3_1:500.71942734.1761747330",
-            "id": "8bb59bd1-c9e3-4424-93a2-bcdf58b15d5e",
-            "os": "redhat8",
-            "catalogUrl": "https://cloudbreak-imagecatalog.s3.amazonaws.com/v3-prod-cb-image-catalog.json",
-            "catalogName": "cdp-default"
-        },
-        "environmentCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:environment:e6695702-9b8d-496c-968a-3939c856933d",
-        "credentialCrn": "crn:cdp:environments:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:credential:dd79be98-f723-4673-b358-6f26085165f7",
-        "datalakeCrn": "crn:cdp:datalake:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:datalake:e04460db-07e4-430a-9278-278e00108333",
-        "clusterTemplateCrn": "crn:cdp:datahub:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:clustertemplate:8d2848ed-4ee4-461a-ae06-8b588c6a1dcf",
-        "statusReason": "",
-        "clouderaManager": {
-            "version": "7.13.1.500",
-            "platformVersion": "7.3.1-1.cdh7.3.1.p500.71942734"
-        },
-        "endpoints": {
-            "endpoints": [
-                {
-                    "serviceName": "NIFI_REGISTRY_SERVER",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy/nifi-registry-app/nifi-registry/",
-                    "displayName": "NiFi Registry",
-                    "knoxService": "NIFI-REGISTRY",
-                    "mode": "SSO_PROVIDER_FROM_UMS",
-                    "open": true
-                },
-                {
-                    "serviceName": "NIFI_NODE",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy/nifi-app/nifi/",
-                    "displayName": "NiFi",
-                    "knoxService": "NIFI",
-                    "mode": "SSO_PROVIDER_FROM_UMS",
-                    "open": true
-                },
-                {
-                    "serviceName": "SCHEMA_REGISTRY_SERVER",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy/schema-registry/",
-                    "displayName": "Schema Registry",
-                    "knoxService": "SCHEMA-REGISTRY",
-                    "mode": "SSO_PROVIDER_FROM_UMS",
-                    "open": true
-                },
-                {
-                    "serviceName": "CM-UI",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy/cmf/home/",
-                    "displayName": "CM-UI",
-                    "knoxService": "CM-UI",
-                    "mode": "SSO_PROVIDER_FROM_UMS",
-                    "open": true
-                },
-                {
-                    "serviceName": "KNOX",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/homepage/home?profile=token&topologies=cdp-proxy-token",
-                    "displayName": "Token Integration",
-                    "knoxService": "KNOX_TOKEN_INTEGRATOR",
-                    "mode": "SSO_PROVIDER_FROM_UMS",
-                    "open": true
-                },
-                {
-                    "serviceName": "NIFI_NODE",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/",
-                    "displayName": "NiFi Rest",
-                    "knoxService": "NIFI_REST",
-                    "mode": "PAM",
-                    "open": true
-                },
-                {
-                    "serviceName": "NIFI_REGISTRY_SERVER",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-registry-app/nifi-registry-api/",
-                    "displayName": "NiFi Registry Rest",
-                    "knoxService": "NIFI-REGISTRY-REST",
-                    "mode": "PAM",
-                    "open": true
-                },
-                {
-                    "serviceName": "CM-API",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/cm-api/",
-                    "displayName": "CM-API",
-                    "knoxService": "CM-API",
-                    "mode": "PAM",
-                    "open": true
-                },
-                {
-                    "serviceName": "SCHEMA_REGISTRY_SERVER",
-                    "serviceUrl": "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/schema-registry/api/v1/",
-                    "displayName": "Schema Registry",
-                    "knoxService": "SCHEMA-REGISTRY-API",
-                    "mode": "PAM",
-                    "open": true
-                }
-            ]
-        },
-        "multiAz": false
-    }
-}
+PS C:\WINDOWS\system32> cdp datahub get-cluster-service-status help
+
+get-cluster-service-status
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Description
+***********
+
+Gets the status of the services in a cluster.
+
+
+Synopsis
+********
+
+     get-cluster-service-status
+   --cluster-name <value>
+   [--cli-input-json <value>]
+   [--generate-cli-skeleton]
+
+
+Options
+*******
+
+"--cluster-name" (string)
+
+   The name or CRN of the cluster.
+
+"--cli-input-json" (string)
+
+-- More  --
