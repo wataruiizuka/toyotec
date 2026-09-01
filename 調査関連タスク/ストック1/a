@@ -1,3 +1,4 @@
-$actual = (Get-FileHash "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip" -Algorithm SHA512).Hash.ToLower()
-$expected = (Get-Content "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip.sha512").Trim().ToLower()
-$actual -eq $expected
+PS C:\WINDOWS\system32> $actual = (Get-FileHash "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip" -Algorithm SHA512).Hash.ToLower()
+PS C:\WINDOWS\system32> $expected = (Get-Content "$HOME\Downloads\nifi-toolkit-1.28.1-bin.zip.sha512").Trim().ToLower()
+PS C:\WINDOWS\system32> $actual -eq $expected
+True
