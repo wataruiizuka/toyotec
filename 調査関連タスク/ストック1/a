@@ -1,18 +1,12 @@
-PS C:\WINDOWS\system32> java --version
-java : 用語 'java' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません
-。名前が正しく記述されていることを確認し、パスが含まれている場合はそのパスが正しいことを確認してから、再試行してくださ
-い。
-発生場所 行:1 文字:1
-+ java --version
-+ ~~~~
-    + CategoryInfo          : ObjectNotFound: (java:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
+PS C:\WINDOWS\system32> Get-Alias curl
 
-PS C:\WINDOWS\system32> curl --version
-curl : リモート名を解決できませんでした。: '--version'
-発生場所 行:1 文字:1
-+ curl --version
-+ ~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest]、WebExce
-    ption
-    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Alias           curl -> Invoke-WebRequest
+
+
+PS C:\WINDOWS\system32> curl.exe --version
+curl 8.21.0 (Windows) libcurl/8.21.0 Schannel zlib/1.3.2 WinIDN WinLDAP
+Release-Date: 2026-06-24
+Protocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns ldap ldaps mqtt mqtts pop3 pop3s smtp smtps telnet tftp ws wss
+Features: alt-svc AsynchDNS HSTS HTTPS-proxy IDN IPv6 Kerberos Largefile libz SPNEGO SSL SSPI threadsafe Unicode UnixSockets
