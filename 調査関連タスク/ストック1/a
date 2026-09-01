@@ -1,7 +1,45 @@
-& "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user `
--u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
--ts "$env:JAVA_HOME\lib\security\cacerts" `
--tst JKS `
--tsp changeit `
--ot json `
--verbose
+PS C:\WINDOWS\system32> & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user `
+>> -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
+>> -ts "$env:JAVA_HOME\lib\security\cacerts" `
+>> -tst JKS `
+>> -tsp changeit `
+>> -ot json `
+>> -verbose
+Detected java 11 or later runtime version: 11
+Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+
+ERROR: Error executing command 'current-user' : Error retrieving current:
+
+
+org.apache.nifi.toolkit.cli.api.CommandException: Error executing command 'current-user' : Error retrieving current:
+        at org.apache.nifi.toolkit.cli.impl.command.nifi.AbstractNiFiCommand.doExecute(AbstractNiFiCommand.java:65)
+        at org.apache.nifi.toolkit.cli.impl.command.AbstractPropertyCommand.execute(AbstractPropertyCommand.java:74)
+        at org.apache.nifi.toolkit.cli.impl.command.CommandProcessor.processCommand(CommandProcessor.java:248)
+        at org.apache.nifi.toolkit.cli.impl.command.CommandProcessor.processGroupCommand(CommandProcessor.java:229)
+        at org.apache.nifi.toolkit.cli.impl.command.CommandProcessor.process(CommandProcessor.java:184)
+        at org.apache.nifi.toolkit.cli.CLIMain.runSingleCommand(CLIMain.java:145)
+        at org.apache.nifi.toolkit.cli.CLIMain.main(CLIMain.java:72)
+Caused by: org.apache.nifi.toolkit.cli.impl.client.nifi.NiFiClientException: Error retrieving current:
+        at org.apache.nifi.toolkit.cli.impl.client.nifi.impl.AbstractJerseyClient.executeAction(AbstractJerseyClient.java:90)
+        at org.apache.nifi.toolkit.cli.impl.client.nifi.impl.JerseyFlowClient.getCurrentUser(JerseyFlowClient.java:72)
+        at org.apache.nifi.toolkit.cli.impl.command.nifi.flow.CurrentUser.doExecute(CurrentUser.java:48)
+        at org.apache.nifi.toolkit.cli.impl.command.nifi.flow.CurrentUser.doExecute(CurrentUser.java:32)
+        at org.apache.nifi.toolkit.cli.impl.command.nifi.AbstractNiFiCommand.doExecute(AbstractNiFiCommand.java:63)
+        ... 6 more
+Caused by: javax.ws.rs.NotAuthorizedException: HTTP 401 Unauthorized
+        at org.glassfish.jersey.client.JerseyInvocation.convertToException(JerseyInvocation.java:959)
+        at org.glassfish.jersey.client.JerseyInvocation.translate(JerseyInvocation.java:770)
+        at org.glassfish.jersey.client.JerseyInvocation.lambda$invoke$1(JerseyInvocation.java:687)
+        at org.glassfish.jersey.client.JerseyInvocation.call(JerseyInvocation.java:709)
+        at org.glassfish.jersey.client.JerseyInvocation.lambda$runInScope$3(JerseyInvocation.java:703)
+        at org.glassfish.jersey.internal.Errors.process(Errors.java:292)
+        at org.glassfish.jersey.internal.Errors.process(Errors.java:274)
+        at org.glassfish.jersey.internal.Errors.process(Errors.java:205)
+        at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:390)
+        at org.glassfish.jersey.client.JerseyInvocation.runInScope(JerseyInvocation.java:703)
+        at org.glassfish.jersey.client.JerseyInvocation.invoke(JerseyInvocation.java:686)
+        at org.glassfish.jersey.client.JerseyInvocation$Builder.method(JerseyInvocation.java:422)
+        at org.glassfish.jersey.client.JerseyInvocation$Builder.get(JerseyInvocation.java:318)
+        at org.apache.nifi.toolkit.cli.impl.client.nifi.impl.JerseyFlowClient.lambda$getCurrentUser$0(JerseyFlowClient.java:74)
+        at org.apache.nifi.toolkit.cli.impl.client.nifi.impl.AbstractJerseyClient.executeAction(AbstractJerseyClient.java:76)
+        ... 10 more
