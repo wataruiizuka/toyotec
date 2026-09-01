@@ -1,59 +1,31 @@
-PS C:\WINDOWS\system32> $processorUrl = "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/process-groups/161738d5-e892-1713-ae84-c17687bda86e/processors"
-PS C:\WINDOWS\system32>
-PS C:\WINDOWS\system32> $processorFile = Join-Path $env:TEMP "nifi-processors.json"
-PS C:\WINDOWS\system32>
-PS C:\WINDOWS\system32> curl.exe `
->>   --proxy "socks5h://127.0.0.1:1080" `
->>   -u "wataru_iizuka_za" `
->>   -sS `
->>   -o "$processorFile" `
->>   "$processorUrl"
-Enter host password for user 'wataru_iizuka_za':
-PS C:\WINDOWS\system32>
-PS C:\WINDOWS\system32> $processorResult = Get-Content `
->>   -LiteralPath "$processorFile" `
->>   -Raw `
->>   -Encoding UTF8 | ConvertFrom-Json
-PS C:\WINDOWS\system32>
-PS C:\WINDOWS\system32> $processorResult.processors | ForEach-Object {
->>     [PSCustomObject]@{
->>         Name         = $_.component.name
->>         Type         = ($_.component.type -split '\.')[-1]
->>         State        = $_.component.state
->>         Validation   = $_.component.validationStatus
->>         CanRead      = $_.permissions.canRead
->>         CanWrite     = $_.permissions.canWrite
->>         OperateRead  = $_.operatePermissions.canRead
->>         OperateWrite = $_.operatePermissions.canWrite
->>         Id           = $_.id
->>     }
->> } | Format-Table -AutoSize
+$connectionUrl = "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/process-groups/161738d5-e892-1713-ae84-c17687bda86e/connections"
 
-Name                 Type             State    Validation CanRead CanWrite OperateRead OperateWrite Id
-----                 ----             -----    ---------- ------- -------- ----------- ------------ --
-ListS3               ListS3           DISABLED VALIDATING    True     True        True         True 220d343b-10c2-14...
-EvaluateJsonPath     EvaluateJsonPath DISABLED VALIDATING    True     True        True         True f72f3ca6-bf39-16...
-UpdateRecord         UpdateRecord     STOPPED  VALID         True     True        True         True 5d413017-ddd3-11...
-PutKudu              PutKudu          STOPPED  VALID         True     True        True         True 9a753eb4-5661-16...
-RouteOnAttribute     RouteOnAttribute STOPPED  VALID         True     True        True         True c041324c-3eb2-1d...
-GetFile              GetFile          DISABLED VALIDATING    True     True        True         True 0a5c32e2-69df-1a...
-AttributesToJSON     AttributesToJSON DISABLED VALIDATING    True     True        True         True 279b3e07-68f2-16...
-ExecuteScript        ExecuteScript    DISABLED VALIDATING    True     True        True         True ab853ab5-f440-13...
-UpdateAttribute      UpdateAttribute  STOPPED  VALID         True     True        True         True eb563f34-2314-10...
-RouteOnAttribute     RouteOnAttribute STOPPED  VALID         True     True        True         True 117c3341-2af6-1c...
-RouteOnAttribute     RouteOnAttribute STOPPED  VALID         True     True        True         True 0c3b3728-d2a4-13...
-必要な項目を抽出     QueryRecord      STOPPED  VALID         True     True        True         True 92923cd8-5ae9-16...
-FetchS3Object        FetchS3Object    STOPPED  VALID         True     True        True         True 14d939dc-7e19-15...
-SaveSuccessLog       ExecuteSQL       DISABLED VALID         True     True        True         True d422305e-66f0-1d...
-RouteOnAttribute CSV RouteOnAttribute STOPPED  INVALID       True     True        True         True 35e53c8f-f7c9-13...
-SplitJson            SplitJson        DISABLED VALIDATING    True     True        True         True bd103b24-51ab-15...
-RouteOnAttribute     RouteOnAttribute STOPPED  VALID         True     True        True         True bb8d385f-b501-12...
-対象販社だけ取得     RouteOnAttribute DISABLED VALIDATING    True     True        True         True 26b63224-6c75-1a...
-PutKudu_poc          PutKudu          DISABLED INVALID       True     True        True         True 99013efd-ac5b-13...
-MergeContent         MergeContent     DISABLED VALIDATING    True     True        True         True 32b633a5-e1e2-1f...
-ListS3               ListS3           DISABLED VALIDATING    True     True        True         True cf643e4b-ab16-1f...
-RouteOnAttribute     RouteOnAttribute STOPPED  VALID         True     True        True         True b1fb3cfe-5702-15...
+$connectionFile = Join-Path $env:TEMP "nifi-connections.json"
 
+curl.exe `
+  --proxy "socks5h://127.0.0.1:1080" `
+  -u "wataru_iizuka_za" `
+  -sS `
+  -o "$connectionFile" `
+  "$connectionUrl"
 
-PS C:\WINDOWS\system32>
-PS C:\WINDOWS\system32> Remove-Item "$processorFile" -ErrorAction SilentlyContinue
+$connectionResult = Get-Content `
+  -LiteralPath "$connectionFile" `
+  -Raw `
+  -Encoding UTF8 | ConvertFrom-Json
+
+$connectionResult.connections | ForEach-Object {
+    [PSCustomObject]@{
+        Name         = $_.component.name
+        Source       = $_.component.source.name
+        SourceType   = $_.component.source.type
+        Destination  = $_.component.destination.name
+        DestType     = $_.component.destination.type
+        Relationships= ($_.component.selectedRelationships -join ",")
+        CanRead      = $_.permissions.canRead
+        CanWrite     = $_.permissions.canWrite
+        Id           = $_.id
+    }
+} | Format-Table -AutoSize
+
+Remove-Item "$connectionFile" -ErrorAction SilentlyContinue
