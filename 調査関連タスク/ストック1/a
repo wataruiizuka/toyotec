@@ -1,18 +1,43 @@
-{
-    "user": {
-        "userId": "7fd5b6fe-c47e-43fa-8147-e6ae80806705",
-        "crn": "crn:altus:iam:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:user:7fd5b6fe-c47e-43fa-8147-e6ae80806705",
-        "email": "wataru_iizuka_za@toyotec-jp.com",
-        "firstName": "",
-        "lastName": "",
-        "creationDate": "2026-04-17T03:51:30.692000+00:00",
-        "accountAdmin": false,
-        "identityProviderCrn": "crn:altus:iam:us-west-1:14555aa7-ae8c-45c4-8dd3-07f165cc5c6c:samlProvider:toyotecdap-entraid/a5128ef3-9115-426a-97f0-451e401d3394",
-        "lastInteractiveLogin": "2026-09-01T04:48:37.593000+00:00",
-        "workloadUsername": "wataru_iizuka_za",
-        "status": "ACTIVE",
-        "workloadPasswordDetails": {
-            "isPasswordSet": true
-        }
-    }
-}
+PS C:\WINDOWS\system32> cdp datahub list -clusters
+usage: cdp datahub
+                   {cancel-datahub-diagnostics,collect-cm-diagnostics,collect-datahub-diagnostics,create-aws-cluster,create-aws-gov-cloud-cluster,create-auto-scale-rules,create-azure-cluster,create-cluster-definition,create-cluster-template,create-custom-configurations,create-gcp-cluster,create-recipe,delete-auto-scale-rules,delete-cluster,delete-cluster-definitions,delete-cluster-templates,delete-custom-configurations,delete-instances,delete-recipes,describe-auto-scale-rules,describe-cluster,describe-cluster-definition,describe-cluster-template,describe-custom-configurations,describe-recipe,describe-scaling-activity,finalize-zookeeper-to-kraft-migration,get-cluster-host-status,get-cluster-service-status,get-cm-roles,get-datahub-log-descriptors,get-operation,get-vm-types,list-auto-scale-history,list-cluster-definitions,list-cluster-lifecycle-events,list-cluster-templates,list-clusters,list-custom-configurations,list-datahub-diagnostics,list-datahub-secret-types,list-recipes,list-scaling-activities,migrate-skus,migrate-zookeeper-to-kraft,prepare-cluster-upgrade,renew-certificate,renew-public-certificate,repair-cluster,replace-recipes,restart-cluster-instances,retry-cluster,rollback-zookeeper-to-kraft-migration,rotate-auto-tls-certificates,rotate-db-certificate,rotate-private-certificates,rotate-salt-password,rotate-secrets,scale-cluster,set-catalog,set-default-java-version,start-cluster,start-cluster-vertical-scaling,start-database-upgrade,start-instances,stop-cluster,stop-instances,sync-cluster,sync-component-versions-from-cm,update-auto-scale-rules,update-orchestrator-state,update-public-dns-entries,update-to-aws-imds-v1,update-to-aws-imds-v2,upgrade-cluster,help}
+cdp datahub: error: argument operation: Invalid choice, valid choices are:
+
+cancel-datahub-diagnostics               | collect-cm-diagnostics
+collect-datahub-diagnostics              | create-aws-cluster
+create-aws-gov-cloud-cluster             | create-auto-scale-rules
+create-azure-cluster                     | create-cluster-definition
+create-cluster-template                  | create-custom-configurations
+create-gcp-cluster                       | create-recipe
+delete-auto-scale-rules                  | delete-cluster
+delete-cluster-definitions               | delete-cluster-templates
+delete-custom-configurations             | delete-instances
+delete-recipes                           | describe-auto-scale-rules
+describe-cluster                         | describe-cluster-definition
+describe-cluster-template                | describe-custom-configurations
+describe-recipe                          | describe-scaling-activity
+finalize-zookeeper-to-kraft-migration    | get-cluster-host-status
+get-cluster-service-status               | get-cm-roles
+get-datahub-log-descriptors              | get-operation
+get-vm-types                             | list-auto-scale-history
+list-cluster-definitions                 | list-cluster-lifecycle-events
+list-cluster-templates                   | list-clusters
+list-custom-configurations               | list-datahub-diagnostics
+list-datahub-secret-types                | list-recipes
+list-scaling-activities                  | migrate-skus
+migrate-zookeeper-to-kraft               | prepare-cluster-upgrade
+renew-certificate                        | renew-public-certificate
+repair-cluster                           | replace-recipes
+restart-cluster-instances                | retry-cluster
+rollback-zookeeper-to-kraft-migration    | rotate-auto-tls-certificates
+rotate-db-certificate                    | rotate-private-certificates
+rotate-salt-password                     | rotate-secrets
+scale-cluster                            | set-catalog
+set-default-java-version                 | start-cluster
+start-cluster-vertical-scaling           | start-database-upgrade
+start-instances                          | stop-cluster
+stop-instances                           | sync-cluster
+sync-component-versions-from-cm          | update-auto-scale-rules
+update-orchestrator-state                | update-public-dns-entries
+update-to-aws-imds-v1                    | update-to-aws-imds-v2
+upgrade-cluster                          | help
