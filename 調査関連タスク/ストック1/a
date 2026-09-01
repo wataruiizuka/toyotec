@@ -1,13 +1,14 @@
-PS C:\Users\00496_990801> python --version
-Python 
-PS C:\Users\00496_990801> py --version
-py : 用語 'py' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません。名前が正しく記述されていることを確認し、パスが含ま
-れている場合はそのパスが正しいことを確認してから、再試行してください。
-発生場所 行:1 文字:1
-+ py --version
-+ ~~
-    + CategoryInfo          : ObjectNotFound: (py:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
- 
-PS C:\Users\00496_990801> python -m pip --version
-Python 
+PS C:\WINDOWS\system32> where.exe python
+C:\Users\00496_990801\AppData\Local\Microsoft\WindowsApps\python.exe
+PS C:\WINDOWS\system32> Get-Command python | Format-List Name,CommandType,Source,Path
+
+
+Name        : python.exe
+CommandType : Application
+Source      : C:\Users\00496_990801\AppData\Local\Microsoft\WindowsApps\python.exe
+Path        : C:\Users\00496_990801\AppData\Local\Microsoft\WindowsApps\python.exe
+
+
+
+PS C:\WINDOWS\system32> python -c "import sys; print(sys.exectable); print(sys.version)"
+Python
