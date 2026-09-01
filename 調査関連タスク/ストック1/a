@@ -1,19 +1,316 @@
-$securePassword = Read-Host "Cloudera Workload Password" -AsSecureString
-$bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
-$plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
-
-try {
-    & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi pg-list `
-    -pgid "f2613412-e31d-1ff9-0000-0000526547ae" `
-    -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
-    -bau "wataru_iizuka_za" `
-    -bap $plainPassword `
-    -ts "$env:JAVA_HOME\lib\security\cacerts" `
-    -tst JKS `
-    -tsp changeit `
-    -ot json
-}
-finally {
-    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
-    Remove-Variable plainPassword,securePassword,bstr -ErrorAction SilentlyContinue
-}
+PS C:\WINDOWS\system32> $securePassword = Read-Host "Cloudera Workload Password" -AsSecureString
+Cloudera Workload Password: **********
+PS C:\WINDOWS\system32> $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
+PS C:\WINDOWS\system32> $plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+PS C:\WINDOWS\system32>
+PS C:\WINDOWS\system32> try {
+>>     & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi pg-list `
+>>     -pgid "f2613412-e31d-1ff9-0000-0000526547ae" `
+>>     -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" `
+>>     -bau "wataru_iizuka_za" `
+>>     -bap $plainPassword `
+>>     -ts "$env:JAVA_HOME\lib\security\cacerts" `
+>>     -tst JKS `
+>>     -tsp changeit `
+>>     -ot json
+>> }
+>> finally {
+>>     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+>>     Remove-Variable plainPassword,securePassword,bstr -ErrorAction SilentlyContinue
+>> }
+Detected java 11 or later runtime version: 11
+Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+[ {
+  "id" : "440e3b63-594a-1c1f-bdf1-91e7522c5f7c",
+  "versionedComponentId" : "8c15ae1b-daa1-3262-8456-6b47ab19b30e",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : 248.0,
+    "y" : 192.0
+  },
+  "name" : "DataLib",
+  "comments" : "",
+  "variables" : { },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 0,
+  "stoppedCount" : 5,
+  "invalidCount" : 0,
+  "disabledCount" : 0,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 0,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 0,
+  "inputPortCount" : 0
+}, {
+  "id" : "e71f3cb4-2d32-1438-bae1-dbb2d4ad8804",
+  "versionedComponentId" : "42b11567-3728-3c17-8f2a-56fec362f1c5",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : 240.0,
+    "y" : 424.0
+  },
+  "name" : "DataLib_ops",
+  "comments" : "",
+  "variables" : { },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 6,
+  "stoppedCount" : 0,
+  "invalidCount" : 0,
+  "disabledCount" : 0,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 1,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 1,
+  "inputPortCount" : 0
+}, {
+  "id" : "e0bb3ad3-e317-158d-9dbe-6881d4889cfd",
+  "versionedComponentId" : "cb31a8f1-175b-3c7f-aae0-351d00638fce",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : -296.0,
+    "y" : 688.0
+  },
+  "name" : "S3-_Iceberg_UPASS_ops",
+  "comments" : "",
+  "variables" : { },
+  "parameterContext" : {
+    "id" : "3132a886-8fee-3a62-a90a-88bfa858b5a8",
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    },
+    "component" : {
+      "id" : "3132a886-8fee-3a62-a90a-88bfa858b5a8",
+      "name" : "S3ToKudoParam_Upass"
+    }
+  },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 0,
+  "stoppedCount" : 19,
+  "invalidCount" : 0,
+  "disabledCount" : 1,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 0,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 0,
+  "inputPortCount" : 0
+}, {
+  "id" : "d4d231ea-9f28-13d0-8483-77b143895a57",
+  "versionedComponentId" : "f5ea8c21-2251-3353-ac51-260d51fc3bb4",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : -1248.0,
+    "y" : 424.0
+  },
+  "name" : "S3-_Kudu_Gazoo_ops",
+  "comments" : "",
+  "variables" : { },
+  "parameterContext" : {
+    "id" : "8852d5dd-a487-33f5-b7c0-47a777a9f2f7",
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    },
+    "component" : {
+      "id" : "8852d5dd-a487-33f5-b7c0-47a777a9f2f7",
+      "name" : "S3ToKudoParam_Gazoo"
+    }
+  },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 15,
+  "stoppedCount" : 0,
+  "invalidCount" : 0,
+  "disabledCount" : 2,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 1,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 1,
+  "inputPortCount" : 0
+}, {
+  "id" : "161738d5-e892-1713-ae84-c17687bda86e",
+  "versionedComponentId" : "47e46940-2f7b-328c-a3e6-63001cfb772c",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : -296.0,
+    "y" : 192.0
+  },
+  "name" : "S3-_Kudu_UPASS",
+  "comments" : "",
+  "variables" : { },
+  "parameterContext" : {
+    "id" : "3132a886-8fee-3a62-a90a-88bfa858b5a8",
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    },
+    "component" : {
+      "id" : "3132a886-8fee-3a62-a90a-88bfa858b5a8",
+      "name" : "S3ToKudoParam_Upass"
+    }
+  },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 0,
+  "stoppedCount" : 18,
+  "invalidCount" : 1,
+  "disabledCount" : 11,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 0,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 0,
+  "inputPortCount" : 0
+}, {
+  "id" : "30163b3e-b405-1272-9adf-2542b4dae11b",
+  "versionedComponentId" : "5870eb05-189a-360e-b863-0d2d6eb39bcb",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : -296.0,
+    "y" : 424.0
+  },
+  "name" : "S3-_Kudu_UPASS_ops",
+  "comments" : "",
+  "variables" : { },
+  "parameterContext" : {
+    "id" : "3132a886-8fee-3a62-a90a-88bfa858b5a8",
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    },
+    "component" : {
+      "id" : "3132a886-8fee-3a62-a90a-88bfa858b5a8",
+      "name" : "S3ToKudoParam_Upass"
+    }
+  },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 16,
+  "stoppedCount" : 0,
+  "invalidCount" : 0,
+  "disabledCount" : 1,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 0,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 0,
+  "inputPortCount" : 0
+}, {
+  "id" : "b3d23600-94a4-18b6-b51a-45d3c59219aa",
+  "versionedComponentId" : "b25b4740-9839-390a-a373-6d2abdb4f085",
+  "parentGroupId" : "f2613412-e31d-1ff9-0000-0000526547ae",
+  "position" : {
+    "x" : -1768.0,
+    "y" : 576.0
+  },
+  "name" : "test_putsql",
+  "comments" : "",
+  "variables" : { },
+  "parameterContext" : {
+    "id" : "8852d5dd-a487-33f5-b7c0-47a777a9f2f7",
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    },
+    "component" : {
+      "id" : "8852d5dd-a487-33f5-b7c0-47a777a9f2f7",
+      "name" : "S3ToKudoParam_Gazoo"
+    }
+  },
+  "flowfileConcurrency" : "UNBOUNDED",
+  "flowfileOutboundPolicy" : "STREAM_WHEN_AVAILABLE",
+  "defaultFlowFileExpiration" : "0 sec",
+  "defaultBackPressureObjectThreshold" : 10000,
+  "defaultBackPressureDataSizeThreshold" : "1 GB",
+  "logFileSuffix" : "",
+  "runningCount" : 0,
+  "stoppedCount" : 21,
+  "invalidCount" : 1,
+  "disabledCount" : 0,
+  "activeRemotePortCount" : 0,
+  "inactiveRemotePortCount" : 0,
+  "upToDateCount" : 0,
+  "locallyModifiedCount" : 0,
+  "staleCount" : 0,
+  "locallyModifiedAndStaleCount" : 0,
+  "syncFailureCount" : 0,
+  "localInputPortCount" : 0,
+  "localOutputPortCount" : 0,
+  "publicInputPortCount" : 0,
+  "publicOutputPortCount" : 0,
+  "outputPortCount" : 0,
+  "inputPortCount" : 0
+} ]
