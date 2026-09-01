@@ -16,3 +16,134 @@ PS C:\WINDOWS\system32> try {
 >> finally {
 >>     [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
 >>     Remove-Variable plainPassword,securePassword,bstr -ErrorAction SilentlyContinue
+>> }
+Detected java 11 or later runtime version: 11
+Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+{
+  "identity" : "wataru_iizuka_za",
+  "anonymous" : false,
+  "provenancePermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "countersPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "tenantsPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "controllerPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "policiesPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "systemPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "parameterContextPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "restrictedComponentsPermissions" : {
+    "canRead" : true,
+    "canWrite" : true
+  },
+  "componentRestrictionPermissions" : [ {
+    "requiredPermission" : {
+      "id" : "read-distributed-filesystem",
+      "label" : "read distributed filesystem"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "access-keytab",
+      "label" : "access keytab"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "export-nifi-details",
+      "label" : "export nifi details"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "read-filesystem",
+      "label" : "read filesystem"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "access-environment-credentials",
+      "label" : "access environment credentials"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "reference-remote-resources",
+      "label" : "reference remote resources"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "execute-code",
+      "label" : "execute code"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "access-ticket-cache",
+      "label" : "access ticket cache"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "write-filesystem",
+      "label" : "write filesystem"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  }, {
+    "requiredPermission" : {
+      "id" : "write-distributed-filesystem",
+      "label" : "write distributed filesystem"
+    },
+    "permissions" : {
+      "canRead" : true,
+      "canWrite" : true
+    }
+  } ],
+  "canVersionFlows" : true
+}
