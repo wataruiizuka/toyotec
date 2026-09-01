@@ -1,1 +1,2 @@
-https://downloads.apache.org/nifi/1.28.1/?utm_source=chatgpt.com
+Get-ChildItem "$HOME\Downloads\nifi-toolkit-1.28.1*" |
+    Select-Object Name,Length,LastWriteTime
