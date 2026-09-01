@@ -1,11 +1,1 @@
-PS C:\WINDOWS\system32> Get-NetTCPConnection -LocalPort 1080 -State Listen -ErrorAction SilentlyContinue |
->> Select-Object LocalAddress,LocalPort,State,OwningProcess
-
-LocalAddress LocalPort  State OwningProcess
------------- ---------  ----- -------------
-::1               1080 Listen         25884
-127.0.0.1         1080 Listen         25884
-
-
-PS C:\WINDOWS\system32> curl.exe --proxy "socks5h://127.0.0.1:1080" -sS -o NUL -w "%{http_code}" "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/flow/current-user"
-401
+curl.exe --proxy "socks5h://127.0.0.1:1080" -u "wataru_iizuka_za" -sS -o NUL -w "%{http_code}" "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/flow/current-user"
