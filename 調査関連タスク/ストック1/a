@@ -1,6 +1,4 @@
-PS C:\WINDOWS\system32> $env:JAVA_TOOL_OPTIONS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080"
-PS C:\WINDOWS\system32> & "$HOME\Tools\NiFi\nifi-toolkit-1.28.1\bin\cli.bat" nifi current-user -u "https://cdp-toyotecdap-nifi-ve-je-management0.toyotecd.kj09-szpi.a0.cloudera.site/cdp-toyotecdap-nifi-ve-je/cdp-proxy-api/nifi-app/nifi-api/" -ot json
-Detected java 11 or later runtime version: 11
-Picked up JAVA_TOOL_OPTIONS: -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=1080
+$javaTruststore = "$env:JAVA_HOME\lib\security\cacerts"
+Test-Path $javaTruststore
 
-ERROR: Error executing command 'current-user' : truststore, truststoreType, and truststorePasswd are required when using an https url
+keytool -list -keystore "$env:JAVA_HOME\lib\security\cacerts" -storepass changeit 2>&1 | Select-Object -First 8
