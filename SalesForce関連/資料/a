@@ -1,86 +1,9 @@
-{
-  "name": "order__c_csv",
-  "type": "record",
-  "namespace": "toyotec_poc0822",
-  "fields": [
-    {
-      "name": "Id",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "Name",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "OrderNo__c",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "LeaseCompanyVehicleContractNO__c",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "Mj_LeaseKaishaSyaryoKeiyakuNoYobi__c",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "IsCancel__c",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "buyer__c",
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    {
-      "name": "EntryDate__c",
-      "type": [
-        {
-          "type": "long",
-          "logicalType": "timestamp-millis"
-        },
-        "null"
-      ]
-    },
-    {
-      "name": "CancelDate__c",
-      "type": [
-        {
-          "type": "long",
-          "logicalType": "timestamp-millis"
-        },
-        "null"
-      ]
-    },
-    {
-      "name": "DT_ADF_CREATE",
-      "type": [
-        {
-          "type": "long",
-          "logicalType": "timestamp-millis"
-        },
-        "null"
-      ]
-    }
-  ]
-}
+SELECT
+    Id,
+    OrderNo__c,
+    LeaseCompanyVehicleContractNO__c,
+    Mj_LeaseKaishaSyaryoKeiyakuNoYobi__c,
+    EntryDate__c
+FROM
+    Order__c
+LIMIT 10
