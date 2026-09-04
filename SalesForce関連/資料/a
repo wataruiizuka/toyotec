@@ -1,1 +1,9 @@
-cdp-dap-kudu-ve-je-master10.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master20.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master30.toyotecd.kj09-szpi.a0.cloudera.site:7051
+SELECT
+    Id,
+    OrderNo__c,
+    LeaseCompanyVehicleContractNO__c,
+    Mj_LeaseKaishaSyaryoKeiyakuNoYobi__c,
+    EntryDate__c
+FROM
+    Order__c
+LIMIT 10
