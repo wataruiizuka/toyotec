@@ -1,21 +1,29 @@
-欧さん回答
-・DataVizは検証段階で、本番運用は未開始のため、今回の運用設計ではN/Aとなる。
-・監視、インシデントレベル、エスカレーションの詳細設計は、本番リリース時の別タスクとして扱うとのこと。
-・本番リリース次期、リリース後の運用責任者、基盤障害時の連絡ルール、今回の監視設計タスクに含めるかは未決定。
-・停止した場合は帳票を利用できない。
-・監視候補はCDP側のCPU・メモリ使用率等、画面表示、ログイン、データ更新、エラー、性能を含む具体的な監視範囲は追加確認が必要。
+お疲れ様です。
 
-・参照予定DB（号口環境）：
-→ ai21rep_pr_dx_kudu
-　ai21rep_pr_kudu
-　ai21rep_stg_pr_dx_kudu
-　neo1rep_pr_kudu
-　neodx_pr_kudu
+先ほどご共有いただいた内容をもとに、NextJ_Salesforce_PoC配下でPoC用フローを作成する準備を進めています。
 
-・参照予定DB（検証環境）：
-→ ai21rep_ve_dx_kudu
-　ai21rep_ve_kudu
-　ai21rep_ve_stg_kudu
-　ai21rep_ve_test_kudu
-　neo1rep_ve_kudu
-　neodx_ve_kudu
+実際にNiFi上で構成を作る前に、以下の点だけ確認させてください。
+
+【Salesforce側】
+・具体的にどのAPIを使用する想定か
+・認証方式
+・対象オブジェクト
+・取得対象項目
+
+【Kudu側】
+・対象テーブル
+・新規テーブルか既存テーブルか
+・Primary Key
+・カラム
+・データ型
+
+【NiFi側】
+・Salesforce APIの取得方法
+・Kuduへの書き込み方法
+・Controller Serviceの扱い
+・Parameter Contextの扱い
+・エラー時の経路／処理方法
+
+現時点では、Salesforce APIから取得したデータをNiFi経由でKuduへ基本そのまま連携し、必要に応じてデータ型だけ調整する認識です。
+
+上記について、すでに決まっている内容や参考にした方がよい既存フロー・設定などがあれば、ご共有いただけると助かります。
