@@ -1,10 +1,10 @@
-CREATE TABLE nextj_ve_poc_kudu.salesforce_poc_test (
-    id STRING NOT NULL,
-    orderno__c STRING NULL,
-    leasecompanyvehiclecontractno__c STRING NULL,
-    mj_leasekaishasyaryokeiyakunoyobi__c STRING NULL,
-    entrydate__c STRING NULL,
-    PRIMARY KEY (id)
-)
-PARTITION BY HASH (id) PARTITIONS 2
-STORED AS KUDU;
+name	type	comment	primary_key	key_unique	nullable	default_value	encoding	compression	block_size
+id	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+orderno__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+leasecompanyvehiclecontractno__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_leasekaishasyaryokeiyakunoyobi__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+entrydate__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+
+
+result
+CREATE EXTERNAL TABLE nextj_ve_poc_kudu.salesforce_poc_test ( id STRING NOT NULL ENCODING AUTO_ENCODING COMPRESSION DEFAULT_COMPRESSION, orderno__c STRING NULL ENCODING AUTO_ENCODING COMPRESSION DEFAULT_COMPRESSION, leasecompanyvehiclecontractno__c STRING NULL ENCODING AUTO_ENCODING COMPRESSION DEFAULT_COMPRESSION, mj_leasekaishasyaryokeiyakunoyobi__c STRING NULL ENCODING AUTO_ENCODING COMPRESSION DEFAULT_COMPRESSION, entrydate__c STRING NULL ENCODING AUTO_ENCODING COMPRESSION DEFAULT_COMPRESSION, PRIMARY KEY (id) ) PARTITION BY HASH (id) PARTITIONS 2 COMMENT '' STORED AS KUDU TBLPROPERTIES ('TRANSLATED_TO_EXTERNAL'='TRUE', 'external.table.purge'='TRUE', 'kudu.cluster_id'='e242e27faf994eb297de913aa5003d48', 'kudu.master_addresses'='cdp-dap-kudu-ve-je-master10.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master20.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master30.toyotecd.kj09-szpi.a0.cloudera.site:7051')
