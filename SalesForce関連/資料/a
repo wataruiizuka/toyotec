@@ -1,9 +1,38 @@
-SELECT
-    Id,
-    OrderNo__c,
-    LeaseCompanyVehicleContractNO__c,
-    Mj_LeaseKaishaSyaryoKeiyakuNoYobi__c,
-    EntryDate__c
-FROM
-    Order__c
-LIMIT 10
+Authorization Server URL
+→ #{salesforce_authorization_url}
+
+Client Authentication Strategy
+→ REQUEST_BODY
+
+Grant Type
+→ User Password
+
+Username
+→ #{salesforce_authorization_username}
+
+Password
+→ #{salesforce_authorization_password}
+
+Client ID
+→ #{salesforce_client_id}
+
+Client Secret
+→ #{salesforce_client_secret}
+
+Scope
+→ No value set
+
+Resource
+→ No value set
+
+Audience
+→ No value set
+
+Refresh Window
+→ 0 s
+
+SSL Context Service
+→ No value set
+
+Proxy Configuration Service
+→ No value set
