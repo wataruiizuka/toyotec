@@ -1,1 +1,10 @@
-zzzzzz@tmt.sfa.dev0
+cnt
+10
+
+name	type	comment	primary_key	key_unique	nullable	default_value	encoding	compression	block_size
+id	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+orderno__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+leasecompanyvehiclecontractno__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+mj_leasekaishasyaryokeiyakunoyobi__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+entrydate__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
+
