@@ -1,10 +1,9 @@
-cnt
-10
-
-name	type	comment	primary_key	key_unique	nullable	default_value	encoding	compression	block_size
-id	string		true	true	false		AUTO_ENCODING	DEFAULT_COMPRESSION	0
-orderno__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
-leasecompanyvehiclecontractno__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
-mj_leasekaishasyaryokeiyakunoyobi__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
-entrydate__c	string		false		true		AUTO_ENCODING	DEFAULT_COMPRESSION	0
-
+SELECT
+    id,
+    orderno__c,
+    leasecompanyvehiclecontractno__c,
+    mj_leasekaishasyaryokeiyakunoyobi__c,
+    entrydate__c
+FROM nextj_ve_poc_kudu.salesforce_poc_test
+ORDER BY id
+LIMIT 10;
