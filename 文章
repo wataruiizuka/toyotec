@@ -1,29 +1,13 @@
 お疲れ様です。
+次期JのSalesforceデータ連携PoCについて、Salesforce → NiFi → Kuduまでの疎通確認を実施しました。
 
-先ほどご共有いただいた内容をもとに、NextJ_Salesforce_PoC配下でPoC用フローを作成する準備を進めています。
+今回、PoC専用のNiFi Process Groupを作成し、SalesforceのSandbox環境からQuerySalesforceObjectを使ってデータを取得し、PutKuduでKuduへ格納するフローを構築しています。
 
-実際にNiFi上で構成を作る前に、以下の点だけ確認させてください。
+検証では、SalesforceのOrder__cから5項目を10件取得し、NiFi上で1 FlowFileとして受信後、PoC用のKuduテーブルへ書き込みました。
+Kudu側でも10件格納されていることを確認し、Salesforce側とKudu側で主要項目の値、NULL値、全角数字を含む文字列が一致しているところまで確認できています。
 
-【Salesforce側】
-・具体的にどのAPIを使用する想定か
-・認証方式
-・対象オブジェクト
-・取得対象項目
+また、NiFiクラスタが3ノード構成のため、当初All nodesで実行すると同じSalesforce Queryが3回実行される状態になっていましたが、取得側のQuerySalesforceObjectをPrimary node実行に変更し、1回の取得で1 FlowFileが生成される構成に修正しています。
 
-【Kudu側】
-・対象テーブル
-・新規テーブルか既存テーブルか
-・Primary Key
-・カラム
-・データ型
+今回の結果から、NiFiのSalesforceコネクタを利用して、Salesforceからデータを取得しKuduへ格納する基本的な連携方式は技術的に成立することを確認できました。
 
-【NiFi側】
-・Salesforce APIの取得方法
-・Kuduへの書き込み方法
-・Controller Serviceの扱い
-・Parameter Contextの扱い
-・エラー時の経路／処理方法
-
-現時点では、Salesforce APIから取得したデータをNiFi経由でKuduへ基本そのまま連携し、必要に応じてデータ型だけ調整する認識です。
-
-上記について、すでに決まっている内容や参考にした方がよい既存フロー・設定などがあれば、ご共有いただけると助かります。
+一方で、今回はあくまで疎通確認のPoCとなるため、正式なSalesforceのObject / Field、データ型、増分取得、削除対応、エラー処理、監視、性能面などは未確定です。
