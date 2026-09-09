@@ -1,9 +1,3 @@
-ご確認ありがとうございます。
-lightning.force.com、HTTPS:443許可済みの件、承知しました。
-
-こちらでSalesforce側の接続情報を確認したところ、NiFiのAPI接続で使用するInstance URLとして
-https://03601-toyota-crm--dojo.sandbox.my.salesforce.com
-を共有いただいています。
-
-lightning.force.comは画面側のURLで、NiFiからのAPI接続では上記my.salesforce.comを使用する想定のため、
-03601-toyota-crm--dojo.sandbox.my.salesforce.comについてもHTTPS:443で通信可能になっているか、念のため確認いただけますでしょうか。
+03601-toyota-crm--dojo.sandbox.lightning.force.comは不要でしたね。。
+03601-toyota-crm--dojo.sandbox.my.salesforce.com
+設定しました。
