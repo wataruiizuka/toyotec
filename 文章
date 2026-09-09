@@ -1,21 +1,3 @@
-Salesforce環境側に特化して回答させていただきます
-Salesforceの方とのやり取りやデータ活用基盤全体での方針は私は分からないのでインフラTの皆様でご確認いただきたく
- 
-・「dojo」について、今回NiFiから接続確認を行うTMT次期JのSalesforce検証環境を指している認識で合っているか。
-→TM東京の検証環境は実質「dojo」環境1つなので問題ないかと
-→※Salesforceの方からすると「Full Sandbox」の方が通りはいいです
- 
-・接続に使用するSalesforceのInstance URLを確認したい
-→https://03601-toyota-crm--dojo.sandbox.my.salesforce.com
-→検証環境は上記で問題ないかと
- 
-・共有いただいたアカウント(test_cdp_sys@toyotec.dojo)を、NiFiからのAPI接続に使用するシステム連携用アカウントとして利用してよいか確認したい
-→はい、問題ありません
-→プロファイル（Salesforce上の権限）もTMCから指定のある「他システム連携用」というものにしています
- 
-・共有いただいたアカウント(test_cdp_sys@toyotec.dojo)にAPI利用権限が付与しているか確認したい
-→確認したところ、権限付与されていましたので問題なくご利用いただけます。
- 
-・NiFiから次期J Salesforceへ接続する際の正式な認証方式を確認したい。
-→こちらは分からないです
-→Salesforceの方と技術相談の上影響確認していただけますか
+送信元：172.17.2.0/24　⇒Subnet1（nifiの置き場所）
+プロトコル：Https:443,Http:80
+宛先：tmt-crm--dev0.sandbox.my.salesforce.com, test.salesforce.com, 03601-toyota-crm--dojo.sandbox.my.salesforce-setup.com
