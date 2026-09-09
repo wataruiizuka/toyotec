@@ -1,3 +1,10 @@
-送信元：172.17.2.0/24　⇒Subnet1（nifiの置き場所）
-プロトコル：Https:443,Http:80
-宛先：tmt-crm--dev0.sandbox.my.salesforce.com, test.salesforce.com, 03601-toyota-crm--dojo.sandbox.my.salesforce-setup.com
+NiFi側では現在、QuerySalesforceObjectとStandardOauth2AccessTokenProviderを使用したOAuth2認証でSalesforceへの接続PoCを実施しています。
+TMT次期JのFull Sandboxについても同じ構成を利用する想定で進めたいのですが、以下の認識で問題ないか確認させてください。
+
+認証方式はOAuth2で問題ないか
+現在PoCで使用しているOAuth2構成を流用可能か
+OAuth2で必要となるSalesforce側の設定・認証情報は何か
+NiFiからのAPI接続にあたり、Salesforce側で接続元IP等の追加許可が必要か
+API Version 64.0を使用して問題ないか
+初回疎通確認として、1件程度Readして問題ないObject / Fieldはどれか
+上記Object / Fieldについて、test_cdp_sys@toyotec.dojoに参照権限が付与されているか
