@@ -1,11 +1,11 @@
 Name
-salesforce_url
+salesforce_authorization_url
 
 Value
-https://03601-toyota-crm--dojo.sandbox.my.salesforce.com
+https://03601-toyota-crm--dojo.sandbox.my.salesforce.com/services/oauth2/token
 
 Sensitive Value
 No
 
 Description
-次期J dojo Full SandboxのSalesforce Instance URL
+次期J dojo Full SandboxのOAuth2 Client Credentials Flow用Token Endpoint
