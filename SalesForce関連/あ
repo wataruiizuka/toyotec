@@ -1,11 +1,25 @@
 Name
-salesforce_authorization_url
+salesforce_client_id
 
 Value
-https://03601-toyota-crm--dojo.sandbox.my.salesforce.com/services/oauth2/token
+NW担当者から共有されたClient ID
 
 Sensitive Value
 No
 
 Description
-次期J dojo Full SandboxのOAuth2 Client Credentials Flow用Token Endpoint
+次期J dojo Full SandboxのSalesforce OAuth2 Client Credentials Flow用Client ID
+
+
+
+Name
+salesforce_client_secret
+
+Value
+NW担当者から共有されたClient Secret
+
+Sensitive Value
+Yes
+
+Description
+次期J dojo Full SandboxのSalesforce OAuth2 Client Credentials Flow用Client Secret
