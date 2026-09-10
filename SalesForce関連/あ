@@ -1,3 +1,28 @@
-④ Token Endpoint / 認証先URL
-⇒03601-toyota-crm--dojo.sandbox.my.salesforce.com/services/oauth2/token
-かと思います
+QuerySalesforceObject_NextJ_dojo_ConnectTest
+
+Salesforce Instance URL
+→ #{salesforce_url}
+
+API Version
+→ 64.0
+
+Query Type
+→ Custom Query
+
+Custom SOQL Query
+→ 空欄
+
+Read Timeout
+→ 120 sec
+
+OAuth2 Access Token Provider
+→ NextJ_Salesforce_dojo_ConnectTest_OAuth2
+
+Execution
+→ Primary node
+
+State
+→ Stopped
+
+Validation
+→ Custom SOQL未設定のためINVALIDでも現時点ではOK
