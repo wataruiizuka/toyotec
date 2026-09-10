@@ -1,25 +1,37 @@
-Name
-salesforce_client_id
+NextJ_Salesforce_dojo_ConnectTest_OAuth2
 
-Value
-NW担当者から共有されたClient ID
+Authorization Server URL
+→ #{salesforce_authorization_url}
 
-Sensitive Value
-No
+Client Authentication Strategy
+→ REQUEST_BODY
 
-Description
-次期J dojo Full SandboxのSalesforce OAuth2 Client Credentials Flow用Client ID
+Grant Type
+→ Client Credentials
 
+Username
+→ 未設定
 
+Password
+→ 未設定
 
-Name
-salesforce_client_secret
+Client ID
+→ #{salesforce_client_id}
 
-Value
-NW担当者から共有されたClient Secret
+Client Secret
+→ #{salesforce_client_secret}
 
-Sensitive Value
-Yes
+Scope
+→ 未設定
 
-Description
-次期J dojo Full SandboxのSalesforce OAuth2 Client Credentials Flow用Client Secret
+Resource
+→ 未設定
+
+Audience
+→ 未設定
+
+SSL Context Service
+→ 未設定
+
+Proxy Configuration Service
+→ 未設定
