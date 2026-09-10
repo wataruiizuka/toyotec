@@ -4,10 +4,19 @@
 あと少しだけ確認させてください。
 今回共有いただいたClient ID / Client Secretが、次期J（dojo）向けの設定として使ってよいものか整理したいため、Salesforce管理画面上で以下を確認いただけますでしょうか。
 
-今回のOAuth設定のアプリケーション名 / API名
-この設定を確認している環境がdojoのFull Sandboxであること
-このOAuth設定の**Consumer Key（Client ID）**が、先ほど共有いただいたClient IDと一致していること
-可能であれば、今回NiFiからClient Credentials Flowで接続する際に使用するToken Endpoint / 認証先URLが確認できるか
+① OAuth設定のアプリケーション名 / API名
+Salesforceの設定画面上で、このClient Credentials Flowが設定されているアプリの名前を確認したいです。
+「次期J」「dojo」「CDP」「NiFi」など、今回の連携用途と分かる名称になっているかを確認したいです。
+② この設定を確認しているSalesforce環境
+現在開いている環境が、次期Jのdojo Full Sandboxであることを確認したいです。
+可能であれば、画面上のドメインやMy Domain等で
+03601-toyota-crm--dojo.sandbox.my.salesforce.com
+の環境であることが分かると助かります。
+③ Consumer Key（Client ID）
+今回のOAuthアプリのConsumer Keyが、先ほど共有いただいたClient IDと一致しているか確認したいです。
+Client Secretについては再共有いただかなくて大丈夫です。
+④ Token Endpoint / 認証先URL
+NiFi側でOAuth2のToken取得先URLを設定する必要があるため、Salesforce側でこのClient Credentials Flowに使用するToken Endpointが確認できるようでしたら、そのURLも教えていただきたいです。
 
 Client Secretについては、再度実値を共有いただく必要はありません。
 
