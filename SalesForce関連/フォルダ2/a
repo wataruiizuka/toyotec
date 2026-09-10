@@ -1,1 +1,15 @@
-愛してる。
+お疲れ様です。
+先ほど共有いただいた内容で、Client Credentials Flowが有効になっていること、実行ユーザーがtest_cdp_sys@toyotec.dojoになっていること、OAuth Scopeにapiが設定されていることまでは確認できました。ありがとうございます。
+
+あと少しだけ確認させてください。
+今回共有いただいたClient ID / Client Secretが、次期J（dojo）向けの設定として使ってよいものか整理したいため、Salesforce管理画面上で以下を確認いただけますでしょうか。
+
+今回のOAuth設定のアプリケーション名 / API名
+この設定を確認している環境がdojoのFull Sandboxであること
+このOAuth設定の**Consumer Key（Client ID）**が、先ほど共有いただいたClient IDと一致していること
+可能であれば、今回NiFiからClient Credentials Flowで接続する際に使用するToken Endpoint / 認証先URLが確認できるか
+
+Client Secretについては、再度実値を共有いただく必要はありません。
+
+まずは既存設定を変更せず、確認だけお願いできればと思っています。
+お手数ですが、よろしくお願いします。
