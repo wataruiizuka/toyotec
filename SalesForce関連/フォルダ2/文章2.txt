@@ -1,9 +1,15 @@
-接続情報下記になります。ご確認お願いしますmm
-ちなみにUsername、Passwordはtest_cdp_sys@toyotec.dojoのものだと思うのですが、（違ってたらすみません）
-今回の認証方式的に不要そうです。
- 
-Client ID：3MVG9xw0daOIgBi67vXIz62__Gh9etEpKbsSEMsbllb7XK_an8vKvRo_ur5NpyoXOksMRxvuxQ9b8.XMmx7V5
-Client Secret：D8BC844D614C75FF4C4DA8792E3C3BC1FFD7D82DFE18B8F0F61CC6582B321676
+お疲れ様です。
+先ほど接続情報の共有ありがとうございます。
 
-他にSalesforce側の情報で必要そうなものがあれば言ってもらえるとです
- 
+追加で、先ほど共有いただいたClient ID / Client Secretに紐づくSalesforce側の設定について、可能であれば管理画面上で以下を確認いただけますでしょうか。
+
+この設定が次期J（dojo）用のOAuth設定になっているか
+認証方式がClient Credentials Flowになっているか
+Integration User / Run As Userが**test_cdp_sys@toyotec.dojo**になっているか
+API接続に必要なOAuth Scopeが設定されているか
+
+Username / Passwordは不要そうとのことでしたので、こちらでもClient Credentials Flowの可能性が高いと考えています。
+NiFi側の設定を変更する前に、上記だけ確認できればと思っています。
+
+Client Secret等の実値は再共有いただかなくて大丈夫です。
+お手数ですが、ご確認よろしくお願いします。
