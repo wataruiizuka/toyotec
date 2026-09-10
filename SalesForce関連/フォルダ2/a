@@ -1,0 +1,23 @@
+Salesforce Instance URL
+https://tmt-crm--dev0.sandbox.my.salesforce.com
+Authorization Server URL
+https://test.salesforce.com/services/oauth2/token
+Grant Type
+User Password
+Client Authentication Strategy
+REQUEST_BODY
+Username
+NiFi側では salesforce_authorization_username のParameterを参照
+Password
+NiFi側では salesforce_authorization_password のParameterを参照
+Sensitive設定のため、こちらでは実値は確認していません
+Client ID
+NiFi側では salesforce_client_id のParameterを参照
+こちらで整理している資料上では実値までは確認できていません
+Client Secret
+NiFi側では salesforce_client_secret のParameterを参照
+Sensitive設定のため、こちらでは実値は確認していません
+Scope / Resource / Audience
+未設定
+Refresh Window
+0s
