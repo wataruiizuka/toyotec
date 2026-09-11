@@ -1,3 +1,6 @@
-name	comment
-nextj_ve_poc_kudu	
-
+CREATE TABLE nextj_ve_poc_kudu.salesforce_kojinmokuhyo_poc_test (
+    id STRING NOT NULL,
+    PRIMARY KEY (id)
+)
+PARTITION BY HASH (id) PARTITIONS 2
+STORED AS KUDU;
