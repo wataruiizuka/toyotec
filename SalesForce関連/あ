@@ -1,2 +1,26 @@
-result
-CREATE EXTERNAL TABLE nextj_ve_poc_kudu.salesforce_kojinmokuhyo_poc_test ( id STRING NOT NULL ENCODING AUTO_ENCODING COMPRESSION DEFAULT_COMPRESSION, PRIMARY KEY (id) ) PARTITION BY HASH (id) PARTITIONS 2 COMMENT '' STORED AS KUDU TBLPROPERTIES ('TRANSLATED_TO_EXTERNAL'='TRUE', 'external.table.purge'='TRUE', 'kudu.cluster_id'='e242e27faf994eb297de913aa5003d48', 'kudu.master_addresses'='cdp-dap-kudu-ve-je-master10.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master20.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master30.toyotecd.kj09-szpi.a0.cloudera.site:7051')
+お疲れ様です。
+次期JのSalesforce（dojo）→ NiFi → Kuduの接続検証を進めています。
+
+現在、NiFi側ではOAuth2のClient Credentials Flowを設定し、SalesforceのToken Endpointまで接続確認を進めていますが、実行するとSalesforce側から以下のエラーが返っている状況です。
+
+invalid_client_id
+client identifier invalid
+
+NiFiに設定しているClient IDについては、先ほど共有いただいた「CDP連携検証用（cdpconnect_ve）」のConsumer Keyと再度照合し、完全一致していることは確認済みです。
+
+また、SalesforceのToken EndpointからHTTP 400の応答自体は返ってきているため、現状はネットワーク疎通というより、Salesforce側でClient IDがOAuthクライアントとして認識される部分で止まっているように見えています。
+
+お手数ですが、「CDP連携検証用（cdpconnect_ve）」について、以下を確認いただけますでしょうか。
+
+External Client Appが現在、有効・利用可能な状態になっているか
+Client Credentials Flowが有効になっているか
+Client Credentials Flowの実行ユーザーがtest_cdp_sys@toyotec.dojoになっているか
+現在表示されているConsumer Keyが、有効な認証情報として利用できる状態か
+Consumer Key / Consumer Secretの再生成や変更などが最近行われていないか
+
+現時点ではSalesforceのデータ取得までは到達しておらず、Kuduへの書き込みもまだ発生していません。
+
+まずはSalesforce側の現在の設定状況だけ確認いただければと思います。
+設定変更が必要そうであれば、内容を確認してから進めたいです。
+
+お手数ですが、よろしくお願いします。
