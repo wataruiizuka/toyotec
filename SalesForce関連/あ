@@ -1,3 +1,1 @@
-SELECT Id
-FROM tcrm__T_T_TJ_KojinMokuhyo__c
-LIMIT 1
+cdp-dap-kudu-ve-je-master10.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master20.toyotecd.kj09-szpi.a0.cloudera.site:7051,cdp-dap-kudu-ve-je-master30.toyotecd.kj09-szpi.a0.cloudera.site:7051
