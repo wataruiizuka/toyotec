@@ -1,28 +1,10 @@
-QuerySalesforceObject_NextJ_dojo_ConnectTest
-
-Salesforce Instance URL
-→ #{salesforce_url}
-
-API Version
-→ 64.0
-
-Query Type
-→ Custom Query
-
-Custom SOQL Query
-→ 空欄
-
-Read Timeout
-→ 120 sec
-
-OAuth2 Access Token Provider
-→ NextJ_Salesforce_dojo_ConnectTest_OAuth2
-
-Execution
-→ Primary node
-
-State
-→ Stopped
-
-Validation
-→ Custom SOQL未設定のためINVALIDでも現時点ではOK
+下記ご確認お願いします
+権限も付与されていました！
+ 
+ 
+・オブジェクト
+個人目標：tcrm__T_T_TJ_KojinMokuhyo__c
+ 
+・フィールド
+￤ＳＹＳ＿作成アプリID：tcrm__CreatedAppId__c
+￤ＳＹＳ＿更新アプリID：tcrm__LastModifiedAppId__c
