@@ -1,12 +1,21 @@
-確認しました。下記観点では特に問題はなさそうです・・・
- 
-External Client Appが現在、有効・利用可能な状態になっているか
-　→はい
-Client Credentials Flowが有効になっているか
-　→はい
-Client Credentials Flowの実行ユーザーがtest_cdp_sys@toyotec.dojoになっているか
-　→はい
-現在表示されているConsumer Keyが、有効な認証情報として利用できる状態か
-　→はい
-Consumer Key / Consumer Secretの再生成や変更などが最近行われていないか
-　→変更ありませんでした
+04:57:27 UTC
+ERROR
+8a1a3a60-01a0-1000-0000-00002b7ebe54
+cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site:8443
+
+QuerySalesforceObject[id=8a1a3a60-01a0-1000-0000-00002b7ebe54] Couldn't get Salesforce records: org.apache.nifi.processor.exception.ProcessException: OAuth2 access token request failed [HTTP 400]
+
+04:57:27 UTC
+ERROR
+8a05ec73-01a0-1000-0000-0000798288bb
+cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site:8443
+
+StandardOauth2AccessTokenProvider[id=8a05ec73-01a0-1000-0000-0000798288bb] OAuth2 access token request failed [HTTP 400], response:
+{"error":"invalid_client_id","error_description":"client identifier invalid"}
+
+04:57:27 UTC
+ERROR
+8a1a3a60-01a0-1000-0000-00002b7ebe54
+cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site:8443
+
+QuerySalesforceObject[id=8a1a3a60-01a0-1000-0000-00002b7ebe54] Couldn't get Salesforce records: org.apache.nifi.processor.exception.ProcessException: OAuth2 access token request failed [HTTP 400
