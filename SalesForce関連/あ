@@ -1,21 +1,64 @@
-04:57:27 UTC
-ERROR
-8a1a3a60-01a0-1000-0000-00002b7ebe54
-cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site:8443
+正常系​
 
-QuerySalesforceObject[id=8a1a3a60-01a0-1000-0000-00002b7ebe54] Couldn't get Salesforce records: org.apache.nifi.processor.exception.ProcessException: OAuth2 access token request failed [HTTP 400]
+・連携するデータ量が合っているか​
 
-04:57:27 UTC
-ERROR
-8a05ec73-01a0-1000-0000-0000798288bb
-cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site:8443
+　・データの件数、行数​
 
-StandardOauth2AccessTokenProvider[id=8a05ec73-01a0-1000-0000-0000798288bb] OAuth2 access token request failed [HTTP 400], response:
-{"error":"invalid_client_id","error_description":"client identifier invalid"}
+　　・マスタ系​
 
-04:57:27 UTC
-ERROR
-8a1a3a60-01a0-1000-0000-00002b7ebe54
-cdp-toyotecdap-nifi-ve-je-nifi1.toyotecd.kj09-szpi.a0.cloudera.site:8443
+　　　・最新​
 
-QuerySalesforceObject[id=8a1a3a60-01a0-1000-0000-00002b7ebe54] Couldn't get Salesforce records: org.apache.nifi.processor.exception.ProcessException: OAuth2 access token request failed [HTTP 400
+　　・トランザクション系​
+
+　　　・更新差分の件数を確認する方法はSalesforce側で準備があるかに依存​
+
+・指定した日付の範囲が合っているか​
+
+　・10月を指定したときにまだデータがないので、実行されたら0件が正​
+
+　・0件だからと言ってエラーにならない​
+
+・テーブルとカラムが合っているか​
+
+　・Salesforceの値とCDPの値を比較し、一致するか​
+
+・データ型の確認​
+
+　・全部文字列か、Salesforce側でデータ型に変換されているか​
+
+　・Salesforceの値とCDPの値を比較し、一致するか　※変換が必要な場合は次のレイヤー​
+
+・NULLの扱い​
+
+　・文字列で来るか、空で来るか　※処理が失敗する（空で来る想定）​
+
+・JSON形式（文字列）の扱い（カスタムオブジェクト）​
+
+　・プロパティの順番は関係ない、内包している値が一致しているか​
+
+・連携元と連携先のマッピングが正しいか​
+
+　・基本はSalesforce上のオブジェクト名を利用​
+
+　・各販社のSalesforceごとにスキーマが切られる​
+
+　・カスタムオブジェクトを統一したとしても、データが充足しているとは限らない​
+
+　　・キーがずれる可能性もある​
+
+　　・A社とB社で利用できるデータが異なる​
+
+　　・実際に使うときに統合することを考える（Siver, Goldを作るときの話）​
+
+​
+
+異常系​
+
+・データ量が想定よりも多い / 少ない​
+
+　・エラーログの出力​
+
+
+メモ：
+・データ完全性​
+　・Kafkaで受信したデータとSalesforceのEvent Busに蓄積されたデータを比較し、欠損がないか確認​
